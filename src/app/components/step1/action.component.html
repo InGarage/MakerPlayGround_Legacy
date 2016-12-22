@@ -19,7 +19,11 @@
 
   <div class="action-menu margin-top">
     <div class="well no-padding">
-      <Tree #tree [nodes]="nodes" [options]="options" [focused]="true"></Tree>
+      <Tree #tree [nodes]="actions" [focused]="true">
+        <template #treeNodeTemplate let-node>
+          <b>{{ node.data.name }}</b><br>{{ node.data.description }}
+        </template>
+      </Tree>
     </div>
   </div>
 

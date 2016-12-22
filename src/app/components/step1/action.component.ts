@@ -1,7 +1,6 @@
-import { Component, Input, OnInit, AfterContentChecked, AfterViewInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { TreeModule } from 'angular2-tree-component';
-import { ActionsService } from '../../services/actions.service';
-import { ActionGroup, Action, ActionProperty, ActionType, ControlType } from './action';
+import { ActionGroup } from './action';
 
 @Component({
   //moduleId: module.id,
@@ -12,16 +11,10 @@ import { ActionGroup, Action, ActionProperty, ActionType, ControlType } from './
 })
 
 export class ActionComponent {
-  //actions: Action[];
-  //actions = ACTION;
-  //test = Test;
-  //types: any[];
-  node: ActionGroup[];
-  searchKeyword: string;
-  content: any;
-  options = { childrenField: 'cus_children' }  
+  actions: ActionGroup[];
 
   constructor() {
+    this.actions = require("./action.json");
   }
 
   filterNodes(text, tree) {
