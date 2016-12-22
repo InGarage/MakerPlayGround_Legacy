@@ -12,29 +12,15 @@
 
   <!-- Search -->
   <div class="search-action margin-top">
-    <form (submit)="searchAction(search.value)">
-      <input class="form-control step1_search" placeholder="Search" type="text" #search />
+    <form>
+      <input class="form-control step1_search" #filter (keyup)="filterNodes(filter.value, tree)" placeholder="Search" />
     </form>
   </div>
 
-<!--
   <div class="action-menu margin-top">
-    <div class="well no-padding" id="dropdown-action">
-      
-      <ul class="nav nav-list nav-menu-list-style" *ngFor="let type of actions">
-        <li *ngIf="actionHeadFilter(type)"><label class="tree-toggle nav-header glyphicon-icon-rpad">{{type.group_name}}
-          <span class="menu-collapsible-icon glyphicon glyphicon-chevron-down"></span></label>
-           <div id="test"></div>
-            <ul class="nav nav-list tree bullets" *ngFor="let each of type.action">
-                <li *ngIf="actionFilter(each.name)" class="eachAction" (click)="displayImage(each.img)">{{each.name}}</li>
-            </ul>
-        </li>
-      </ul> 
-    </div> <!-- well no-padding 
-  </div> <!-- action-menu margin-top 
-
-  <div>
-    <Tree [actions]="actions"></Tree>
-  </div>-->
+    <div class="well no-padding">
+      <Tree #tree [nodes]="nodes" [options]="options" [focused]="true"></Tree>
+    </div>
+  </div>
 
 </div> <!-- autoheight -->

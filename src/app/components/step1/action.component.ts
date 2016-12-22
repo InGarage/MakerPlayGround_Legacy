@@ -1,6 +1,8 @@
-import { Component, Input, OnInit, AfterContentChecked } from '@angular/core';
+import { Component, Input, OnInit, AfterContentChecked, AfterViewInit } from '@angular/core';
+import { TreeModule } from 'angular2-tree-component';
 import { ActionsService } from '../../services/actions.service';
-import { Action } from './action';
+//import { Action } from './action';
+import { Test } from './action';
 import * as fabric from 'fabric';
 
 let ACTION = [
@@ -41,6 +43,7 @@ let ACTION = [
   }
 ];
 
+
 @Component({
   //moduleId: module.id,
   selector: 'action',
@@ -52,17 +55,47 @@ let ACTION = [
 export class ActionComponent {
   //actions: Action[];
   actions = ACTION;
+  test = Test;
   types: any[];
   searchKeyword: string;
   content: any;
+  options = { childrenField: 'cus_children' }  
+
+ nodes = [
+    {
+      id: 1,
+      name: 'Motor',
+      cus_children: [
+        { id: 2, name: 'Active motor' },
+        { id: 3, name: 'Inactive motor' }
+      ]
+    },
+    {
+      id: 4,
+      name: 'LED',
+      cus_children: [
+        { id: 5, name: 'Active LED' },
+        { id: 6, name: 'Inactive LED'},
+        {
+          id: 7,
+          name: 'child2.2',
+          cus_children: [
+            { id: 8, name: 'subsub' }
+          ]
+        }
+      ]
+    }
+  ];
+
 
   constructor(private actionsService: ActionsService) {
     this.searchKeyword = "";
   }
 
-  ngOnInit() {
-    console.log(this.actions);
+  filterNodes(text, tree) {
+    tree.treeModel.filterNodes(text, true);
   }
+
 
   searchAction(search: string) {
     console.log(search);
@@ -95,14 +128,4 @@ export class ActionComponent {
     //<img src="'+img+'" />'
   }
 
-  /* action menu 
-  ngAfterViewInit() {
-    $('.tree-toggle').click(function () {
-      $(this).parent().children('ul.tree').toggle(200);
-    });
-
-    $(function () {
-      $('.tree-toggle').parent().children('ul.tree').toggle(200);
-    })
-  }*/
 }
