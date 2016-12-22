@@ -1,19 +1,21 @@
 
 export interface ActionGroup {
-  group_name : string;
+  name : string;
   children : Action[];
 }
 
 export interface Action {
   name: string;
   type: ActionType;
-  property: ActionProperty[];
+  description: string;
+  property?: ActionProperty[];
   image: string;  // path to an image that will be used to represent this action in the canvas
 }
 
 export enum ActionType {
   Accel_X,
-  Accel_Y
+  Accel_Y,
+  Unspecified // to be removed
   // TODO: add new actions
 }
 

@@ -17,6 +17,24 @@
     height: 100%;
 }
 
+.front {
+    display: block;
+    z-index: 5;
+    position: relative;
+}
+
+.canvas-behind {
+    display: block;
+    z-index: 3;
+}
+
+.scrollable-action-menu {
+    overflow-y: scroll;
+    background-color: white;
+    height: 500px;
+    border-radius: 4px;
+}
+
 .project_name {
     /*float: none;*/
     margin: 0 auto;
