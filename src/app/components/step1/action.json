@@ -1,46 +1,36 @@
-{
-  "Motor": [
-    {
-      "name": "Dummy Motor 1",
-      "type": "Motor",
-      "label": "รอบ",
-      "datatype": "int",
-      "control": "textbox",
-      "format": ""
-    },
-    {
-      "name": "Dummy Motor 2",
-      "type": "Motor",
-      "label": "time",
-      "datatype": "int",
-      "control": "textbox",
-      "format": ""
-    }
-  ],
-  "LED": [
-    {
-      "name": "DIM",
-      "type": "LED",
-      "label": "Percentage",
-      "datatype": "int",
-      "control": "textbox",
-      "format": ""
-    },
-    {
-      "name": "กระพริบนับรอบ",
-      "type": "LED",
-      "label": "time",
-      "datatype": "int",
-      "control": "textbox",
-      "format": ""
-    },
-    {
-      "name": "กระพริบ",
-      "type": "LED",
-      "label": "time",
-      "datatype": "int",
-      "control": "textbox",
-      "format": ""
-    }
-  ]
-}
+[
+  {
+    "id": 1,
+    "name": "root1",
+    "children": [
+      {
+        "id": 2,
+        "name": "child1"
+      },
+      {
+        "id": 3,
+        "name": "child2"
+      }
+    ]
+  },
+  {
+    "id": 4,
+    "name": "root2",
+    "children": [
+      {
+        "id": 5,
+        "name": "child2.1"
+      },
+      {
+        "id": 6,
+        "name": "child2.2",
+        "children": [
+          {
+            "id": 7,
+            "name": "subsub"
+          }
+        ]
+      }
+    ]
+  }
+]
