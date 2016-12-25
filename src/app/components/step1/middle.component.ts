@@ -1,4 +1,4 @@
-import { Component, Input, AfterViewInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Action } from './action';
 import 'fabric';
 
@@ -7,34 +7,24 @@ import 'fabric';
   templateUrl: `./middle.component.html`,
   styleUrls: ['./step1.component.css']
 })
-export class MiddleComponent  {
+export class MiddleComponent implements OnInit {
 
   canvas: fabric.ICanvas;
 
-  addAction(selectedAction: any) {
-    var canvas = new fabric.Canvas('c');
-    var imgObj = new Image();
+  ngOnInit() {
+    this.canvas = new fabric.Canvas('c');
+  }
+
+  addAction(selectedAction: Action) {
+    let imgObj = new Image();
     imgObj.src = selectedAction.image;
-    imgObj.onload = function() {
-      var imgInstance = new fabric.Image(imgObj, {
+    imgObj.onload = () => {
+      let imgInstance = new fabric.Image(imgObj, {
           left: 200,
           top: 200,
         });
-      canvas.add(imgInstance);
+      this.canvas.add(imgInstance);
     }
-/*
-    var canvas = <HTMLCanvasElement> document.getElementById("c");
-    var context = canvas.getContext('2d');
-
-    var base_image =  new Image();
-    base_image.src = selectedAction.image;
-    base_image.onload = function(){
-      var imageWidth = base_image.width;
-      var imageHeight = base_image.height;
-      context.drawImage(base_image, 100, 100);
-      console.log(imageWidth);
-      console.log(imageHeight);
-    }*/
   }
 
 }
