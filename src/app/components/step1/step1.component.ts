@@ -17,6 +17,7 @@ export class Step1Component  {
     var setElementHeight = function () {
       var height = $(window).height();
       $('.autoheight').css('min-height', (height));
+      $('.canvas-behind').css('min-height', (height));
       };
 
     $(window).on("resize", function () {

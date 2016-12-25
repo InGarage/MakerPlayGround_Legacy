@@ -9,9 +9,28 @@ import 'fabric';
 })
 export class MiddleComponent  {
 
-  canvas: fabric.ICanvas;
+  //canvas: fabric.ICanvas;
+  canvas: any;
+
+  constructor() {
+    this.canvas = <HTMLCanvasElement> document.getElementById("c");
+  }
+
 
   addAction(selectedAction: any) {
+    //var imgObj = new Image();
+    /*fabric.Image.fromURL(selectedAction.image, function (img) {
+        // deal with image
+       img.left = 100,
+       img.top = 100,
+       this.canvas.add(img);
+       console.log('hi');
+      });*/
+    var ctx= this.canvas.getContext("2d");
+    ctx.beginPath();
+    ctx.arc(100,75,50,0,2*Math.PI);
+    ctx.stroke();
+    /*
     var canvas = new fabric.Canvas('c');
     var imgObj = new Image();
     imgObj.src = selectedAction.image;
@@ -22,6 +41,7 @@ export class MiddleComponent  {
         });
       canvas.add(imgInstance);
     }
+    */
 /*
     var canvas = <HTMLCanvasElement> document.getElementById("c");
     var context = canvas.getContext('2d');
