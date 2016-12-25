@@ -10,13 +10,13 @@
           "name": "Speed",
           "control" : "Slider"
         },
-        "image" : ""
+        "image" : "/assets/img/Motor_on.png"
       },
       {
         "name" : "Motor Off",
         "type" : "Unspecified",
         "description" : "Turn the motor off",
-        "image" : ""
+        "image" : "/assets/img/Motor_off.png"
       }
     ] 
   },
@@ -31,13 +31,13 @@
           "name": "Brightness",
           "control" : "SpinBox"
         },
-        "image" : ""
+        "image" : "/assets/img/LED_on.png"
       },
       {
         "name" : "Led Off",
         "type" : "Unspecified",
         "description" : "Turn the led off",
-        "image" : ""
+        "image" : "/assets/img/LED_off.png"
       }
     ] 
   }
