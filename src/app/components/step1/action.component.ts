@@ -1,9 +1,8 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { TreeModule } from 'angular2-tree-component';
-import { ActionGroup } from './action';
+import { ActionGroup, Action } from './action';
 
 @Component({
-  //moduleId: module.id,
   selector: 'action',
   templateUrl: `./action.component.html`,
   styleUrls: ['./step1.component.css'],
@@ -12,7 +11,8 @@ import { ActionGroup } from './action';
 
 export class ActionComponent {
 
-  @Output() myEvent = new EventEmitter();
+  @Output() myEvent = new EventEmitter<Action>();
+
   actions: ActionGroup[];
 
   constructor() {
@@ -23,10 +23,10 @@ export class ActionComponent {
     tree.treeModel.filterNodes(text, true);
   }
 
-  selectedAction(selectedAction: any) {
-    /* Only emit data when selectedAction isn't a parent */
-    if (selectedAction.node.level !== 1) {
-      this.myEvent.emit(selectedAction.node.data);
+  selectedAction($event: any) {
+    // Only emit event when the selected tree node isn't a header node
+    if ($event.node.isLeaf) {
+      this.myEvent.emit($event.node.data);
     }
   }
 }

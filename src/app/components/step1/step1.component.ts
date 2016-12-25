@@ -1,5 +1,4 @@
 import { Component, Input } from '@angular/core';
-//import { Action } from './action';
 import * as fabric from 'fabric';
 import * as $ from 'jquery';
 
