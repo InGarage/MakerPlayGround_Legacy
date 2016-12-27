@@ -23,6 +23,10 @@ export class ActionComponent {
     tree.treeModel.filterNodes(text, true);
   }
 
+  deleteState($event: any) {
+    this.myEvent.emit($event);
+  }
+
   selectedAction($event: any) {
     // Only emit event when the selected tree node isn't a header node
     if ($event.node.isLeaf) {

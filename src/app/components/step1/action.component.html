@@ -8,6 +8,7 @@
   <div class="project_name">
       Project_name
       <button class="save_button"><i class="fa fa-floppy-o fa-lg" aria-hidden="true"></i></button>
+      <button class="delete_button" (click)="deleteState(1)"><i class="fa fa-trash fa-lg" aria-hidden="true"></i></button>
   </div> 
 
   <!-- Search -->
@@ -17,13 +18,16 @@
     </form>
   </div>
 
+  <!-- Action menu -->
   <div class="action-menu margin-top">
-    <div class="well no-padding">
-      <Tree #tree [nodes]="actions" [focused]="true" (onActivate)="selectedAction($event)">
-        <template #treeNodeTemplate let-node>
-          <b>{{ node.data.name }}</b><br>{{ node.data.description }}
-        </template>
-      </Tree>
+    <div class="scrollable-action-menu">
+      <div class="well no-padding">
+        <Tree #tree [nodes]="actions" [focused]="true" (onActivate)="selectedAction($event)">
+          <template #treeNodeTemplate let-node>
+            <b>{{ node.data.name }}</b><br>{{ node.data.description }}
+          </template>
+        </Tree>
+      </div>
     </div>
   </div>
 

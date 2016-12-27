@@ -9,9 +9,6 @@ import * as $ from 'jquery';
   styleUrls: ['./step1.component.css']
 })
 export class Step1Component  {
-  //@Input()
-  //post: Action;
-
   ngOnInit(){
     var setElementHeight = function () {
       var height = $(window).height();

@@ -15,7 +15,8 @@ USER</a></li>
     </nav>
 
 <div class="col-md-3">
-  <action #left (myEvent)="middle.addAction($event)" class="front"></action>
+  <!--<action #left (myEvent)="middle.addAction($event)" class="front"></action>-->
+  <action #left (myEvent)="middle.getEvent($event)" class="front"></action>
 </div>
 
 <middle #middle class="canvas-behind scrollable-action-menu"></middle>
