@@ -5,6 +5,7 @@ export interface ActionGroup {
 }
 
 export interface Action {
+  id: number;
   name: string;
   type: ActionType;
   description: string;
