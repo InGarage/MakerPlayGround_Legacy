@@ -25,8 +25,8 @@ export class MiddleComponent implements OnInit {
 
     private canvas: fabric.ICanvas;
 
-    private graph: GraphModel;
-    private event: EventManager;
+    private graphModel: GraphModel;
+    private eventManager: EventManager;
 
     // TODO: remove in future version
     private actionGroup: ActionGroup[];
@@ -35,8 +35,8 @@ export class MiddleComponent implements OnInit {
         // TODO: refactor to read the json only once by create a global object or use dependency injection
         this.actionGroup = require("./action.json");
 
-        this.graph = new GraphModel(this.dummyGraph);
-        this.event = new EventManager();
+        this.graphModel = new GraphModel(this.dummyGraph);
+        this.eventManager = new EventManager();
         this.canvas = new fabric.Canvas('c');
 
         this.redrawCanvas();
@@ -71,21 +71,11 @@ export class MiddleComponent implements OnInit {
     private drawEdge(triggerData: TriggerData) {
         let startX: number, startY: number, endX: number, endY: number, angle: number;
 
-        //if (triggerData.src_node_id === 0) {    // TODO: find better way to check
-            startX = triggerData.display_params.start_x;
-            startY = triggerData.display_params.start_y;
-            endX = triggerData.display_params.end_x;
-            endY = triggerData.display_params.end_y;
-            angle = Math.atan((endY - startY) / (endX - startX));   // in radian
-        //} else {
-        //    let srcNode = this.graph.getNodeData(triggerData.src_node_id);
-        //    let dstNode = this.graph.getNodeData(triggerData.dst_node_id);
-        //    startX = srcNode.display_params.x + NODE_SIZE / 2 * Math.cos(triggerData.display_params.src_conn_deg * Math.PI / 180);
-        //    startY = srcNode.display_params.y + NODE_SIZE / 2 * Math.sin(triggerData.display_params.src_conn_deg * Math.PI / 180);
-        //    endX = dstNode.display_params.x + NODE_SIZE / 2 * Math.cos(triggerData.display_params.dst_conn_deg * Math.PI / 180);
-        //    endY = dstNode.display_params.y + NODE_SIZE / 2 * Math.sin(triggerData.display_params.dst_conn_deg * Math.PI / 180);
-        //    angle = Math.atan((endY - startY) / (endX - startX)); // in radian
-        //}
+        startX = triggerData.display_params.start_x;
+        startY = triggerData.display_params.start_y;
+        endX = triggerData.display_params.end_x;
+        endY = triggerData.display_params.end_y;
+        angle = Math.atan((endY - startY) / (endX - startX));   // in radian
 
         let line = new fabric.Line([
             startX,
@@ -114,10 +104,10 @@ export class MiddleComponent implements OnInit {
         });
         // connect if arrow intersect with node
         line.on('modified', (options) => {
-            for (let actionData of this.graph.node()) {
+            for (let actionData of this.graphModel.node()) {
                 let distance = Math.sqrt(Math.pow(line.left - actionData.display_params.x, 2) + Math.pow(line.top - actionData.display_params.y, 2));
                 if (distance < NODE_SIZE / 2) {
-                    this.event.pushEvent(new ConnectEdgeToSrcNodeEvent(this.graph, actionData, triggerData, 400, 400));
+                    this.eventManager.pushEvent(new ConnectEdgeToSrcNodeEvent(this.graphModel, actionData, triggerData, 400, 400));
                     this.redrawCanvas();
                     break;
                 }
@@ -130,11 +120,11 @@ export class MiddleComponent implements OnInit {
     private redrawCanvas() {
         this.canvas.clear();
 
-        for (let node of this.graph.node()) {
+        for (let node of this.graphModel.node()) {
             this.drawNode(node);
         }
 
-        for (let edge of this.graph.edge()) {
+        for (let edge of this.graphModel.edge()) {
             this.drawEdge(edge);
         }
     }
