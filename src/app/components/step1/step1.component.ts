@@ -10,14 +10,17 @@ import * as $ from 'jquery';
 })
 export class Step1Component  {
   ngOnInit(){
+    /*
     var setElementHeight = function () {
       var height = $(window).height();
-      $('.autoheight').css('min-height', (height));
+      height = 100;
+      $('.tree').css('max-height', (height));
+      /*$('.autoheight').css('min-height', (height));
       $('.canvas-behind').css('min-height', (height));
       };
 
     $(window).on("resize", function () {
       setElementHeight();
-      }).resize();
+      }).resize();*/
   }
 }

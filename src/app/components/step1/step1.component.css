@@ -1,20 +1,39 @@
 .col-md-3 {
-    padding-left: 15px;
-    background-color: gray;
-    height: 100%;
+    position: fixed;
+    float: left;
+    margin-left: 30px;
+    margin-right: 30px;
     width: 20%;
+    z-index: 5;
 }
 
-.col-md-6 {
-    width: 60%;
-}
 
-.col-md-4 {
+.right-side{
+    position: fixed;
+    left: 77%;
     width: 20%;
+    z-index: 5;
 }
 
-.fullheight {
-    height: 100%;
+.well-edit {
+  min-height: 20px;
+  background-color: #f5f5f5;
+  border: 1px solid #e3e3e3;
+  border-radius: 4px;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .05);
+          box-shadow: inset 0 1px 1px rgba(0, 0, 0, .05);
+}
+
+.actionBox {
+    padding-top: 70px;
+}
+
+.triggerBox {
+    padding-top: 10px;
+}
+
+.property-box {
+    margin-top: 70px;
 }
 
 .front {
@@ -24,19 +43,11 @@
 }
 
 .canvas-behind {
-    display: block;
     z-index: 3;
-}
-
-.scrollable-action-menu {
-    overflow-y: scroll;
-    background-color: white;
-    height: 500px;
-    border-radius: 4px;
+    position: relative;
 }
 
 .project_name {
-    /*float: none;*/
     margin: 0 auto;
     background-color: white;
     padding-top: 15px;
@@ -58,13 +69,107 @@
     margin-top: 10px;
 }
 
-.step1_search {
-    border-radius: 20px;
-    text-align: center;
+.search-action {
+    padding-top: 5px;
+    padding-bottom: 15px;
 }
 
-.no-padding{
-  padding:0px;
+.step1_search {
+    width: 90%;
+    border-radius: 5px;
+    margin: 0 auto;
+}
+
+.labelProperties {
+  padding-left: 30px;
+  line-height:40px;
+  font-size: 15px;
+  border-bottom: 1px solid #e3e3e3;
+}
+
+.glyphicon-fix {
+  position: relative;
+  font-family: 'Glyphicons Halflings';
+  font-style: normal;
+  font-weight: normal;
+  line-height: 1;
+
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+} 
+
+.butttonHideProperties {
+    position: relative;
+    float: right;
+    margin-top: 5px;
+    margin-right: 5px;
+    height: 25px;
+    border: none;
+    background-color: transparent;
+    outline: none;
+}
+
+.butttonHideProperties:focus {
+    border: none;
+}
+
+.buttonSetProperty {
+    position: relative;
+    text-align: center;
+    padding-top: 20px;
+    padding-bottom: 15px;
+}
+
+input[type=text] {
+  display: block;
+  width: 100%;
+  height: 34px;
+  padding: 6px 12px;
+  font-size: 14px;
+  line-height: 1.42857143;
+  color: #555;
+  background-color: #fff;
+  background-image: none;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+          box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+  -webkit-transition: border-color ease-in-out .15s, -webkit-box-shadow ease-in-out .15s;
+       -o-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+          transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+}
+
+input[type=text]:focus {
+  border-color: #66afe9;
+  outline: 0;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102, 175, 233, .6);
+          box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102, 175, 233, .6);
+}
+
+input[type=number] {
+  display: block;
+  width: 100%;
+  height: 34px;
+  padding: 6px 12px;
+  font-size: 14px;
+  line-height: 1.42857143;
+  color: #555;
+  background-color: #fff;
+  background-image: none;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+          box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+  -webkit-transition: border-color ease-in-out .15s, -webkit-box-shadow ease-in-out .15s;
+       -o-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+          transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+}
+
+input[type=number]:focus {
+  border-color: #66afe9;
+  outline: 0;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102, 175, 233, .6);
+          box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102, 175, 233, .6);
 }
 
 .glyphicon-icon-rpad .glyphicon,.glyphicon-icon-rpad .glyphicon.m8,.fa-icon-rpad .fa,.fa-icon-rpad .fa.m8{ padding-right:8px; }
@@ -76,8 +181,6 @@
 .glyphicon-icon-rpad .glyphicon.m15,.fa-icon-rpad .fa.m15{ padding-right:15px; }
 .glyphicon-icon-lpad .glyphicon.m15,.fa-icon-lpad .fa.m15{ padding-left:15px; }
 
-
-
 ul.nav-menu-list-style .menu-collapsible-icon{
     position:absolute; right:3px; top:16px; font-size:9px; 
 }
@@ -88,11 +191,11 @@ ul.nav-menu-list-style{
 
 /* Type of action, tree's root */
 ul.nav-menu-list-style .nav-header{
-  border-top:1px solid #FFFFFF;
-  border-bottom:1px solid #e8e8e8;
+  /*border-top:1px solid #FFFFFF;*/
+  /*border-bottom:1px solid #e8e8e8;*/
   display:block;
   margin:0;
-  line-height:35px;
+  line-height:40px;
   padding:0 10px;
   font-weight:600;
 }
@@ -106,19 +209,8 @@ ul.nav-menu-list-style> li a{
   line-height:32px;
 }
 
-.eachAction {
-  border-top:1px solid #FFFFFF;
-  border-bottom:1px solid #e8e8e8;
-  padding:0 10px;
-  line-height:30px;
-  padding-left: 30px;
-}
-
-
-
 ul.nav-menu-list-style{list-style:none; padding:0px; margin:0px;}
 ul.nav-menu-list-style li .badge,ul.nav-menu-list-style li .pull-right,ul.nav-menu-list-style li span.badge,ul.nav-menu-list-style li label.badge{float:right; margin-top:7px;}
 ul.bullets{list-style:inside disc}
 ul.numerics{list-style:inside decimal}
 ul.kas-icon-aero li a:before{font-family: 'Glyphicons Halflings'; font-size:9px; content: "\e258"; padding-right:8px; }
-

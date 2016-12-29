@@ -11,6 +11,7 @@ import { SampleProjectComponent }  from './components/sample-project.component';
 import { Step1Component }  from './components/step1/step1.component';
 import { ActionComponent }  from './components/step1/action.component';
 import { MiddleComponent }  from './components/step1/middle.component';
+import { PropertyComponent }  from './components/step1/property.component';
 
 import { ActionsService }  from './services/actions.service';
 
@@ -20,7 +21,7 @@ import {routing} from './app.routing';
   imports:      [ BrowserModule, FormsModule, HttpModule, routing, TreeModule ],
   declarations: [ AppComponent, HomeComponent, TutorialComponent, 
                   SampleProjectComponent, Step1Component, ActionComponent,
-                  MiddleComponent ],
+                  MiddleComponent, PropertyComponent ],
   providers:    [ ActionsService ],
   bootstrap:    [ AppComponent ]
 })

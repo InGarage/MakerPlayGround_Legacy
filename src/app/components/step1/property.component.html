@@ -1,0 +1,39 @@
+<div class="property-box" *ngIf="showProperties">
+    <div class="well-edit">
+    
+        <p class="labelProperties"><label>Properties</label>
+        <button class="butttonHideProperties" (click)="hideProperties()">
+        <span class="glyphicon-fix glyphicon-remove" aria-hidden="true"></span>
+        </button></p>
+        
+
+        <form [ngStyle]="setFormStyles()" *ngFor="let property of ObjProperties">
+            <label>{{property.name}}</label><br/>
+
+            <div *ngIf="property.control==='TextBox'">
+                <input type="text">
+            </div>
+
+            <div *ngIf="property.control==='RadioButton'">
+                <input type="radio">
+            </div>
+            <div *ngIf="property.control==='CheckBox'">
+                <input type="checkbox">
+            </div>
+            <div *ngIf="property.control==='SpinBox'">
+                <input type="number">
+            </div>            
+            <div *ngIf="property.control==='Color'">
+                <input type="color">
+            </div>
+
+            <div *ngIf="property.control==='Slider'">
+                <input type="range">
+            </div>
+        </form>
+        <div class="buttonSetProperty">
+            <button type="button" class="btn btn-primary">OK</button>
+        </div>
+    </div>
+</div>
+

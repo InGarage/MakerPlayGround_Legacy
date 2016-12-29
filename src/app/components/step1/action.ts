@@ -26,10 +26,10 @@ export interface ActionProperty {
 }
 
 export enum ControlType {
-  TextBox,
-  RadioButton,
-  CheckBox,
-  SpinBox,  // HTML5 input type number
-  Color,
-  Slider  // HTML5 input type range
+  TextBox,      // HTML5 input type text
+  RadioButton,  // HTML5 input type radio
+  CheckBox,     // HTML5 input type checkbox
+  SpinBox,      // HTML5 input type number
+  Color,        // HTML5 input type color
+  Slider        // HTML5 input type range
 }

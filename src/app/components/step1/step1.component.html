@@ -15,11 +15,16 @@ USER</a></li>
     </nav>
 
 <div class="col-md-3">
-  <!--<action #left (myEvent)="middle.addAction($event)" class="front"></action>-->
+  <!--
   <action #left (myEvent)="middle.getEvent($event)" class="front"></action>
+  -->
+  <action #left (myEvent)="right.populatePropertyWindow($event)" class="front"></action>
 </div>
 
-<middle #middle class="canvas-behind scrollable-action-menu"></middle>
+<div class="right-side">
+  <property #right class="front"></property>
+</div>
 
-<div class="col-md-4">
+<div>
+<middle #middle class="canvas-behind scrollable-action-menu"></middle>
 </div>

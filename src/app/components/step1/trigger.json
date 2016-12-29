@@ -6,28 +6,16 @@
         "name" : "Motor On",
         "type" : "Unspecified",
         "description" : "Turn the motor on",
-        "property" : [
-          {
-          "name": "Name",
-          "control": "TextBox"
-          },
-          {
+        "property" : {
           "name": "Speed",
           "control" : "Slider"
-          }
-        ],
+        },
         "image" : "/assets/img/Motor_on.png"
       },
       {
         "name" : "Motor Off",
         "type" : "Unspecified",
         "description" : "Turn the motor off",
-        "property" : [
-          {
-          "name": "Name",
-          "control": "TextBox"
-          }
-        ],
         "image" : "/assets/img/Motor_off.png"
       }
     ] 
@@ -39,30 +27,29 @@
         "name" : "Led On",
         "type" : "Unspecified",
         "description" : "Turn the led on",
-        "property" : [
-          {
-          "name": "Name",
-          "control": "TextBox"
-          },
-          {
+        "property" : {
           "name": "Brightness",
           "control" : "SpinBox"
-          }
-        ],
+        },
         "image" : "/assets/img/LED_on.png"
       },
       {
         "name" : "Led Off",
         "type" : "Unspecified",
         "description" : "Turn the led off",
-        "property" : [
-          {
-          "name": "Name",
-          "control": "TextBox"
-          }
-        ],
         "image" : "/assets/img/LED_off.png"
       }
     ] 
+  },
+  {
+    "name" : "Dummy",
+    "children" : [
+      {
+        "name" : "Also Dummy",
+        "type" : "Unspecified",
+        "description" : "",
+        "image" : "/assets/img/LED_off.png"
+      }
+    ]
   }
 ]
