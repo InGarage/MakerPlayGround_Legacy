@@ -3,6 +3,7 @@
     "name" : "Motor",
     "children" : [
       {
+        "id": 1,
         "name" : "Motor On",
         "type" : "Unspecified",
         "description" : "Turn the motor on",
@@ -19,6 +20,7 @@
         "image" : "/assets/img/Motor_on.png"
       },
       {
+        "id": 2,
         "name" : "Motor Off",
         "type" : "Unspecified",
         "description" : "Turn the motor off",
@@ -36,6 +38,7 @@
     "name" : "Led",
     "children" : [
       {
+        "id": 3,
         "name" : "Led On",
         "type" : "Unspecified",
         "description" : "Turn the led on",
@@ -52,6 +55,7 @@
         "image" : "/assets/img/LED_on.png"
       },
       {
+        "id": 4,
         "name" : "Led Off",
         "type" : "Unspecified",
         "description" : "Turn the led off",
