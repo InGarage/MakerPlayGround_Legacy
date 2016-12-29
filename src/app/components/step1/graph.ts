@@ -41,8 +41,8 @@ export interface TriggerData {
     dst_node_id: number,    
     /* Parameters needed to display the node on the screen */
     display_params: { 
-        src_conn_deg: number,   /* angle that the arrow's tail connects to the source node */
-        dst_conn_deg: number,    /* angle that the arrow's head connects to the destination node */
+        //src_conn_deg: number,   /* angle that the arrow's tail connects to the source node */
+        //dst_conn_deg: number,    /* angle that the arrow's head connects to the destination node */
         start_x: number,
         start_y: number,
         end_x: number,

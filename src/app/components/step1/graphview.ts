@@ -61,21 +61,21 @@ export class GraphView {
      * @returns     array of fabric.IObject to be added to the canvas
      */
     initCanvasFromGraph(canvas: fabric.ICanvas, graph: GraphData) {
-        let nodes: Node[] = [];
+        let nodes: NodeView[] = [];
 
         console.log(graph);
 
         for (let node of graph.nodes) {
-            nodes.push(new Node(canvas, node, this.findActionById(node.action_id)));
+            nodes.push(new NodeView(canvas, node, this.findActionById(node.action_id)));
         }
 
         for (let edge of graph.edges) {
-            canvas.add(new Edge(canvas, nodes, edge));
+            new EdgeView(canvas, nodes, edge);
         }
     }
 }
 
-class Node {
+export class NodeView {
     private image: fabric.IImage;   // BEWARE: image is undefined until the callback is called
     private text: fabric.IText;
 
@@ -117,18 +117,17 @@ class Node {
     }
 }
 
-class Edge extends fabric.Group {
+export class EdgeView {
     private line: fabric.ILine;
     private triangle: fabric.ITriangle;
-    private headCircle: fabric.ICircle;
-    private tailCircle: fabric.ICircle;
+    //private headCircle: fabric.ICircle;
+    //private tailCircle: fabric.ICircle;
 
-    private srcNode: Node;
-    private dstNode: Node;
+    private srcNode: NodeView;
+    private dstNode: NodeView;
 
-    constructor(private canvas: fabric.ICanvas, private node: Node[], private edge: TriggerData) {
-        super();
-
+    constructor(private canvas: fabric.ICanvas, private node: NodeView[], private edge: TriggerData) {
+        
         let startX: number, startY: number, endX: number, endY: number, angle: number;
 
         // calculate start and end point of the edge
@@ -168,30 +167,18 @@ class Edge extends fabric.Group {
             angle: 90 + (angle * 180 / Math.PI),
         });
 
-        this.tailCircle = new fabric.Circle({
+        /*this.tailCircle = new fabric.Circle({
             left: startX,
             top: startY,
             originX: 'center',
             originY: 'center'
-        });
+        });*/
 
-        this.initEvent();
-        this.addWithUpdate(this.line);
-        this.addWithUpdate(this.triangle);
-        //canvas.add(this.line, this.triangle);
-    }
-
-    private initEvent() {
-        /*this.on('moving', (option) => {
-            this.line.set('stroke', '#f00');
-            this.set('dirty', true);
-            this.canvas.renderAll();
-            console.log('move group');
-        })*/
+        canvas.add(this.line, this.triangle);
     }
 
     // TODO: This function should be refactored into the node class / service
-    private findNodeByActionId(id: number): Node {
+    private findNodeByActionId(id: number): NodeView {
         for (let node of this.node) {
             if (node.getNode().action_id === id)
                 return node;
