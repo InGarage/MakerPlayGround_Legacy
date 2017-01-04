@@ -68,5 +68,88 @@
         "image" : "/assets/img/LED_off.png"
       }
     ] 
+  },
+  {
+    "name" : "Dummy Action",
+    "children" : [
+      {
+        "id": 3,
+        "name" : "Led On",
+        "type" : "Unspecified",
+        "description" : "Turn the led on",
+        "property" : [
+          {
+          "name": "Name",
+          "control": "TextBox"
+          },
+          {
+          "name": "Brightness",
+          "control" : "SpinBox"
+          }
+        ],
+        "image" : "/assets/img/LED_on.png"
+      },
+      {
+        "id": 4,
+        "name" : "Led Off",
+        "type" : "Unspecified",
+        "description" : "Turn the led off",
+        "property" : [
+          {
+          "name": "Name",
+          "control": "TextBox"
+          }
+        ],
+        "image" : "/assets/img/LED_off.png"
+      }
+    ] 
+  },
+  {
+    "name" : "Dummy Action2",
+    "children" : [
+      {
+        "id": 3,
+        "name" : "Led On",
+        "type" : "Unspecified",
+        "description" : "Turn the led on",
+        "property" : [
+          {
+          "name": "Name",
+          "control": "TextBox"
+          },
+          {
+          "name": "Brightness",
+          "control" : "SpinBox"
+          }
+        ],
+        "image" : "/assets/img/LED_on.png"
+      },
+      {
+        "id": 4,
+        "name" : "Led Off",
+        "type" : "Unspecified",
+        "description" : "Turn the led off",
+        "property" : [
+          {
+          "name": "Name",
+          "control": "TextBox"
+          }
+        ],
+        "image" : "/assets/img/LED_off.png"
+      },
+      {
+        "id": 4,
+        "name" : "Led Off",
+        "type" : "Unspecified",
+        "description" : "Turn the led off",
+        "property" : [
+          {
+          "name": "Name",
+          "control": "TextBox"
+          }
+        ],
+        "image" : "/assets/img/LED_off.png"
+      }
+    ] 
   }
 ]

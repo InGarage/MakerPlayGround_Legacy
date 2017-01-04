@@ -1,4 +1,7 @@
-import { Component, Input, OnInit, OnChanges, ElementRef, Renderer } from '@angular/core';
+import {
+    Component, Input, Output, EventEmitter,
+    OnInit, OnChanges, ElementRef, Renderer
+} from '@angular/core';
 import 'fabric';
 import * as $ from 'jquery';
 
@@ -9,9 +12,9 @@ import { EventManager } from './eventmanager';
 import { ConnectEdgeToSrcNodeEvent } from './graphevent';
 
 /* display constants */
-const NODE_SIZE: number = 75;
-const NODE_NAME_YPOS: number = 50;
-const NODE_NAME_FONTSIZE: number = 14;
+const NODE_SIZE: number = 100;
+const NODE_NAME_YPOS: number = 70;
+const NODE_NAME_FONTSIZE: number = 20;
 const EDGE_ARROW_HEAD_SIZE: number = 15;
 const EDGE_ARROW_WIDTH: number = 2;
 
@@ -22,6 +25,8 @@ const EDGE_ARROW_WIDTH: number = 2;
 })
 
 export class MiddleComponent implements OnInit {
+
+    @Output() myEvent = new EventEmitter<Action>();
 
     private canvas: fabric.ICanvas;
 
@@ -38,24 +43,34 @@ export class MiddleComponent implements OnInit {
         this.graphModel = new GraphModel(this.dummyGraph);
         this.eventManager = new EventManager();
         this.canvas = new fabric.Canvas('c');
+        this.canvasBoundaryLimit();
 
         this.redrawCanvas();
     }
 
+    private canvasBoundaryLimit() {
+        this.canvas.on('object:moving', (e) => {
+            let obj = e.target;
+            // if object is too big ignore
+            if (obj.height > this.canvas.getHeight() || obj.width > this.canvas.getWidth()) {
+                return;
+            }
+            obj.setCoords();
+            // top-left corner
+            if (obj.getBoundingRect().top < 0 || obj.getBoundingRect().left < 0) {
+                obj.top = Math.max(obj.top, obj.top - obj.getBoundingRect().top);
+                obj.left = Math.max(obj.left, obj.left - obj.getBoundingRect().left);
+            }
+            // bot-right corner
+            if (obj.getBoundingRect().top + obj.getBoundingRect().height > this.canvas.getHeight() || obj.getBoundingRect().left + obj.getBoundingRect().width > this.canvas.getWidth()) {
+                obj.top = Math.min(obj.top, this.canvas.getHeight() - obj.getBoundingRect().height + obj.top - obj.getBoundingRect().top);
+                obj.left = Math.min(obj.left, this.canvas.getWidth() - obj.getBoundingRect().width + obj.left - obj.getBoundingRect().left);
+            }
+        });
+    }
+
     private drawNode(actionData: ActionData) {
         let action = this.findActionById(actionData.action_id);
-
-        let image: fabric.IImage;
-        fabric.Image.fromURL(action.image
-            , (im) => { image = im; this.canvas.add(im); }
-            , {
-                width: NODE_SIZE,
-                height: NODE_SIZE,
-                left: actionData.display_params.x,
-                top: actionData.display_params.y,
-                originX: 'center',
-                originY: 'center'
-            });
 
         let text = new fabric.Text(actionData.action_params.name, {
             left: actionData.display_params.x,
@@ -65,7 +80,33 @@ export class MiddleComponent implements OnInit {
             fontSize: NODE_NAME_FONTSIZE
         });
 
-        this.canvas.add(text);
+        let image: fabric.IImage;
+        fabric.Image.fromURL(action.image
+            , (im) => {
+                image = im;
+                /* Group image and text together so it will move together */
+                let groupAction = new fabric.Group([image, text], {});
+
+                /* Send data to populate property window when this action is selected */
+                groupAction.on('selected', (e) => {
+                    this.myEvent.emit(action);
+                });
+
+                /* Update location of action when modified */
+                groupAction.on('modified', (e) => {
+                    this.graphModel.moveNode(actionData,groupAction.getTop(),groupAction.getLeft());
+                });
+
+                this.canvas.add(groupAction);
+            }
+            , {
+                width: NODE_SIZE,
+                height: NODE_SIZE,
+                left: actionData.display_params.x,
+                top: actionData.display_params.y,
+                originX: 'center',
+                originY: 'center'
+            });
     }
 
     private drawEdge(triggerData: TriggerData) {
@@ -140,6 +181,17 @@ export class MiddleComponent implements OnInit {
         return undefined;
     }
 
+    private addNewNode(newAction: Action) {
+        this.graphModel.addNode(this.graphModel.node(), newAction);
+        this.redrawCanvas();
+    }
+
+    private removeNode(nodeData: ActionData) {
+        // remove Non-connected node, just remove only node itself
+        this.graphModel.removeNode(this.graphModel.node(), nodeData);
+    }
+
+
     // TODO: dummy data to be removed
     dummyGraph: GraphData = {
         nodes: [
@@ -150,8 +202,8 @@ export class MiddleComponent implements OnInit {
                     name: 'Motor 1'
                 },
                 display_params: {
-                    x: 100,
-                    y: 100
+                    x: 500,
+                    y: 300
                 }
             },
             {
@@ -161,8 +213,8 @@ export class MiddleComponent implements OnInit {
                     name: 'Motor 2'
                 },
                 display_params: {
-                    x: 300,
-                    y: 100
+                    x: 800,
+                    y: 300
                 }
             }
         ],

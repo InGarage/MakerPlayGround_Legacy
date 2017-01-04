@@ -21,6 +21,15 @@ export class ActionComponent {
   windowHeight: number;
   maxHeight: number;
 
+  windowWidth: number;
+  componentMenuWidth: string;
+  componentMenuHeight: string;  
+  maxActionHeight: number;
+  maxTriggerHeight: number;
+  actionCurrentHeight: number;
+  triggerCurrentHeight: number;
+  styles: any;
+
   constructor() {
     this.actions = require("./action.json");
     this.triggers = require("./trigger.json");
@@ -28,14 +37,31 @@ export class ActionComponent {
   }
 
   ngOnInit() {
+    this.setElementWidth();
+    this.setElementHeight();
+/*
     $(window).on("resize", () => {
       this.setElementHeight();
-    }).resize();
-
-    $(window).on("zoom", () => {
-      this.setElementHeight();
-    }).resize();
+    }).resize();*/
   }
+
+  setElementWidth() {
+    this.windowWidth = $(window).width();
+    // componentMenuWidth equal to 20 percent of windowWidth
+    this.componentMenuWidth = (this.windowWidth/5) + 'px';
+    this.setFlexMenuStyles();
+  }
+
+  setFlexMenuStyles() {
+    let styles = {
+      'display': 'flex',
+      'flex-flow': 'column nowrap',
+      'justify-content': 'flex-start',
+      'align-items': 'stretch',
+    };
+    return styles;
+  }
+
 
 /************************************************
  *    Deal with height of left-side menu        *
@@ -44,17 +70,30 @@ export class ActionComponent {
  ************************************************/ 
   setElementHeight() {
     this.windowHeight = $(window).height();
-    this.maxHeight = (this.windowHeight / 4) + 30;
-    this.setStyles();
+    //88 percent of window's height
+    this.maxHeight = (this.windowHeight*8.8)/10;
+    this.setFlexMenuStyles();
   }
 
-  setStyles() {
-    let styles = {
+  setActionStyles() {
+    this.styles = {
       'overflow-y': 'scroll',
       'width': '100%',
-      'max-height': this.maxHeight + 'px',
+      'max-height': this.maxActionHeight + 'px',
     };
-    return styles;
+
+    return this.styles;
+  }
+
+  setTriggerStyles() {
+
+    this.styles = {
+      'overflow-y': 'scroll',
+      'width': '100%',
+      'max-height': this.maxTriggerHeight + 'px',
+    };
+
+    return this.styles;
   }
 
 
@@ -62,21 +101,47 @@ export class ActionComponent {
  *    Deal with tree component in Action/Trigger menu     *
  *********************************************************/ 
 
+  toggleTreeview() {
+    this.manageFlexBox();
+  }
+
+
+  manageFlexBox() {
+    setTimeout(() => {
+      let getTrigger = document.getElementById("trigger");
+      this.triggerCurrentHeight = getTrigger.offsetHeight;
+
+      this.maxActionHeight = this.maxHeight - (this.triggerCurrentHeight) - 100;
+
+      let getAction = document.getElementById("action");
+      this.actionCurrentHeight = getAction.offsetHeight;
+
+      this.maxTriggerHeight = this.maxHeight - (this.actionCurrentHeight) - 100;
+    }, 50);
+
+    this.setActionStyles();
+    this.setTriggerStyles();
+  }
+
   showTreeAction() {
     if (this.showActionMenu === true) {
       this.showActionMenu = false;
+      this.manageFlexBox();
     }
     else {
       this.showActionMenu = true;
+      this.manageFlexBox();
     }
   }
 
   showTreeTrigger() {
     if (this.showTriggerMenu === true) {
       this.showTriggerMenu = false;
+      this.manageFlexBox();
     }
     else {
       this.showTriggerMenu = true;
+      this.manageFlexBox();
     }
   }
 
@@ -95,15 +160,15 @@ export class ActionComponent {
 
   selectedAction($event: any) {
     // Only emit event when the selected tree node isn't a header node
-    /*if ($event.node.isLeaf) {
+    if ($event.node.isLeaf) {
       this.myEvent.emit($event.node.data);
-    }*/
+    }
 
-    /* Tempolary; */
+    /* Tempolary; 
   if ($event.node.isLeaf) {
         this.myEvent.emit($event.node.data);
         
-      }
+      }*/
 
 
   }

@@ -49,6 +49,24 @@
         "type" : "Unspecified",
         "description" : "",
         "image" : "/assets/img/LED_off.png"
+      },
+      {
+        "name" : "Also Dummy",
+        "type" : "Unspecified",
+        "description" : "",
+        "image" : "/assets/img/LED_off.png"
+      },
+      {
+        "name" : "Also Dummy",
+        "type" : "Unspecified",
+        "description" : "",
+        "image" : "/assets/img/LED_off.png"
+      },
+      {
+        "name" : "Also Dummy",
+        "type" : "Unspecified",
+        "description" : "",
+        "image" : "/assets/img/LED_off.png"
       }
     ]
   }

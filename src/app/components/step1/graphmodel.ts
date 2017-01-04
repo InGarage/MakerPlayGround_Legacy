@@ -1,16 +1,38 @@
 import { GraphData, ActionData, TriggerData } from './graph';
+import { Action } from './action'
 
 export class GraphModel {
 
+
     constructor(private graphData: GraphData) {
-    } 
-
-    addNode() {
-
     }
 
-    removeNode() {
+    addNode(actionData: ActionData[], newAction: Action) {
+        let obj: ActionData = new ActionData; 
+        obj.action_id = newAction.id;
+        obj.action_params = {name: ''};
+        obj.display_params = {x: 0, y: 0};
 
+        for (let property of newAction.property) {
+                if (property.name === 'Name') {
+                    obj.action_params.name = 'Motor 1';
+                    //console.log(obj.action_params.name);
+                }
+                if (property.name === 'Speed') {
+                    obj.action_params[property.name] = '';
+                    //console.log(obj.action_params.name);
+                }
+            }
+        obj.display_params.x = 500;
+        obj.display_params.y = 100;
+
+        actionData.push(obj);
+    }
+
+
+    removeNode(actionData: ActionData[], nodeData: ActionData) {
+        // loop through whole array of actionData to find same node_id  nodeData
+        // then delete it, and re-draw canvas
     }
 
     connectEdgeToSrcNode(actionData: ActionData, triggerData: TriggerData, x: number, y: number) {
@@ -22,20 +44,22 @@ export class GraphModel {
     disconnectEdgeFromSrcNode(triggerData: TriggerData) {
     }
 
-    moveNode() {
-
+    moveNode(actionData: ActionData, topPos: number, leftPos: number) {
+        /* In case node size is 100 */
+        actionData.display_params.x = leftPos + 50;
+        actionData.display_params.y = topPos + 50;
     }
 
     moveEdge() {
 
     }
 
-    node() : ActionData[] {
+    node(): ActionData[] {
         return this.graphData.nodes;
     }
 
     // TODO: should search more efficiently
-    getNodeData(id: number) : ActionData {
+    getNodeData(id: number): ActionData {
         for (let data of this.graphData.nodes) {
             if (data.node_id === id)
                 return data;
@@ -43,12 +67,12 @@ export class GraphModel {
         return undefined;
     }
 
-    edge() : TriggerData[] {
-        return this.graphData.edges;   
+    edge(): TriggerData[] {
+        return this.graphData.edges;
     }
 
     // TODO: should search more efficiently
-    getEdgeData(id: number) : TriggerData {
+    getEdgeData(id: number): TriggerData {
         for (let data of this.graphData.edges) {
             if (data.edge_id === id)
                 return data;

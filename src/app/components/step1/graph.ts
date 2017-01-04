@@ -4,11 +4,11 @@ export interface GraphData {
     edges: TriggerData[]  /* List of graph edges */
 }
 
-export interface ActionData {
+export class ActionData {
     /* Node's unique id */
-    node_id: number,
+    node_id: number;
     /* Action's unique id based on action.json */
-    action_id: number,
+    action_id: number;
     /* Action's parameters based on each action requirement*/
     //action_params: {
     //    name: string,   /* parameter's name */
@@ -17,12 +17,12 @@ export interface ActionData {
     action_params: {
         name: string,
         [index: string]: string
-    }
+    };
     /* Parameters needed to display the node on the screen */
     display_params: { 
         x: number,      /* center coordinate of the 75*75px node */
         y: number 
-    }
+    };
 }
 /* List of nodes */
 export interface TriggerData {

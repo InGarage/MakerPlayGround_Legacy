@@ -3,24 +3,37 @@ import * as fabric from 'fabric';
 import * as $ from 'jquery';
 
 @Component({
-  //moduleId: module.id,
   selector: 'step1',
   templateUrl: `./step1.component.html`,
   styleUrls: ['./step1.component.css']
 })
 export class Step1Component  {
-  ngOnInit(){
-    /*
-    var setElementHeight = function () {
-      var height = $(window).height();
-      height = 100;
-      $('.tree').css('max-height', (height));
-      /*$('.autoheight').css('min-height', (height));
-      $('.canvas-behind').css('min-height', (height));
-      };
 
-    $(window).on("resize", function () {
-      setElementHeight();
-      }).resize();*/
+  windowWidth: number;
+  componentMenuWidth: string;
+
+  ngOnInit(){
+    this.setElementWidth();
   }
+
+  setElementWidth() {
+    this.windowWidth = $(window).width();
+    // componentMenuWidth equal to 20 percent of windowWidth
+    this.componentMenuWidth = (this.windowWidth/5) + 'px';
+    this.setComponentMenuStyles();
+  }
+
+  setComponentMenuStyles() {
+    let styles = {
+      'position': 'fixed',
+      'float': 'left',
+      'margin-left': '30px',
+      'margin-right': '30px',
+      'z-index': '5',
+      'width': this.componentMenuWidth,
+    };
+    return styles;
+  }
+  
 }
+

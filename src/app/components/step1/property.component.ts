@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { GraphData, ActionData, TriggerData } from './graph';
 import { Action,ActionGroup,ActionProperty } from './action';
 import * as fabric from 'fabric';
 
@@ -22,7 +23,7 @@ export class PropertyComponent  {
     let styles = {
       'padding-left': '30px',
       'padding-right': '30px',
-      'padding-top': '10px',
+      'padding-bottom': '15px',
     };
     return styles;
   }

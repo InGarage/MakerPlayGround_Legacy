@@ -25,11 +25,11 @@
 }
 
 .actionBox {
-    padding-top: 70px;
+    margin-top: 70px;
 }
 
 .triggerBox {
-    padding-top: 10px;
+    margin-top: 10px;
 }
 
 .property-box {
@@ -45,28 +45,6 @@
 .canvas-behind {
     z-index: 3;
     position: relative;
-}
-
-.project_name {
-    margin: 0 auto;
-    background-color: white;
-    padding-top: 15px;
-    padding-bottom: 20px;
-    padding-left: 10px;
-    border-radius: 4px;
-    font-size: 18px;
-}
-
-.info-inline {
-    display: inline;
-}
-
-.save_button {
-    margin-left: 20px;
-}
-
-.margin-top {
-    margin-top: 10px;
 }
 
 .search-action {
@@ -118,6 +96,10 @@
     text-align: center;
     padding-top: 20px;
     padding-bottom: 15px;
+}
+
+.canvas-container {
+    margin-top: 51px;
 }
 
 input[type=text] {
@@ -214,3 +196,5 @@ ul.nav-menu-list-style li .badge,ul.nav-menu-list-style li .pull-right,ul.nav-me
 ul.bullets{list-style:inside disc}
 ul.numerics{list-style:inside decimal}
 ul.kas-icon-aero li a:before{font-family: 'Glyphicons Halflings'; font-size:9px; content: "\e258"; padding-right:8px; }
+
+
