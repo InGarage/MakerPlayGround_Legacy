@@ -118,14 +118,23 @@ export class GraphData {
 
     getNode(nodeID: number): NodeData {
         let check = this.data.getIn(['nodes', nodeID]);
-        if (check !== undefined) 
+        if (check !== undefined)
             return new NodeData(nodeID, check);
         else
             return undefined;
     }
 
     addNode(action: Action): GraphData {
-        return undefined;
+        let newObj = {};
+        newObj = {
+            "action_id": 6,
+            "display_x": '100',
+            "display_y": '100',
+            "params": {
+                "name": "XXX",
+            }
+        };
+        return new GraphData(this.data.setIn(['nodes', 6], Immutable.fromJS(newObj)));
     }
 
     removeNode(actionData: NodeData): GraphData {

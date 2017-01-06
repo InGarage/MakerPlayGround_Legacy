@@ -291,7 +291,7 @@
         ],
         "image" : "/assets/img/LED_on.png",
         "default" : "30" 
-      },
+      }
     ] 
   },
   {
@@ -353,7 +353,7 @@
           }
         ],
         "image" : "/assets/img/LED_off.png"
-      },
+      }
     ] 
   },
   {
@@ -408,8 +408,7 @@
           "control" : "DOTMATRIX_CONTROL"
           }
         ],
-        "image" : "/assets/img/LED_on.png",
-  
+        "image" : "/assets/img/LED_on.png"
       }
     ] 
   },

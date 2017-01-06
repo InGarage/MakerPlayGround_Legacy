@@ -2,6 +2,7 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { GraphData, NodeData } from './graphmodel';
 import { GraphCanvas } from './graphcanvas';
+import { Action } from './action';
 
 //import { EventManager } from './eventmanager';
 //import { ConnectEdgeToSrcNodeEvent } from './graphevent';
@@ -23,6 +24,12 @@ export class MiddleComponent implements OnInit {
 
     constructor() {
         this.model = GraphData.createGraphDataFromJSON(this.dummyGraph);
+    }
+
+    addNewNode(newAction: Action) {
+        console.log(newAction);
+        this.model = this.model.addNode(newAction);
+        this.canvas.redraw(this.model);
     }
 
     ngOnInit() {
