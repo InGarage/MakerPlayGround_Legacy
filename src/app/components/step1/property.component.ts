@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
-import { GraphData, ActionData, TriggerData } from './graph';
-import { Action,ActionGroup,ActionProperty } from './action';
+//import { GraphData, ActionData, TriggerData } from './graph';
+import { Action, ActionGroup, ActionProperty } from './action';
 import * as fabric from 'fabric';
 
 
