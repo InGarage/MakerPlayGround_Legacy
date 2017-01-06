@@ -1,82 +1,170 @@
-import { GraphData, ActionData, TriggerData } from './graph';
-import { Action } from './action'
+import * as Immutable from 'immutable';
 
-export class GraphModel {
+import { Action } from './action';
 
+export class GraphData {
 
-    constructor(private graphData: GraphData) {
+    /** 
+     * Create model from JSON representation of the graph according to the following format
+     * ``` 
+     * { 
+     *   "nodes": {
+     *     1 : {                // Node's unique id
+     *       "action_id": 1,    // Action's unique id based on action.json
+     *       "display_x": 100,  // Center position of the node on the screen 
+     *       "display_y": 100,
+     *       "params" : {       // Action's parameters based on each action requirement
+     *         "name": "XXX",
+     *         // other params
+     *       }
+     *     },
+     *     2 : {
+     *       // other nodes
+     *     }
+     *   },
+     *   "edges": {
+     *     1 : {
+     *       "trigger_id": 1,   // Trigger's unique id based on trigger.json 
+     *       "params: {         // Trigger's parameters based on each trigger requirement
+     *         "key": "value",
+     *         // other params
+     *       },
+     *       "src_node_id": number, // Unique id of the source node    
+     *       "dst_node_id": number, // Unique id of the destination node
+     *       "start_x": number,     // Parameters needed to display the edge on the screen
+     *       "start_y": number,
+     *       "end_x": number,
+     *       "end_y": number
+     *     },
+     *     2 : {
+     *       // other edges
+     *     }  
+     *   }
+     * }
+     * ```
+     * @param json JSON string represent of the graph
+     * @return 
+     */
+    static createGraphDataFromJSON(json: string): GraphData {
+        let data = Immutable.fromJS(json, (key, value) => {
+            var isIndexed = Immutable.Iterable.isIndexed(value);
+            return isIndexed ? value.toList() : value.toOrderedMap();
+        });
+        return new GraphData(data);
     }
 
-    addNode(actionData: ActionData[], newAction: Action) {
-        let obj: ActionData = new ActionData; 
-        obj.action_id = newAction.id;
-        obj.action_params = {name: ''};
-        obj.display_params = {x: 0, y: 0};
-
-        for (let property of newAction.property) {
-                if (property.name === 'Name') {
-                    obj.action_params.name = 'Motor 1';
-                    //console.log(obj.action_params.name);
-                }
-                if (property.name === 'Speed') {
-                    obj.action_params[property.name] = '';
-                    //console.log(obj.action_params.name);
-                }
-            }
-        obj.display_params.x = 500;
-        obj.display_params.y = 100;
-
-        actionData.push(obj);
+    private constructor(public data: Immutable.Map<string, Immutable.Map<number, Immutable.Map<string, string>>>) {
     }
 
-
-    removeNode(actionData: ActionData[], nodeData: ActionData) {
-        // loop through whole array of actionData to find same node_id  nodeData
-        // then delete it, and re-draw canvas
+    /**
+     * Helper function to compare two GraphData instances and provide the caller list of changes through the callback
+     * @param graph the graph data to compare with
+     * @param callback 
+     */
+    compareGraphModel(otherGraph: GraphData, callback: (type: 'addition' | 'deletion' | 'update', target: NodeData | EdgeData) => void) {
+        if (otherGraph === undefined) {
+            console.log('compare:', this.data.get('nodes').forEach((value, key) => {
+                callback('addition', new NodeData(key, value));
+            }));
+            this.data.get('edges').forEach((value, key) => {
+                callback('addition', new EdgeData(key, value));
+            });
+        }
     }
 
-    connectEdgeToSrcNode(actionData: ActionData, triggerData: TriggerData, x: number, y: number) {
-        triggerData.src_node_id = actionData.node_id;
-        triggerData.display_params.start_x = x;
-        triggerData.display_params.start_y = y;
+    addNode(action: Action) : GraphData{
+        return undefined;
     }
 
-    disconnectEdgeFromSrcNode(triggerData: TriggerData) {
+    removeNode(actionData: NodeData) : GraphData {
+        return undefined;
     }
 
-    moveNode(actionData: ActionData, topPos: number, leftPos: number) {
-        /* In case node size is 100 */
-        actionData.display_params.x = leftPos + 50;
-        actionData.display_params.y = topPos + 50;
+    connectEdgeToSrcNode() {
+    }
+
+    disconnectEdgeFromSrcNode() {
+    }
+
+    moveNode(actionData: NodeData, topPos: number, leftPos: number) {
     }
 
     moveEdge() {
 
     }
+}
 
-    node(): ActionData[] {
-        return this.graphData.nodes;
+/**
+ * Small wrapper class to pass action data to the view (GraphCanvas).
+ * It is designed to abstract the internal data structure use in GraphModel.
+ */
+export class NodeData {
+    constructor(private uid: number, private data: Immutable.Map<string, string>) {
     }
 
-    // TODO: should search more efficiently
-    getNodeData(id: number): ActionData {
-        for (let data of this.graphData.nodes) {
-            if (data.node_id === id)
-                return data;
-        }
-        return undefined;
+    getNodeId() : number {
+        return this.uid;
     }
 
-    edge(): TriggerData[] {
-        return this.graphData.edges;
+    getActionId(): number {
+        return parseInt(this.data.get('action_id'));
     }
 
-    // TODO: should search more efficiently
-    getEdgeData(id: number): TriggerData {
-        for (let data of this.graphData.edges) {
-            if (data.edge_id === id)
-                return data;
-        }
-        return undefined;
+    getActionParams(name: string): string {
+        return this.data.getIn(['params', name]);
+    }
+
+    getX(): number {
+        return parseFloat(this.data.get('display_x'));
+    }
+
+    getY(): number {
+        return parseFloat(this.data.get('display_y'));
     }
 }
+
+/**
+ * Small wrapper class to pass trigger data to the view (GraphCanvas).
+ * It is designed to abstract the internal data structure use in GraphModel.
+ */
+export class EdgeData {
+    constructor(private uid: number, private data: Immutable.Map<string, string>) {
+    }
+
+    getEdgeId() : number {
+        return this.uid;
+    }
+
+    getTriggerId(): number {
+        return parseInt(this.data.get('trigger_id'));
+    }
+
+    getTriggerParams(name: string): string {
+        return this.data.getIn(['params', name]);
+    }
+
+    getSourceNodeId(): string {
+        return this.data.get('src_node_id');
+    }
+
+    getDestinationNodeId(): string {
+        return this.data.get('dst_node_id');
+    }
+
+    getStartX(): number {
+        return parseFloat(this.data.get('start_x'));
+    }
+
+    getStartY(): number {
+        return parseFloat(this.data.get('start_y'));
+    }
+
+    getEndX(): number {
+        return parseFloat(this.data.get('end_x'));
+    }
+
+    getEndY(): number {
+        return parseFloat(this.data.get('end_y'));
+    }
+}
+

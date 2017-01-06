@@ -34,3 +34,15 @@ export enum ControlType {
   Color,        // HTML5 input type color
   Slider        // HTML5 input type range
 }
+
+/*export namespace ActionHelper {
+  export function findActionById(id: number): Action {
+        for (let actionGroup of this.actionGroup) {
+            for (let action of actionGroup.children) {
+                if (action.id === id)
+                    return action;
+            }
+        }
+        return undefined;
+    }
+}*/
