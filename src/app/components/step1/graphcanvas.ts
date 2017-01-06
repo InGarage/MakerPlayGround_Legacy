@@ -17,9 +17,9 @@ export class GraphCanvas {
     private actionGroup: ActionGroup[]; // TODO: remove in future version
 
     private canvas: fabric.ICanvas;
-    private nodeFabricObject: {[node_id: number]: fabric.IObject} = {};  // TODO: refactor to more efficient datastructure
-    private edgeFabricObject: {[edge_id: number]: fabric.IObject} = {};  // TODO: refactor to more efficient datastructure
-    private callback: {[index: string]: () => void} = {};  // TODO: refactor to more efficient datastructure
+    private nodeFabricObject: { [node_id: number]: fabric.IObject[] } = {};  // TODO: refactor to more efficient datastructure
+    private edgeFabricObject: { [edge_id: number]: fabric.IObject[] } = {};  // TODO: refactor to more efficient datastructure
+    private callback: { [index: string]: (CanvasEventOptions) => void } = {};  // TODO: refactor to more efficient datastructure
 
     constructor(element: HTMLCanvasElement | string, options?: fabric.ICanvasOptions) {
         this.canvas = new fabric.Canvas(element, options);
@@ -45,6 +45,13 @@ export class GraphCanvas {
 
         // TODO: refactor to read the json only once by create a global object or use dependency injection
         this.actionGroup = require("./action.json");
+
+        this.canvas.on('selection:cleared', (e) => {
+            if (e.target !== null) {
+                this.callback['object:deselected']({  
+                });
+            }
+        });
     }
 
     // TODO: This function should be refactored into the action class / service
@@ -82,10 +89,14 @@ export class GraphCanvas {
             fontSize: NODE_NAME_FONTSIZE
         });
         group.addWithUpdate(text);
-        
+
         // Send data to populate property window when this action is selected
         group.on('selected', (e) => {
             //this.myEvent.emit(action);
+
+            this.callback['node:selected']({
+                target_id: nodeData.getNodeId(),
+            });
         });
 
         // Update location of action when modified
@@ -95,13 +106,14 @@ export class GraphCanvas {
 
         group.hasControls = group.hasBorders = false;
 
-        this.nodeFabricObject[nodeData.getNodeId()] = group;
+        this.nodeFabricObject[nodeData.getNodeId()] = [group];
     }
 
     private removeNode(nodeData: NodeData) {
         let obj = this.nodeFabricObject[nodeData.getNodeId()];
         this.nodeFabricObject[nodeData.getNodeId()] = undefined;
-        this.canvas.remove(obj);
+        for (let o of obj)
+            this.canvas.remove(o);
     }
 
     private drawEdge(triggerData: EdgeData) {
@@ -135,55 +147,9 @@ export class GraphCanvas {
 
             let currentOriginLineX = line.getLeft();;
             let currentOriginLineY = line.getTop();
-    
-            if ((startX < endX) && (startY > endY)) {
-                nStartX = currentOriginLineX - difX;
-                nEndX = currentOriginLineX + difX;
-                nStartY = currentOriginLineY + difY;
-                nEndY = currentOriginLineY - difY;
-            }
-            else if ((startX < endX) && (startY < endY)) {
-                nStartX = currentOriginLineX - difX;
-                nEndX = currentOriginLineX + difX;
-                nStartY = currentOriginLineY - difY;
-                nEndY = currentOriginLineY + difY;
-            }
-            else if ((startX > endX) && (startY > endY)) {
-                nStartX = currentOriginLineX + difX;
-                nEndX = currentOriginLineX - difX;
-                nStartY = currentOriginLineY + difY;
-                nEndY = currentOriginLineY - difY;   
-            }
-            if ((startX > endX) && (startY < endY)) {
-                nStartX = currentOriginLineX + difX;
-                nEndX = currentOriginLineX - difX;
-                nStartY = currentOriginLineY - difY;
-                nEndY = currentOriginLineY + difY;  
-            }
-            else if ((startX < endX) && (startY === endY)) {
-                nStartX = currentOriginLineX - difX;
-                nEndX = currentOriginLineX + difX;
-                nStartY = currentOriginLineY;
-                nEndY = currentOriginLineY;              
-            }
-            else if ((startX > endX) && (startY === endY)) {
-                nStartX = currentOriginLineX + difX;
-                nEndX = currentOriginLineX - difX;
-                nStartY = currentOriginLineY;
-                nEndY = currentOriginLineY;   
-            }
-            else if ((startX === endX) && (startY < endY)) {
-                nStartX = currentOriginLineX;
-                nEndX = currentOriginLineX;
-                nStartY = currentOriginLineY - difY;
-                nEndY = currentOriginLineY + difY;   
-            }
-            else if ((startX === endX) && (startY > endY)) {
-                nStartX = currentOriginLineX;
-                nEndX = currentOriginLineX;
-                nStartY = currentOriginLineY + difY;
-                nEndY = currentOriginLineY - difY;   
-            }
+
+            [nStartX, nEndX, nStartY, nEndY] = this.getCurrentPoint(triggerData, currentOriginLineX, currentOriginLineY);
+
 
             dotHead.setLeft(nStartX);
             dotHead.setTop(nStartY);
@@ -194,10 +160,25 @@ export class GraphCanvas {
                 left: nEndX - EDGE_ARROW_HEAD_SIZE / 2 * Math.cos(angle),
                 top: nEndY - EDGE_ARROW_HEAD_SIZE / 2 * Math.sin(angle),
             });
+
         });
         // connect if arrow intersect with node
         line.on('modified', (options) => {
             // Need to re-draw canvas, so that dot can be clicked
+            let nStartX: number, nStartY: number, nEndX: number, nEndY: number;
+
+            let currentOriginLineX = line.getLeft();;
+            let currentOriginLineY = line.getTop();
+
+            [nStartX, nEndX, nStartY, nEndY] = this.getCurrentPoint(triggerData, currentOriginLineX, currentOriginLineY);
+
+            this.callback['edge:move']({
+                target_id: triggerData.getEdgeId(),
+                start_x: nStartX,
+                start_y: nStartY,
+                end_x: nEndX,
+                end_y: nEndY,
+            });
             //this.redrawCanvas();
         });
 
@@ -252,7 +233,7 @@ export class GraphCanvas {
 
             let newEndX = endX - EDGE_ARROW_HEAD_SIZE / 2 * Math.cos(angle);
             let newEndY = endY - EDGE_ARROW_HEAD_SIZE / 2 * Math.sin(angle);
-        
+
             triangle.set({
                 'left': newEndX,
                 'top': newEndY,
@@ -267,7 +248,7 @@ export class GraphCanvas {
             });
 
             this.canvas.renderAll();
-            });
+        });
 
 
         dotHead.on('modified', (options) => {
@@ -275,20 +256,84 @@ export class GraphCanvas {
             //this.redrawCanvas();
         });
 
+        this.edgeFabricObject[triggerData.getEdgeId()] = [line, triangle, dotTail, dotHead];
         this.canvas.add(line, triangle, dotTail, dotHead);
+    }
+
+    private getCurrentPoint(triggerData, currentOriginLineX, currentOriginLineY) {
+        let startX: number, startY: number, endX: number, endY: number;
+
+        startX = triggerData.getStartX();
+        startY = triggerData.getStartY();
+        endX = triggerData.getEndX();
+        endY = triggerData.getEndY();
+
+        let difX = Math.abs(startX - endX) / 2;
+        let difY = Math.abs(startY - endY) / 2;
+
+        if ((startX < endX) && (startY > endY)) {
+            return [currentOriginLineX - difX
+                , currentOriginLineX + difX
+                , currentOriginLineY + difY
+                , currentOriginLineY - difY];
+
+        }
+        else if ((startX < endX) && (startY < endY)) {
+            return [currentOriginLineX - difX
+                , currentOriginLineX + difX
+                , currentOriginLineY - difY
+                , currentOriginLineY + difY];
+        }
+        else if ((startX > endX) && (startY > endY)) {
+            return [currentOriginLineX + difX
+                , currentOriginLineX - difX
+                , currentOriginLineY + difY
+                , currentOriginLineY - difY];
+        }
+        if ((startX > endX) && (startY < endY)) {
+            return [currentOriginLineX + difX
+                , currentOriginLineX - difX
+                , currentOriginLineY - difY
+                , currentOriginLineY + difY];
+        }
+        else if ((startX < endX) && (startY === endY)) {
+            return [currentOriginLineX - difX
+                , currentOriginLineX + difX
+                , currentOriginLineY
+                , currentOriginLineY];
+        }
+        else if ((startX > endX) && (startY === endY)) {
+            return [currentOriginLineX + difX
+                , currentOriginLineX - difX
+                , currentOriginLineY
+                , currentOriginLineY];
+        }
+        else if ((startX === endX) && (startY < endY)) {
+            return [currentOriginLineX
+                , currentOriginLineX
+                , currentOriginLineY - difY
+                , currentOriginLineY + difY];
+        }
+        else if ((startX === endX) && (startY > endY)) {
+            return [currentOriginLineX
+                , currentOriginLineX
+                , currentOriginLineY + difY
+                , currentOriginLineY - difY];
+        }
     }
 
     private removeEdge(edgeData: EdgeData) {
         let obj = this.edgeFabricObject[edgeData.getEdgeId()];
         this.edgeFabricObject[edgeData.getEdgeId()] = undefined;
-        this.canvas.remove(obj);
+        for (let o of obj)
+            this.canvas.remove(o);
     }
 
     /**
      * (Re)draw the canvas with the data provided 
      * @param graph graph to be drawn onto the canvas
      */
-    redraw(graph: GraphData) : void {
+    redraw(graph: GraphData): void {
         graph.compareGraphModel(this.graph, (type, target) => {
             if (type === "addition") {
                 if (target instanceof NodeData) {
@@ -320,7 +365,19 @@ export class GraphCanvas {
      * @param event event to register to which should be 'node:select', 'node:move' or ...
      * @param callback a callback function to be called when that specific event is occured
      */
-    on(event: 'node:select'|'node:move', callback: () => void) {
+    on(event: 'node:selected' | 'node:move' | 'edge:move' | 'object:deselected', callback: (options: CanvasEventOptions) => void) {
         this.callback[event] = callback;
     }
+}
+
+export interface CanvasEventOptions {
+    target_id: number,
+    src_node_id?: number, // Unique id of the source node    
+    dst_node_id?: number, // Unique id of the destination node
+    start_x?: number,     // Parameters needed to display the edge on the screen
+    start_y?: number,
+    center_x?: number,
+    center_y?: number,
+    end_x?: number,
+    end_y?: number
 }

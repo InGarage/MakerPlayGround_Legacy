@@ -1,7 +1,8 @@
 
-import { Component, OnInit } from '@angular/core';
-import { GraphData } from './graphmodel';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { GraphData, NodeData } from './graphmodel';
 import { GraphCanvas } from './graphcanvas';
+
 //import { EventManager } from './eventmanager';
 //import { ConnectEdgeToSrcNodeEvent } from './graphevent';
 
@@ -15,8 +16,10 @@ import 'fabric';
 
 export class MiddleComponent implements OnInit {
 
+    @Output() nodeSelect = new EventEmitter<NodeData>(); 
     private canvas: GraphCanvas;
     private model: GraphData;
+
 
     constructor() {
         this.model = GraphData.createGraphDataFromJSON(this.dummyGraph);
@@ -25,7 +28,18 @@ export class MiddleComponent implements OnInit {
     ngOnInit() {
         this.canvas = new GraphCanvas('c');
         this.canvas.redraw(this.model);
+        this.canvas.on('edge:move', (options) => {
+            this.model = this.model.moveEdge(options.target_id, options.start_x, options.end_x, options.start_y, options.end_y)
+            this.canvas.redraw(this.model);
+        });
+        this.canvas.on('node:selected', (options) => {
+            this.nodeSelect.emit(this.model.getNode(options.target_id));
+        });
+        this.canvas.on('object:deselected', (options) => {
+            this.nodeSelect.emit(null);
+        })
     }
+
 
     // TODO: dummy data to be removed
     dummyGraph: any = {
