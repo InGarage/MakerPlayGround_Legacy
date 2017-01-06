@@ -36,6 +36,7 @@ export class MiddleComponent implements OnInit {
     // TODO: remove in future version
     private actionGroup: ActionGroup[];
 
+
     ngOnInit() {
         // TODO: refactor to read the json only once by create a global object or use dependency injection
         this.actionGroup = require("./action.json");
@@ -94,8 +95,10 @@ export class MiddleComponent implements OnInit {
 
                 /* Update location of action when modified */
                 groupAction.on('modified', (e) => {
-                    this.graphModel.moveNode(actionData,groupAction.getTop(),groupAction.getLeft());
+                    this.graphModel.moveNode(actionData, groupAction.getTop(), groupAction.getLeft());
                 });
+
+                groupAction.hasControls = groupAction.hasBorders = false;
 
                 this.canvas.add(groupAction);
             }
@@ -116,7 +119,10 @@ export class MiddleComponent implements OnInit {
         startY = triggerData.display_params.start_y;
         endX = triggerData.display_params.end_x;
         endY = triggerData.display_params.end_y;
-        angle = Math.atan((endY - startY) / (endX - startX));   // in radian
+        angle = Math.atan2((endY - startY), (endX - startX));   // in radian
+
+        let difX = Math.abs(startX - endX) / 2;
+        let difY = Math.abs(startY - endY) / 2;
 
         let line = new fabric.Line([
             startX,
@@ -129,6 +135,89 @@ export class MiddleComponent implements OnInit {
                 strokeWidth: EDGE_ARROW_WIDTH,
                 stroke: '#000'
             });
+        line.hasControls = line.hasBorders = false;
+
+        // redraw arrow head when the line is moving
+        line.on('moving', (options) => {
+            let nStartX: number, nStartY: number, nEndX: number, nEndY: number;
+
+            let currentOriginLineX = line.getLeft();;
+            let currentOriginLineY = line.getTop();
+    
+            if ((startX < endX) && (startY > endY)) {
+                nStartX = triggerData.display_params.start_x = currentOriginLineX - difX;
+                nEndX = triggerData.display_params.end_x = currentOriginLineX + difX;
+                nStartY = triggerData.display_params.start_y = currentOriginLineY + difY;
+                nEndY = triggerData.display_params.end_y = currentOriginLineY - difY;
+            }
+            else if ((startX < endX) && (startY < endY)) {
+                nStartX = triggerData.display_params.start_x = currentOriginLineX - difX;
+                nEndX = triggerData.display_params.end_x = currentOriginLineX + difX;
+                nStartY = triggerData.display_params.start_y = currentOriginLineY - difY;
+                nEndY = triggerData.display_params.end_y = currentOriginLineY + difY;
+            }
+            else if ((startX > endX) && (startY > endY)) {
+                nStartX = triggerData.display_params.start_x = currentOriginLineX + difX;
+                nEndX = triggerData.display_params.end_x = currentOriginLineX - difX;
+                nStartY = triggerData.display_params.start_y = currentOriginLineY + difY;
+                nEndY = triggerData.display_params.end_y = currentOriginLineY - difY;   
+            }
+            if ((startX > endX) && (startY < endY)) {
+                nStartX = triggerData.display_params.start_x = currentOriginLineX + difX;
+                nEndX = triggerData.display_params.end_x = currentOriginLineX - difX;
+                nStartY = triggerData.display_params.start_y = currentOriginLineY - difY;
+                nEndY = triggerData.display_params.end_y = currentOriginLineY + difY;  
+            }
+            else if ((startX < endX) && (startY === endY)) {
+                nStartX = triggerData.display_params.start_x = currentOriginLineX - difX;
+                nEndX = triggerData.display_params.end_x = currentOriginLineX + difX;
+                nStartY = triggerData.display_params.start_y = currentOriginLineY;
+                nEndY = triggerData.display_params.end_y = currentOriginLineY;              
+            }
+            else if ((startX > endX) && (startY === endY)) {
+                nStartX = triggerData.display_params.start_x = currentOriginLineX + difX;
+                nEndX = triggerData.display_params.end_x = currentOriginLineX - difX;
+                nStartY = triggerData.display_params.start_y = currentOriginLineY;
+                nEndY = triggerData.display_params.end_y = currentOriginLineY;   
+            }
+            else if ((startX === endX) && (startY < endY)) {
+                nStartX = triggerData.display_params.start_x = currentOriginLineX;
+                nEndX = triggerData.display_params.end_x = currentOriginLineX;
+                nStartY = triggerData.display_params.start_y = currentOriginLineY - difY;
+                nEndY = triggerData.display_params.end_y = currentOriginLineY + difY;   
+            }
+            else if ((startX === endX) && (startY > endY)) {
+                nStartX = triggerData.display_params.start_x = currentOriginLineX;
+                nEndX = triggerData.display_params.end_x = currentOriginLineX;
+                nStartY = triggerData.display_params.start_y = currentOriginLineY + difY;
+                nEndY = triggerData.display_params.end_y = currentOriginLineY - difY;   
+            }
+
+            dotHead.setLeft(nStartX);
+            dotHead.setTop(nStartY);
+            dotTail.setLeft(nEndX);
+            dotTail.setTop(nEndY);
+
+            triangle.set({
+                left: nEndX - EDGE_ARROW_HEAD_SIZE / 2 * Math.cos(angle),
+                top: nEndY - EDGE_ARROW_HEAD_SIZE / 2 * Math.sin(angle),
+            });
+        });
+        // connect if arrow intersect with node
+        line.on('modified', (options) => {
+
+            // Need to re-draw canvas, so that dot can be clicked
+            this.redrawCanvas();
+
+            for (let actionData of this.graphModel.node()) {
+                let distance = Math.sqrt(Math.pow(line.left - actionData.display_params.x, 2) + Math.pow(line.top - actionData.display_params.y, 2));
+                if (distance < NODE_SIZE / 2) {
+                    this.eventManager.pushEvent(new ConnectEdgeToSrcNodeEvent(this.graphModel, actionData, triggerData, 400, 400));
+                    this.redrawCanvas();
+                    break;
+                }
+            }
+        });
 
         let triangle = new fabric.Triangle({
             left: endX - EDGE_ARROW_HEAD_SIZE / 2 * Math.cos(angle),
@@ -140,22 +229,71 @@ export class MiddleComponent implements OnInit {
             angle: 90 + (angle * 180 / Math.PI),
         });
 
-        // redraw arrow head when the line is moving
-        line.on('moving', (options) => {
+        let dotTail = new fabric.Circle({
+            left: endX,
+            top: endY,
+            radius: 3,
+            fill: 'red',
+            originX: 'center',
+            originY: 'center',
         });
-        // connect if arrow intersect with node
-        line.on('modified', (options) => {
-            for (let actionData of this.graphModel.node()) {
-                let distance = Math.sqrt(Math.pow(line.left - actionData.display_params.x, 2) + Math.pow(line.top - actionData.display_params.y, 2));
-                if (distance < NODE_SIZE / 2) {
-                    this.eventManager.pushEvent(new ConnectEdgeToSrcNodeEvent(this.graphModel, actionData, triggerData, 400, 400));
-                    this.redrawCanvas();
-                    break;
-                }
-            }
-        })
 
-        this.canvas.add(line, triangle);
+        dotTail.on('moving', (options) => {
+            let newEndX = triggerData.display_params.end_x = dotTail.getLeft();
+            let newEndY = triggerData.display_params.end_y = dotTail.getTop();
+
+        });
+
+        dotTail.on('modified', (options) => {
+            // Need to re-draw canvas, so that dot can be clicked
+            //this.redrawCanvas();
+        });
+        dotTail.hasControls = dotTail.hasBorders = false;
+
+        let dotHead = new fabric.Circle({
+            left: startX,
+            top: startY,
+            radius: 4,
+            fill: 'red',
+            originX: 'center',
+            originY: 'center',
+        });
+        dotHead.hasControls = dotHead.hasBorders = false;
+
+        /* redraw line when dotHead is moving */
+        dotHead.on('moving', (options) => {
+            let newStartX = triggerData.display_params.start_x = dotHead.getLeft();
+            let newStartY = triggerData.display_params.start_y = dotHead.getTop();
+
+            angle = Math.atan2((endY - newStartY), (endX - newStartX));
+
+
+            let newEndX = endX - EDGE_ARROW_HEAD_SIZE / 2 * Math.cos(angle);
+            let newEndY = endY - EDGE_ARROW_HEAD_SIZE / 2 * Math.sin(angle);
+        
+            triangle.set({
+                'left': newEndX,
+                'top': newEndY,
+                'angle': 90 + (angle * 180 / Math.PI),
+            })
+
+            line.set({
+                'x1': newStartX,
+                'y1': newStartY,
+                'x2': newEndX,
+                'y2': newEndY,
+            });
+
+            this.canvas.renderAll();
+            });
+
+
+        dotHead.on('modified', (options) => {
+            // Need to re-draw canvas, so that dot can be clicked
+            this.redrawCanvas();
+        });
+
+        this.canvas.add(line, triangle, dotTail, dotHead);
     }
 
     private redrawCanvas() {
@@ -165,10 +303,13 @@ export class MiddleComponent implements OnInit {
             this.drawNode(node);
         }
 
-        for (let edge of this.graphModel.edge()) {
-            this.drawEdge(edge);
-        }
+        setTimeout(() => {
+            for (let edge of this.graphModel.edge()) {
+                this.drawEdge(edge);
+            }
+        }, 50)
     }
+
 
     // TODO: This function should be refactored into the action class / service
     private findActionById(id: number): Action {
@@ -254,7 +395,7 @@ export class MiddleComponent implements OnInit {
                 dst_node_id: 0,
                 display_params: {
                     start_x: 300,
-                    start_y: 300,
+                    start_y: 500,
                     end_x: 500,
                     end_y: 500
                 }
