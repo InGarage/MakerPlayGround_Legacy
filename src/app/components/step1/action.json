@@ -7,8 +7,9 @@
           "name" : "Dim",
           "type" : ["LED"],
           "description" : "Dim LED",
+          
           "property" : [
-            {
+             {
             "name":"name" ,
             "control" : "Textbox"
             },
@@ -25,8 +26,9 @@
           "name" : "Blink",
           "type" : ["LED"],
           "description" : "Turn on and turn off led depends on periode",
+          
           "property" : [
-            {
+             {
             "name":"name" ,
             "control" : "Textbox"
             },
@@ -42,8 +44,9 @@
           "name" : "Turn on",
           "type" : ["LED"],
           "description" : "Turn on LED",
+          
           "property" : [
-            {
+             {
             "name":"name" ,
             "control" : "Textbox"
             },
@@ -59,11 +62,12 @@
           "name" : "Turn off",
           "type" : ["LED"],
           "description" : "Turn off led",
-          "image" : "/as
-          {
+           "property" : [
+             {
             "name":"name" ,
             "control" : "Textbox"
-          }s,ets/img/Motor_off.png"
+            }],
+          "image" : "/assets/img/Motor_off.png"
         }
       ] 
     },
@@ -75,8 +79,9 @@
           "name" : "Dim",
           "type" : ["RGBLED"],
           "description" : "Dim LED",
+          
           "property" : [
-            {
+             {
             "name":"name" ,
             "control" : "Textbox"
             },
@@ -93,8 +98,9 @@
           "name" : "Blink",
           "type" : ["RGBLED"],
           "description" : "Turn on and turn off led depends on periode",
+          
           "property" : [
-            {
+             {
             "name":"name" ,
             "control" : "Textbox"
             },
@@ -110,8 +116,9 @@
           "name" : "Turn on",
           "type" : ["RGBLED"],
           "description" : "Turn on LED",
+          
           "property" : [
-            {
+             {
             "name":"name" ,
             "control" : "Textbox"
             },
@@ -131,19 +138,21 @@
           "name" : "Turn off",
           "type" : ["RGBLED"],
           "description" : "Turn off led",
-          "image" : "/as
-          {
+           "property" : [
+             {
             "name":"name" ,
             "control" : "Textbox"
-          }s,ets/img/Motor_off.png"
+            }],
+          "image" : "/assets/img/Motor_off.png"
         },
         {
           "id": 9,
           "name" : "Change Colour",
           "type" : ["RGBLED"],
           "description" : "Change led colour",
+          
           "property" : [
-            {
+             {
             "name":"name" ,
             "control" : "Textbox"
             },
@@ -164,30 +173,33 @@
           "name" : "Backlight On",
           "type" : ["LCD16X2"],
           "description" : "Turn the backlight on",
-          "image" : "/as
-          {
+           "property" : [
+             {
             "name":"name" ,
             "control" : "Textbox"
-          }s,ets/img/LED_on.png"
+            }],
+          "image" : "/assets/img/LED_on.png"
         },
         {
           "id": 11,
           "name" : "Backlight Off",
           "type" : ["LCD16X2"],
           "description" : "Turn the backlight off",
-          "image" : "/as
-          {
+           "property" : [
+             {
             "name":"name" ,
             "control" : "Textbox"
-          }s,ets/img/LED_off.png"
+            }],
+          "image" : "/assets/img/LED_off.png"
         },
         {
           "id": 12,
           "name" : "backlight colour",
           "type" : ["LCD16X2","LCDbacklightcolour"],
           "description" : "Change backlight colour",
+          
           "property" : [
-            {
+             {
             "name":"name" ,
             "control" : "Textbox"
             },
@@ -203,8 +215,9 @@
           "name" : "Show text",
           "type" : ["LCD16X2"],
           "description" : "Show text",
+          
           "property" : [
-            {
+             {
             "name":"name" ,
             "control" : "Textbox"
             },
@@ -220,8 +233,9 @@
           "name" : "text colour",
           "type" : ["LCD16X2","LCDtextcolour"],
           "description" : "Change text colour",
+          
           "property" : [
-            {
+             {
             "name":"name" ,
             "control" : "Textbox"
             },
@@ -236,11 +250,12 @@
           "name" : "Clear screen",
           "type" : ["LCD16X2"],
           "description" : "Clear led screen",
-          "image" : "/as
-          {
+           "property" : [
+             {
             "name":"name" ,
             "control" : "Textbox"
-          }s,ets/img/LED_off.png"
+            }],
+          "image" : "/assets/img/LED_off.png"
         }
 
       ] 
@@ -253,8 +268,9 @@
           "name" : "Play audio",
           "type" : ["Amplifiers","SDcard"],
           "description" : "Play audio in sdcard",
+          
           "property" : [
-            {
+             {
             "name":"name" ,
             "control" : "Textbox"
             },
@@ -274,32 +290,35 @@
           "name" : "Increase Volume",
           "type" : ["Amplifiers"],
           "description" : "Increase Volume 1 step",
-          
-          "
-          {
+           "property" : [
+             {
             "name":"name" ,
             "control" : "Textbox"
-          }i,mage" : "/assets/img/LED_off.png"
+            }],
+
+          "image" : "/assets/img/LED_off.png"
         },
         {
           "id": 18,
           "name" : "Decrease Volume",
           "type" : ["Amplifiers"],
           "description" : "Decrease Volume 1 step",
-          
-          "
-          {
+           "property" : [
+             {
             "name":"name" ,
             "control" : "Textbox"
-          }i,mage" : "/assets/img/LED_off.png"
+            }],
+
+          "image" : "/assets/img/LED_off.png"
         },
         {
           "id": 19,
           "name" : "Set Volume",
           "type" : ["Amplifiers"],
           "description" : "Set Volume",
+          
           "property" : [
-            {
+             {
             "name":"name" ,
             "control" : "Textbox"
             },
@@ -316,11 +335,12 @@
           "name" : "Stop",
           "type" : ["Amplifiers"],
           "description" : "Set Volume",
-          "image" : "/as
-          {
+           "property" : [
+             {
             "name":"name" ,
             "control" : "Textbox"
-          }s,ets/img/LED_on.png",
+            }],
+          "image" : "/assets/img/LED_on.png",
           "default" : "30" 
         }
       ] 
@@ -333,8 +353,9 @@
           "name" : "Play Buzzer",
           "type" : ["Buzzer"],
           "description" : "Play audio in sdcard",
+          
           "property" : [
-            {
+             {
             "name":"name" ,
             "control" : "Textbox"
             },
@@ -350,32 +371,35 @@
           "name" : "Increase Volume",
           "type" : ["Buzzer"],
           "description" : "Increase Volume 1 step",
-          
-          "
-          {
+           "property" : [
+             {
             "name":"name" ,
             "control" : "Textbox"
-          }i,mage" : "/assets/img/LED_off.png"
+            }],
+
+          "image" : "/assets/img/LED_off.png"
         },
         {
           "id": 23,
           "name" : "Decrease Volume",
           "type" : ["Buzzer"],
           "description" : "Decrease Volume 1 step",
-          
-          "
-          {
+           "property" : [
+             {
             "name":"name" ,
             "control" : "Textbox"
-          }i,mage" : "/assets/img/LED_off.png"
+            }],
+
+          "image" : "/assets/img/LED_off.png"
         },
         {
           "id": 24,
           "name" : "Set Volume",
           "type" : ["Buzzer"],
           "description" : "Set Volume",
+          
           "property" : [
-            {
+             {
             "name":"name" ,
             "control" : "Textbox"
             },
@@ -398,8 +422,9 @@
           "name" : "Rotate",
           "type" : ["Motor"],
           "description" : "Rotate motor depends on direction and speed",
+          
           "property" : [
-            {
+             {
             "name":"name" ,
             "control" : "Textbox"
             },
@@ -419,19 +444,21 @@
           "name" : "Reverse",
           "type" : ["Motor"],
           "description" : "Rotate motor to opposite direction",
-          "image" : "/as
-          {
+           "property" : [
+             {
             "name":"name" ,
             "control" : "Textbox"
-          }s,ets/img/LED_off.png"
+            }],
+          "image" : "/assets/img/LED_off.png"
         },
         {
           "id": 27,
           "name" : "Speed",
           "type" : ["Motor"],
           "description" : "Change motor speed",
+          
           "property" : [
-            {
+             {
             "name":"name" ,
             "control" : "Textbox"
             },
@@ -447,19 +474,21 @@
           "name" : "Stop",
           "type" : ["Motor"],
           "description" : "Turn off the motor",
-          "image" : "/as
-          {
+           "property" : [
+             {
             "name":"name" ,
             "control" : "Textbox"
-          }s,ets/img/LED_off.png"
+            }],
+          "image" : "/assets/img/LED_off.png"
         }, 
         {
           "id": 29,
           "name" : "Rotate by degree",
           "type" : ["Motor"],
           "description" : "Rotate motor by degree",
+          
           "property" : [
-            {
+             {
             "name":"name" ,
             "control" : "Textbox"
             },
@@ -480,8 +509,9 @@
           "name" : "Setup",
           "type" : ["Clock"],
           "description" : "Set initial time",
+          
           "property" : [
-            {
+             {
             "name":"name" ,
             "control" : "Textbox"
             },
@@ -503,8 +533,9 @@
           "name" : "Show number",
           "type" : ["7segment"],
           "description" : "show number on 7segment only 1 digit",
+          
           "property" : [
-            {
+             {
             "name":"name" ,
             "control" : "Textbox"
             },
@@ -526,11 +557,12 @@
           "name" : "Display",
           "type" : ["Dotmatrix"],
           "description" : "Display data on dot matrix",
+          
           "property" : [
-            {
-              "name":"name" ,
-              "control" : "Textbox"
-  ,          }
+             {
+            "name":"name" ,
+            "control" : "Textbox"
+            },
             {
               "name": "Data",
               "control" : "DOTMATRIX_CONTROL"
@@ -549,8 +581,9 @@
           "name" : "Temperature",
           "type" : ["LCD16X2","Temperature"],
           "description" : "Display temperature",
+          
           "property" : [
-            {
+             {
             "name":"name" ,
             "control" : "Textbox"
             },
@@ -566,8 +599,9 @@
           "name" : "Accelerometer_X",
           "type" : ["AccelX","LCD16X2"],
           "description" : "Display Accelerometer x axis",
+          
           "property" : [
-            {
+             {
             "name":"name" ,
             "control" : "Textbox"
             },
@@ -583,8 +617,9 @@
           "name" : "Pressure",
           "type" : ["Barometer","LCD16X2"],
           "description" : "Display Pressure",
+          
           "property" : [
-            {
+             {
             "name":"name" ,
             "control" : "Textbox"
             },
@@ -600,8 +635,9 @@
           "name" : "Gyroscope",
           "type" : ["Gyroscope","LCD16X2"],
           "description" : "Display Gyroscope",
+          
           "property" : [
-            {
+             {
             "name":"name" ,
             "control" : "Textbox"
             },
@@ -617,8 +653,9 @@
           "name" : "Direction",
           "type" : ["Magnetometer","LCD16X2"],
           "description" : "Display Accelerometer",
+          
           "property" : [
-            {
+             {
             "name":"name" ,
             "control" : "Textbox"
             },
@@ -634,8 +671,9 @@
           "name" : "Orientation",
           "type" : ["Orientation","LCD16X2"],
           "description" : "Display Orientation",
+          
           "property" : [
-            {
+             {
             "name":"name" ,
             "control" : "Textbox"
             },
@@ -651,8 +689,9 @@
           "name" : "Illumination",
           "type" : ["Illuminance","LCD16X2"],
           "description" : "Display Illumination",
+          
           "property" : [
-            {
+             {
             "name":"name" ,
             "control" : "Textbox"
             },
@@ -668,8 +707,9 @@
           "name" : "Distance",
           "type" : ["Distance","LCD16X2"],
           "description" : "Display distance",
+          
           "property" : [
-            {
+             {
             "name":"name" ,
             "control" : "Textbox"
             },
@@ -686,8 +726,9 @@
           "name" : "Humanity",
           "type" : ["Humanity","LCD16X2"],
           "description" : "Display humanity",
+          
           "property" : [
-            {
+             {
             "name":"name" ,
             "control" : "Textbox"
             },
@@ -704,8 +745,9 @@
           "name" : "Colour",
           "type" : ["Colour","LCD16X2"],
           "description" : "Display RGB colour code",
+          
           "property" : [
-            {
+             {
             "name":"name" ,
             "control" : "Textbox"
             },
@@ -722,8 +764,9 @@
           "name" : "Gesture",
           "type" : ["Gesture","LCD16X2"],
           "description" : "Display gesture direction",
+          
           "property" : [
-            {
+             {
             "name":"name" ,
             "control" : "Textbox"
             },
@@ -740,8 +783,9 @@
           "name" : "UART",
           "type" : ["UART","LCD16X2"],
           "description" : "Display data in serial communication",
+          
           "property" : [
-            {
+             {
             "name":"name" ,
             "control" : "Textbox"
             },
@@ -759,8 +803,9 @@
           "name" : "Button state",
           "type" : ["Button","LCD16X2"],
           "description" : "Display button state",
+          
           "property" : [
-            {
+             {
             "name":"name" ,
             "control" : "Textbox"
             },
@@ -778,8 +823,9 @@
           "name" : "Liquid Level",
           "type" : ["Liquid Level","LCD16X2"],
           "description" : "Display Liquid Level",
+          
           "property" : [
-            {
+             {
             "name":"name" ,
             "control" : "Textbox"
             },
@@ -796,8 +842,9 @@
           "name" : "General Analog voltage",
           "type" : ["Generic","LCD16X2"],
           "description" : "Display General Analog voltage",
+          
           "property" : [
-            {
+             {
             "name":"name" ,
             "control" : "Textbox"
             },
@@ -815,8 +862,9 @@
           "name" : "General Digital logic",
           "type" : ["Generic","LCD16X2"],
           "description" : "General Digital logic",
+          
           "property" : [
-            {
+             {
             "name":"name" ,
             "control" : "Textbox"
             },
@@ -832,8 +880,9 @@
           "name" : "Accelerometer_Y",
           "type" : ["AccelY","LCD16X2"],
           "description" : "Display Accelerometer y axis",
+          
           "property" : [
-            {
+             {
             "name":"name" ,
             "control" : "Textbox"
             },
@@ -849,8 +898,9 @@
           "name" : "Accelerometer_Z",
           "type" : ["AccelZ","LCD16X2"],
           "description" : "Display Accelerometer z axis",
+          
           "property" : [
-            {
+             {
             "name":"name" ,
             "control" : "Textbox"
             },
