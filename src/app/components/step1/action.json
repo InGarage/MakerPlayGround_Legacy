@@ -550,7 +550,7 @@
         }
       ] 
     },
-    /*{
+    {
       "name" : "Dotmatrix",
       "children" : [
         {
@@ -569,11 +569,11 @@
               "control" : "DOTMATRIX_CONTROL"
             }
           ],
-          "image" : "/assets/img/LED_on.png",
+          "image" : "/assets/img/LED_on.png"
 
         }
       ] 
-    }*/
+    },
     {
       "name" : "Display",
       "children" : [
