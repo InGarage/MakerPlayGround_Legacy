@@ -213,6 +213,7 @@
           "image" : "/assets/img/LED_off.png"
         }
 
+<<<<<<< HEAD
       ] 
     },
     {
@@ -285,6 +286,279 @@
         }
       ] 
     },
+=======
+    ] 
+  },
+  {
+    "name" : "Audio",
+    "children" : [
+      {
+        "id": 16,
+        "name" : "Play audio",
+        "type" : ["Amplifiers","SDcard"],
+        "description" : "Play audio in sdcard",
+        "property" : [
+          {
+          "name": "Filename",
+          "control": "TextBox"
+          },
+          {
+          "name": "Volume",
+          "control" : "SpinBox"
+          }
+        ],
+        "image" : "/assets/img/LED_on.png"
+      },
+      {
+        "id": 17,
+        "name" : "Increase Volume",
+        "type" : ["Amplifiers"],
+        "description" : "Increase Volume 1 step",
+        
+        "image" : "/assets/img/LED_off.png"
+      },
+      {
+        "id": 18,
+        "name" : "Decrease Volume",
+        "type" : ["Amplifiers"],
+        "description" : "Decrease Volume 1 step",
+        
+        "image" : "/assets/img/LED_off.png"
+      },
+       {
+        "id": 19,
+        "name" : "Set Volume",
+        "type" : ["Amplifiers"],
+        "description" : "Set Volume",
+        "property" : [
+          {
+          "name": "Volume",
+          "control": "TextBox",
+          "unit" : "db"
+          }
+        ],
+        "image" : "/assets/img/LED_on.png"
+      },
+       {
+        "id": 20,
+        "name" : "Stop",
+        "type" : ["Amplifiers"],
+        "description" : "Set Volume",
+        "image" : "/assets/img/LED_on.png",
+        "default" : "30" 
+      }
+    ] 
+  },
+  {
+    "name" : "Buzzer",
+    "children" : [
+      {
+        "id": 21,
+        "name" : "Play Buzzer",
+        "type" : ["Buzzer"],
+        "description" : "Play audio in sdcard",
+        "property" : [
+          {
+          "name": "Volume",
+          "control" : "SpinBox"
+          }
+        ],
+        "image" : "/assets/img/LED_on.png"
+      },
+      {
+        "id": 22,
+        "name" : "Increase Volume",
+        "type" : ["Buzzer"],
+        "description" : "Increase Volume 1 step",
+        
+        "image" : "/assets/img/LED_off.png"
+      },
+      {
+        "id": 23,
+        "name" : "Decrease Volume",
+        "type" : ["Buzzer"],
+        "description" : "Decrease Volume 1 step",
+        
+        "image" : "/assets/img/LED_off.png"
+      },
+       {
+        "id": 24,
+        "name" : "Set Volume",
+        "type" : ["Buzzer"],
+        "description" : "Set Volume",
+        "property" : [
+          {
+          "name": "Volume",
+          "control": "TextBox",
+          "unit" : "db"
+          }
+        ],
+        "image" : "/assets/img/LED_on.png",
+        "default" : "30" 
+      }
+    ] 
+  },
+  {
+    "name" : "Motor",
+    "children" : [
+      {
+        "id": 25,
+        "name" : "Rotate",
+        "type" : ["Motor"],
+        "description" : "Rotate motor depends on direction and speed",
+        "property" : [
+          {
+          "name": "direction",
+          "control": "TextBox"
+          },
+          {
+          "name": "speed",
+          "control" : "Textbox"
+          }
+        ],
+        "image" : "/assets/img/LED_on.png"
+      },
+      {
+        "id": 26,
+        "name" : "Reverse",
+        "type" : ["Motor"],
+        "description" : "Rotate motor to opposite direction",
+        "image" : "/assets/img/LED_off.png"
+      },
+      {
+        "id": 27,
+        "name" : "Speed",
+        "type" : ["Motor"],
+        "description" : "Change motor speed",
+        "property" : [
+          {
+          "name": "Speed",
+          "control": "TextBox"
+          }
+        ],
+        "image" : "/assets/img/LED_off.png"
+      },
+         {
+        "id": 28,
+        "name" : "Stop",
+        "type" : ["Motor"],
+        "description" : "Turn off the motor",
+        "image" : "/assets/img/LED_off.png"
+      }, 
+      {
+        "id": 29,
+        "name" : "Rotate by degree",
+        "type" : ["Motor"],
+        "description" : "Rotate motor by degree",
+        "property" : [
+          {
+          "name": "Degree",
+          "control": "TextBox"
+          }
+        ],
+        "image" : "/assets/img/LED_off.png"
+      }
+    ] 
+  },
+  {
+    "name" : "Real time clock",
+    "children" : [
+      {
+        "id": 30,
+        "name" : "Setup",
+        "type" : ["RTC"],
+        "description" : "Set initial time",
+        "property" : [
+          {
+          "name": "time",
+          "control" : "Textbox"
+          }
+        ],
+        "image" : "/assets/img/LED_on.png",
+        "default" : "15:23:34"
+      }
+    ] 
+  },
+   {
+    "name" : "7 Segment",
+    "children" : [
+      {
+        "id": 31,
+        "name" : "Show number",
+        "type" : ["7segment"],
+        "description" : "show number on 7segment only 1 digit",
+        "property" : [
+          {
+          "name": "Number",
+          "control" : "Textbox"
+          }
+        ],
+        "image" : "/assets/img/LED_on.png",
+        "default" : "1"
+      }
+    ] 
+  },
+   {
+    "name" : "Dotmatrix",
+    "children" : [
+      {
+        "id": 32,
+        "name" : "Display",
+        "type" : ["Dotmatrix"],
+        "description" : "Display data on dot matrix",
+        "property" : [
+          {
+          "name": "Data",
+          "control" : "DOTMATRIX_CONTROL"
+          }
+        ],
+        "image" : "/assets/img/LED_on.png"
+      }
+    ] 
+  },
+  {
+    "name" : "Display",
+    "children" : [
+      {
+        "id": 33,
+        "name" : "Temperature",
+        "type" : ["LCD16X2","Temperature"],
+        "description" : "Display temperature",
+        "property" : [
+          {
+          "name": "LCD device name",
+          "control": "TextBox"
+          }
+        ],
+        "image" : "/assets/img/LED_on.png"
+      },
+       {
+        "id": 34,
+        "name" : "Accelerometer",
+        "type" : ["Accelerometer","LCD16X2"],
+        "description" : "Display Accelerometer",
+        "property" : [
+          {
+          "name": "LCD device name",
+          "control": "TextBox"
+          }
+        ],
+        "image" : "/assets/img/LED_on.png"
+      },
+          {
+        "id": 35,
+        "name" : "Pressure",
+        "type" : ["Barometer","LCD16X2"],
+        "description" : "Display Pressure",
+        "property" : [
+          {
+          "name": "LCD device name",
+          "control": "TextBox"
+          }
+        ],
+        "image" : "/assets/img/LED_on.png"
+      },
+>>>>>>> 869e6f5d1527e1e58fe844f468456422fec888a8
     {
       "name" : "Buzzer",
       "children" : [

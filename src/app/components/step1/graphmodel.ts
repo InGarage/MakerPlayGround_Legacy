@@ -1,6 +1,7 @@
 import * as Immutable from 'immutable';
 
 import { Action } from './action';
+import { CanvasEventOptions } from './graphcanvas';
 
 export class GraphData {
 
@@ -63,20 +64,82 @@ export class GraphData {
      */
     compareGraphModel(otherGraph: GraphData, callback: (type: 'addition' | 'deletion' | 'update', target: NodeData | EdgeData) => void) {
         if (otherGraph === undefined) {
-            console.log('compare:', this.data.get('nodes').forEach((value, key) => {
+            this.data.get('nodes').forEach((value, key) => {
                 callback('addition', new NodeData(key, value));
-            }));
+            });
             this.data.get('edges').forEach((value, key) => {
                 callback('addition', new EdgeData(key, value));
             });
+        } else {
+            let val: { value: number, done: boolean };
+
+            let iter = otherGraph.data.get('nodes').keys();
+            while (!(val = iter.next()).done) {
+                let newData = this.data.getIn(['nodes', val.value]);
+                let oldData = otherGraph.data.getIn(['nodes', val.value]);
+
+                if (newData === undefined)
+                    callback('deletion', new NodeData(val.value, oldData));
+                if (!Immutable.is(oldData, newData))
+                    callback('update', new NodeData(val.value, newData));
+            }
+
+            iter = this.data.get('nodes').keys();
+            while (!(val = iter.next()).done) {
+                let newData = this.data.getIn(['nodes', val.value]);
+                let oldData = otherGraph.data.getIn(['nodes', val.value]);
+
+                if (oldData === undefined)
+                    callback('addition', new NodeData(val.value, newData));
+            }
+
+            // Edge compare
+            iter = otherGraph.data.get('edges').keys();
+            while (!(val = iter.next()).done) {
+                let newData = this.data.getIn(['edges', val.value]);
+                let oldData = otherGraph.data.getIn(['edges', val.value]);
+
+                if (newData === undefined)
+                    callback('deletion', new EdgeData(val.value, oldData));
+                if (!Immutable.is(oldData, newData))
+                    callback('update', new EdgeData(val.value, newData));
+            }
+
+            iter = this.data.get('edges').keys();
+            while (!(val = iter.next()).done) {
+                let newData = this.data.getIn(['edges', val.value]);
+                let oldData = otherGraph.data.getIn(['edges', val.value]);
+
+                if (oldData === undefined)
+                    callback('addition', new EdgeData(val.value, newData));
+            }
         }
     }
 
-    addNode(action: Action) : GraphData{
-        return undefined;
+    getNode(nodeID: number): NodeData {
+        let check = this.data.getIn(['nodes', nodeID]);
+        if (check !== undefined)
+            return new NodeData(nodeID, check);
+        else
+            return undefined;
     }
 
-    removeNode(actionData: NodeData) : GraphData {
+    addNode(action: Action): GraphData {
+        
+        //console.log(action);
+        let newObj = {};
+        newObj = {
+            "action_id": 6,
+            "display_x": '500',
+            "display_y": '150',
+            "params": {
+                "name": "XXX",
+            }
+        };
+        return new GraphData(this.data.setIn(['nodes', 6], Immutable.fromJS(newObj)));
+    }
+
+    removeNode(actionData: NodeData): GraphData {
         return undefined;
     }
 
@@ -89,8 +152,13 @@ export class GraphData {
     moveNode(actionData: NodeData, topPos: number, leftPos: number) {
     }
 
-    moveEdge() {
-
+    moveEdge(id, x1, x2, y1, y2): GraphData {
+        return new GraphData(this.data.withMutations(map => {
+            map.setIn(['edges', id, 'start_x'], x1)
+                .setIn(['edges', id, 'start_y'], y1)
+                .setIn(['edges', id, 'end_x'], x2)
+                .setIn(['edges', id, 'end_y'], y2)
+        }));
     }
 }
 
@@ -102,7 +170,7 @@ export class NodeData {
     constructor(private uid: number, private data: Immutable.Map<string, string>) {
     }
 
-    getNodeId() : number {
+    getNodeId(): number {
         return this.uid;
     }
 
@@ -131,7 +199,7 @@ export class EdgeData {
     constructor(private uid: number, private data: Immutable.Map<string, string>) {
     }
 
-    getEdgeId() : number {
+    getEdgeId(): number {
         return this.uid;
     }
 
