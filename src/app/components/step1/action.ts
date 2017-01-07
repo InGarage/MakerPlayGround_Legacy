@@ -7,15 +7,44 @@ export interface ActionGroup {
 export interface Action {
   id: number;
   name: string;
-  type: string[];
-  description: ActionType[];
+  type: ActionType[];
+  description: string;
   property?: ActionProperty[];
   image: string;  // path to an image that will be used to represent this action in the canvas
 }
 export enum ActionType{
  Accel_X,
  Accel_Y,
- Unspecified //to be removed
+ LED,
+ REGLED,
+ LCDbacklightcolour,
+ Amplifiers,
+ Buzzer,
+ Motor,
+ Clock,
+ Sevensegment,
+ Dotmatrix,
+ Generic,
+ Distance,
+ LCD16X2,
+ Barometer,
+ SDcard,
+ Gyroscope,	
+ Magnetometer,	
+ Orientation,	
+ Temperature,
+ Gesture,	
+ UART,	
+ Button,	
+ LiquidLevel,
+ AccelZ,	
+ Colour,	
+ UV,	
+ IR, 
+ Illuminance, 
+ LiquidFlow,
+ Unspecified 
+ //to be removed
  // TODO: add new actions
 
 }
