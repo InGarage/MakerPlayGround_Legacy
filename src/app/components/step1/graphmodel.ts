@@ -125,17 +125,24 @@ export class GraphData {
     }
 
     addNode(action: Action): GraphData {
-        
-        //console.log(action);
+        console.log(action);
         let newObj = {};
+        let allParams = {};
         newObj = {
-            "action_id": 6,
+            "action_id": action.id,
             "display_x": '500',
             "display_y": '150',
-            "params": {
-                "name": "XXX",
-            }
         };
+
+        for (let prop of action.property) {
+            if (prop.name === 'name')
+                allParams[prop.name] = action.name + ' 1';
+            else
+                allParams[prop.name] = '';
+        }
+        newObj["params"] = allParams;
+        console.log(newObj["params"]);
+
         return new GraphData(this.data.setIn(['nodes', 6], Immutable.fromJS(newObj)));
     }
 
