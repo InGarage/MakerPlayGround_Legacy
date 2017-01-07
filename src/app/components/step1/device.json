@@ -1064,7 +1064,7 @@
    "Link": "https://www.adafruit.com/products/1604"
  },
  {
-   "Type": ["Motion"],
+   "Type": ["Amplifiers","Compass","AccelX","AccelY","AccelZ","Magnetic Field","GyroX","GyroY","GyroZ","Compass","Barometer","Temperature","Pressure","Altitude"],
    "Brand": "Adafruit",
    "Model": 3085,
    "IC": "",
@@ -1078,7 +1078,7 @@
    "Link": "https://www.adafruit.com/products/3085"
  },
  {
-   "Type": ["Motion"],
+   "Type": ["Compass","AccelX","AccelY","AccelZ","Magnetic Field","GyroX","GyroY","GyroZ","Compass","Barometer","Temperature","Pressure","Altitude"],
    "Brand": "Adafruit",
    "Model": 1714,
    "IC": "L3GD20H + LSM303",
@@ -1092,7 +1092,7 @@
    "Link": "https://www.adafruit.com/products/1714"
  },
  {
-   "Type": ["Motion"],
+   "Type": ["AccelX","AccelY","AccelZ"],
    "Brand": "Adafruit",
    "Model": 1231,
    "IC": "ADXL345",
@@ -1106,7 +1106,7 @@
    "Link": "https://www.adafruit.com/products/1231"
  },
  {
-   "Type": ["Motion"],
+   "Type": ["GyroX","GyroY","GyroZ"],
    "Brand": "Adafruit",
    "Model": 1032,
    "IC": "L3GD20H",
@@ -1120,7 +1120,7 @@
    "Link": "https://www.adafruit.com/products/1032"
  },
  {
-   "Type": ["Motion"],
+   "Type": ["AccelX","AccelY","AccelZ"],
    "Brand": "Adafruit",
    "Model": 163,
    "IC": "ADXL335",
@@ -1134,7 +1134,7 @@
    "Link": "https://www.adafruit.com/products/163"
  },
  {
-   "Type": ["Motion"],
+   "Type": ["Orientation"],
    "Brand": "Adafruit",
    "Model": 2472,
    "IC": "BNO055",
