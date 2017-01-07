@@ -125,11 +125,13 @@ export class GraphData {
     }
 
     addNode(action: Action): GraphData {
+        
+        //console.log(action);
         let newObj = {};
         newObj = {
             "action_id": 6,
-            "display_x": '100',
-            "display_y": '100',
+            "display_x": '500',
+            "display_y": '150',
             "params": {
                 "name": "XXX",
             }

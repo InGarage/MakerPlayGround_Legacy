@@ -117,17 +117,18 @@ export class GraphCanvas {
     }
 
     private drawEdge(triggerData: EdgeData) {
-        let startX: number, startY: number, endX: number, endY: number, angle: number;
-
+        let startX: number, startY: number, endX: number, endY: number, angle: number, difX: number, difY: number;
         startX = triggerData.getStartX();
         startY = triggerData.getStartY();
         endX = triggerData.getEndX();
         endY = triggerData.getEndY();
         angle = Math.atan2((endY - startY), (endX - startX));   // in radian
+        difX = Math.abs(startX - endX) / 2;
+        difY = Math.abs(startY - endY) / 2;
 
-        let difX = Math.abs(startX - endX) / 2;
-        let difY = Math.abs(startY - endY) / 2;
-
+        /**
+         * START OF LINE
+         */
         let line = new fabric.Line([
             startX,
             startY,
@@ -144,12 +145,10 @@ export class GraphCanvas {
         // redraw arrow head when the line is moving
         line.on('moving', (options) => {
             let nStartX: number, nStartY: number, nEndX: number, nEndY: number;
-
             let currentOriginLineX = line.getLeft();;
             let currentOriginLineY = line.getTop();
 
             [nStartX, nEndX, nStartY, nEndY] = this.getCurrentPoint(triggerData, currentOriginLineX, currentOriginLineY);
-
 
             dotHead.setLeft(nStartX);
             dotHead.setTop(nStartY);
@@ -166,7 +165,6 @@ export class GraphCanvas {
         line.on('modified', (options) => {
             // Need to re-draw canvas, so that dot can be clicked
             let nStartX: number, nStartY: number, nEndX: number, nEndY: number;
-
             let currentOriginLineX = line.getLeft();;
             let currentOriginLineY = line.getTop();
 
@@ -179,9 +177,14 @@ export class GraphCanvas {
                 end_x: nEndX,
                 end_y: nEndY,
             });
-            //this.redrawCanvas();
         });
+        /**
+         * END OF LINE
+         */
 
+        /**
+         * START OF TRIANGLE
+         */
         let triangle = new fabric.Triangle({
             left: endX - EDGE_ARROW_HEAD_SIZE / 2 * Math.cos(angle),
             top: endY - EDGE_ARROW_HEAD_SIZE / 2 * Math.sin(angle),
@@ -191,28 +194,52 @@ export class GraphCanvas {
             originY: 'center',
             angle: 90 + (angle * 180 / Math.PI),
         });
+        triangle.hasControls = triangle.hasBorders = false;
 
-        let dotTail = new fabric.Circle({
-            left: endX,
-            top: endY,
-            radius: 3,
-            fill: 'red',
-            originX: 'center',
-            originY: 'center',
+        triangle.on('moving', (options) => {
+            let currentOriginTriangleX = triangle.getLeft();
+            let currentOriginTriangleY = triangle.getTop();
+            let newLeft: number, newTop: number;
+            [newLeft,newTop] = this.getLeftTopLine(triggerData, currentOriginTriangleX, currentOriginTriangleY);
+
+            line.set({
+                left: newLeft,
+                top: newTop
+            });
+            
+            let currentOriginLineX = line.getLeft();
+            let currentOriginLineY = line.getTop();
+            let nStartX: number, nStartY: number, nEndX: number, nEndY: number;
+           [nStartX, nEndX, nStartY, nEndY] = this.getCurrentPoint(triggerData, currentOriginLineX, currentOriginLineY);
+
+            dotHead.setLeft(nStartX);
+            dotHead.setTop(nStartY);
+            dotTail.setLeft(nEndX + EDGE_ARROW_HEAD_SIZE / 2 * Math.cos(angle));
+            dotTail.setTop(nEndY + EDGE_ARROW_HEAD_SIZE / 2 * Math.sin(angle));
         });
 
-        dotTail.on('moving', (options) => {
-            let newEndX = dotTail.getLeft();
-            let newEndY = dotTail.getTop();
+        triangle.on('modified', (options) => {
+            let newStartX:number, newStartY:number,newEndX:number, newEndY:number;
+            newStartX = dotHead.getLeft();
+            newStartY = dotHead.getTop();
+            newEndX = dotTail.getLeft();
+            newEndY = dotTail.getTop();
 
-        });
+            this.callback['edge:move']({
+                target_id: triggerData.getEdgeId(),
+                start_x: newStartX,
+                start_y: newStartY,
+                end_x: newEndX,
+                end_y: newEndY,
+            });
+        })
+        /**
+         * END OF TRIANGLE
+         */
 
-        dotTail.on('modified', (options) => {
-            // Need to re-draw canvas, so that dot can be clicked
-            //this.redrawCanvas();
-        });
-        dotTail.hasControls = dotTail.hasBorders = false;
-
+        /**
+         * START OF DOT-HEAD
+         */
         let dotHead = new fabric.Circle({
             left: startX,
             top: startY,
@@ -225,14 +252,13 @@ export class GraphCanvas {
 
         /* redraw line when dotHead is moving */
         dotHead.on('moving', (options) => {
-            let newStartX = dotHead.getLeft();
-            let newStartY = dotHead.getTop();
+            let newStartX:number, newStartY:number,newEndX:number, newEndY:number;
+            newStartX = dotHead.getLeft();
+            newStartY = dotHead.getTop();
 
             angle = Math.atan2((endY - newStartY), (endX - newStartX));
-
-
-            let newEndX = endX - EDGE_ARROW_HEAD_SIZE / 2 * Math.cos(angle);
-            let newEndY = endY - EDGE_ARROW_HEAD_SIZE / 2 * Math.sin(angle);
+            newEndX = endX - EDGE_ARROW_HEAD_SIZE / 2 * Math.cos(angle);
+            newEndY = endY - EDGE_ARROW_HEAD_SIZE / 2 * Math.sin(angle);
 
             triangle.set({
                 'left': newEndX,
@@ -246,18 +272,120 @@ export class GraphCanvas {
                 'x2': newEndX,
                 'y2': newEndY,
             });
-
-            this.canvas.renderAll();
         });
-
 
         dotHead.on('modified', (options) => {
             // Need to re-draw canvas, so that dot can be clicked
-            //this.redrawCanvas();
+            let newStartX:number, newStartY:number,newEndX:number, newEndY:number;
+            newStartX = dotHead.getLeft();
+            newStartY = dotHead.getTop();
+
+            angle = Math.atan2((endY - newStartY), (endX - newStartX));
+            newEndX = endX - EDGE_ARROW_HEAD_SIZE / 2 * Math.cos(angle);
+            newEndY = endY - EDGE_ARROW_HEAD_SIZE / 2 * Math.sin(angle);
+
+            this.callback['edge:move']({
+                target_id: triggerData.getEdgeId(),
+                start_x: newStartX,
+                start_y: newStartY,
+                end_x: endX,
+                end_y: endY,
+            });
         });
+        /**
+         * END OF DOT-HEAD
+         */
+
+        /**
+         * START OF DOT-TAIL
+         */
+        let dotTail = new fabric.Circle({
+            left: endX,
+            top: endY,
+            radius: 3,
+            fill: 'red',
+            originX: 'center',
+            originY: 'center',
+        });
+        dotTail.hasControls = dotTail.hasBorders = false;
+
+        dotTail.on('moving', (options) => {
+            let currentEndX:number, currentEndY:number,newEndX:number, newEndY:number;
+            currentEndX = dotTail.getLeft();
+            currentEndY = dotTail.getTop();
+
+            angle = Math.atan2((currentEndY - startY), (currentEndX - startX));
+            newEndX = currentEndX - EDGE_ARROW_HEAD_SIZE / 2 * Math.cos(angle);
+            newEndY = currentEndY - EDGE_ARROW_HEAD_SIZE / 2 * Math.sin(angle);
+
+            triangle.set({
+                'left': newEndX,
+                'top': newEndY,
+                'angle': 90 + (angle * 180 / Math.PI),
+            })
+
+            line.set({
+                'x1': startX,
+                'y1': startY,
+                'x2': newEndX,
+                'y2': newEndY,
+            });
+        });
+
+        dotTail.on('modified', (options) => {
+            // Need to re-draw canvas, so that dot can be clicked
+            let currentEndX:number, currentEndY:number,newEndX:number, newEndY:number;
+            currentEndX = dotTail.getLeft();
+            currentEndY = dotTail.getTop();
+
+            angle = Math.atan2((currentEndY - startY), (currentEndX - startX));
+            newEndX = currentEndX - EDGE_ARROW_HEAD_SIZE / 2 * Math.cos(angle);
+            newEndY = currentEndY - EDGE_ARROW_HEAD_SIZE / 2 * Math.sin(angle);
+
+            this.callback['edge:move']({
+                target_id: triggerData.getEdgeId(),
+                start_x: startX,
+                start_y: startY,
+                end_x: currentEndX,
+                end_y: currentEndY,
+            });
+        });
+        /**
+         * END OF DOT-TAIL
+         */
 
         this.edgeFabricObject[triggerData.getEdgeId()] = [line, triangle, dotTail, dotHead];
         this.canvas.add(line, triangle, dotTail, dotHead);
+    }
+
+    private getLeftTopLine(triggerData, currentOriginTriangleX, currentOriginTriangleY) {
+        let startX: number, startY: number, endX: number, endY: number;
+
+        startX = triggerData.getStartX();
+        startY = triggerData.getStartY();
+        endX = triggerData.getEndX();
+        endY = triggerData.getEndY();
+
+        let difX = Math.abs(startX - endX) / 2;
+        let difY = Math.abs(startY - endY) / 2;
+
+        if ((startX < endX) && (startY >= endY)) {
+            return [currentOriginTriangleX - difX
+                , currentOriginTriangleY + difY];
+
+        }
+        else if ((startX <= endX) && (startY < endY)) {
+            return [currentOriginTriangleX - difX
+                , currentOriginTriangleY - difY];
+        }
+        else if ((startX > endX) && (startY >= endY)) {
+            return [currentOriginTriangleX + difX
+                , currentOriginTriangleY + difY];
+        }
+        else if ((startX >= endX) && (startY < endY)) {
+            return [currentOriginTriangleX + difX
+                , currentOriginTriangleY - difY];
+        }
     }
 
     private getCurrentPoint(triggerData, currentOriginLineX, currentOriginLineY) {
@@ -271,54 +399,30 @@ export class GraphCanvas {
         let difX = Math.abs(startX - endX) / 2;
         let difY = Math.abs(startY - endY) / 2;
 
-        if ((startX < endX) && (startY > endY)) {
+        if ((startX < endX) && (startY >= endY)) {
             return [currentOriginLineX - difX
                 , currentOriginLineX + difX
                 , currentOriginLineY + difY
                 , currentOriginLineY - difY];
 
         }
-        else if ((startX < endX) && (startY < endY)) {
+        else if ((startX <= endX) && (startY < endY)) {
             return [currentOriginLineX - difX
                 , currentOriginLineX + difX
                 , currentOriginLineY - difY
                 , currentOriginLineY + difY];
         }
-        else if ((startX > endX) && (startY > endY)) {
+        else if ((startX > endX) && (startY >= endY)) {
             return [currentOriginLineX + difX
                 , currentOriginLineX - difX
                 , currentOriginLineY + difY
                 , currentOriginLineY - difY];
         }
-        if ((startX > endX) && (startY < endY)) {
+        else if ((startX >= endX) && (startY < endY)) {
             return [currentOriginLineX + difX
                 , currentOriginLineX - difX
                 , currentOriginLineY - difY
                 , currentOriginLineY + difY];
-        }
-        else if ((startX < endX) && (startY === endY)) {
-            return [currentOriginLineX - difX
-                , currentOriginLineX + difX
-                , currentOriginLineY
-                , currentOriginLineY];
-        }
-        else if ((startX > endX) && (startY === endY)) {
-            return [currentOriginLineX + difX
-                , currentOriginLineX - difX
-                , currentOriginLineY
-                , currentOriginLineY];
-        }
-        else if ((startX === endX) && (startY < endY)) {
-            return [currentOriginLineX
-                , currentOriginLineX
-                , currentOriginLineY - difY
-                , currentOriginLineY + difY];
-        }
-        else if ((startX === endX) && (startY > endY)) {
-            return [currentOriginLineX
-                , currentOriginLineX
-                , currentOriginLineY + difY
-                , currentOriginLineY - difY];
         }
     }
 
