@@ -7,7 +7,7 @@ export interface ActionGroup {
 export interface Action {
   id: number;
   name: string;
-  type: ActionType;
+  type: ActionType[];
   description: string;
   property?: ActionProperty[];
   image: string;  // path to an image that will be used to represent this action in the canvas

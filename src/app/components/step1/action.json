@@ -257,7 +257,7 @@
             }],
           "image" : "/assets/img/LED_off.png"
         }
-      ]
+      ] 
     },
     {
       "name" : "Audio",
