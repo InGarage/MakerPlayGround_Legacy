@@ -1148,7 +1148,7 @@
    "Link": "https://www.adafruit.com/products/2472"
  },
  {
-   "Type": ["Motion"],
+   "Type": ["IRMotion"],
    "Brand": "Adafruit",
    "Model": 2167,
    "IC": "",
@@ -1162,7 +1162,7 @@
    "Link": "https://www.adafruit.com/products/2167"
  },
  {
-   "Type": ["Motion"],
+   "Type": ["IRMotion"],
    "Brand": "Adafruit",
    "Model": 2168,
    "IC": "",
@@ -1175,21 +1175,7 @@
    "Datasheet": "https://cdn-shop.adafruit.com/product-files/2168/C2917.pdf",
    "Link": "https://www.adafruit.com/product/2168"
  },
- {
-   "Type": ["Motion"],
-   "Brand": "Adafruit",
-   "Model": 2122,
-   "IC": "",
-   "Price": 17.5,
-   "Detail": "Laser Break Beam Sensor",
-   "Image": "https://cdn-shop.adafruit.com/970x728/2122-02.jpg",
-   "Connect": "GPIO",
-   "MinVolt": 4.5,
-   "MaxVolt": 5.5,
-   "Datasheet": "",
-   "Link": "https://www.adafruit.com/products/2122"
- },
- {
+/* {
    "Type": ["Motion"],
    "Brand": "Adafruit",
    "Model": 1766,
@@ -1216,9 +1202,9 @@
    "MaxVolt": 12,
    "Datasheet": "",
    "Link": "https://www.adafruit.com/products/2384"
- },
+ },*/
  {
-   "Type": ["Motion"],
+   "Type": ["Orientation"],
    "Brand": "Adafruit",
    "Model": 173,
    "IC": "",
@@ -1232,7 +1218,7 @@
    "Link": "https://www.adafruit.com/products/173"
  },
  {
-   "Type": ["Motion"],
+   "Type": ["Anemometer"],
    "Brand": "Adafruit",
    "Model": 1733,
    "IC": "",
@@ -1260,7 +1246,7 @@
    "Link": "https://www.sparkfun.com/products/13656"
  },
  {
-   "Type": ["Motor"],
+   "Type": ["MotorController"],
    "Brand": "Adafruit",
    "Model": 2305,
    "IC": "DRV2605L",
@@ -1274,7 +1260,7 @@
    "Link": "https://www.adafruit.com/products/2305"
  },
  {
-   "Type": ["Motor"],
+   "Type": ["MotorController","StepperController"],
    "Brand": "Adafruit",
    "Model": 2448,
    "IC": "TB6612",
@@ -1288,7 +1274,7 @@
    "Link": "https://www.adafruit.com/products/2448"
  },
  {
-   "Type": ["Motor"],
+   "Type": ["MotorController","StepperController"],
    "Brand": "Adafruit",
    "Model": 3297,
    "IC": "DRV8833",
@@ -1316,7 +1302,7 @@
    "Link": "https://www.sparkfun.com/products/11696"
  },
  {
-   "Type": ["Motor"],
+   "Type": ["MotorController","StepperController"],
    "Brand": "Adafruit",
    "Model": 1438,
    "IC": "",
@@ -1330,7 +1316,7 @@
    "Link": "https://www.adafruit.com/products/1438"
  },
  {
-   "Type": ["Motor"],
+   "Type": ["MotorController"],
    "Brand": "Adafruit",
    "Model": 3190,
    "IC": "DRV8871",
@@ -1344,7 +1330,7 @@
    "Link": "https://www.adafruit.com/products/3190"
  },
  {
-   "Type": ["Proximity"],
+   "Type": ["Distance"],
    "Brand": "Adafruit",
    "Model": 164,
    "IC": "",
@@ -1358,7 +1344,7 @@
    "Link": "https://www.adafruit.com/products/164"
  },
  {
-   "Type": ["Proximity"],
+   "Type": ["Distance"],
    "Brand": "Adafruit",
    "Model": 1031,
    "IC": "",
@@ -1372,7 +1358,7 @@
    "Link": "https://www.adafruit.com/products/1031"
  },
  {
-   "Type": ["Proximity"],
+   "Type": ["Distance"],
    "Brand": "Adafruit",
    "Model": 1568,
    "IC": "",
@@ -1386,7 +1372,7 @@
    "Link": "https://www.adafruit.com/products/1568"
  },
  {
-   "Type": ["Proximity"],
+   "Type": ["Distance","Illuminance"],
    "Brand": "Adafruit",
    "Model": 466,
    "IC": "VCNL4010",
@@ -1400,7 +1386,7 @@
    "Link": "https://www.adafruit.com/products/466"
  },
  {
-   "Type": ["Proximity"],
+   "Type": ["Distance"],
    "Brand": "Adafruit",
    "Model": 3317,
    "IC": "VL53L0X",
@@ -1414,7 +1400,7 @@
    "Link": "https://www.adafruit.com/products/3317"
  },
  {
-   "Type": ["Proximity"],
+   "Type": ["Distance"],
    "Brand": "Adafruit",
    "Model": 3316,
    "IC": "VL6180X",
@@ -1428,7 +1414,7 @@
    "Link": "https://www.adafruit.com/products/3316"
  },
  {
-   "Type": ["Proximity"],
+   "Type": ["Distance"],
    "Brand": "Adafruit",
    "Model": 172,
    "IC": "",
@@ -1442,7 +1428,7 @@
    "Link": "https://www.adafruit.com/products/172"
  },
  {
-   "Type": ["Proximity"],
+   "Type": ["Distance"],
    "Brand": "Adafruit",
    "Model": 980,
    "IC": "",
@@ -1456,7 +1442,7 @@
    "Link": "https://www.adafruit.com/products/980"
  },
  {
-   "Type": ["Proximity"],
+   "Type": ["Distance"],
    "Brand": "Adafruit",
    "Model": 981,
    "IC": "",
@@ -1470,7 +1456,7 @@
    "Link": "https://www.adafruit.com/products/981"
  },
  {
-   "Type": ["Proximity"],
+   "Type": ["Distance"],
    "Brand": "Adafruit",
    "Model": 982,
    "IC": "",
@@ -1484,7 +1470,7 @@
    "Link": "https://www.adafruit.com/products/982"
  },
  {
-   "Type": ["Proximity"],
+   "Type": ["Distance"],
    "Brand": "Adafruit",
    "Model": 979,
    "IC": "",
@@ -1498,7 +1484,7 @@
    "Link": "https://www.adafruit.com/products/979"
  },
  {
-   "Type": ["Proximity"],
+   "Type": ["Distance"],
    "Brand": "Adafruit",
    "Model": 983,
    "IC": "",
@@ -1512,7 +1498,7 @@
    "Link": "https://www.adafruit.com/products/983"
  },
  {
-   "Type": ["Proximity"],
+   "Type": ["Distance"],
    "Brand": "Adafruit",
    "Model": 984,
    "IC": "",
@@ -1526,7 +1512,7 @@
    "Link": "https://www.adafruit.com/products/984"
  },
  {
-   "Type": ["Proximity"],
+   "Type": ["Distance"],
    "Brand": "Adafruit",
    "Model": 985,
    "IC": "",
@@ -1540,7 +1526,7 @@
    "Link": "https://www.adafruit.com/products/985"
  },
  {
-   "Type": ["Proximity"],
+   "Type": ["Distance"],
    "Brand": "Adafruit",
    "Model": 1137,
    "IC": "MB7092",
@@ -1554,7 +1540,7 @@
    "Link": "https://www.adafruit.com/products/1137"
  },
  {
-   "Type": ["Proximity"],
+   "Type": ["PIR"],
    "Brand": "sparkfun",
    "Model": 13285,
    "IC": "",
@@ -1568,7 +1554,7 @@
    "Link": "https://www.sparkfun.com/products/13285"
  },
  {
-   "Type": ["Proximity"],
+   "Type": ["PIR"],
    "Brand": "Adafruit",
    "Model": 189,
    "IC": "",
@@ -1596,7 +1582,7 @@
    "Link": "https://www.adafruit.com/products/815"
  },
  {
-   "Type": ["PWM"],
+   "Type": ["Dotmatrix"],
    "Brand": "Adafruit",
    "Model": 1455,
    "IC": "TLC59711",
@@ -1610,7 +1596,7 @@
    "Link": "https://www.adafruit.com/products/1455"
  },
  {
-   "Type": ["PWM"],
+   "Type": ["Dotmatrix"],
    "Brand": "Adafruit",
    "Model": 1429,
    "IC": "TLC5947",
@@ -1666,7 +1652,7 @@
    "Link": "https://www.adafruit.com/products/364"
  },
  {
-   "Type": ["Soil Moisture"],
+   "Type": ["Soil Moisture","Humidity"],
    "Brand": "sparkfun",
    "Model": 13322,
    "IC": "",
@@ -1708,7 +1694,7 @@
    "Link": "https://www.adafruit.com/products/1063"
  },
  {
-   "Type": ["Sound"],
+   "Type": ["Sound","Amplifiers"],
    "Brand": "Adafruit",
    "Model": 1713,
    "IC": "MAX9814",
@@ -1722,7 +1708,7 @@
    "Link": "https://www.adafruit.com/products/1713"
  },
  {
-   "Type": ["Sound"],
+   "Type": ["Buzzer"],
    "Brand": "Adafruit",
    "Model": 1739,
    "IC": "",
@@ -1736,7 +1722,7 @@
    "Link": "https://www.adafruit.com/products/1739"
  },
  {
-   "Type": ["Sound"],
+   "Type": ["Buzzer"],
    "Brand": "Adafruit",
    "Model": 160,
    "IC": "",
@@ -1750,7 +1736,7 @@
    "Link": "https://www.adafruit.com/products/160"
  },
  {
-   "Type": ["Sound"],
+   "Type": ["Buzzer"],
    "Brand": "Adafruit",
    "Model": 1740,
    "IC": "",
@@ -1778,7 +1764,7 @@
    "Link": "https://www.sparkfun.com/products/7950"
  },
  {
-   "Type": ["Speaker"],
+   "Type": ["Buzzer"],
    "Brand": "sparkfun",
    "Model": 13940,
    "IC": "",
@@ -1792,7 +1778,7 @@
    "Link": "https://www.sparkfun.com/products/13940"
  },
  {
-   "Type": ["Storage"],
+   "Type": ["SDCard"],
    "Brand": "Adafruit",
    "Model": 254,
    "IC": "",
@@ -1946,7 +1932,7 @@
    "Link": "https://www.sparkfun.com/products/10301"
  },
  {
-   "Type": ["WIFI"],
+   "Type": ["WIFI","UART"],
    "Brand": "Adafruit",
    "Model": 2999,
    "IC": "",
@@ -1960,7 +1946,7 @@
    "Link": "https://www.adafruit.com/products/2999"
  },
  {
-   "Type": ["WIFI"],
+   "Type": ["WIFI","UART"],
    "Brand": "Adafruit",
    "Model": 2471,
    "IC": "ESP8266",
