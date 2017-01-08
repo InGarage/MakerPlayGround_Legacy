@@ -530,7 +530,7 @@
         {
           "id": 31,
           "name" : "Show number",
-          "type" : ["7segment"],
+          "type" : ["Sevensegment"],
           "description" : "show number on 7segment only 1 digit",
           
           "property" : [
@@ -548,7 +548,7 @@
         }
       ] 
     },
-    /*{
+    {
       "name" : "Dotmatrix",
       "children" : [
         {
@@ -567,11 +567,11 @@
               "control" : "DOTMATRIX_CONTROL"
             }
           ],
-          "image" : "/assets/img/LED_on.png",
+          "image" : "/assets/img/LED_on.png"
 
         }
       ] 
-    }*/
+    },
     {
       "name" : "Display",
       "children" : [
@@ -820,7 +820,7 @@
         {
           "id": 46,
           "name" : "Liquid Level",
-          "type" : ["Liquid Level","LCD16X2"],
+          "type" : ["LiquidLevel","LCD16X2"],
           "description" : "Display Liquid Level",
           
           "property" : [
