@@ -11,7 +11,7 @@
           "property" : [
              {
             "name":"name" ,
-            "control" : "Textbox"
+            "control" : "TextBox"
             },
             {
               "name": "Percentage",
@@ -30,7 +30,7 @@
           "property" : [
              {
             "name":"name" ,
-            "control" : "Textbox"
+            "control" : "TextBox"
             },
             {
               "name": "Periode",
@@ -48,7 +48,7 @@
           "property" : [
              {
             "name":"name" ,
-            "control" : "Textbox"
+            "control" : "TextBox"
             },
             {
               "name": "Brightness",
@@ -65,7 +65,7 @@
            "property" : [
              {
             "name":"name" ,
-            "control" : "Textbox"
+            "control" : "TextBox"
             }],
           "image" : "/assets/img/Motor_off.png"
         }
@@ -83,7 +83,7 @@
           "property" : [
              {
             "name":"name" ,
-            "control" : "Textbox"
+            "control" : "TextBox"
             },
             {
               "name": "Percentage",
@@ -102,7 +102,7 @@
           "property" : [
              {
             "name":"name" ,
-            "control" : "Textbox"
+            "control" : "TextBox"
             },
             {
               "name": "Periode",
@@ -120,7 +120,7 @@
           "property" : [
              {
             "name":"name" ,
-            "control" : "Textbox"
+            "control" : "TextBox"
             },
             {
               "name": "Brightness",
@@ -141,7 +141,7 @@
            "property" : [
              {
             "name":"name" ,
-            "control" : "Textbox"
+            "control" : "TextBox"
             }],
           "image" : "/assets/img/Motor_off.png"
         },
@@ -154,7 +154,7 @@
           "property" : [
              {
             "name":"name" ,
-            "control" : "Textbox"
+            "control" : "TextBox"
             },
             {
               "name": "Colour",
@@ -176,7 +176,7 @@
            "property" : [
              {
             "name":"name" ,
-            "control" : "Textbox"
+            "control" : "TextBox"
             }],
           "image" : "/assets/img/LED_on.png"
         },
@@ -188,7 +188,7 @@
            "property" : [
              {
             "name":"name" ,
-            "control" : "Textbox"
+            "control" : "TextBox"
             }],
           "image" : "/assets/img/LED_off.png"
         },
@@ -201,7 +201,7 @@
           "property" : [
              {
             "name":"name" ,
-            "control" : "Textbox"
+            "control" : "TextBox"
             },
             {
               "name": "Colour",
@@ -219,7 +219,7 @@
           "property" : [
              {
             "name":"name" ,
-            "control" : "Textbox"
+            "control" : "TextBox"
             },
             {
               "name": "Text",
@@ -237,7 +237,7 @@
           "property" : [
              {
             "name":"name" ,
-            "control" : "Textbox"
+            "control" : "TextBox"
             },
             {
               "name": "Colour",
@@ -253,7 +253,7 @@
            "property" : [
              {
             "name":"name" ,
-            "control" : "Textbox"
+            "control" : "TextBox"
             }],
           "image" : "/assets/img/LED_off.png"
         }
@@ -271,7 +271,7 @@
           "property" : [
              {
             "name":"name" ,
-            "control" : "Textbox"
+            "control" : "TextBox"
             },
             {
               "name": "Filename",
@@ -292,7 +292,7 @@
            "property" : [
              {
             "name":"name" ,
-            "control" : "Textbox"
+            "control" : "TextBox"
             }],
 
           "image" : "/assets/img/LED_off.png"
@@ -305,7 +305,7 @@
            "property" : [
              {
             "name":"name" ,
-            "control" : "Textbox"
+            "control" : "TextBox"
             }],
 
           "image" : "/assets/img/LED_off.png"
@@ -319,7 +319,7 @@
           "property" : [
              {
             "name":"name" ,
-            "control" : "Textbox"
+            "control" : "TextBox"
             },
             {
               "name": "Volume",
@@ -337,7 +337,7 @@
            "property" : [
              {
             "name":"name" ,
-            "control" : "Textbox"
+            "control" : "TextBox"
             }],
           "image" : "/assets/img/LED_on.png",
           "default" : "30" 
@@ -356,7 +356,7 @@
           "property" : [
              {
             "name":"name" ,
-            "control" : "Textbox"
+            "control" : "TextBox"
             },
             {
               "name": "Volume",
@@ -373,7 +373,7 @@
            "property" : [
              {
             "name":"name" ,
-            "control" : "Textbox"
+            "control" : "TextBox"
             }],
 
           "image" : "/assets/img/LED_off.png"
@@ -386,7 +386,7 @@
            "property" : [
              {
             "name":"name" ,
-            "control" : "Textbox"
+            "control" : "TextBox"
             }],
 
           "image" : "/assets/img/LED_off.png"
@@ -400,7 +400,7 @@
           "property" : [
              {
             "name":"name" ,
-            "control" : "Textbox"
+            "control" : "TextBox"
             },
             {
               "name": "Volume",
@@ -425,7 +425,7 @@
           "property" : [
              {
             "name":"name" ,
-            "control" : "Textbox"
+            "control" : "TextBox"
             },
             {
               "name": "direction",
@@ -433,7 +433,7 @@
             },
             {
               "name": "speed",
-              "control" : "Textbox"
+              "control" : "TextBox"
             }
           ],
           "image" : "/assets/img/LED_on.png"
@@ -446,7 +446,7 @@
            "property" : [
              {
             "name":"name" ,
-            "control" : "Textbox"
+            "control" : "TextBox"
             }],
           "image" : "/assets/img/LED_off.png"
         },
@@ -459,7 +459,7 @@
           "property" : [
              {
             "name":"name" ,
-            "control" : "Textbox"
+            "control" : "TextBox"
             },
             {
               "name": "Speed",
@@ -476,7 +476,7 @@
            "property" : [
              {
             "name":"name" ,
-            "control" : "Textbox"
+            "control" : "TextBox"
             }],
           "image" : "/assets/img/LED_off.png"
         }, 
@@ -489,7 +489,7 @@
           "property" : [
              {
             "name":"name" ,
-            "control" : "Textbox"
+            "control" : "TextBox"
             },
             {
               "name": "Degree",
@@ -512,11 +512,11 @@
           "property" : [
              {
             "name":"name" ,
-            "control" : "Textbox"
+            "control" : "TextBox"
             },
             {
               "name": "time",
-              "control" : "Textbox"
+              "control" : "TextBox"
             }
           ],
           "image" : "/assets/img/LED_on.png",
@@ -536,11 +536,11 @@
           "property" : [
              {
             "name":"name" ,
-            "control" : "Textbox"
+            "control" : "TextBox"
             },
             {
               "name": "Number",
-              "control" : "Textbox"
+              "control" : "TextBox"
             }
           ],
           "image" : "/assets/img/LED_on.png",
@@ -560,7 +560,7 @@
           "property" : [
              {
             "name":"name" ,
-            "control" : "Textbox"
+            "control" : "TextBox"
             },
             {
               "name": "Data",
@@ -584,7 +584,7 @@
           "property" : [
              {
             "name":"name" ,
-            "control" : "Textbox"
+            "control" : "TextBox"
             },
             {
               "name": "LCD device name",
@@ -602,7 +602,7 @@
           "property" : [
              {
             "name":"name" ,
-            "control" : "Textbox"
+            "control" : "TextBox"
             },
             {
               "name": "LCD device name",
@@ -620,7 +620,7 @@
           "property" : [
              {
             "name":"name" ,
-            "control" : "Textbox"
+            "control" : "TextBox"
             },
             {
               "name": "LCD device name",
@@ -638,7 +638,7 @@
           "property" : [
              {
             "name":"name" ,
-            "control" : "Textbox"
+            "control" : "TextBox"
             },
             {
               "name": "LCD device name",
@@ -656,7 +656,7 @@
           "property" : [
              {
             "name":"name" ,
-            "control" : "Textbox"
+            "control" : "TextBox"
             },
             {
               "name": "LCD device name",
@@ -674,7 +674,7 @@
           "property" : [
              {
             "name":"name" ,
-            "control" : "Textbox"
+            "control" : "TextBox"
             },
             {
               "name": "LCD device name",
@@ -692,7 +692,7 @@
           "property" : [
              {
             "name":"name" ,
-            "control" : "Textbox"
+            "control" : "TextBox"
             },
             {
               "name": "LCD device name",
@@ -710,7 +710,7 @@
           "property" : [
              {
             "name":"name" ,
-            "control" : "Textbox"
+            "control" : "TextBox"
             },
             {
               "name": "LCD device name",
@@ -729,7 +729,7 @@
           "property" : [
              {
             "name":"name" ,
-            "control" : "Textbox"
+            "control" : "TextBox"
             },
             {
               "name": "LCD device name",
@@ -748,7 +748,7 @@
           "property" : [
              {
             "name":"name" ,
-            "control" : "Textbox"
+            "control" : "TextBox"
             },
             {
               "name": "LCD device name",
@@ -767,7 +767,7 @@
           "property" : [
              {
             "name":"name" ,
-            "control" : "Textbox"
+            "control" : "TextBox"
             },
             {
               "name": "LCD device name",
@@ -786,7 +786,7 @@
           "property" : [
              {
             "name":"name" ,
-            "control" : "Textbox"
+            "control" : "TextBox"
             },
             {
               "name": "LCD device name",
@@ -806,7 +806,7 @@
           "property" : [
              {
             "name":"name" ,
-            "control" : "Textbox"
+            "control" : "TextBox"
             },
             {
               "name": "LCD device name",
@@ -826,7 +826,7 @@
           "property" : [
              {
             "name":"name" ,
-            "control" : "Textbox"
+            "control" : "TextBox"
             },
             {
               "name": "LCD device name",
@@ -845,7 +845,7 @@
           "property" : [
              {
             "name":"name" ,
-            "control" : "Textbox"
+            "control" : "TextBox"
             },
             {
               "name": "LCD device name",
@@ -865,7 +865,7 @@
           "property" : [
              {
             "name":"name" ,
-            "control" : "Textbox"
+            "control" : "TextBox"
             },
             {
               "name": "LCD device name",
@@ -883,7 +883,7 @@
           "property" : [
              {
             "name":"name" ,
-            "control" : "Textbox"
+            "control" : "TextBox"
             },
             {
               "name": "LCD device name",
@@ -901,7 +901,7 @@
           "property" : [
              {
             "name":"name" ,
-            "control" : "Textbox"
+            "control" : "TextBox"
             },
             {
               "name": "LCD device name",

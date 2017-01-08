@@ -21,6 +21,8 @@ export class GraphCanvas {
     private edgeFabricObject: { [edge_id: number]: fabric.IObject[] } = {};  // TODO: refactor to more efficient datastructure
     private callback: { [index: string]: (CanvasEventOptions) => void } = {};  // TODO: refactor to more efficient datastructure
 
+    private activeObject: any;
+
     constructor(element: HTMLCanvasElement | string, options?: fabric.ICanvasOptions) {
         this.canvas = new fabric.Canvas(element, options);
         // do not allow any object to move out of canvas area
@@ -71,7 +73,50 @@ export class GraphCanvas {
 
         let image: fabric.IImage;
         fabric.Image.fromURL(action.image
-            , (im) => { image = im; group.addWithUpdate(im); this.canvas.add(group); }
+            , (im) => 
+            { 
+                image = im; 
+
+                /**
+                 * HANDLE IMAGE EVENT
+                 */
+                image.on('moving', (e) => {
+                    let newStartX: number, newStartY: number;
+                    newStartX = image.getLeft();
+                    newStartY = image.getTop();
+                    text.set({
+                        left: newStartX,
+                        top: newStartY + NODE_NAME_YPOS,
+                    });   
+                });
+
+                image.on('modified', (e) => {
+                    let newStartX: number, newStartY: number;
+                    newStartX = image.getLeft();
+                    newStartY = image.getTop();
+
+                    this.callback['node:move']({
+                        target_id: nodeData.getNodeId(),
+                        center_x: newStartX,
+                        center_y: newStartY,
+                    });
+
+                    image.visible = false;
+                    this.canvas.setActiveObject(image);   
+                });
+
+                image.on('selected', (e) => {
+                    this.callback['node:selected']({
+                        target_id: nodeData.getNodeId(),
+                    });
+                });
+
+                image.hasControls = image.hasBorders = false;
+                text.hasControls = text.hasBorders = false;
+                
+                this.canvas.add(image,text);
+                this.nodeFabricObject[nodeData.getNodeId()] = [image,text];
+            }
             , {
                 width: NODE_SIZE,
                 height: NODE_SIZE,
@@ -88,32 +133,40 @@ export class GraphCanvas {
             originY: 'center',
             fontSize: NODE_NAME_FONTSIZE
         });
-        group.addWithUpdate(text);
 
-        // Send data to populate property window when this action is selected
-        group.on('selected', (e) => {
-            //this.myEvent.emit(action);
-
-            this.callback['node:selected']({
-                target_id: nodeData.getNodeId(),
+        /**
+         * HANDLE TEXT EVENT
+         */
+        text.on('moving', (options) => {
+            let newStartX: number, newStartY: number;
+            newStartX = text.getLeft();
+            newStartY = text.getTop();
+            image.set({
+                left: newStartX,
+                top: newStartY - NODE_NAME_YPOS,
             });
         });
 
-        // Update location of action when modified
-        group.on('modified', (e) => {
-            //this.graphModel.moveNode(actionData,groupAction.getTop(),groupAction.getLeft());
+        text.on('modified', (options) => {
+            let newStartX: number, newStartY: number;
+            newStartX = text.getLeft();
+            newStartY = text.getTop();
+
+            this.callback['node:move']({
+                target_id: nodeData.getNodeId(),
+                center_x: newStartX,
+                center_y: newStartY - NODE_NAME_YPOS,
+            });
+
+            text.visible = false;
+            this.canvas.setActiveObject(text); 
         });
 
-        group.hasControls = group.hasBorders = false;
-
-        this.nodeFabricObject[nodeData.getNodeId()] = [group];
-    }
-
-    private removeNode(nodeData: NodeData) {
-        let obj = this.nodeFabricObject[nodeData.getNodeId()];
-        this.nodeFabricObject[nodeData.getNodeId()] = undefined;
-        for (let o of obj)
-            this.canvas.remove(o);
+        text.on('selected', (options) => {
+            this.callback['node:selected']({
+                target_id: nodeData.getNodeId(),
+            });
+        })
     }
 
     private drawEdge(triggerData: EdgeData) {
@@ -372,7 +425,6 @@ export class GraphCanvas {
         if ((startX < endX) && (startY >= endY)) {
             return [currentOriginTriangleX - difX
                 , currentOriginTriangleY + difY];
-
         }
         else if ((startX <= endX) && (startY < endY)) {
             return [currentOriginTriangleX - difX
@@ -426,11 +478,18 @@ export class GraphCanvas {
         }
     }
 
+    private removeNode(nodeData: NodeData) {
+        let obj = this.nodeFabricObject[nodeData.getNodeId()];
+        this.nodeFabricObject[nodeData.getNodeId()] = undefined;
+        for (let o of obj)
+            this.canvas.remove(o);
+    }
+
     private removeEdge(edgeData: EdgeData) {
         let obj = this.edgeFabricObject[edgeData.getEdgeId()];
         this.edgeFabricObject[edgeData.getEdgeId()] = undefined;
         for (let o of obj)
-            this.canvas.remove(o);
+            this.canvas.remove(o); 
     }
 
     /**

@@ -125,7 +125,12 @@ export class GraphData {
     }
 
     addNode(action: Action): GraphData {
-        console.log(action);
+        let nodeCount = [];
+        this.data.get('nodes').forEach((value, key) => {
+            nodeCount.push(key);
+        });
+
+        let newNode_key = nodeCount.length + 1;
         let newObj = {};
         let allParams = {};
         newObj = {
@@ -141,9 +146,8 @@ export class GraphData {
                 allParams[prop.name] = '';
         }
         newObj["params"] = allParams;
-        console.log(newObj["params"]);
 
-        return new GraphData(this.data.setIn(['nodes', 6], Immutable.fromJS(newObj)));
+        return new GraphData(this.data.setIn(['nodes', newNode_key], Immutable.fromJS(newObj)));
     }
 
     removeNode(actionData: NodeData): GraphData {
@@ -156,7 +160,11 @@ export class GraphData {
     disconnectEdgeFromSrcNode() {
     }
 
-    moveNode(actionData: NodeData, topPos: number, leftPos: number) {
+    moveNode(id: number, leftPos: number, topPos: number) {
+        return new GraphData(this.data.withMutations(map => {
+            map.setIn(['nodes', id, 'display_x'], leftPos)
+                .setIn(['nodes', id, 'display_y'], topPos)
+        }));
     }
 
     moveEdge(id, x1, x2, y1, y2): GraphData {

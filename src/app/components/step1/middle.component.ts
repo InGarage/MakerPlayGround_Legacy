@@ -27,7 +27,6 @@ export class MiddleComponent implements OnInit {
     }
 
     addNewNode(newAction: Action) {
-
         this.model = this.model.addNode(newAction);
         this.canvas.redraw(this.model);
     }
@@ -35,6 +34,11 @@ export class MiddleComponent implements OnInit {
     ngOnInit() {
         this.canvas = new GraphCanvas('c');
         this.canvas.redraw(this.model);
+
+        this.canvas.on('node:move', (options) => {
+            this.model = this.model.moveNode(options.target_id, options.center_x, options.center_y);
+            this.canvas.redraw(this.model);
+        })
 
         this.canvas.on('edge:move', (options) => {
             this.model = this.model.moveEdge(options.target_id, options.start_x, options.end_x, options.start_y, options.end_y)
