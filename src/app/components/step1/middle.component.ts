@@ -41,7 +41,7 @@ export class MiddleComponent implements OnInit {
         })
 
         this.canvas.on('edge:move', (options) => {
-            this.model = this.model.moveEdge(options.target_id, options.start_x, options.end_x, options.start_y, options.end_y)
+            this.model = this.model.moveEdge(options.target_id, options.start_x, options.end_x, options.start_y, options.end_y); 
             this.canvas.redraw(this.model);
         });
 
@@ -51,7 +51,21 @@ export class MiddleComponent implements OnInit {
 
         this.canvas.on('object:deselected', (options) => {
             this.nodeSelect.emit(null);
-        })
+        });
+
+        this.canvas.on('edge:connectionDst', (options) => {
+            this.model = this.model.connectionEdgeOfDstNode(options.dst_node_id
+            , options.target_id, options.start_x, options.end_x, options.start_y, options.end_y);
+            this.canvas.redraw(this.model);
+        });
+
+        this.canvas.on('edge:connectionSrc', (options) => {
+            this.model = this.model.connectionEdgeOfSrcNode(options.src_node_id
+            , options.target_id, options.start_x, options.end_x, options.start_y, options.end_y);
+            this.canvas.redraw(this.model);      
+        });
+
+
     }
 
 
@@ -82,7 +96,9 @@ export class MiddleComponent implements OnInit {
                     'temp': 50
                 },
                 'src_node_id': 0,
+                'src_angle': 0,
                 'dst_node_id': 0,
+                'dst_angle': 0,
                 'start_x': 300,
                 'start_y': 300,
                 'end_x': 500,

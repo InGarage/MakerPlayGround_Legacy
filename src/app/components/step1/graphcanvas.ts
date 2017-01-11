@@ -21,7 +21,8 @@ export class GraphCanvas {
     private edgeFabricObject: { [edge_id: number]: fabric.IObject[] } = {};  // TODO: refactor to more efficient datastructure
     private callback: { [index: string]: (CanvasEventOptions) => void } = {};  // TODO: refactor to more efficient datastructure
 
-    private activeObject: any;
+    private difXbetweenEdgePointandNodeOrigin: number;
+    private difYbetweenEdgePointandNodeOrigin: number;
 
     constructor(element: HTMLCanvasElement | string, options?: fabric.ICanvasOptions) {
         this.canvas = new fabric.Canvas(element, options);
@@ -54,6 +55,7 @@ export class GraphCanvas {
                 });
             }
         });
+
     }
 
     // TODO: This function should be refactored into the action class / service
@@ -67,9 +69,178 @@ export class GraphCanvas {
         return undefined;
     }
 
+    private getNewEndXYForMovingNodeWithConnection(nodeData, edgeDst, image) {
+        let originX: number, originY: number, edgeEndX: number, edgeEndY: number;
+        let difX: number, difY: number, currentX: number, currentY: number;
+        let newEndX: number, newEndY: number;
+        originX = nodeData.getX();
+        originY = nodeData.getY();
+        edgeEndX = edgeDst.getEndX();
+        edgeEndY = edgeDst.getEndY()
+
+        difX = Math.abs(originX - edgeEndX);
+        difY = Math.abs(originY - edgeEndY);
+ 
+        currentX = image.getLeft();
+        currentY = image.getTop();
+
+        if ((edgeEndX < originX) && (edgeEndY > originY)) {
+            return [currentX - difX, currentY + difY];
+        }
+        if ((edgeEndX < originX) && (edgeEndY < originY)) {
+            return [currentX - difX, currentY - difY];
+        }
+        if ((edgeEndX > originX) && (edgeEndY < originY)) {
+            return [currentX + difX, currentY - difY];
+        }
+        if ((edgeEndX > originX) && (edgeEndY > originY)) {
+            return [currentX + difX, currentY + difY];
+        }
+    }
+
+    private manupulateMovingDstNode(nodeData: NodeData, edgeDst: EdgeData, image) {
+        let newEndX: number, newEndY: number;
+
+        [newEndX, newEndY] = this.getNewEndXYForMovingNodeWithConnection(nodeData, edgeDst, image);
+
+        let edgeStartX = edgeDst.getStartX();
+        let edgeStartY = edgeDst.getStartY();
+        let angle = Math.atan2((newEndY - edgeStartY), (newEndX - edgeStartX));   // in radian
+
+        // 0 = line, 1 = triangle, 2 = dotTail, 3 = dotHead
+        let dotTail = this.edgeFabricObject[edgeDst.getEdgeId()][2];
+        dotTail.set({
+            top: newEndY,
+            left: newEndX,
+        });
+
+        let line = this.edgeFabricObject[edgeDst.getEdgeId()][0];
+        line.set({
+            'x2': newEndX - EDGE_ARROW_HEAD_SIZE / 2 * Math.cos(angle),
+            'y2': newEndY - EDGE_ARROW_HEAD_SIZE / 2 * Math.sin(angle)
+        });
+
+        let triangle = this.edgeFabricObject[edgeDst.getEdgeId()][1];
+        triangle.set({
+            left: newEndX - EDGE_ARROW_HEAD_SIZE / 2 * Math.cos(angle),
+            top: newEndY - EDGE_ARROW_HEAD_SIZE / 2 * Math.sin(angle),
+            angle: 90 + (angle * 180 / Math.PI),
+        });
+    }
+
+    private getNewStartXYForMovingNodeWithConnection(nodeData, edgeSrc, image) {
+        let originX: number, originY: number, edgeStartX: number, edgeStartY: number;
+        let difX: number, difY: number, currentX: number, currentY: number;
+        let newEndX: number, newEndY: number;
+        originX = nodeData.getX();
+        originY = nodeData.getY();
+        edgeStartX = edgeSrc.getStartX();
+        edgeStartY = edgeSrc.getStartY()
+
+        difX = Math.abs(originX - edgeStartX);
+        difY = Math.abs(originY - edgeStartY);
+ 
+        currentX = image.getLeft();
+        currentY = image.getTop();
+
+        if ((edgeStartX < originX) && (edgeStartY > originY)) {
+            return [currentX - difX, currentY + difY];
+        }
+        if ((edgeStartX < originX) && (edgeStartY < originY)) {
+            return [currentX - difX, currentY - difY];
+        }
+        if ((edgeStartX > originX) && (edgeStartY < originY)) {
+            return [currentX + difX, currentY - difY];
+        }
+        if ((edgeStartX > originX) && (edgeStartY > originY)) {
+            return [currentX + difX, currentY + difY];
+        }
+    }
+
+    private manupulateMovingSrcNode(nodeData: NodeData, edgeSrc: EdgeData, image) {
+        let newStartX: number, newStartY: number;
+
+        [newStartX, newStartY] = this.getNewStartXYForMovingNodeWithConnection(nodeData, edgeSrc, image);
+
+        let edgeEndX = edgeSrc.getEndX();
+        let edgeEndY = edgeSrc.getEndY();
+        let angle = Math.atan2((edgeEndY - newStartY), (edgeEndX - newStartX));   // in radian
+
+        // 0 = line, 1 = triangle, 2 = dotTail, 3 = dotHead
+        let dotHead = this.edgeFabricObject[edgeSrc.getEdgeId()][3];
+        dotHead.set({
+            top: newStartY,
+            left: newStartX,
+        });
+
+        let line = this.edgeFabricObject[edgeSrc.getEdgeId()][0];
+        line.set({
+            'x1': newStartX,
+            'y1': newStartY,
+            'x2': edgeEndX - EDGE_ARROW_HEAD_SIZE / 2 * Math.cos(angle),
+            'y2': edgeEndY - EDGE_ARROW_HEAD_SIZE / 2 * Math.sin(angle)
+        });
+
+        let triangle = this.edgeFabricObject[edgeSrc.getEdgeId()][1];
+        triangle.set({
+            left: edgeEndX - EDGE_ARROW_HEAD_SIZE / 2 * Math.cos(angle),
+            top: edgeEndY - EDGE_ARROW_HEAD_SIZE / 2 * Math.sin(angle),
+            angle: 90 + (angle * 180 / Math.PI),
+        });
+    }
+
+    private manipulateMovingConnectedNode_Display(nodeData: NodeData, image) {
+        let allEdgesDst: EdgeData[], allEdgesSrc: EdgeData[];
+        allEdgesDst = this.graph.getAllEdgesDstNode(nodeData.getNodeId(), nodeData.getX(), nodeData.getY());
+        allEdgesSrc = this.graph.getAllEdgesSrcNode(nodeData.getNodeId(), nodeData.getX(), nodeData.getY());       
+
+        if (allEdgesDst.length !== 0) {
+            for (let i=0; i<allEdgesDst.length; i++) {
+                this.manupulateMovingDstNode(nodeData, allEdgesDst[i], image);
+            }
+        }
+        if (allEdgesSrc.length !== 0) {
+            for (let i=0; i<allEdgesSrc.length; i++) {
+                this.manupulateMovingSrcNode(nodeData, allEdgesSrc[i], image);
+            }     
+        }
+    }
+
+    private manipulateMovingConnectedNode_UpdateData(nodeData: NodeData, image) {
+        let allEdgesDst: EdgeData[], allEdgesSrc: EdgeData[];
+        allEdgesDst = this.graph.getAllEdgesDstNode(nodeData.getNodeId(), nodeData.getX(), nodeData.getY());
+        allEdgesSrc = this.graph.getAllEdgesSrcNode(nodeData.getNodeId(), nodeData.getX(), nodeData.getY());       
+
+        if (allEdgesDst.length !== 0) {
+            for (let i=0; i<allEdgesDst.length; i++) {
+                this.manupulateMovingDstNode(nodeData, allEdgesDst[i], image);
+                this.callback['edge:connectionDst']({
+                    target_id: allEdgesDst[i].getEdgeId(),
+                    start_x: this.edgeFabricObject[allEdgesDst[i].getEdgeId()][3].getLeft(),
+                    start_y: this.edgeFabricObject[allEdgesDst[i].getEdgeId()][3].getTop(),
+                    end_x: this.edgeFabricObject[allEdgesDst[i].getEdgeId()][2].getLeft(),
+                    end_y: this.edgeFabricObject[allEdgesDst[i].getEdgeId()][2].getTop(),
+                    dst_node_id: allEdgesDst[i].getDestinationNodeId(),
+                });
+            }
+        }
+        if (allEdgesSrc.length !== 0) {
+            for (let i=0; i<allEdgesSrc.length; i++) {
+                this.manupulateMovingSrcNode(nodeData, allEdgesSrc[i], image);
+                this.callback['edge:connectionSrc']({
+                    target_id: allEdgesSrc[i].getEdgeId(),
+                    start_x: this.edgeFabricObject[allEdgesSrc[i].getEdgeId()][3].getLeft(),
+                    start_y: this.edgeFabricObject[allEdgesSrc[i].getEdgeId()][3].getTop(),
+                    end_x: this.edgeFabricObject[allEdgesSrc[i].getEdgeId()][2].getLeft(),
+                    end_y: this.edgeFabricObject[allEdgesSrc[i].getEdgeId()][2].getTop(),
+                    src_node_id: allEdgesSrc[i].getSourceNodeId(),
+                });
+            }     
+        }
+    }
+
     private drawNode(nodeData: NodeData) {
         let action = this.findActionById(nodeData.getActionId());
-        let group = new fabric.Group();
 
         let image: fabric.IImage;
         fabric.Image.fromURL(action.image
@@ -88,12 +259,20 @@ export class GraphCanvas {
                         left: newStartX,
                         top: newStartY + NODE_NAME_YPOS,
                     });   
+                    circlePatrol.set({
+                        left: newStartX,
+                        top: newStartY,
+                    });
+
+                    this.manipulateMovingConnectedNode_Display(nodeData, image);
                 });
 
                 image.on('modified', (e) => {
                     let newStartX: number, newStartY: number;
                     newStartX = image.getLeft();
                     newStartY = image.getTop();
+
+                    this.manipulateMovingConnectedNode_UpdateData(nodeData, image);
 
                     this.callback['node:move']({
                         target_id: nodeData.getNodeId(),
@@ -113,9 +292,11 @@ export class GraphCanvas {
 
                 image.hasControls = image.hasBorders = false;
                 text.hasControls = text.hasBorders = false;
-                
-                this.canvas.add(image,text);
-                this.nodeFabricObject[nodeData.getNodeId()] = [image,text];
+                circlePatrol.hasControls = circlePatrol.hasBorders = false;
+                circlePatrol.visible = false;
+        
+                this.canvas.add(circlePatrol,text,image);
+                this.nodeFabricObject[nodeData.getNodeId()] = [circlePatrol,text,image];
             }
             , {
                 width: NODE_SIZE,
@@ -123,7 +304,20 @@ export class GraphCanvas {
                 left: nodeData.getX(),
                 top: nodeData.getY(),
                 originX: 'center',
-                originY: 'center'
+                originY: 'center',
+            });
+
+
+        let circlePatrol = new fabric.Circle({
+            left: nodeData.getX(),
+            top: nodeData.getY(),
+            radius: NODE_SIZE/2,
+            stroke: 'black',
+            strokeWidth: 15,
+            opacity: 0.2,
+            fill: 'rgba(0,0,0,0)',
+            originX: 'center',
+            originY: 'center',
             });
 
         let text = new fabric.Text(nodeData.getActionParams('name'), {
@@ -145,12 +339,21 @@ export class GraphCanvas {
                 left: newStartX,
                 top: newStartY - NODE_NAME_YPOS,
             });
+
+            circlePatrol.set({
+                left: newStartX,
+                top: newStartY - NODE_NAME_YPOS,
+            });
+
+            this.manipulateMovingConnectedNode_Display(nodeData, image);
         });
 
         text.on('modified', (options) => {
             let newStartX: number, newStartY: number;
             newStartX = text.getLeft();
             newStartY = text.getTop();
+
+            this.manipulateMovingConnectedNode_UpdateData(nodeData, image);
 
             this.callback['node:move']({
                 target_id: nodeData.getNodeId(),
@@ -212,8 +415,8 @@ export class GraphCanvas {
                 left: nEndX - EDGE_ARROW_HEAD_SIZE / 2 * Math.cos(angle),
                 top: nEndY - EDGE_ARROW_HEAD_SIZE / 2 * Math.sin(angle),
             });
-
         });
+
         // connect if arrow intersect with node
         line.on('modified', (options) => {
             // Need to re-draw canvas, so that dot can be clicked
@@ -263,7 +466,7 @@ export class GraphCanvas {
             let currentOriginLineX = line.getLeft();
             let currentOriginLineY = line.getTop();
             let nStartX: number, nStartY: number, nEndX: number, nEndY: number;
-           [nStartX, nEndX, nStartY, nEndY] = this.getCurrentPoint(triggerData, currentOriginLineX, currentOriginLineY);
+            [nStartX, nEndX, nStartY, nEndY] = this.getCurrentPoint(triggerData, currentOriginLineX, currentOriginLineY);
 
             dotHead.setLeft(nStartX);
             dotHead.setTop(nStartY);
@@ -325,25 +528,69 @@ export class GraphCanvas {
                 'x2': newEndX,
                 'y2': newEndY,
             });
+
+            let inRangeNode: NodeData = this.graph.getNodeInRange(newStartX,newStartY,(NODE_SIZE/2)+20);
+            if (inRangeNode !== undefined) {
+                let highlight = this.nodeFabricObject[inRangeNode.getNodeId()][0];
+                highlight.visible = true;
+            }
+            else {
+                for (let i=1; i<=Object.keys(this.nodeFabricObject).length; i++) {
+                    let highlight = this.nodeFabricObject[i][0];
+                    highlight.visible = false;
+                }
+            }
         });
 
         dotHead.on('modified', (options) => {
+            for (let i=1; i<=Object.keys(this.nodeFabricObject).length; i++) {
+                let highlight = this.nodeFabricObject[i][0];
+                highlight.visible = false;
+            }
             // Need to re-draw canvas, so that dot can be clicked
-            let newStartX:number, newStartY:number,newEndX:number, newEndY:number;
-            newStartX = dotHead.getLeft();
-            newStartY = dotHead.getTop();
+            let currentStartX: number, currentStartY: number;
+            let newStartX: number, newStartY:number,newEndX:number, newEndY:number;
+            currentStartX = dotHead.getLeft();
+            currentStartY = dotHead.getTop();
 
-            angle = Math.atan2((endY - newStartY), (endX - newStartX));
+            /* Find end_x and end_y for using with line */
+            angle = Math.atan2((endY - currentStartY), (endX - currentStartX));
             newEndX = endX - EDGE_ARROW_HEAD_SIZE / 2 * Math.cos(angle);
             newEndY = endY - EDGE_ARROW_HEAD_SIZE / 2 * Math.sin(angle);
 
-            this.callback['edge:move']({
-                target_id: triggerData.getEdgeId(),
-                start_x: newStartX,
-                start_y: newStartY,
-                end_x: endX,
-                end_y: endY,
-            });
+            let inRangeNode: NodeData = this.graph.getNodeInRange(currentStartX,currentStartY,(NODE_SIZE/2)+20);
+            // Intersect between dotTail and node, connect to destination node
+            if (inRangeNode !== undefined) {
+                let newEndX: number, newEndY: number;
+                [newStartX, newStartY] = this.getNewTopLeftForConnecting(inRangeNode, currentStartX, currentStartY);
+
+                dotHead.set({
+                    top: newStartY,
+                    left: newStartX,
+                    originX: 'center',
+                    originY: 'center',
+                });
+
+                this.callback['edge:connectionSrc']({
+                    target_id: triggerData.getEdgeId(),
+                    start_x: newStartX,
+                    start_y: newStartY,
+                    end_x: endX,
+                    end_y: endY,
+                    src_node_id: inRangeNode.getNodeId(),
+                });
+            }
+            // No intersection found, just update location of edge
+            else {
+                this.callback['edge:connectionSrc']({
+                    target_id: triggerData.getEdgeId(),
+                    start_x: currentStartX,
+                    start_y: currentStartY,
+                    end_x: endX,
+                    end_y: endY,
+                    src_node_id: 0,
+                });
+            }
         });
         /**
          * END OF DOT-HEAD
@@ -383,25 +630,64 @@ export class GraphCanvas {
                 'x2': newEndX,
                 'y2': newEndY,
             });
+
+            let inRangeNode: NodeData = this.graph.getNodeInRange(newEndX,newEndY,(NODE_SIZE/2)+20);
+            if (inRangeNode !== undefined) {
+                let highlight = this.nodeFabricObject[inRangeNode.getNodeId()][0];
+                highlight.visible = true;
+            }
+            else {
+                for (let i=1; i<=Object.keys(this.nodeFabricObject).length; i++) {
+                    let highlight = this.nodeFabricObject[i][0];
+                    highlight.visible = false;
+                }
+            }
         });
 
         dotTail.on('modified', (options) => {
+            for (let i=1; i<=Object.keys(this.nodeFabricObject).length; i++) {
+                let highlight = this.nodeFabricObject[i][0];
+                highlight.visible = false;
+            }
+
             // Need to re-draw canvas, so that dot can be clicked
             let currentEndX:number, currentEndY:number,newEndX:number, newEndY:number;
             currentEndX = dotTail.getLeft();
             currentEndY = dotTail.getTop();
 
-            angle = Math.atan2((currentEndY - startY), (currentEndX - startX));
-            newEndX = currentEndX - EDGE_ARROW_HEAD_SIZE / 2 * Math.cos(angle);
-            newEndY = currentEndY - EDGE_ARROW_HEAD_SIZE / 2 * Math.sin(angle);
+            let inRangeNode: NodeData = this.graph.getNodeInRange(currentEndX,currentEndY,(NODE_SIZE/2)+20);
+            // Intersect between dotTail and node, connect to destination node
+            if (inRangeNode !== undefined) {
+                let newEndX: number, newEndY: number;
+                [newEndX, newEndY] = this.getNewTopLeftForConnecting(inRangeNode, currentEndX, currentEndY);
 
-            this.callback['edge:move']({
-                target_id: triggerData.getEdgeId(),
-                start_x: startX,
-                start_y: startY,
-                end_x: currentEndX,
-                end_y: currentEndY,
-            });
+                dotTail.set({
+                    top: newEndY,
+                    left: newEndX,
+                    originX: 'center',
+                    originY: 'center',
+                });
+
+                this.callback['edge:connectionDst']({
+                    target_id: triggerData.getEdgeId(),
+                    start_x: startX,
+                    start_y: startY,
+                    end_x: newEndX,
+                    end_y: newEndY,
+                    dst_node_id: inRangeNode.getNodeId(),
+                });
+            }
+            // No intersection found, update location of edge and remove any connection
+            else {
+                this.callback['edge:connectionDst']({
+                    target_id: triggerData.getEdgeId(),
+                    start_x: startX,
+                    start_y: startY,
+                    end_x: currentEndX,
+                    end_y: currentEndY,
+                    dst_node_id: 0,
+                });
+            }
         });
         /**
          * END OF DOT-TAIL
@@ -409,6 +695,15 @@ export class GraphCanvas {
 
         this.edgeFabricObject[triggerData.getEdgeId()] = [line, triangle, dotTail, dotHead];
         this.canvas.add(line, triangle, dotTail, dotHead);
+    }
+
+    private getNewTopLeftForConnecting(inRangeNode, currentEndX, currentEndY) {
+        let originX = inRangeNode.getX();
+        let originY = inRangeNode.getY();
+        let angle = Math.atan2((currentEndY - originY), (currentEndX - originX));
+        let x = originX + (NODE_SIZE/2-2) * Math.cos(angle);
+        let y = originY + (NODE_SIZE/2-2) * Math.sin(angle);
+        return [x, y];
     }
 
     private getLeftTopLine(triggerData, currentOriginTriangleX, currentOriginTriangleY) {
@@ -481,6 +776,7 @@ export class GraphCanvas {
     private removeNode(nodeData: NodeData) {
         let obj = this.nodeFabricObject[nodeData.getNodeId()];
         this.nodeFabricObject[nodeData.getNodeId()] = undefined;
+
         for (let o of obj)
             this.canvas.remove(o);
     }
@@ -521,6 +817,7 @@ export class GraphCanvas {
             }
         });
         this.graph = graph;
+        
     }
 
     /**
@@ -528,14 +825,15 @@ export class GraphCanvas {
      * @param event event to register to which should be 'node:select', 'node:move' or ...
      * @param callback a callback function to be called when that specific event is occured
      */
-    on(event: 'node:selected' | 'node:move' | 'edge:move' | 'object:deselected', callback: (options: CanvasEventOptions) => void) {
+    on(event: 'node:selected' | 'node:move' | 'edge:move' | 'object:deselected' | 'edge:connectionDst' | 'edge:connectionSrc'
+        , callback: (options: CanvasEventOptions) => void) {
         this.callback[event] = callback;
     }
 }
 
 export interface CanvasEventOptions {
     target_id: number,
-    src_node_id?: number, // Unique id of the source node    
+    src_node_id?: number, // Unique id of the source node
     dst_node_id?: number, // Unique id of the destination node
     start_x?: number,     // Parameters needed to display the edge on the screen
     start_y?: number,
