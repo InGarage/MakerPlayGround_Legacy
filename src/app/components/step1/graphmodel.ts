@@ -117,6 +117,7 @@ export class GraphData {
     }
 
     getNode(nodeID: number): NodeData {
+        //console.log(nodeID);
         let check = this.data.getIn(['nodes', nodeID]);
         if (check !== undefined) {
             return new NodeData(nodeID, check);
@@ -230,7 +231,7 @@ export class GraphData {
 
     
 /**
- * Update location of edge, also disconnect edge from desNode
+ * Update location of edge
  */
     moveEdge(id, x1, x2, y1, y2): GraphData {
         return new GraphData(this.data.withMutations(map => {
@@ -238,7 +239,7 @@ export class GraphData {
                 .setIn(['edges', id, 'start_y'], y1)
                 .setIn(['edges', id, 'end_x'], x2)
                 .setIn(['edges', id, 'end_y'], y2)
-                .setIn(['edges', id, 'dst_node_id'], 0)
+                //.setIn(['edges', id, 'dst_node_id'], 0)
         }));
     }
 }

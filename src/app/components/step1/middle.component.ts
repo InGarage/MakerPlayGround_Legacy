@@ -103,8 +103,22 @@ export class MiddleComponent implements OnInit {
                 'start_y': 300,
                 'end_x': 500,
                 'end_y': 500
+            },
+            2: {
+                'trigger_id': 2,
+                'params': {
+                    'temp': 50
+                },
+                'src_node_id': 0,
+                'src_angle': 0,
+                'dst_node_id': 0,
+                'dst_angle': 0,
+                'start_x': 400,
+                'start_y': 200,
+                'end_x': 500,
+                'end_y': 200
             }
-        }
+        }       
     };
 
 }
