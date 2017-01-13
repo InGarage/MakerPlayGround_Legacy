@@ -173,6 +173,57 @@ export class GraphData {
         return result;
     }
 
+    getEdgeInRangeSrc(originX: number, originY: number, range: number = 70) : EdgeData {
+        //const NODE_SIZE: number = 100
+        let result : EdgeData;
+        this.data.get('edges').forEach((value, key) => {
+            let start_x = parseFloat(value.get('start_x'));
+            let start_y = parseFloat(value.get('start_y'));
+
+            // 60 is radius of circle
+            if (Math.sqrt((start_x-originX)*(start_x-originX) + (start_y-originY)*(start_y-originY)) < range) {
+                result = new EdgeData(key, value);
+                return false;
+            }
+        });
+
+        return result;
+    }
+
+    getEdgeInRangeDst(originX: number, originY: number, range: number = 70) : EdgeData {
+        //const NODE_SIZE: number = 100
+        let result : EdgeData;
+        this.data.get('edges').forEach((value, key) => {
+            let end_x = parseFloat(value.get('end_x'));
+            let end_y = parseFloat(value.get('end_y'));
+
+            // 60 is radius of circle
+            if (Math.sqrt((end_x-originX)*(end_x-originX) + (end_y-originY)*(end_y-originY)) < range) {
+                result = new EdgeData(key, value);
+                return false;
+            }
+        });
+
+        return result;
+    }
+/*
+    getEdgeInRangeDst(endX: number, endY: number, range: number = 70) : NodeData {
+        //const NODE_SIZE: number = 100
+        let result : EdgeData;
+        this.data.get('edges').forEach((value, key) => {
+            let display_x = parseFloat(value.get('display_x'));
+            let display_y = parseFloat(value.get('display_y'));
+
+            // 60 is radius of circle
+            if (Math.sqrt((endX-display_x)*(endX-display_x) + (endY-display_y)*(endY-display_y)) < range) {
+                result = new EdgeData(key, value);
+                return false;
+            }
+        });
+
+        return result;
+    }
+*/
     getAllEdgesSrcNode(nodeId: number, nodeX: number, nodeY: number, range: number = 70) {
         let allEdgesSrc: EdgeData[] = [];
         this.data.get('edges').forEach((value, key) => {
@@ -231,7 +282,7 @@ export class GraphData {
 
     
 /**
- * Update location of edge
+ * Update location of edge, also remove any src/dst connection
  */
     moveEdge(id, x1, x2, y1, y2): GraphData {
         return new GraphData(this.data.withMutations(map => {
@@ -239,7 +290,8 @@ export class GraphData {
                 .setIn(['edges', id, 'start_y'], y1)
                 .setIn(['edges', id, 'end_x'], x2)
                 .setIn(['edges', id, 'end_y'], y2)
-                //.setIn(['edges', id, 'dst_node_id'], 0)
+                .setIn(['edges', id, 'dst_node_id'], 0)
+                .setIn(['edges', id, 'src_node_id'], 0)
         }));
     }
 }
