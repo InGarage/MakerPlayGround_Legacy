@@ -173,34 +173,32 @@ export class GraphData {
         return result;
     }
 
-    getEdgeInRangeSrc(originX: number, originY: number, range: number = 70) : EdgeData {
+    getEdgeInRangeSrc(originX: number, originY: number, range: number = 70) : EdgeData[] {
         //const NODE_SIZE: number = 100
-        let result : EdgeData;
+        let result: EdgeData[] = [];
         this.data.get('edges').forEach((value, key) => {
             let start_x = parseFloat(value.get('start_x'));
             let start_y = parseFloat(value.get('start_y'));
 
             // 60 is radius of circle
             if (Math.sqrt((start_x-originX)*(start_x-originX) + (start_y-originY)*(start_y-originY)) < range) {
-                result = new EdgeData(key, value);
-                return false;
+                result.push(new EdgeData(key, value));
             }
         });
 
         return result;
     }
 
-    getEdgeInRangeDst(originX: number, originY: number, range: number = 70) : EdgeData {
+    getEdgeInRangeDst(originX: number, originY: number, range: number = 70) : EdgeData[] {
         //const NODE_SIZE: number = 100
-        let result : EdgeData;
+        let result : EdgeData[] = [];
         this.data.get('edges').forEach((value, key) => {
             let end_x = parseFloat(value.get('end_x'));
             let end_y = parseFloat(value.get('end_y'));
 
             // 60 is radius of circle
             if (Math.sqrt((end_x-originX)*(end_x-originX) + (end_y-originY)*(end_y-originY)) < range) {
-                result = new EdgeData(key, value);
-                return false;
+                result.push(new EdgeData(key, value));
             }
         });
 
