@@ -10,6 +10,8 @@ const NODE_NAME_YPOS: number = 70;
 const NODE_NAME_FONTSIZE: number = 20;
 const EDGE_ARROW_HEAD_SIZE: number = 15;
 const EDGE_ARROW_WIDTH: number = 2;
+const REMOVE_X: number = (NODE_SIZE/2);
+const REMOVE_Y: number = (NODE_SIZE/2);
 
 export class GraphCanvas {
 
@@ -56,6 +58,7 @@ export class GraphCanvas {
             //console.log(group._objects[0].getLeft(), group._objects[0].getTop());
             //console.log(this.nodeFabricObject[1][3].getLeft(), this.nodeFabricObject[1][3].getTop());
             this.setVisiblePatrolSelectedToFalse();
+            this.setVisibleRemoveButtonToFalse();
             this.callback['object:deselected']({
             });
         });
@@ -236,6 +239,32 @@ export class GraphCanvas {
         }
 
         return undefined;
+    }
+
+    private setVisibleDotsToFalse() {
+        for (let i = 1; i <= Object.keys(this.edgeFabricObject).length; i++) {
+            if (this.edgeFabricObject[i] === undefined) {
+                continue;
+            }
+            else {
+                let tail = this.edgeFabricObject[i][2];
+                tail.visible = false;
+                let head = this.edgeFabricObject[i][3];
+                head.visible = false;
+            }
+        }      
+    }
+
+    private setVisibleRemoveButtonToFalse() {
+        for (let i = 1; i <= Object.keys(this.nodeFabricObject).length; i++) {
+            if (this.nodeFabricObject[i] === undefined) {
+                continue;
+            }
+            else {
+                let cross = this.nodeFabricObject[i][4];
+                cross.visible = false;
+            }
+        }
     }
 
     private setVisiblePatrolSelectedToFalse() {
@@ -456,6 +485,7 @@ export class GraphCanvas {
                     this.setObjectLocation(text, newStartX, newStartY + NODE_NAME_YPOS);
                     this.setObjectLocation(circlePatrolInRange, newStartX, newStartY);
                     this.setObjectLocation(circlePatrolSelected, newStartX, newStartY);
+                    this.setObjectLocation(cross, newStartX + REMOVE_X, newStartY - REMOVE_Y);
 
                     // highlight this node when it is moving within edge boundary
                     this.getInRangeEdge(newStartX, newStartY, nodeData);
@@ -517,7 +547,9 @@ export class GraphCanvas {
 
                 image.on('selected', (e) => {
                     this.setVisiblePatrolSelectedToFalse();
+                    this.setVisibleRemoveButtonToFalse()
                     circlePatrolSelected.visible = true;
+                    cross.visible = true;
 
                     this.callback['node:selected']({
                         target_id: nodeData.getNodeId(),
@@ -528,11 +560,15 @@ export class GraphCanvas {
                 text.hasControls = text.hasBorders = false;
                 circlePatrolInRange.hasControls = circlePatrolInRange.hasBorders = false;
                 circlePatrolInRange.visible = false;
+                circlePatrolInRange.selectable = false;
                 circlePatrolSelected.hasControls = circlePatrolSelected.hasBorders = false;
                 circlePatrolSelected.visible = false;
+                circlePatrolSelected.selectable = false;
+                cross.hasControls = cross.hasBorders = false;
+                cross.visible = false;
 
-                this.canvas.add(circlePatrolInRange, circlePatrolSelected, text, image);
-                this.nodeFabricObject[nodeData.getNodeId()] = [circlePatrolInRange, circlePatrolSelected, text, image];
+                this.canvas.add(circlePatrolInRange, circlePatrolSelected, text, image, cross);
+                this.nodeFabricObject[nodeData.getNodeId()] = [circlePatrolInRange, circlePatrolSelected, text, image, cross];
             }
             , {
                 width: NODE_SIZE,
@@ -543,13 +579,83 @@ export class GraphCanvas {
                 originY: 'center',
             });
 
+        let cross_1 = new fabric.Line([
+            nodeData.getX() + (NODE_SIZE/2) - 10,
+            nodeData.getY() - (NODE_SIZE/2),
+            nodeData.getX() + (NODE_SIZE/2),
+            nodeData.getY() - (NODE_SIZE/2) + 10,
+        ], {
+                originX: 'center',
+                originY: 'center',
+                strokeWidth: 5,
+                stroke: 'red'
+            });
+
+        let cross_2 = new fabric.Line([
+            nodeData.getX() + (NODE_SIZE/2),
+            nodeData.getY() - (NODE_SIZE/2),
+            nodeData.getX() + (NODE_SIZE/2) - 10,
+            nodeData.getY() - (NODE_SIZE/2) + 10,
+        ], {
+                originX: 'center',
+                originY: 'center',
+                strokeWidth: 5,
+                stroke: 'red'
+            });
+
+        let cross = new fabric.Group([cross_1, cross_2], {
+            left: nodeData.getX() + REMOVE_X,
+            top: nodeData.getY() - REMOVE_Y,
+            originX: 'center',
+            originY: 'center',
+        });
+        cross.on('selected', (options) => {
+            /**
+             * Disconnect this node from any edge connection
+             */
+            let allEdgesDst: EdgeData[], allEdgesSrc: EdgeData[];
+            allEdgesDst = this.graph.getAllEdgesDstNode(nodeData.getNodeId(), nodeData.getX(), nodeData.getY());
+            allEdgesSrc = this.graph.getAllEdgesSrcNode(nodeData.getNodeId(), nodeData.getX(), nodeData.getY());
+
+            if (allEdgesDst.length !== 0) {
+                for (let edge of allEdgesDst) {
+                    this.manipulateMovingDstNode(nodeData, edge, image);
+                    this.callback['edge:connectionDst']({
+                        target_id: edge.getEdgeId(),
+                        start_x: this.edgeFabricObject[edge.getEdgeId()][3].getLeft(),
+                        start_y: this.edgeFabricObject[edge.getEdgeId()][3].getTop(),
+                        end_x: this.edgeFabricObject[edge.getEdgeId()][2].getLeft(),
+                        end_y: this.edgeFabricObject[edge.getEdgeId()][2].getTop(),
+                        dst_node_id: 0,
+                    });
+                }
+            }
+            if (allEdgesSrc.length !== 0) {
+                for (let edge of allEdgesSrc) {
+                    this.manipulateMovingSrcNode(nodeData, edge, image);
+                    this.callback['edge:connectionSrc']({
+                        target_id: edge.getEdgeId(),
+                        start_x: this.edgeFabricObject[edge.getEdgeId()][3].getLeft(),
+                        start_y: this.edgeFabricObject[edge.getEdgeId()][3].getTop(),
+                        end_x: this.edgeFabricObject[edge.getEdgeId()][2].getLeft(),
+                        end_y: this.edgeFabricObject[edge.getEdgeId()][2].getTop(),
+                        src_node_id: 0,
+                    });
+                }
+            }
+
+            // remove this node
+            this.callback['node:remove']({
+                target_id: nodeData.getNodeId(),
+            });
+        });
 
         let circlePatrolInRange = new fabric.Circle({
             left: nodeData.getX(),
             top: nodeData.getY(),
             radius: NODE_SIZE / 2,
             stroke: '#66afe9',
-            strokeWidth: 15,
+            strokeWidth: 10,
             opacity: 0.5,
             fill: 'rgba(0,0,0,0)',
             originX: 'center',
@@ -559,9 +665,9 @@ export class GraphCanvas {
         let circlePatrolSelected = new fabric.Circle({
             left: nodeData.getX(),
             top: nodeData.getY(),
-            radius: NODE_SIZE / 2,
+            radius: (NODE_SIZE / 2) - 2,
             stroke: 'black',
-            strokeWidth: 8,
+            strokeWidth: 5,
             opacity: 0.2,
             fill: 'rgba(0,0,0,0)',
             originX: 'center',
@@ -587,6 +693,7 @@ export class GraphCanvas {
             this.setObjectLocation(image, newStartX, newStartY);
             this.setObjectLocation(circlePatrolInRange, newStartX, newStartY);
             this.setObjectLocation(circlePatrolSelected, newStartX, newStartY);
+            this.setObjectLocation(cross, newStartX + REMOVE_X, newStartY - REMOVE_Y);
 
             // highlight this node when it is moving within edge boundary
             this.getInRangeEdge(newStartX, newStartY, nodeData);
@@ -826,6 +933,7 @@ export class GraphCanvas {
             this.getInRangeNodeForLine_UpdateData(triggerData, nStartX, nStartY, nEndX, nEndY, (NODE_SIZE / 2) + 20, dotHead, dotTail);
         });
         line.on('selected', (options) => {
+            this.setVisibleDotsToFalse();
             dotHead.visible = true;
             dotTail.visible = true;
         });
@@ -848,20 +956,20 @@ export class GraphCanvas {
         triangle.hasControls = triangle.hasBorders = false;
 
         triangle.on('moving', (options) => {
-            let currentOriginTriangleX = triangle.getLeft();
-            let currentOriginTriangleY = triangle.getTop();
+            let currentOriginTriangleX = triangle.getLeft() + EDGE_ARROW_HEAD_SIZE / 2 * Math.cos(angle);
+            let currentOriginTriangleY = triangle.getTop() + EDGE_ARROW_HEAD_SIZE / 2 * Math.sin(angle);
             let newLeft: number, newTop: number;
             let nStartX: number, nStartY: number, nEndX: number, nEndY: number;
 
             [newLeft, newTop] = this.getLeftTopLine(triggerData, currentOriginTriangleX, currentOriginTriangleY);
             this.setObjectLocation(line, newLeft, newTop);
 
-            let currentOriginLineX = line.getLeft();
-            let currentOriginLineY = line.getTop();
+            let currentOriginLineX = line.getLeft(); 
+            let currentOriginLineY = line.getTop(); 
             [nStartX, nEndX, nStartY, nEndY] = this.getCurrentPoint(triggerData, currentOriginLineX, currentOriginLineY);
 
             this.setObjectLocation(dotHead, nStartX, nStartY)
-            this.setObjectLocation(dotTail, nEndX + EDGE_ARROW_HEAD_SIZE / 2 * Math.cos(angle), nEndY + EDGE_ARROW_HEAD_SIZE / 2 * Math.sin(angle));
+            this.setObjectLocation(dotTail, nEndX, nEndY);
 
             this.getInRangeNodeForLine_Display(nStartX, nStartY, nEndX, nEndY, (NODE_SIZE / 2) + 20);
         });
@@ -876,6 +984,7 @@ export class GraphCanvas {
             this.getInRangeNodeForLine_UpdateData(triggerData, newStartX, newStartY, newEndX, newEndY, (NODE_SIZE / 2) + 20, dotHead, dotTail);
         });
         triangle.on('selected', (options) => {
+            this.setVisibleDotsToFalse();
             dotHead.visible = true;
             dotTail.visible = true;
         });
@@ -1174,7 +1283,7 @@ export class GraphCanvas {
      * @param event event to register to which should be 'node:select', 'node:move' or ...
      * @param callback a callback function to be called when that specific event is occured
      */
-    on(event: 'node:selected' | 'node:move' | 'edge:move' | 'object:deselected' | 'edge:connectionDst' | 'edge:connectionSrc'
+    on(event: 'node:selected' | 'node:move' | 'node:remove' | 'edge:move' | 'edge:moveWithoutDisconnect' | 'object:deselected' | 'edge:connectionDst' | 'edge:connectionSrc'
         , callback: (options: CanvasEventOptions) => void) {
         this.callback[event] = callback;
     }
