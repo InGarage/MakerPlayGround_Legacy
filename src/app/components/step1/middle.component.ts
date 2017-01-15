@@ -1,7 +1,8 @@
 
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { GraphData, NodeData } from './graphmodel';
-import { GraphCanvas } from './graphcanvas';
+//import { GraphCanvas } from './graphcanvas';
+import { GraphCanvas, CanvasEventOptions, CanvasEventTypes } from './newgraphcanvas';
 import { Action } from './action';
 
 //import { EventManager } from './eventmanager';
@@ -20,7 +21,6 @@ export class MiddleComponent implements OnInit {
     @Output() nodeSelect = new EventEmitter<NodeData>(); 
     private canvas: GraphCanvas;
     private model: GraphData;
-
 
     constructor() {
         this.model = GraphData.createGraphDataFromJSON(this.dummyGraph);
@@ -64,13 +64,57 @@ export class MiddleComponent implements OnInit {
             , options.target_id, options.start_x, options.end_x, options.start_y, options.end_y);
             this.canvas.redraw(this.model);      
         });
-
-
     }
 
 
     // TODO: dummy data to be removed
     dummyGraph: any = {
+        'nodes': {
+            '23e8d5e9-7f0f-40bd-a60b-05a2aea4579b': {
+                'action_id': 1,
+                'display_x': 500,
+                'display_y': 300,
+                'params': {
+                    'name': 'Motor 1'
+                }
+            },
+            '3a27eaa4-7971-49d8-9d74-2e79a49054ed': {
+                'action_id': 2,
+                'display_x': 800,
+                'display_y': 300,
+                'params': {
+                    'name': 'Motor 1'
+                }
+            }
+        },
+        'edges': {
+            '361cf758-db06-4c9d-9b31-2d88269554bb': {
+                'trigger_id': 1,
+                'params': {
+                    'temp': 50
+                },
+                'src_node_id': '',
+                'dst_node_id': '',
+                'start_x': 300,
+                'start_y': 300,
+                'end_x': 500,
+                'end_y': 500
+            },
+            '87755327-ece5-4b80-bbf1-37a09c350196': {
+                'trigger_id': 2,
+                'params': {
+                    'temp': 50
+                },
+                'src_node_id': '',
+                'dst_node_id': '',
+                'start_x': 400,
+                'start_y': 200,
+                'end_x': 500,
+                'end_y': 200
+            }
+        }       
+    };
+    /*dummyGraph: any = {
         'nodes': {
             1: {
                 'action_id': 1,
@@ -119,6 +163,6 @@ export class MiddleComponent implements OnInit {
                 'end_y': 200
             }
         }       
-    };
+    };*/
 
 }

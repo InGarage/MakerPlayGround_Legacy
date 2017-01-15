@@ -24,6 +24,7 @@ export class GraphCanvas {
     private difXbetweenEdgePointandNodeOrigin: number;
     private difYbetweenEdgePointandNodeOrigin: number;
 
+    // complete
     constructor(element: HTMLCanvasElement | string, options?: fabric.ICanvasOptions) {
         this.canvas = new fabric.Canvas(element, options);
         // do not allow any object to move out of canvas area
@@ -171,8 +172,8 @@ export class GraphCanvas {
                         }
                         else if ((inRangeEdgeDst.length === 0) && (inRangeEdgeSrc.length === 0)) {
                             let allEdgesDst: EdgeData[], allEdgesSrc: EdgeData[];
-                            allEdgesDst = this.graph.getAllEdgesDstNode(node.getNodeId(), o.getLeft(), o.getTop());
-                            allEdgesSrc = this.graph.getAllEdgesSrcNode(node.getNodeId(), o.getLeft(), o.getTop());
+                            allEdgesDst = this.graph.getEdgesByDstNode(node.getNodeId(), o.getLeft(), o.getTop());
+                            allEdgesSrc = this.graph.getEdgesBySrcNode(node.getNodeId(), o.getLeft(), o.getTop());
 
                             if (allEdgesDst.length !== 0) {
                                 // all data stay the same, except this edge must be disconnected from this node
@@ -189,7 +190,7 @@ export class GraphCanvas {
                             }
 
                             if (allEdgesSrc.length !== 0) {
-                                 for (let edge of allEdgesSrc) {
+                                for (let edge of allEdgesSrc) {
                                     this.callback['edge:connectionSrc']({
                                         target_id: edge.getEdgeId(),
                                         start_x: edge.getStartX(),
@@ -198,7 +199,7 @@ export class GraphCanvas {
                                         end_y: edge.getEndY(),
                                         src_node_id: 0,
                                     });
-                                } 
+                                }
                             }
                         }
 
@@ -209,7 +210,7 @@ export class GraphCanvas {
                                 center_x: o.getLeft(),
                                 center_y: o.getTop(),
                             });
-                        o.visible = false;
+                            o.visible = false;
                         }
                     }
 
@@ -238,6 +239,7 @@ export class GraphCanvas {
         return undefined;
     }
 
+    // complete
     private setVisiblePatrolSelectedToFalse() {
         for (let i = 1; i <= Object.keys(this.nodeFabricObject).length; i++) {
             if (this.nodeFabricObject[i] === undefined) {
@@ -262,6 +264,7 @@ export class GraphCanvas {
         }
     }
 
+    // complete
     // TODO: This function should be refactored into the action class / service
     private findActionById(id: number): Action {
         for (let actionGroup of this.actionGroup) {
@@ -273,6 +276,7 @@ export class GraphCanvas {
         return undefined;
     }
 
+    // complete => calculateNewEdgePoint
     private getNewEndXYForMovingNodeWithConnection(nodeData, edgeDst, image) {
         let originX: number, originY: number, edgeEndX: number, edgeEndY: number;
         let difX: number, difY: number, currentX: number, currentY: number;
@@ -302,6 +306,7 @@ export class GraphCanvas {
         }
     }
 
+    // complete => moveNode / moveEdge
     private manipulateMovingDstNode(nodeData: NodeData, edgeDst: EdgeData, image) {
         let newEndX: number, newEndY: number;
 
@@ -325,6 +330,7 @@ export class GraphCanvas {
         this.setTriangleLocation(triangle, newEndX - EDGE_ARROW_HEAD_SIZE / 2 * Math.cos(angle), newEndY - EDGE_ARROW_HEAD_SIZE / 2 * Math.sin(angle), angle);
     }
 
+    // complete => calculateNewEdgePoint
     private getNewStartXYForMovingNodeWithConnection(nodeData, edgeSrc, image) {
         let originX: number, originY: number, edgeStartX: number, edgeStartY: number;
         let difX: number, difY: number, currentX: number, currentY: number;
@@ -332,7 +338,7 @@ export class GraphCanvas {
         originX = nodeData.getX();
         originY = nodeData.getY();
         edgeStartX = edgeSrc.getStartX();
-        edgeStartY = edgeSrc.getStartY()
+        edgeStartY = edgeSrc.getStartY();
 
         difX = Math.abs(originX - edgeStartX);
         difY = Math.abs(originY - edgeStartY);
@@ -354,6 +360,7 @@ export class GraphCanvas {
         }
     }
 
+    // complete => moveNode / moveEdge
     private manipulateMovingSrcNode(nodeData: NodeData, edgeSrc: EdgeData, image) {
         let newStartX: number, newStartY: number;
 
@@ -373,27 +380,11 @@ export class GraphCanvas {
         this.setLinePoints(line, newStartX, newStartY, edgeEndX - EDGE_ARROW_HEAD_SIZE / 2 * Math.cos(angle), edgeEndY - EDGE_ARROW_HEAD_SIZE / 2 * Math.sin(angle));
     }
 
-    private manipulateMovingConnectedNode_Display(nodeData: NodeData, image) {
-        let allEdgesDst: EdgeData[], allEdgesSrc: EdgeData[];
-        allEdgesDst = this.graph.getAllEdgesDstNode(nodeData.getNodeId(), nodeData.getX(), nodeData.getY());
-        allEdgesSrc = this.graph.getAllEdgesSrcNode(nodeData.getNodeId(), nodeData.getX(), nodeData.getY());
-
-        if (allEdgesDst.length !== 0) {
-            for (let edge of allEdgesDst) {
-                this.manipulateMovingDstNode(nodeData, edge, image);
-            }
-        }
-        if (allEdgesSrc.length !== 0) {
-            for (let edge of allEdgesSrc) {
-                this.manipulateMovingSrcNode(nodeData, edge, image);
-            }
-        }
-    }
-
+    // complete => 
     private manipulateMovingConnectedNode_UpdateData(nodeData: NodeData, image) {
         let allEdgesDst: EdgeData[], allEdgesSrc: EdgeData[];
-        allEdgesDst = this.graph.getAllEdgesDstNode(nodeData.getNodeId(), nodeData.getX(), nodeData.getY());
-        allEdgesSrc = this.graph.getAllEdgesSrcNode(nodeData.getNodeId(), nodeData.getX(), nodeData.getY());
+        allEdgesDst = this.graph.getEdgesByDstNode(nodeData.getNodeId(), nodeData.getX(), nodeData.getY());
+        allEdgesSrc = this.graph.getEdgesBySrcNode(nodeData.getNodeId(), nodeData.getX(), nodeData.getY());
 
         if (allEdgesDst.length !== 0) {
             for (let edge of allEdgesDst) {
@@ -423,6 +414,7 @@ export class GraphCanvas {
         }
     }
 
+    // complete => getEdgeInRange
     private getInRangeEdge(newStartX, newStartY, nodeData): EdgeData[][] {
         let inRangeEdgeSrc: EdgeData[] = this.graph.getEdgeInRangeSrc(newStartX, newStartY);
         let inRangeEdgeDst: EdgeData[] = this.graph.getEdgeInRangeDst(newStartX, newStartY);
@@ -437,6 +429,7 @@ export class GraphCanvas {
         return [inRangeEdgeSrc, inRangeEdgeDst];
     }
 
+    // complete
     private drawNode(nodeData: NodeData) {
         let action = this.findActionById(nodeData.getActionId());
 
@@ -461,7 +454,13 @@ export class GraphCanvas {
                     this.getInRangeEdge(newStartX, newStartY, nodeData);
 
                     // any edge connected to this node, will be moved depends on this node location
-                    this.manipulateMovingConnectedNode_Display(nodeData, image);
+                    for (let edge of this.graph.getEdgesByDstNode(nodeData.getNodeId())) {
+                        this.manipulateMovingDstNode(nodeData, edge, image);
+                    }
+
+                    for (let edge of this.graph.getEdgesBySrcNode(nodeData.getNodeId())) {
+                        this.manipulateMovingSrcNode(nodeData, edge, image);
+                    }
                 });
 
                 image.on('modified', (e) => {
@@ -674,6 +673,7 @@ export class GraphCanvas {
         })
     }
 
+    // complete => moveEdge
     private getInRangeNodeForLine_Display(nStartX, nStartY, nEndX, nEndY, range) {
         let inRangeNodeSrc: NodeData = this.graph.getNodeInRange(nStartX, nStartY, range);
         let inRangeNodeDst: NodeData = this.graph.getNodeInRange(nEndX, nEndY, range);
@@ -698,6 +698,7 @@ export class GraphCanvas {
         }
     }
 
+    // complete => moveEdge
     private getInRangeNodeForLine_UpdateData(triggerData, nStartX, nStartY, nEndX, nEndY, range, dotHead, dotTail) {
         let inRangeNodeSrc: NodeData = this.graph.getNodeInRange(nStartX, nStartY, (NODE_SIZE / 2) + 20);
         let inRangeNodeDst: NodeData = this.graph.getNodeInRange(nEndX, nEndY, (NODE_SIZE / 2) + 20);
@@ -796,8 +797,8 @@ export class GraphCanvas {
         line.on('moving', (options) => {
             let nStartX: number, nStartY: number, nEndX: number, nEndY: number;
 
-            let currentOriginLineX = line.getLeft() + (EDGE_ARROW_HEAD_SIZE / 2 * Math.cos(angle))/2;
-            let currentOriginLineY = line.getTop() + (EDGE_ARROW_HEAD_SIZE / 2 * Math.sin(angle))/2;
+            let currentOriginLineX = line.getLeft() + (EDGE_ARROW_HEAD_SIZE / 2 * Math.cos(angle)) / 2;
+            let currentOriginLineY = line.getTop() + (EDGE_ARROW_HEAD_SIZE / 2 * Math.sin(angle)) / 2;
 
             [nStartX, nEndX, nStartY, nEndY] = this.getCurrentPoint(triggerData, currentOriginLineX, currentOriginLineY);
 
@@ -818,8 +819,8 @@ export class GraphCanvas {
 
             // Need to re-draw canvas, so that dot can be clicked
             let nStartX: number, nStartY: number, nEndX: number, nEndY: number;
-            let currentOriginLineX = line.getLeft() + (EDGE_ARROW_HEAD_SIZE / 2 * Math.cos(angle))/2;
-            let currentOriginLineY = line.getTop() + (EDGE_ARROW_HEAD_SIZE / 2 * Math.sin(angle))/2;
+            let currentOriginLineX = line.getLeft() + (EDGE_ARROW_HEAD_SIZE / 2 * Math.cos(angle)) / 2;
+            let currentOriginLineY = line.getTop() + (EDGE_ARROW_HEAD_SIZE / 2 * Math.sin(angle)) / 2;
 
             [nStartX, nEndX, nStartY, nEndY] = this.getCurrentPoint(triggerData, currentOriginLineX, currentOriginLineY);
 
@@ -1047,7 +1048,7 @@ export class GraphCanvas {
         this.canvas.add(line, triangle, dotTail, dotHead);
     }
 
-
+    // complete => calculateConnectionPoint
     private getNewTopLeftForConnecting(originX, originY, pointX, pointY) {
         let angle = Math.atan2((pointY - originY), (pointX - originX));
         let x = originX + (NODE_SIZE / 2 - 2) * Math.cos(angle);
@@ -1055,6 +1056,7 @@ export class GraphCanvas {
         return [x, y];
     }
 
+    // complete => getLineOriginFromTriangleOrigin
     private getLeftTopLine(triggerData, currentOriginTriangleX, currentOriginTriangleY) {
         let startX: number, startY: number, endX: number, endY: number;
 
@@ -1084,6 +1086,7 @@ export class GraphCanvas {
         }
     }
 
+    // complete => getLineCoordinateFromOrigin
     private getCurrentPoint(triggerData, currentOriginLineX, currentOriginLineY) {
         let startX: number, startY: number, endX: number, endY: number;
 
@@ -1137,6 +1140,7 @@ export class GraphCanvas {
             this.canvas.remove(o);
     }
 
+    // complete
     /**
      * (Re)draw the canvas with the data provided 
      * @param graph graph to be drawn onto the canvas
@@ -1169,6 +1173,7 @@ export class GraphCanvas {
 
     }
 
+    // complete
     /**
      * Register a callback for a specific event
      * @param event event to register to which should be 'node:select', 'node:move' or ...

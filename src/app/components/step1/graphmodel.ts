@@ -1,4 +1,5 @@
 import * as Immutable from 'immutable';
+import * as UUID from 'uuid';
 
 import { Action } from './action';
 import { CanvasEventOptions } from './graphcanvas';
@@ -54,7 +55,7 @@ export class GraphData {
         return new GraphData(data);
     }
 
-    private constructor(public data: Immutable.Map<string, Immutable.Map<number, Immutable.Map<string, string>>>) {
+    private constructor(public data: Immutable.Map<string, Immutable.Map<string, Immutable.Map<string, string>>>) {
     }
 
     /**
@@ -71,7 +72,7 @@ export class GraphData {
                 callback('addition', new EdgeData(key, value));
             });
         } else {
-            let val: { value: number, done: boolean };
+            let val: { value: string, done: boolean };
 
             let iter = otherGraph.data.get('nodes').keys();
             while (!(val = iter.next()).done) {
@@ -116,23 +117,18 @@ export class GraphData {
         }
     }
 
-    getNode(nodeID: number): NodeData {
+    getNode(nodeID: string): NodeData {
         //console.log(nodeID);
         let check = this.data.getIn(['nodes', nodeID]);
         if (check !== undefined) {
             return new NodeData(nodeID, check);
-        }
-        else
+        } else {
             return undefined;
+        }
     }
 
     addNode(action: Action): GraphData {
-        let nodeCount = [];
-        this.data.get('nodes').forEach((value, key) => {
-            nodeCount.push(key);
-        });
-
-        let newNode_key = nodeCount.length + 1;
+        let newNode_key = UUID.v4();
         let newObj = {};
         let allParams = {};
         newObj = {
@@ -147,7 +143,7 @@ export class GraphData {
             else
                 allParams[prop.name] = '';
         }
-        newObj["params"] = allParams;
+        newObj['params'] = allParams;
 
         return new GraphData(this.data.setIn(['nodes', newNode_key], Immutable.fromJS(newObj)));
     }
@@ -156,15 +152,15 @@ export class GraphData {
         return undefined;
     }
 
-    getNodeInRange(endX: number, endY: number, range: number = 70) : NodeData {
+    getNodeInRange(endX: number, endY: number, range: number = 70): NodeData {
         //const NODE_SIZE: number = 100
-        let result : NodeData;
+        let result: NodeData;
         this.data.get('nodes').forEach((value, key) => {
             let display_x = parseFloat(value.get('display_x'));
             let display_y = parseFloat(value.get('display_y'));
 
             // 60 is radius of circle
-            if (Math.sqrt((endX-display_x)*(endX-display_x) + (endY-display_y)*(endY-display_y)) < range) {
+            if (Math.sqrt((endX - display_x) * (endX - display_x) + (endY - display_y) * (endY - display_y)) < range) {
                 result = new NodeData(key, value);
                 return false;
             }
@@ -173,7 +169,7 @@ export class GraphData {
         return result;
     }
 
-    getEdgeInRangeSrc(originX: number, originY: number, range: number = 70) : EdgeData[] {
+    getEdgeInRangeSrc(originX: number, originY: number, range: number = 70): EdgeData[] {
         //const NODE_SIZE: number = 100
         let result: EdgeData[] = [];
         this.data.get('edges').forEach((value, key) => {
@@ -181,7 +177,7 @@ export class GraphData {
             let start_y = parseFloat(value.get('start_y'));
 
             // 60 is radius of circle
-            if (Math.sqrt((start_x-originX)*(start_x-originX) + (start_y-originY)*(start_y-originY)) < range) {
+            if (Math.sqrt((start_x - originX) * (start_x - originX) + (start_y - originY) * (start_y - originY)) < range) {
                 result.push(new EdgeData(key, value));
             }
         });
@@ -189,66 +185,54 @@ export class GraphData {
         return result;
     }
 
-    getEdgeInRangeDst(originX: number, originY: number, range: number = 70) : EdgeData[] {
+    getEdgeInRangeDst(originX: number, originY: number, range: number = 70): EdgeData[] {
         //const NODE_SIZE: number = 100
-        let result : EdgeData[] = [];
+        let result: EdgeData[] = [];
         this.data.get('edges').forEach((value, key) => {
             let end_x = parseFloat(value.get('end_x'));
             let end_y = parseFloat(value.get('end_y'));
 
             // 60 is radius of circle
-            if (Math.sqrt((end_x-originX)*(end_x-originX) + (end_y-originY)*(end_y-originY)) < range) {
+            if (Math.sqrt((end_x - originX) * (end_x - originX) + (end_y - originY) * (end_y - originY)) < range) {
                 result.push(new EdgeData(key, value));
             }
         });
 
         return result;
     }
-/*
-    getEdgeInRangeDst(endX: number, endY: number, range: number = 70) : NodeData {
-        //const NODE_SIZE: number = 100
-        let result : EdgeData;
-        this.data.get('edges').forEach((value, key) => {
-            let display_x = parseFloat(value.get('display_x'));
-            let display_y = parseFloat(value.get('display_y'));
 
-            // 60 is radius of circle
-            if (Math.sqrt((endX-display_x)*(endX-display_x) + (endY-display_y)*(endY-display_y)) < range) {
-                result = new EdgeData(key, value);
-                return false;
-            }
-        });
-
-        return result;
-    }
-*/
-    getAllEdgesSrcNode(nodeId: number, nodeX: number, nodeY: number, range: number = 70) {
+    /**
+     * Get every edges that has source node's id equal to the node id provided
+     * @param nodeId node's id to match to when searching
+     * @return array of EdgeData instances
+     */
+    getEdgesBySrcNode(nodeId: string): EdgeData[] {
         let allEdgesSrc: EdgeData[] = [];
+        console.log('start');
         this.data.get('edges').forEach((value, key) => {
-            let srcId: number = parseInt(value.get('src_node_id')); 
-            if (nodeId == srcId) {
+            let srcId = value.get('src_node_id');
+            console.log(key, srcId);
+            if (nodeId === srcId) {
                 allEdgesSrc.push(new EdgeData(key, value));
             }
         });
-    if (allEdgesSrc !== undefined)
         return allEdgesSrc;
-    else
-        return allEdgesSrc = undefined;
     }
 
-    // connect with arrow head
-    getAllEdgesDstNode(nodeId: number, nodeX: number, nodeY: number, range: number = 70) {
+    /**
+     * Get every edges that has destination node's id equal to the node id provided
+     * @param nodeId node's id to match to when searching
+     * @return array of EdgeData instances
+     */
+    getEdgesByDstNode(nodeId: string): EdgeData[] {
         let allEdgesDst: EdgeData[] = [];
         this.data.get('edges').forEach((value, key) => {
-            let dstId: number = parseInt(value.get('dst_node_id')); 
-            if (nodeId == dstId) {
+            let dstId = value.get('dst_node_id');
+            if (nodeId === dstId) {
                 allEdgesDst.push(new EdgeData(key, value));
             }
         });
-    if (allEdgesDst !== undefined)
         return allEdgesDst;
-    else
-        return allEdgesDst = undefined;
     }
 
     connectionEdgeOfDstNode(nodeId, edgeId, x1, x2, y1, y2): GraphData {
@@ -258,7 +242,7 @@ export class GraphData {
                 .setIn(['edges', edgeId, 'end_x'], x2)
                 .setIn(['edges', edgeId, 'end_y'], y2)
                 .setIn(['edges', edgeId, 'dst_node_id'], nodeId)
-        }));   
+        }));
     }
 
     connectionEdgeOfSrcNode(nodeId, edgeId, x1, x2, y1, y2): GraphData {
@@ -268,28 +252,28 @@ export class GraphData {
                 .setIn(['edges', edgeId, 'end_x'], x2)
                 .setIn(['edges', edgeId, 'end_y'], y2)
                 .setIn(['edges', edgeId, 'src_node_id'], nodeId)
-        }));   
+        }));
     }
 
-    moveNode(id: number, leftPos: number, topPos: number) {
+    moveNode(id: string, leftPos: number, topPos: number) {
         return new GraphData(this.data.withMutations(map => {
             map.setIn(['nodes', id, 'display_x'], leftPos)
                 .setIn(['nodes', id, 'display_y'], topPos)
         }));
     }
 
-    
-/**
- * Update location of edge, also remove any src/dst connection
- */
+
+    /**
+     * Update location of edge, also remove any src/dst connection
+     */
     moveEdge(id, x1, x2, y1, y2): GraphData {
         return new GraphData(this.data.withMutations(map => {
             map.setIn(['edges', id, 'start_x'], x1)
                 .setIn(['edges', id, 'start_y'], y1)
                 .setIn(['edges', id, 'end_x'], x2)
                 .setIn(['edges', id, 'end_y'], y2)
-                .setIn(['edges', id, 'dst_node_id'], 0)
-                .setIn(['edges', id, 'src_node_id'], 0)
+                .setIn(['edges', id, 'dst_node_id'], '')
+                .setIn(['edges', id, 'src_node_id'], '')
         }));
     }
 }
@@ -299,10 +283,10 @@ export class GraphData {
  * It is designed to abstract the internal data structure use in GraphModel.
  */
 export class NodeData {
-    constructor(private uid: number, private data: Immutable.Map<string, string>) {
+    constructor(private uid: string, private data: Immutable.Map<string, string>) {
     }
 
-    getNodeId(): number {
+    getNodeId(): string {
         return this.uid;
     }
 
@@ -322,7 +306,7 @@ export class NodeData {
         return parseFloat(this.data.get('display_y'));
     }
 
-    
+
 }
 
 /**
@@ -330,10 +314,10 @@ export class NodeData {
  * It is designed to abstract the internal data structure use in GraphModel.
  */
 export class EdgeData {
-    constructor(private uid: number, private data: Immutable.Map<string, string>) {
+    constructor(private uid: string, private data: Immutable.Map<string, string>) {
     }
 
-    getEdgeId(): number {
+    getEdgeId(): string {
         return this.uid;
     }
 
