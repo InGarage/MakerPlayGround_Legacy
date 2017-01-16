@@ -208,10 +208,10 @@ export class GraphData {
      */
     getEdgesBySrcNode(nodeId: string): EdgeData[] {
         let allEdgesSrc: EdgeData[] = [];
-        console.log('start');
+        //console.log('start');
         this.data.get('edges').forEach((value, key) => {
             let srcId = value.get('src_node_id');
-            console.log(key, srcId);
+            //console.log(key, srcId);
             if (nodeId === srcId) {
                 allEdgesSrc.push(new EdgeData(key, value));
             }

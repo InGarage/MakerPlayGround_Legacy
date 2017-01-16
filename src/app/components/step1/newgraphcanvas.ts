@@ -13,7 +13,7 @@ const EDGE_ARROW_HEAD_SIZE: number = 15;
 const EDGE_ARROW_WIDTH: number = 2;
 
 export interface CanvasEventOptions {
-    target_id: string,
+    target_id?: string,
     src_node_id?: string, // Unique id of the source node
     dst_node_id?: string, // Unique id of the destination node
     start_x?: number,     // Parameters needed to display the edge on the screen
@@ -71,10 +71,10 @@ export class GraphCanvas {
      * @param graph graph to be drawn onto the canvas
      */
     redraw(graph: GraphData): void {
-        let oldGraph = this.graph;
-        this.graph = graph;
-        graph.compareGraphModel(oldGraph, (type, target) => {
-            console.log(type, target);
+        //let oldGraph = this.graph;
+        //this.graph = graph;
+        graph.compareGraphModel(this.graph, (type, target) => {
+            //console.log(type, target);
             if (type === "addition") {
                 if (target instanceof NodeData) {
                     this.drawNode(target);
@@ -96,6 +96,13 @@ export class GraphCanvas {
                     this.drawEdge(target);
                 }
             }
+        });
+        this.graph = graph;
+        this.nodeFabricObject.forEach((nodeId, nodeView) => {
+            nodeView.graph = this.graph;
+        });
+        this.edgeFabricObject.forEach((edgeId, edgeView) => {
+            edgeView.graph = this.graph;
         });
     }
 
@@ -143,7 +150,7 @@ class NodeView {
     readonly nodeNameText: fabric.IText;
     actionGroup: ActionGroup[] = require("./action.json"); // TODO: refactor into the action class / service
 
-    constructor(readonly graph: GraphData, readonly canvas: fabric.ICanvas,
+    constructor(public graph: GraphData, readonly canvas: fabric.ICanvas,
         readonly nodeFabricObject: Collections.Dictionary<string, NodeView>,
         readonly edgeFabricObject: Collections.Dictionary<string, EdgeView>,
         readonly callback: Collections.Dictionary<CanvasEventTypes, (options: CanvasEventOptions) => void>,
@@ -260,37 +267,45 @@ class NodeView {
             });
         }
 
-        // show connecting indicator when this node is moving into edge's boundary
-        // and is not emitted event (otherwise the indicator won't be cleared)
+        // show connecting indicator when this node is moving into the boundary of edge(s) that
+        // this node hasn't connected to yet. The connecting indicator is shown only when we aren't
+        // emitted an event (moving event) otherwise we won't have chance to clear the indicator.
+        this.nodeConnectingIndicator.visible = false;
         let edge = this.getEdgeInRange(originX, originY);
-        if (!shouldEmittedEvent && (edge !== undefined) && (edge.src.length != 0 || edge.dest.length != 0)) {
-            this.nodeConnectingIndicator.visible = true;
-        } else {
-            this.nodeConnectingIndicator.visible = false;
-        }
-
-        if (shouldEmittedEvent) {
-            for (let e of edge.src) {
-                let connectionPoint = this.calculateConnectionPoint(originX, originY, e.getStartX(), e.getStartY());
-                this.callback.getValue('edge:connectionSrc')({
-                    target_id: e.getEdgeId(),
-                    start_x: connectionPoint.x,
-                    start_y: connectionPoint.y,
-                    end_x: e.getEndX(),
-                    end_y: e.getEndY(),
-                    src_node_id: this.nodeData.getNodeId(),
-                });
+        for (let e of edge.src) {
+            console.log(e.getEdgeId());
+            if (e.getSourceNodeId() !== this.nodeData.getNodeId()) {
+                if (shouldEmittedEvent) {
+                    let connectionPoint = this.calculateConnectionPoint(originX, originY, e.getStartX(), e.getStartY());
+                    this.callback.getValue('edge:connectionSrc')({
+                        target_id: e.getEdgeId(),
+                        start_x: connectionPoint.x,
+                        start_y: connectionPoint.y,
+                        end_x: e.getEndX(),
+                        end_y: e.getEndY(),
+                        src_node_id: this.nodeData.getNodeId(),
+                    });
+                } else {
+                    this.nodeConnectingIndicator.visible = true;
+                }
             }
-            for (let e of edge.dest) {
-                let connectionPoint = this.calculateConnectionPoint(originX, originY, e.getEndX(), e.getEndY());
-                this.callback.getValue('edge:connectionDst')({
-                    target_id: e.getEdgeId(),
-                    start_x: e.getStartX(),
-                    start_y: e.getStartY(),
-                    end_x: connectionPoint.x,
-                    end_y: connectionPoint.y,
-                    dst_node_id: this.nodeData.getNodeId(),
-                });
+        }
+        for (let e of edge.dest) {
+            console.log(e.getEdgeId());
+            if (e.getDestinationNodeId() !== this.nodeData.getNodeId()) {
+                if (shouldEmittedEvent) {
+                    let connectionPoint = this.calculateConnectionPoint(originX, originY, e.getEndX(), e.getEndY());
+                    this.callback.getValue('edge:connectionDst')({
+                        target_id: e.getEdgeId(),
+                        start_x: e.getStartX(),
+                        start_y: e.getStartY(),
+                        end_x: connectionPoint.x,
+                        end_y: connectionPoint.y,
+                        dst_node_id: this.nodeData.getNodeId(),
+                    });
+                } else {
+                    this.nodeConnectingIndicator.visible = true;
+                }
             }
         }
 
@@ -376,7 +391,7 @@ class EdgeView {
     readonly dotHead: fabric.ICircle;
     readonly dotTail: fabric.ICircle;
 
-    constructor(readonly graph: GraphData, readonly canvas: fabric.ICanvas,
+    constructor(public graph: GraphData, readonly canvas: fabric.ICanvas,
         readonly nodeFabricObject: Collections.Dictionary<string, NodeView>,
         readonly edgeFabricObject: Collections.Dictionary<string, EdgeView>,
         readonly callback: Collections.Dictionary<CanvasEventTypes, (options: CanvasEventOptions) => void>,
@@ -491,59 +506,61 @@ class EdgeView {
             let newStartX = this.dotHead.getLeft();
             let newStartY = this.dotHead.getTop();
             let angle = Math.atan2((endY - newStartY), (endX - newStartX));
-            let newEndX = endX - EDGE_ARROW_HEAD_SIZE / 2 * Math.cos(angle);
-            let newEndY = endY - EDGE_ARROW_HEAD_SIZE / 2 * Math.sin(angle);
-            this.moveEdge(newStartX, newStartY, newEndX, newEndY, angle);
+            //let newEndX = endX - EDGE_ARROW_HEAD_SIZE / 2 * Math.cos(angle);
+            //let newEndY = endY - EDGE_ARROW_HEAD_SIZE / 2 * Math.sin(angle);
+            //this.moveEdge(newStartX, newStartY, newEndX, newEndY, angle);
+            this.moveEdge(newStartX, newStartY, endX, endY, angle);
         });
         this.dotHead.on('modified', (options) => {
             let newStartX = this.dotHead.getLeft();
             let newStartY = this.dotHead.getTop();
             let angle = Math.atan2((endY - newStartY), (endX - newStartX));
-            let newEndX = endX - EDGE_ARROW_HEAD_SIZE / 2 * Math.cos(angle);
-            let newEndY = endY - EDGE_ARROW_HEAD_SIZE / 2 * Math.sin(angle);
-            this.moveEdge(newStartX, newStartY, newEndX, newEndY, angle, true);
+            //let newEndX = endX - EDGE_ARROW_HEAD_SIZE / 2 * Math.cos(angle);
+            //let newEndY = endY - EDGE_ARROW_HEAD_SIZE / 2 * Math.sin(angle);
+            //this.moveEdge(newStartX, newStartY, newEndX, newEndY, angle, true);
+            this.moveEdge(newStartX, newStartY, endX, endY, angle, true);
         });
 
         this.dotTail.on('moving', (options) => {
             let currentEndX = this.dotTail.getLeft();
             let currentEndY = this.dotTail.getTop();
             let angle = Math.atan2((currentEndY - startY), (currentEndX - startX));
-            let newEndX = currentEndX - EDGE_ARROW_HEAD_SIZE / 2 * Math.cos(angle);
-            let newEndY = currentEndY - EDGE_ARROW_HEAD_SIZE / 2 * Math.sin(angle);
-            this.moveEdge(startX, startY, newEndX, newEndY, angle);
+            //let newEndX = currentEndX - EDGE_ARROW_HEAD_SIZE / 2 * Math.cos(angle);
+            //let newEndY = currentEndY - EDGE_ARROW_HEAD_SIZE / 2 * Math.sin(angle);
+            //this.moveEdge(startX, startY, newEndX, newEndY, angle);
+            this.moveEdge(startX, startY, currentEndX, currentEndY, angle);
         });
         this.dotTail.on('modified', (options) => {
             let currentEndX = this.dotTail.getLeft();
             let currentEndY = this.dotTail.getTop();
             let angle = Math.atan2((currentEndY - startY), (currentEndX - startX));
-            let newEndX = currentEndX - EDGE_ARROW_HEAD_SIZE / 2 * Math.cos(angle);
-            let newEndY = currentEndY - EDGE_ARROW_HEAD_SIZE / 2 * Math.sin(angle);
-            this.moveEdge(startX, startY, newEndX, newEndY, angle, true);
+            //let newEndX = currentEndX - EDGE_ARROW_HEAD_SIZE / 2 * Math.cos(angle);
+            //let newEndY = currentEndY - EDGE_ARROW_HEAD_SIZE / 2 * Math.sin(angle);
+            //this.moveEdge(startX, startY, newEndX, newEndY, angle, true);
+            this.moveEdge(startX, startY, currentEndX, currentEndY, angle, true);
         });
     }
 
     moveEdge(startX: number, startY: number, endX: number, endY: number, angle: number, shouldEmittedEvent: boolean = false) {
         // move every components to the new location
-        this.line.set({ 
-            x1: startX, y1: startY, 
-            x2: endX - EDGE_ARROW_HEAD_SIZE / 2 * Math.cos(angle), 
-            y2: endY - EDGE_ARROW_HEAD_SIZE / 2 * Math.sin(angle) 
+        this.line.set({
+            x1: startX, y1: startY,
+            x2: endX - EDGE_ARROW_HEAD_SIZE / 2 * Math.cos(angle),
+            y2: endY - EDGE_ARROW_HEAD_SIZE / 2 * Math.sin(angle)
         });
         this.triangle.set({
             left: endX - EDGE_ARROW_HEAD_SIZE / 2 * Math.cos(angle),
-            top: endY - EDGE_ARROW_HEAD_SIZE / 2 * Math.sin(angle)
+            top: endY - EDGE_ARROW_HEAD_SIZE / 2 * Math.sin(angle),
+            angle: 90 + (angle * 180 / Math.PI)
         });
         this.dotHead.set({ left: startX, top: startY });
         this.dotTail.set({ left: endX, top: endY });
 
-        // clear connecting indicator of every node
-        this.clearNodeConnectingIndicator();
-
-        // show connecting indicator when this edge is moving into node's boundary
-        // and we currently not emitted an event (otherwise we won't be able to clear it)
+        // show node's connecting indicator when this edge is moving into the boundary of node(s) that
+        // this edge hasn't connected to yet. The connecting indicator is shown only when we aren't
+        // emitted an event (edge is moving) otherwise we won't have chance to clear the indicator.
         let nodeAtHead = this.graph.getNodeInRange(startX, startY);
         if (nodeAtHead !== undefined) {
-            console.log(nodeAtHead.getNodeId());
             if (shouldEmittedEvent) {
                 let connectionPoint = this.calculateConnectionPoint(nodeAtHead.getX(), nodeAtHead.getY(), startX, startY);
                 this.callback.getValue('edge:connectionSrc')({
@@ -554,9 +571,9 @@ class EdgeView {
                     end_y: endY,
                     src_node_id: nodeAtHead.getNodeId(),
                 });
-            } else {
+            } else if (nodeAtHead.getNodeId() !== this.edgeData.getSourceNodeId()) {
                 this.nodeFabricObject.getValue(nodeAtHead.getNodeId()).nodeConnectingIndicator.visible = true;
-            }
+            } // else we are nearing the node we have connected to so no connecting indicator is needed
         }
         let nodeAtTail = this.graph.getNodeInRange(endX, endY);
         if (nodeAtTail !== undefined) {
@@ -570,12 +587,12 @@ class EdgeView {
                     end_y: connectionPoint.y,
                     dst_node_id: nodeAtTail.getNodeId(),
                 });
-            } else {
+            } else if (nodeAtTail.getNodeId() !== this.edgeData.getDestinationNodeId()) {
                 this.nodeFabricObject.getValue(nodeAtTail.getNodeId()).nodeConnectingIndicator.visible = true;
-            }
+            } // else we are nearing the node we have connected to so no connecting indicator is needed
         }
 
-        // emitted edge:move when there wasn't any connection made
+        // emitted edge:move when there wasn't any connection made otherwise
         if (shouldEmittedEvent && (nodeAtHead === undefined) && (nodeAtTail === undefined)) {
             this.callback.getValue('edge:move')({
                 target_id: this.edgeData.getEdgeId(),
@@ -584,6 +601,11 @@ class EdgeView {
                 end_x: endX,
                 end_y: endY,
             });
+        }
+
+        // clear connecting indicator of every node when we emitted event (edge is moving)
+        if (shouldEmittedEvent) {
+            this.clearNodeConnectingIndicator();
         }
     }
 
@@ -627,17 +649,22 @@ class EdgeView {
         let startY = this.edgeData.getStartY();
         let endX = this.edgeData.getEndX();
         let endY = this.edgeData.getEndY();
+        let angle = Math.atan2((endY - startY), (endX - startX));
+
         let difX = Math.abs(startX - endX) / 2;
         let difY = Math.abs(startY - endY) / 2;
+        // triangle origin offset ()
+        let offsetX = EDGE_ARROW_HEAD_SIZE / 2 * Math.cos(angle);
+        let offsetY = EDGE_ARROW_HEAD_SIZE / 2 * Math.sin(angle);
 
         if ((startX < endX) && (startY >= endY)) {
-            return [currentOriginTriangleX - difX, currentOriginTriangleY + difY];
+            return [currentOriginTriangleX - difX + offsetX, currentOriginTriangleY + difY - offsetY];
         } else if ((startX <= endX) && (startY < endY)) {
-            return [currentOriginTriangleX - difX, currentOriginTriangleY - difY];
+            return [currentOriginTriangleX - difX + offsetX, currentOriginTriangleY - difY + offsetY];
         } else if ((startX > endX) && (startY >= endY)) {
-            return [currentOriginTriangleX + difX, currentOriginTriangleY + difY];
+            return [currentOriginTriangleX + difX - offsetX, currentOriginTriangleY + difY - offsetY];
         } else if ((startX >= endX) && (startY < endY)) {
-            return [currentOriginTriangleX + difX, currentOriginTriangleY - difY];
+            return [currentOriginTriangleX + difX - offsetX, currentOriginTriangleY - difY + offsetY];
         }
     }
 
