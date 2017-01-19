@@ -51,59 +51,85 @@ export class GraphCanvas {
 
     private handleGroupSelection() {
         let selectedGroup: fabric.IGroup;
-        let selectedNode: NodeView[] = [];
-        let selectedEdge: EdgeView[] = [];
-        let i:number = 0;
+        let selectedNode = new Collections.Set<NodeView>((item) => {return item.id});
+        let selectedEdge = new Collections.Set<EdgeView>((item) => {return item.id});
+
         this.canvas.on('selection:created', (e) => {
             // Grab other pieces of nodes and egdes that should be selected but hasn't been selected by user
-            selectedGroup = this.canvas.getActiveGroup();
-            for (let selectingObject of (<fabric.IObject[]> (<any>selectedGroup)._objects)) {
-                let nodeView = this.nodeFabricObject.getValue(selectingObject.get('uid'));
-                console.log(nodeView);
-                if (nodeView !== undefined) {
-                    //console.log(i++, 'found', selectingObject.get('uid'));
-                    // keep it in an array so we won't need to find it again in selection:cleared
-                    selectedNode.push(nodeView);
-                    // add other piece of the same object to the selection group
-                    for (let obj of nodeView.getAllFabricElement()) {
-                        if ((<any>selectedGroup)._objects.indexOf(obj) === -1) {
-                            selectedGroup.addWithUpdate(obj);
-                        }
-                    }
-                }
-                let edgeView = this.edgeFabricObject.getValue(selectingObject.get('uid'));
-                console.log(edgeView);
-                if (edgeView !== undefined) {
-                    // keep it in an array so we won't need to find it again in selection:cleared
-                    selectedEdge.push(edgeView);
-                    // add other piece of the same object to the selection group
-                    for (let obj of edgeView.getAllFabricElement()) {
-                        if ((<any>selectedGroup)._objects.indexOf(obj) === -1) {
-                            selectedGroup.addWithUpdate(obj);
-                        }
-                    }
+            for (let selectingObject of this.canvas.getActiveGroup().getObjects()) {
+                let uid = selectingObject.get('uid');
+                if (this.nodeFabricObject.containsKey(uid)) {
+                    selectedNode.add(this.nodeFabricObject.getValue(uid));
+                } 
+                if (this.edgeFabricObject.containsKey(uid)) {
+                    selectedEdge.add(this.edgeFabricObject.getValue(uid));
                 }
             }
+            // Modify current selection group to contain other pieces of nodes and edges that should be selected
+            selectedGroup = this.canvas.getActiveGroup();
+            selectedNode.forEach((node) => {
+                for (const obj of node.getAllFabricElement())
+                    if (selectedGroup.getObjects().indexOf(obj) === -1)
+                        selectedGroup.addWithUpdate(obj);
+            });
+            selectedEdge.forEach((edge) => {
+                for (const obj of edge.getAllFabricElement())
+                    if (selectedGroup.getObjects().indexOf(obj) === -1)
+                        selectedGroup.addWithUpdate(obj);
+            });
             this.canvas.setActiveGroup(selectedGroup);
         });
 
         this.canvas.on('selection:cleared', (e) => {
+            // Proceed only if user clear a group selection because selection:cleared is also emitted when we clear single object selection
             if (selectedGroup !== undefined) {
-                for (const node of selectedNode) {
-                    let image = node.nodeActionImage;
-                    node.moveNode(image.getLeft(), image.getTop(), true);
-                }
-                for (const edge of selectedEdge) {
-                    let line = edge.line;
-                    console.log(line.getLeft(), line.getTop());
-                    let [startX, endX, startY, endY] = edge.getLineCoordinateFromOrigin(line.getLeft(), line.getTop());
+                // We move the edge first otherwise moveNode will override edge.line position and we won't know
+                selectedEdge.forEach((edge) => {
+                    let startX = edge.edgeData.getStartX();
+                    let startY = edge.edgeData.getStartY();
+                    let endX = edge.edgeData.getEndX();
+                    let endY = edge.edgeData.getEndY();
                     let angle = Math.atan2((endY - startY), (endX - startX));
+                    [startX, endX, startY, endY] = edge.getLineCoordinateFromOrigin(edge.line.getLeft()  + (EDGE_ARROW_HEAD_SIZE / 2 * Math.cos(angle)) / 2
+                                                                                    , edge.line.getTop() + (EDGE_ARROW_HEAD_SIZE / 2 * Math.sin(angle)) / 2);
                     edge.moveEdge(startX, startY, endX, endY, angle);
                     edge.processEdgeEvent(startX, startY, endX, endY, angle, true);
-                }
+                });
+                // Deselect every node from the edge manually because the moveNode function doesn't handle deselect. Thus, when we move node by group select nodes,
+                // node remains connect to the edge it has been connected to previously even that edges aren't a part of a group selection. After deselecting all nodes, 
+                // the node will be reconnected when it is moved to the new position in the last step
+                selectedNode.forEach((node) => {
+                    for (const edgeData of this.graph.getEdgesBySrcNode(node.id)) {
+                        this.callback.getValue('edge:connectionSrc')({
+                            target_id: edgeData.getEdgeId(),
+                            start_x: edgeData.getStartX(),
+                            start_y: edgeData.getStartY(),
+                            end_x: edgeData.getEndX(),
+                            end_y: edgeData.getEndY(),
+                            src_node_id: '',
+                        });
+                    }
+                    for (const edgeData of this.graph.getEdgesByDstNode(node.id)) {
+                        this.callback.getValue('edge:connectionDst')({
+                            target_id: edgeData.getEdgeId(),
+                            start_x: edgeData.getStartX(),
+                            start_y: edgeData.getStartY(),
+                            end_x: edgeData.getEndX(),
+                            end_y: edgeData.getEndY(),
+                            dst_node_id: '',
+                        });
+                    }
+                });
+                // We can then move the node. Here the connection will be made again since edges has already moved to their new position.
+                // Thus, by moving node to the new location, node will know that it is nearing some edge(s) and will connect to those edges
+                selectedNode.forEach((node) => {
+                    let image = node.nodeActionImage;
+                    node.moveNode(image.getLeft(), image.getTop(), true);
+                });
+                // Clear all temporary variable needed 
                 selectedGroup = undefined;    
-                selectedNode = [];
-                selectedEdge = [];
+                selectedNode.clear();
+                selectedEdge.clear();
             }
         });
     }
