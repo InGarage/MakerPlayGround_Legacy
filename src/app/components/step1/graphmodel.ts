@@ -81,7 +81,7 @@ export class GraphData {
 
                 if (newData === undefined)
                     callback('deletion', new NodeData(val.value, oldData));
-                if (!Immutable.is(oldData, newData))
+                else if (!Immutable.is(oldData, newData))
                     callback('update', new NodeData(val.value, newData));
             }
 
@@ -102,7 +102,7 @@ export class GraphData {
 
                 if (newData === undefined)
                     callback('deletion', new EdgeData(val.value, oldData));
-                if (!Immutable.is(oldData, newData))
+                else if (!Immutable.is(oldData, newData))
                     callback('update', new EdgeData(val.value, newData));
             }
 
@@ -148,8 +148,12 @@ export class GraphData {
         return new GraphData(this.data.setIn(['nodes', newNode_key], Immutable.fromJS(newObj)));
     }
 
-    removeNode(actionData: NodeData): GraphData {
-        return undefined;
+    // removeNode(nodeId: string): GraphData {
+    //     return 
+    // }
+
+    removeNode(nodeId: string): GraphData {
+        return new GraphData(this.data.deleteIn(['nodes', nodeId]));
     }
 
     getNodeInRange(endX: number, endY: number, range: number = 70): NodeData {

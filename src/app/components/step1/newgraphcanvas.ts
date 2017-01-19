@@ -11,6 +11,8 @@ const NODE_NAME_YPOS: number = 70;
 const NODE_NAME_FONTSIZE: number = 20;
 const EDGE_ARROW_HEAD_SIZE: number = 15;
 const EDGE_ARROW_WIDTH: number = 2;
+const REMOVE_X: number = (NODE_SIZE / 2);
+const REMOVE_Y: number = (NODE_SIZE / 2);
 
 export interface CanvasEventOptions {
     target_id?: string,
@@ -24,7 +26,7 @@ export interface CanvasEventOptions {
     end_y?: number
 }
 
-export type CanvasEventTypes = 'node:selected' | 'node:move' | 'edge:move' | 'object:deselected'
+export type CanvasEventTypes = 'node:selected' | 'node:move' | 'node:remove' | 'edge:move' | 'object:deselected'
     | 'edge:connectionDst' | 'edge:connectionSrc';
 
 type Coordinate = {
@@ -47,17 +49,22 @@ export class GraphCanvas {
         this.callback = new Collections.Dictionary<CanvasEventTypes, (options: CanvasEventOptions) => void>();
         this.initCanvas();
         this.handleGroupSelection();
+
+        this.canvas.on('selection:cleared', (e) => {
+            this.deselectAllNode();
+            this.callback.getValue('object:deselected')({});
+        });
     }
 
     private handleGroupSelection() {
         let selectedGroup: fabric.IGroup;
         let selectedNode: NodeView[] = [];
         let selectedEdge: EdgeView[] = [];
-        let i:number = 0;
+        let i: number = 0;
         this.canvas.on('selection:created', (e) => {
             // Grab other pieces of nodes and egdes that should be selected but hasn't been selected by user
             selectedGroup = this.canvas.getActiveGroup();
-            for (let selectingObject of (<fabric.IObject[]> (<any>selectedGroup)._objects)) {
+            for (let selectingObject of (<fabric.IObject[]>(<any>selectedGroup)._objects)) {
                 let nodeView = this.nodeFabricObject.getValue(selectingObject.get('uid'));
                 console.log(nodeView);
                 if (nodeView !== undefined) {
@@ -101,10 +108,17 @@ export class GraphCanvas {
                     edge.moveEdge(startX, startY, endX, endY, angle);
                     edge.processEdgeEvent(startX, startY, endX, endY, angle, true);
                 }
-                selectedGroup = undefined;    
+                selectedGroup = undefined;
                 selectedNode = [];
                 selectedEdge = [];
             }
+        });
+    }
+
+    private deselectAllNode() {
+        this.nodeFabricObject.forEach((nodeId, nodeView) => {
+            nodeView.nodeSelectingIndicator.visible = false;
+            nodeView.nodeRemoveButton.visible = false;
         });
     }
 
@@ -139,7 +153,6 @@ export class GraphCanvas {
         //let oldGraph = this.graph;
         //this.graph = graph;
         graph.compareGraphModel(this.graph, (type, target) => {
-            //console.log(type, target);
             if (type === "addition") {
                 if (target instanceof NodeData) {
                     this.drawNode(target);
@@ -200,6 +213,7 @@ export class GraphCanvas {
                 obj.left = Math.min(obj.left, this.canvas.getWidth() - obj.getBoundingRect().width + obj.left - obj.getBoundingRect().left);
             }
         });
+
     }
 }
 
@@ -208,6 +222,7 @@ class NodeView {
     readonly nodeConnectingIndicator: fabric.ICircle;
     readonly nodeSelectingIndicator: fabric.ICircle;
     readonly nodeNameText: fabric.IText;
+    readonly nodeRemoveButton: fabric.IGroup;
     actionGroup: ActionGroup[] = require("./action.json"); // TODO: refactor into the action class / service
 
     constructor(public graph: GraphData, readonly canvas: fabric.ICanvas,
@@ -227,7 +242,8 @@ class NodeView {
                 this.nodeConnectingIndicator.set('uid', this.id);
                 this.nodeSelectingIndicator.set('uid', this.id);
                 this.nodeNameText.set('uid', this.id);
-                this.canvas.add(this.nodeConnectingIndicator, this.nodeSelectingIndicator, this.nodeNameText, this.nodeActionImage);
+                this.nodeRemoveButton.set('uid', this.id);
+                this.canvas.add(this.nodeConnectingIndicator, this.nodeSelectingIndicator, this.nodeNameText, this.nodeActionImage, this.nodeRemoveButton);
             }
             , {
                 width: NODE_SIZE,
@@ -279,11 +295,45 @@ class NodeView {
             hasControls: false,
             hasBorders: false
         });
+
+        let cross_1 = new fabric.Line([
+            nodeData.getX() + (NODE_SIZE / 2) - 10,
+            nodeData.getY() - (NODE_SIZE / 2),
+            nodeData.getX() + (NODE_SIZE / 2),
+            nodeData.getY() - (NODE_SIZE / 2) + 10,
+        ], {
+                originX: 'center',
+                originY: 'center',
+                strokeWidth: 5,
+                stroke: 'red'
+            });
+
+        let cross_2 = new fabric.Line([
+            nodeData.getX() + (NODE_SIZE / 2),
+            nodeData.getY() - (NODE_SIZE / 2),
+            nodeData.getX() + (NODE_SIZE / 2) - 10,
+            nodeData.getY() - (NODE_SIZE / 2) + 10,
+        ], {
+                originX: 'center',
+                originY: 'center',
+                strokeWidth: 5,
+                stroke: 'red'
+            });
+
+        this.nodeRemoveButton = new fabric.Group([cross_1, cross_2], {
+            left: nodeData.getX() + REMOVE_X,
+            top: nodeData.getY() - REMOVE_Y,
+            originX: 'center',
+            originY: 'center',
+            hasControls: false,
+            hasBorders: false,
+            visible: false
+        });
     }
 
-    getAllFabricElement() : fabric.IObject[] {
+    getAllFabricElement(): fabric.IObject[] {
         return [this.nodeActionImage, this.nodeConnectingIndicator, this.nodeSelectingIndicator
-            , this.nodeNameText];
+            , this.nodeNameText, this.nodeRemoveButton];
     }
 
     private initNodeEvent() {
@@ -298,6 +348,7 @@ class NodeView {
         this.nodeActionImage.on('selected', (e) => {
             this.deselectAllNode();
             this.nodeSelectingIndicator.visible = true;
+            this.nodeRemoveButton.visible = true;
 
             this.callback.getValue('node:selected')({
                 target_id: this.nodeData.getNodeId(),
@@ -315,11 +366,16 @@ class NodeView {
         this.nodeNameText.on('selected', (options) => {
             this.deselectAllNode();
             this.nodeSelectingIndicator.visible = true;
+            this.nodeRemoveButton.visible = true;
 
             this.callback.getValue('node:selected')({
                 target_id: this.nodeData.getNodeId(),
             });
-        })
+        });
+
+        this.nodeRemoveButton.on('selected', (options) => {
+            this.deleteNode(this.nodeActionImage.getLeft(), this.nodeActionImage.getTop());
+        });
     }
 
     moveNode(originX: number, originY: number, shouldEmittedEvent: boolean = false) {
@@ -328,6 +384,7 @@ class NodeView {
         this.nodeNameText.set({ left: originX, top: originY + NODE_NAME_YPOS });
         this.nodeConnectingIndicator.set({ left: originX, top: originY });
         this.nodeSelectingIndicator.set({ left: originX, top: originY });
+        this.nodeRemoveButton.set({ left: originX + REMOVE_X, top: originY - REMOVE_Y });
 
         if (shouldEmittedEvent) {
             this.callback.getValue('node:move')({
@@ -341,6 +398,7 @@ class NodeView {
         // this node hasn't connected to yet. The connecting indicator is shown only when we aren't
         // emitted an event (moving event) otherwise we won't have chance to clear the indicator.
         this.nodeConnectingIndicator.visible = false;
+        this.nodeRemoveButton.visible = false;
         let edge = this.getEdgeInRange(originX, originY);
         for (let e of edge.src) {
             if (e.getSourceNodeId() !== this.nodeData.getNodeId()) {
@@ -415,6 +473,44 @@ class NodeView {
     private deselectAllNode() {
         this.nodeFabricObject.forEach((nodeId, nodeView) => {
             nodeView.nodeSelectingIndicator.visible = false;
+            nodeView.nodeRemoveButton.visible = false;
+        });
+    }
+
+    private deleteNode(originX: number, originY: number) {
+        let edge = this.getEdgeInRange(originX, originY);
+
+        for (let e of edge.src) {
+            if (e.getSourceNodeId() === this.nodeData.getNodeId()) {
+                this.callback.getValue('edge:connectionSrc')({
+                    target_id: e.getEdgeId(),
+                    start_x: e.getStartX(),
+                    start_y: e.getStartY(),
+                    end_x: e.getEndX(),
+                    end_y: e.getEndY(),
+                    src_node_id: '',
+                });
+            }
+        }
+
+        for (let e of edge.dest) {
+            if (e.getDestinationNodeId() === this.nodeData.getNodeId()) {
+                this.callback.getValue('edge:connectionDst')({
+                    target_id: e.getEdgeId(),
+                    start_x: e.getStartX(),
+                    start_y: e.getStartY(),
+                    end_x: e.getEndX(),
+                    end_y: e.getEndY(),
+                    dst_node_id: '',
+                });
+            }
+        }
+
+        this.canvas.deactivateAllWithDispatch();
+
+        // remove this node
+        this.callback.getValue('node:remove')({
+            target_id: this.nodeData.getNodeId(),
         });
     }
 
@@ -551,7 +647,7 @@ class EdgeView {
         this.canvas.add(this.line, this.triangle, this.dotTail, this.dotHead);
     }
 
-    getAllFabricElement() : fabric.IObject[] {
+    getAllFabricElement(): fabric.IObject[] {
         return [this.line, this.triangle, this.dotHead, this.dotTail];
     }
 
@@ -579,7 +675,7 @@ class EdgeView {
         this.line.on('selected', (options) => {
             this.dotHead.visible = true;
             this.dotTail.visible = true;
-        })
+        });
 
         this.triangle.on('moving', (options) => {
             let currentOriginTriangleX = this.triangle.getLeft();
@@ -633,6 +729,14 @@ class EdgeView {
         });
     }
 
+    private getMouseCoords(event): Coordinate {
+        var pointer = this.canvas.getPointer(event.e);
+        var posX = pointer.x;
+        var posY = pointer.y;
+        return { x: posX, y: posY };
+    }
+
+
     moveEdge(startX: number, startY: number, endX: number, endY: number, angle: number) {
         // move every components to the new location
         this.line.set({
@@ -669,9 +773,9 @@ class EdgeView {
                     end_y: endY,
                     src_node_id: nodeAtHead.getNodeId(),
                 });
-            // we only show the connecting indicator when we will not emit event (moving) otherwise
-            // we won't have a chance to clear it
-            } else {    
+                // we only show the connecting indicator when we will not emit event (moving) otherwise
+                // we won't have a chance to clear it
+            } else {
                 this.nodeFabricObject.getValue(nodeAtHead.getNodeId()).nodeConnectingIndicator.visible = true;
             }
         }
@@ -706,6 +810,7 @@ class EdgeView {
     }
 
     // helper function
+
 
     // TODO: add type
     getLineCoordinateFromOrigin(currentOriginLineX: number, currentOriginLineY: number) {
