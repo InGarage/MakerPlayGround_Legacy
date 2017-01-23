@@ -280,6 +280,12 @@ export class GraphData {
                 .setIn(['edges', id, 'src_node_id'], '')
         }));
     }
+
+    updateProperty(data): GraphData {
+        return new GraphData(this.data.withMutations(map => {
+            map.setIn(['nodes', data.uid, 'params', data.name], data.value)
+        }));
+    }
 }
 
 /**

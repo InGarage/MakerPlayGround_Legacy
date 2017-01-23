@@ -7,28 +7,28 @@
         </button></p>
         
 
-        <form [ngStyle]="setFormStyles()" *ngFor="let property of ObjProperties">
+        <form [ngStyle]="setFormStyles()" *ngFor="let property of ObjProperties; let i=index;">
             <label>{{property.name}}</label><br/>
 
             <div *ngIf="property.control==='TextBox'">
-                <input type="text">
+                <input #box type="text" value="{{property.value}}" (keyup)="onKey(ObjProperties[i], box.value)">
             </div>
 
             <div *ngIf="property.control==='RadioButton'">
-                <input type="radio">
+                <input type="radio" value="{{property.value}}">
             </div>
             <div *ngIf="property.control==='CheckBox'">
-                <input type="checkbox">
+                <input type="checkbox" value="{{property.value}}">
             </div>
             <div *ngIf="property.control==='SpinBox'">
-                <input type="number">
+                <input type="number" value="{{property.value}}">
             </div>            
             <div *ngIf="property.control==='Color'">
-                <input type="color">
+                <input type="color" value="{{property.value}}">
             </div>
 
             <div *ngIf="property.control==='Slider'">
-                <input type="range">
+                <input type="range" value="{{property.value}}">
             </div>
         </form>
         <!--

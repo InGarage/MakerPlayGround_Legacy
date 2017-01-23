@@ -59,8 +59,8 @@ export class GraphCanvas {
 
     private handleGroupSelection() {
         let selectedGroup: fabric.IGroup;
-        let selectedNode = new Collections.Set<NodeView>((item) => {return item.id});
-        let selectedEdge = new Collections.Set<EdgeView>((item) => {return item.id});
+        let selectedNode = new Collections.Set<NodeView>((item) => { return item.id });
+        let selectedEdge = new Collections.Set<EdgeView>((item) => { return item.id });
 
         this.canvas.on('selection:created', (e) => {
             // Grab other pieces of nodes and egdes that should be selected but hasn't been selected by user
@@ -68,7 +68,7 @@ export class GraphCanvas {
                 let uid = selectingObject.get('uid');
                 if (this.nodeFabricObject.containsKey(uid)) {
                     selectedNode.add(this.nodeFabricObject.getValue(uid));
-                } 
+                }
                 if (this.edgeFabricObject.containsKey(uid)) {
                     selectedEdge.add(this.edgeFabricObject.getValue(uid));
                 }
@@ -98,8 +98,8 @@ export class GraphCanvas {
                     let endX = edge.edgeData.getEndX();
                     let endY = edge.edgeData.getEndY();
                     let angle = Math.atan2((endY - startY), (endX - startX));
-                    [startX, endX, startY, endY] = edge.getLineCoordinateFromOrigin(edge.line.getLeft()  + (EDGE_ARROW_HEAD_SIZE / 2 * Math.cos(angle)) / 2
-                                                                                    , edge.line.getTop() + (EDGE_ARROW_HEAD_SIZE / 2 * Math.sin(angle)) / 2);
+                    [startX, endX, startY, endY] = edge.getLineCoordinateFromOrigin(edge.line.getLeft() + (EDGE_ARROW_HEAD_SIZE / 2 * Math.cos(angle)) / 2
+                        , edge.line.getTop() + (EDGE_ARROW_HEAD_SIZE / 2 * Math.sin(angle)) / 2);
                     edge.moveEdge(startX, startY, endX, endY, angle);
                     edge.processEdgeEvent(startX, startY, endX, endY, angle, true);
                 });
@@ -135,7 +135,7 @@ export class GraphCanvas {
                     node.moveNode(image.getLeft(), image.getTop(), true);
                 });
                 // Clear all temporary variable needed 
-                selectedGroup = undefined;    
+                selectedGroup = undefined;
                 selectedNode.clear();
                 selectedEdge.clear();
             }
@@ -147,6 +147,16 @@ export class GraphCanvas {
             nodeView.nodeSelectingIndicator.visible = false;
             nodeView.nodeRemoveButton.visible = false;
         });
+    }
+
+    updateDataBinding(data) {
+        if (this.nodeFabricObject.containsKey(data.uid)) {
+            if (data.name === 'name') 
+                this.nodeFabricObject.getValue(data.uid).nodeNameText.setText(data.value);
+        }
+        if (this.edgeFabricObject.containsKey(data.uid)) {
+            
+        }
     }
 
     drawNode(nodeData: NodeData) {
@@ -791,9 +801,9 @@ class EdgeView {
                     end_y: endY,
                     src_node_id: nodeAtHead.getNodeId(),
                 });
-            // we only show the connecting indicator when we will not emit event (moving) otherwise
-            // we won't have a chance to clear it
-            } else {    
+                // we only show the connecting indicator when we will not emit event (moving) otherwise
+                // we won't have a chance to clear it
+            } else {
                 this.nodeFabricObject.getValue(nodeAtHead.getNodeId()).nodeConnectingIndicator.visible = true;
             }
         }

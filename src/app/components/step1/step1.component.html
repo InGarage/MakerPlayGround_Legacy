@@ -1,6 +1,7 @@
 
-    <!-- Fixed navbar -->
-    <nav id="navv" class="navbar navbar-inverse navbar-fixed-top">
+  <!-- Fixed navbar -->
+  <div class="navv">
+    <nav class="navbar navbar-inverse navbar-fixed-top">
       <div class="container">
         <div class="navbar-header">
           <a class="navbar-brand" routerLink="/">Project Graph</a>
@@ -10,18 +11,28 @@
             <li class="active"><a routerLink="/step1"><i class="fa fa-user-circle-o" aria-hidden="true"></i>
 USER</a></li>
           </ul>
-        </div><!--/.nav-collapse -->
+        </div>
+        <!--/.nav-collapse -->
       </div>
     </nav>
+  </div>
 
-<div [ngStyle]="setComponentMenuStyles()">
-  <action #left (myEvent)="middle.addNewNode($event)" class="front"></action>
-</div>
+<div class="step1">
+  <div class="under-nav"></div>
 
-<div class="right-side">
-  <property #right class="front"></property>
-</div>
+  <div class="right-side">
+    <property #right (updateData)="middle.updataPropData($event)"></property>
+  </div>
 
-<div>
-<middle #middle (nodeSelect)="right.populatePropertyWindow($event)" class="canvas-behind scrollable-action-menu"></middle>
+
+  <div class="row">
+    <div [ngStyle]="setComponentMenuStyles()">
+      <action #left (myEvent)="middle.addNewNode($event)"></action>
+    </div>
+
+    <div [ngStyle]="setCanvasStyles()">
+      <middle #middle (nodeSelect)="right.populatePropertyWindow($event)"></middle>
+    </div>
+  </div>
+
 </div>

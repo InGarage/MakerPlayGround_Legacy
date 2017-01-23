@@ -5,6 +5,7 @@ import { GraphData, NodeData } from './graphmodel';
 import { GraphCanvas, CanvasEventOptions, CanvasEventTypes } from './newgraphcanvas';
 import { Action } from './action';
 
+
 //import { EventManager } from './eventmanager';
 //import { ConnectEdgeToSrcNodeEvent } from './graphevent';
 
@@ -22,6 +23,9 @@ export class MiddleComponent implements OnInit {
     private canvas: GraphCanvas;
     private model: GraphData;
 
+    // Data to be updated
+    data;
+
     constructor() {
         this.model = GraphData.createGraphDataFromJSON(this.dummyGraph);
     }
@@ -31,12 +35,24 @@ export class MiddleComponent implements OnInit {
         this.canvas.redraw(this.model);
     }
 
+    updataPropData(data) {
+        // Secretly keep data in this component, we don't immediately update data structure
+        // because this function is executed by detecting keyup. Otherwise, our redo will be too much in detail
+        this.data = data;
+        this.canvas.updateDataBinding(this.data);
+    }
+
     ngOnInit() {
         this.canvas = new GraphCanvas('c');
         this.canvas.redraw(this.model);
 
         this.canvas.on('node:move', (options) => {
             this.model = this.model.moveNode(options.target_id, options.center_x, options.center_y);
+
+            // Update data structure
+            if (this.data !== undefined)
+                this.model = this.model.updateProperty(this.data);
+
             this.canvas.redraw(this.model);
         });
 
@@ -52,10 +68,17 @@ export class MiddleComponent implements OnInit {
 
         this.canvas.on('node:selected', (options) => {
             this.nodeSelect.emit(this.model.getNode(options.target_id));
+
+            // Update data structure
+            if (this.data !== undefined)
+                this.model = this.model.updateProperty(this.data);
         });
 
         this.canvas.on('object:deselected', (options) => {
             this.nodeSelect.emit(null);
+
+            // Update data structure
+            this.model = this.model.updateProperty(this.data);
         });
 
         this.canvas.on('edge:connectionDst', (options) => {
@@ -88,7 +111,8 @@ export class MiddleComponent implements OnInit {
                 'display_x': 800,
                 'display_y': 300,
                 'params': {
-                    'name': 'Motor 1'
+                    'name': 'Motor 1',
+                    'Periode': 'some value',
                 }
             }
         },

@@ -1,8 +1,9 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { NgModule }      from '@angular/core';
 //import { GraphData, ActionData, TriggerData } from './graph';
 import { Action, ActionGroup, ActionProperty } from './action';
 import * as fabric from 'fabric';
-import { NodeData } from './graphmodel';
+import { GraphData, NodeData } from './graphmodel';
 
 
 @Component({
@@ -11,9 +12,16 @@ import { NodeData } from './graphmodel';
   styleUrls: ['./step1.component.css']
 })
 export class PropertyComponent  {
+  @Input() count = 0;
+  @Output() countChange = new EventEmitter();
+  @Output() updateData = new EventEmitter(); 
 
   showProperties: boolean = false;
-  ObjProperties: ActionProperty[];
+  //ObjProperties: ActionProperty[];
+  ObjProperties = [];
+  previousObjData: NodeData;
+
+  name: string;
 
   actions: ActionGroup[];
   triggers: any[];
@@ -34,13 +42,43 @@ export class PropertyComponent  {
     }
 
   populatePropertyWindow(objData: NodeData) {
+    // Update data to data structure
     if (objData === null) {
       this.showProperties = false;
+
+
+      // for (let o of this.ObjProperties) {
+      //   console.log(o.value);
+      // }
+
+      // Get value from latest selected object
+      // for (let obj of this.ObjProperties) {
+      //   let data = [];
+      //   data.push(obj.name);
+      //   let x = (<HTMLInputElement>document.getElementById(obj.name)).value;
+      //   data.push(x);
+      //   this.updateData.emit(data);
+      // }
+
     }
+    // Only show data
     else {
+      console.log(objData);
+      this.previousObjData = objData;
+      this.ObjProperties = [];
       this.showProperties = true;
       let action = this.findActionById(objData.getActionId());
-      this.ObjProperties = action.property;
+
+      let obj = {};
+      for (let prop of action.property) {
+        obj = {
+          uid: objData.getNodeId(),
+          name: prop.name,
+          value: objData.getActionParams(prop.name),
+          control: prop.control,
+        }
+        this.ObjProperties.push(obj);
+      }
     }
   }
 
@@ -55,6 +93,11 @@ export class PropertyComponent  {
 
   hideProperties() {
     this.showProperties = false;
+  }
+
+  onKey(objData, newValue) {
+    objData.value = newValue;
+    this.updateData.emit(objData);
   }
 
 }

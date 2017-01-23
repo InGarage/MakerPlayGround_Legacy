@@ -11,26 +11,50 @@ export class Step1Component  {
 
   windowWidth: number;
   componentMenuWidth: string;
+  windowHeight: number;
+  componentMenuHeight: string;
+  minWidthMenu: string;
+  minWidthCanvas: string;
 
   ngOnInit(){
-    this.setElementWidth();
+    this.setElement();
+    this.windowWidth = $(window).width();
+    this.minWidthMenu = this.windowWidth*0.2 + 'px';
+    this.minWidthCanvas = this.windowWidth*0.8 + 'px';
+
+    $(window).on("resize", () => {
+      this.setElement();
+    }).resize();
   }
 
-  setElementWidth() {
+  setElement() {
     this.windowWidth = $(window).width();
-    // componentMenuWidth equal to 20 percent of windowWidth
-    this.componentMenuWidth = (this.windowWidth/5) + 'px';
+    this.windowHeight = $(window).height();
+    this.componentMenuHeight = (this.windowHeight-100) + 'px';
     this.setComponentMenuStyles();
+    this.setCanvasStyles();
   }
 
   setComponentMenuStyles() {
     let styles = {
-      'position': 'fixed',
       'float': 'left',
-      'margin-left': '30px',
-      'margin-right': '30px',
-      'z-index': '5',
-      'width': this.componentMenuWidth,
+      'padding-left': '15px',
+      'width': this.windowWidth*0.2 + 'px',
+      //'min-width': this.minWidthMenu,
+      'height': this.componentMenuHeight,
+      'background-color': 'lightpink',
+    };
+    return styles;
+  }
+
+  setCanvasStyles() {
+    let styles = {
+      'float': 'left',
+      'width': this.windowWidth*0.8 + 20 + 'px',
+      //'width': this.windowWidth*0.8 + 'px',
+      'height': this.componentMenuHeight,
+      'background-color': 'ivory',
+      'overflow': 'scroll',
     };
     return styles;
   }

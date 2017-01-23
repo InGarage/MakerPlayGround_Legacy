@@ -39,10 +39,11 @@ export class ActionComponent {
   ngOnInit() {
     this.setElementWidth();
     this.setElementHeight();
-/*
+
     $(window).on("resize", () => {
+      this.setElementWidth();
       this.setElementHeight();
-    }).resize();*/
+    }).resize();
   }
 
   setElementWidth() {
@@ -70,8 +71,7 @@ export class ActionComponent {
  ************************************************/ 
   setElementHeight() {
     this.windowHeight = $(window).height();
-    //88 percent of window's height
-    this.maxHeight = (this.windowHeight*8.8)/10;
+    this.maxHeight = (this.windowHeight*8.5)/10;
     this.setFlexMenuStyles();
   }
 
