@@ -4,6 +4,7 @@ import { GraphData, NodeData } from './graphmodel';
 //import { GraphCanvas } from './graphcanvas';
 import { GraphCanvas, CanvasEventOptions, CanvasEventTypes } from './newgraphcanvas';
 import { Action } from './action';
+import { UndoStack } from './undostack';
 
 
 //import { EventManager } from './eventmanager';
@@ -22,24 +23,38 @@ export class MiddleComponent implements OnInit {
     @Output() nodeSelect = new EventEmitter<NodeData>(); 
     private canvas: GraphCanvas;
     private model: GraphData;
-
-    // Data to be updated
-    data;
+    private undoStack: UndoStack<GraphData>;
 
     constructor() {
         this.model = GraphData.createGraphDataFromJSON(this.dummyGraph);
+        this.undoStack = new UndoStack<GraphData>();
+        this.undoStack.push(this.model);
     }
 
     addNewNode(newAction: Action) {
         this.model = this.model.addNode(newAction);
+        this.undoStack.push(this.model);
         this.canvas.redraw(this.model);
     }
 
     updataPropData(data) {
-        // Secretly keep data in this component, we don't immediately update data structure
-        // because this function is executed by detecting keyup. Otherwise, our redo will be too much in detail
-        this.data = data;
-        this.canvas.updateDataBinding(this.data);
+        this.canvas.updateDataBinding(data);
+        this.model = this.model.updateProperty(data);
+    }
+
+    updataPropDataFinish(data) {
+        //if (data !== undefined) {
+            //this.model = this.model.updateProperty(data);
+            //this.canvas.redraw(this.model);
+        //}
+    }
+
+    undo() {
+        this.model = this.undoStack.undo();
+        // Emit this event to hide properties window after undo button is clicked
+        this.nodeSelect.emit(null);
+        this.canvas.deselectAllNode();
+        this.canvas.redraw(this.model);
     }
 
     ngOnInit() {
@@ -48,48 +63,43 @@ export class MiddleComponent implements OnInit {
 
         this.canvas.on('node:move', (options) => {
             this.model = this.model.moveNode(options.target_id, options.center_x, options.center_y);
-
-            // Update data structure
-            if (this.data !== undefined)
-                this.model = this.model.updateProperty(this.data);
-
+            this.undoStack.push(this.model);
             this.canvas.redraw(this.model);
         });
 
         this.canvas.on('node:remove', (options) => {
             this.model = this.model.removeNode(options.target_id);
+            this.undoStack.push(this.model);
             this.canvas.redraw(this.model);
         });
 
         this.canvas.on('edge:move', (options) => {
             this.model = this.model.moveEdge(options.target_id, options.start_x, options.end_x, options.start_y, options.end_y); 
+            this.undoStack.push(this.model);
             this.canvas.redraw(this.model);
         });
 
         this.canvas.on('node:selected', (options) => {
             this.nodeSelect.emit(this.model.getNode(options.target_id));
-
-            // Update data structure
-            if (this.data !== undefined)
-                this.model = this.model.updateProperty(this.data);
         });
 
         this.canvas.on('object:deselected', (options) => {
+            console.log('ei');
             this.nodeSelect.emit(null);
-
-            // Update data structure
-            this.model = this.model.updateProperty(this.data);
+            this.canvas.redraw(this.model);
         });
 
         this.canvas.on('edge:connectionDst', (options) => {
             this.model = this.model.connectionEdgeOfDstNode(options.dst_node_id
             , options.target_id, options.start_x, options.end_x, options.start_y, options.end_y);
+            this.undoStack.push(this.model);
             this.canvas.redraw(this.model);
         });
 
         this.canvas.on('edge:connectionSrc', (options) => {
             this.model = this.model.connectionEdgeOfSrcNode(options.src_node_id
             , options.target_id, options.start_x, options.end_x, options.start_y, options.end_y);
+            this.undoStack.push(this.model);
             this.canvas.redraw(this.model);      
         });
     }

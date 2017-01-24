@@ -142,7 +142,7 @@ export class GraphCanvas {
         });
     }
 
-    private deselectAllNode() {
+    deselectAllNode() {
         this.nodeFabricObject.forEach((nodeId, nodeView) => {
             nodeView.nodeSelectingIndicator.visible = false;
             nodeView.nodeRemoveButton.visible = false;
@@ -151,8 +151,10 @@ export class GraphCanvas {
 
     updateDataBinding(data) {
         if (this.nodeFabricObject.containsKey(data.uid)) {
-            if (data.name === 'name') 
+            if (data.name === 'name') {
                 this.nodeFabricObject.getValue(data.uid).nodeNameText.setText(data.value);
+                this.canvas.renderAll();
+            }
         }
         if (this.edgeFabricObject.containsKey(data.uid)) {
             
@@ -160,6 +162,7 @@ export class GraphCanvas {
     }
 
     drawNode(nodeData: NodeData) {
+        console.log('add',nodeData.getNodeId());
         let nodeView = new NodeView(this.graph, this.canvas, this.nodeFabricObject, this.edgeFabricObject
             , this.callback, nodeData.getNodeId(), nodeData);
         this.nodeFabricObject.setValue(nodeData.getNodeId(), nodeView);
@@ -172,6 +175,7 @@ export class GraphCanvas {
     }
 
     removeNode(nodeData: NodeData) {
+        console.log('remove',nodeData.getNodeId());
         let nodeView = this.nodeFabricObject.remove(nodeData.getNodeId());
         this.canvas.remove(nodeView.nodeActionImage, nodeView.nodeNameText
             , nodeView.nodeSelectingIndicator, nodeView.nodeConnectingIndicator);
@@ -187,9 +191,9 @@ export class GraphCanvas {
      * @param graph graph to be drawn onto the canvas
      */
     redraw(graph: GraphData): void {
-        //let oldGraph = this.graph;
-        //this.graph = graph;
+        this.canvas.renderAll();
         graph.compareGraphModel(this.graph, (type, target) => {
+            console.log(type);
             if (type === "addition") {
                 if (target instanceof NodeData) {
                     this.drawNode(target);
@@ -204,8 +208,9 @@ export class GraphCanvas {
                 }
             } else if (type === "update") { // remove then add it again
                 if (target instanceof NodeData) {
-                    this.removeNode(target);
-                    this.drawNode(target);
+                    this.nodeFabricObject.getValue(target.getNodeId()).reinitializeFromModel(target);
+                    this.canvas.renderAll();
+                    //this.canvas.bringToFront(this.nodeFabricObject.getValue(target.getNodeId()).nodeRemoveButton);
                 } else {
                     this.removeEdge(target);
                     this.drawEdge(target);
@@ -219,6 +224,7 @@ export class GraphCanvas {
         this.edgeFabricObject.forEach((edgeId, edgeView) => {
             edgeView.graph = this.graph;
         });
+
     }
 
     /**
@@ -265,7 +271,7 @@ class NodeView {
         readonly nodeFabricObject: Collections.Dictionary<string, NodeView>,
         readonly edgeFabricObject: Collections.Dictionary<string, EdgeView>,
         readonly callback: Collections.Dictionary<CanvasEventTypes, (options: CanvasEventOptions) => void>,
-        readonly id: string, readonly nodeData: NodeData) {
+        readonly id: string, private nodeData: NodeData) {
 
         // TODO: remove to its own class
         let action = this.findActionById(nodeData.getActionId());
@@ -279,58 +285,17 @@ class NodeView {
                 this.nodeSelectingIndicator.set('uid', this.id);
                 this.nodeNameText.set('uid', this.id);
                 this.nodeRemoveButton.set('uid', this.id);
+                this.reinitializeFromModel(nodeData);
                 this.canvas.add(this.nodeConnectingIndicator, this.nodeSelectingIndicator, this.nodeNameText, this.nodeActionImage, this.nodeRemoveButton);
-            }
-            , {
-                width: NODE_SIZE,
-                height: NODE_SIZE,
-                left: nodeData.getX(),
-                top: nodeData.getY(),
-                originX: 'center',
-                originY: 'center',
-                hasControls: false,
-                hasBorders: false
             });
 
-        this.nodeConnectingIndicator = new fabric.Circle({
-            left: nodeData.getX(),
-            top: nodeData.getY(),
-            radius: NODE_SIZE / 2,
-            stroke: '#66afe9',
-            strokeWidth: 15,
-            opacity: 0.5,
-            fill: 'rgba(0,0,0,0)',
-            originX: 'center',
-            originY: 'center',
-            hasControls: false,
-            hasBorders: false,
-            visible: false
-        });
+        this.nodeConnectingIndicator = new fabric.Circle();
+        this.nodeConnectingIndicator.set({visible: false});
 
-        this.nodeSelectingIndicator = new fabric.Circle({
-            left: nodeData.getX(),
-            top: nodeData.getY(),
-            radius: NODE_SIZE / 2,
-            stroke: 'black',
-            strokeWidth: 8,
-            opacity: 0.2,
-            fill: 'rgba(0,0,0,0)',
-            originX: 'center',
-            originY: 'center',
-            hasControls: false,
-            hasBorders: false,
-            visible: false
-        });
+        this.nodeSelectingIndicator = new fabric.Circle();
+        this.nodeSelectingIndicator.set({visible: false});
 
-        this.nodeNameText = new fabric.Text(nodeData.getActionParams('name'), {
-            left: nodeData.getX(),
-            top: nodeData.getY() + NODE_NAME_YPOS,
-            originX: 'center',
-            originY: 'center',
-            fontSize: NODE_NAME_FONTSIZE,
-            hasControls: false,
-            hasBorders: false
-        });
+        this.nodeNameText = new fabric.Text('');
 
         let cross_1 = new fabric.Line([
             nodeData.getX() + (NODE_SIZE / 2) - NODE_REMOVEBTN_SIZE,
@@ -356,7 +321,65 @@ class NodeView {
                 stroke: 'red'
             });
 
-        this.nodeRemoveButton = new fabric.Group([cross_1, cross_2], {
+        this.nodeRemoveButton = new fabric.Group([cross_1, cross_2]);
+    }
+
+    reinitializeFromModel(nodeData: NodeData) {
+        this.nodeData = nodeData;
+
+        this.nodeActionImage.set({
+                width: NODE_SIZE,
+                height: NODE_SIZE,
+                left: this.nodeData.getX(),
+                top: this.nodeData.getY(),
+                originX: 'center',
+                originY: 'center',
+                hasControls: false,
+                hasBorders: false
+            });
+
+        this.nodeConnectingIndicator.set({
+            left: nodeData.getX(),
+            top: nodeData.getY(),
+            radius: NODE_SIZE / 2,
+            stroke: '#66afe9',
+            strokeWidth: 15,
+            opacity: 0.5,
+            fill: 'rgba(0,0,0,0)',
+            originX: 'center',
+            originY: 'center',
+            hasControls: false,
+            hasBorders: false,
+            selectable: false
+        });
+
+        this.nodeSelectingIndicator.set({
+            left: nodeData.getX(),
+            top: nodeData.getY(),
+            radius: NODE_SIZE / 2,
+            stroke: 'black',
+            strokeWidth: 8,
+            opacity: 0.2,
+            fill: 'rgba(0,0,0,0)',
+            originX: 'center',
+            originY: 'center',
+            hasControls: false,
+            hasBorders: false,
+            selectable: false
+        });
+
+        this.nodeNameText.set({
+            left: nodeData.getX(),
+            top: nodeData.getY() + NODE_NAME_YPOS,
+            originX: 'center',
+            originY: 'center',
+            fontSize: NODE_NAME_FONTSIZE,
+            hasControls: false,
+            hasBorders: false,
+            text: nodeData.getActionParams('name')
+        });
+
+        this.nodeRemoveButton.set({
             left: nodeData.getX() + NODE_REMOVEBTN_POSX,
             top: nodeData.getY() - NODE_REMOVEBTN_POSY,
             originX: 'center',
@@ -365,6 +388,7 @@ class NodeView {
             hasBorders: false,
             visible: false
         });
+
     }
 
     getAllFabricElement(): fabric.IObject[] {

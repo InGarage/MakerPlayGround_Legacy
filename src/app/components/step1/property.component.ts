@@ -13,13 +13,15 @@ import { GraphData, NodeData } from './graphmodel';
 })
 export class PropertyComponent  {
   @Input() count = 0;
-  @Output() countChange = new EventEmitter();
+  @Output() updateDataFinish = new EventEmitter();
   @Output() updateData = new EventEmitter(); 
 
   showProperties: boolean = false;
   //ObjProperties: ActionProperty[];
   ObjProperties = [];
   previousObjData: NodeData;
+
+  valueToBeUpdated;
 
   name: string;
 
@@ -46,24 +48,14 @@ export class PropertyComponent  {
     if (objData === null) {
       this.showProperties = false;
 
-
-      // for (let o of this.ObjProperties) {
-      //   console.log(o.value);
-      // }
-
-      // Get value from latest selected object
-      // for (let obj of this.ObjProperties) {
-      //   let data = [];
-      //   data.push(obj.name);
-      //   let x = (<HTMLInputElement>document.getElementById(obj.name)).value;
-      //   data.push(x);
-      //   this.updateData.emit(data);
-      // }
-
+      if (this.previousObjData !== null)
+          this.updateDataFinish.emit(this.valueToBeUpdated);
     }
     // Only show data
     else {
-      console.log(objData);
+      if (this.previousObjData !== null) 
+          this.updateDataFinish.emit(this.valueToBeUpdated);
+
       this.previousObjData = objData;
       this.ObjProperties = [];
       this.showProperties = true;
@@ -97,6 +89,7 @@ export class PropertyComponent  {
 
   onKey(objData, newValue) {
     objData.value = newValue;
+    this.valueToBeUpdated = objData;
     this.updateData.emit(objData);
   }
 
