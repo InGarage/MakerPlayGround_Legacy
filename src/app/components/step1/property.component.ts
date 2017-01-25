@@ -20,6 +20,7 @@ export class PropertyComponent  {
   //ObjProperties: ActionProperty[];
   ObjProperties = [];
   previousObjData: NodeData;
+  dirty: boolean;
 
   valueToBeUpdated;
 
@@ -46,16 +47,21 @@ export class PropertyComponent  {
   populatePropertyWindow(objData: NodeData) {
     // Update data to data structure
     if (objData === null) {
+      if (this.dirty)
+        this.updateDataFinish.emit(this.ObjProperties);
       this.showProperties = false;
 
-      if (this.previousObjData !== null)
-          this.updateDataFinish.emit(this.valueToBeUpdated);
+     // if (this.previousObjData !== null)
+     //     this.updateDataFinish.emit(this.valueToBeUpdated);
     }
     // Only show data
     else {
-      if (this.previousObjData !== null) 
-          this.updateDataFinish.emit(this.valueToBeUpdated);
-
+      // click friend
+      if ((this.previousObjData !== null) && (this.dirty)) { 
+          console.log('Save');
+          this.updateDataFinish.emit(this.ObjProperties);
+      }
+      this.dirty = false;
       this.previousObjData = objData;
       this.ObjProperties = [];
       this.showProperties = true;
@@ -87,10 +93,18 @@ export class PropertyComponent  {
     this.showProperties = false;
   }
 
-  onKey(objData, newValue) {
-    objData.value = newValue;
-    this.valueToBeUpdated = objData;
+  onKey(objData) {
+    this.dirty = true;
+    for (const o of this.ObjProperties)
+      console.log(o.value);
+    // objData.value = newValue;
+    // this.valueToBeUpdated = objData;
     this.updateData.emit(objData);
+  }
+
+  onOutOfFocus() {
+    this.dirty = false;
+    this.updateDataFinish.emit(this.ObjProperties);
   }
 
 }

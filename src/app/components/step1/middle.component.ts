@@ -39,10 +39,17 @@ export class MiddleComponent implements OnInit {
 
     updataPropData(data) {
         this.canvas.updateDataBinding(data);
-        this.model = this.model.updateProperty(data);
+        //this.model = this.model.updateProperty(data);
     }
 
     updataPropDataFinish(data) {
+        //console.log('finish', data);
+        for (const o of data) {
+            //console.log('prop finish', o.name, o.value);
+             this.model = this.model.updateProperty(o);
+        }
+        this.undoStack.push(this.model);
+        this.canvas.redraw(this.model);
         //if (data !== undefined) {
             //this.model = this.model.updateProperty(data);
             //this.canvas.redraw(this.model);
@@ -50,9 +57,11 @@ export class MiddleComponent implements OnInit {
     }
 
     undo() {
+        console.log('undo');
+        this.nodeSelect.emit(null);
         this.model = this.undoStack.undo();
         // Emit this event to hide properties window after undo button is clicked
-        this.nodeSelect.emit(null);
+
         this.canvas.deselectAllNode();
         this.canvas.redraw(this.model);
     }

@@ -83,6 +83,8 @@ export class GraphData {
                     callback('deletion', new NodeData(val.value, oldData));
                 else if (!Immutable.is(oldData, newData))
                     callback('update', new NodeData(val.value, newData));
+                else
+                    console.log('the same');
             }
 
             iter = this.data.get('nodes').keys();

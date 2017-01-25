@@ -143,6 +143,7 @@ export class GraphCanvas {
     }
 
     deselectAllNode() {
+        this.canvas.deactivateAll().renderAll();
         this.nodeFabricObject.forEach((nodeId, nodeView) => {
             nodeView.nodeSelectingIndicator.visible = false;
             nodeView.nodeRemoveButton.visible = false;
@@ -191,7 +192,8 @@ export class GraphCanvas {
      * @param graph graph to be drawn onto the canvas
      */
     redraw(graph: GraphData): void {
-        this.canvas.renderAll();
+        //this.canvas.renderAll();
+        console.log('redraw');
         graph.compareGraphModel(this.graph, (type, target) => {
             console.log(type);
             if (type === "addition") {
@@ -327,16 +329,19 @@ class NodeView {
     reinitializeFromModel(nodeData: NodeData) {
         this.nodeData = nodeData;
 
+        console.log('position', nodeData.getX(), nodeData.getY());
+
         this.nodeActionImage.set({
                 width: NODE_SIZE,
                 height: NODE_SIZE,
-                left: this.nodeData.getX(),
-                top: this.nodeData.getY(),
+                left: nodeData.getX(),
+                top: nodeData.getY(),
                 originX: 'center',
                 originY: 'center',
                 hasControls: false,
                 hasBorders: false
             });
+        this.nodeActionImage.setCoords();
 
         this.nodeConnectingIndicator.set({
             left: nodeData.getX(),
@@ -352,6 +357,7 @@ class NodeView {
             hasBorders: false,
             selectable: false
         });
+        this.nodeConnectingIndicator.setCoords();
 
         this.nodeSelectingIndicator.set({
             left: nodeData.getX(),
@@ -367,6 +373,7 @@ class NodeView {
             hasBorders: false,
             selectable: false
         });
+        this.nodeSelectingIndicator.setCoords();
 
         this.nodeNameText.set({
             left: nodeData.getX(),
@@ -378,6 +385,7 @@ class NodeView {
             hasBorders: false,
             text: nodeData.getActionParams('name')
         });
+        this.nodeNameText.setCoords();
 
         this.nodeRemoveButton.set({
             left: nodeData.getX() + NODE_REMOVEBTN_POSX,
@@ -388,6 +396,7 @@ class NodeView {
             hasBorders: false,
             visible: false
         });
+        this.nodeRemoveButton.setCoords();
 
     }
 
@@ -406,6 +415,7 @@ class NodeView {
         });
 
         this.nodeActionImage.on('selected', (e) => {
+            console.log('image select');
             this.deselectAllNode();
             this.nodeSelectingIndicator.visible = true;
             this.nodeRemoveButton.visible = true;

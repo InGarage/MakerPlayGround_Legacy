@@ -11,10 +11,10 @@
             <label>{{property.name}}</label><br/>
 
             <div *ngIf="property.control==='TextBox'">
-                <input #box type="text" value="{{property.value}}" (keyup)="onKey(ObjProperties[i], box.value)">
+                <input #box type="text" [(ngModel)]="property.value" name="{{property.name}}" (keyup)="onKey(property)" (blur)="onOutOfFocus()">
             </div>
 
-            <div *ngIf="property.control==='RadioButton'">
+            <!--<div *ngIf="property.control==='RadioButton'">
                 <input type="radio" value="{{property.value}}">
             </div>
             <div *ngIf="property.control==='CheckBox'">
@@ -29,7 +29,7 @@
 
             <div *ngIf="property.control==='Slider'">
                 <input type="range" value="{{property.value}}">
-            </div>
+            </div>-->
         </form>
         <!--
         <div class="buttonSetProperty">
