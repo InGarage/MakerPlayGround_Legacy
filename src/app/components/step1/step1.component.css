@@ -12,14 +12,74 @@
 .navv {
     height: 50px;
     position: static;
+    background-color: #444a62;
+}
+
+.navbar-left {
+    float: left !important;
+}
+
+.navbar-maker {
+    background-color: #96d1e6;
+    color: #ffffff;
+    padding-left: 30px;
+    padding-right: 30px;
+}
+
+.navbar-basic {
+    color: #ffffff;
+    padding-left: 50px;
+    font-size: 14px;
+}
+
+.navbar-right {
+    float: right !important;
+    margin-right: 50px;
 }
 
 .under-nav {
     position: relative;
-    background-color: lightblue;
+    background-color: #f6f7f8;
     height: 50px;
     width: 100%;
+	/*-webkit-box-shadow: 0 8px 6px -6px black;
+	   -moz-box-shadow: 0 8px 6px -6px black;
+	        box-shadow: 0 8px 6px -6px black;*/
+    border-bottom: 1px solid lightgray;
+    display: table;
+    text-align: center;
 }
+
+.under-nav-basic {
+    padding-top: 15px;
+    color: #444a62;
+}
+
+.under-nav-column {
+    display: table-cell;
+    width: 10%;
+}
+
+.under-nav-column1 {
+    display: table-cell;
+    width: 20%;
+}
+
+.under-nav-space1 {
+    display: table-cell;
+    width: 15%;
+}
+
+.under-nav-space2 {
+    display: table-cell;
+    width: 35%;
+}
+
+.under-nav-active {
+    background-color: #eff1f6;
+    border-bottom: 3px solid #96d1e5;
+}
+
 
 .well-edit {
   min-height: 20px;
@@ -31,7 +91,7 @@
 }
 
 .triggerBox {
-    margin-top: 10px;
+    /*margin-top: 10px;*/
 }
 
 .property-box {
@@ -89,9 +149,6 @@
     padding-bottom: 15px;
 }
 
-.canvas-container {
-    /*margin-top: 100px;*/
-}
 
 input[type=text] {
   display: block;

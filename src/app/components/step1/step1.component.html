@@ -1,24 +1,31 @@
-
-  <!-- Fixed navbar -->
-  <div class="navv">
-    <nav class="navbar navbar-inverse navbar-fixed-top">
-      <div class="container">
-        <div class="navbar-header">
-          <a class="navbar-brand" routerLink="/">Project Graph</a>
-        </div>
-        <div class="navbar-collapse collapse">
-          <ul class="nav navbar-nav navbar-right">
-            <li class="active"><a routerLink="/step1"><i class="fa fa-user-circle-o" aria-hidden="true"></i>
-USER</a></li>
-          </ul>
-        </div>
-        <!--/.nav-collapse -->
+<div class="navv">
+  <nav class="navbar navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header navbar-left">
+        <a class="navbar-brand navbar-maker" routerLink="/">Maker</a>
+        <a class="navbar-brand navbar-basic" routerLink="/">My Projects</a>
+        <a class="navbar-brand navbar-basic" routerLink="/">Explore</a>
       </div>
-    </nav>
-  </div>
+      <div class="navbar-collapse collapse">
+        <ul class="nav navbar-nav navbar-right">
+          <li><a class="navbar-basic" routerLink="/step1"><i class="fa fa-user-circle-o" aria-hidden="true"></i>USER</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+</div>
+
 
 <div class="step1">
-  <div class="under-nav"></div>
+
+  <div class="under-nav">
+    <p class="under-nav-basic  under-nav-column1">Project name</p>
+    <p class="under-nav-basic  under-nav-space1"></p>
+    <a class="under-nav-active under-nav-basic  under-nav-column" routerLink="/">Canvas</a>
+    <a class="under-nav-basic  under-nav-column" routerLink="/">Devices</a>
+    <a class="under-nav-basic  under-nav-column" routerLink="/">Blueprint</a>
+    <p class="under-nav-basic  under-nav-space2"></p>
+  </div>
 
   <div class="right-side">
     <property #right (updateData)="middle.updataPropData($event)" (updateDataFinish)="middle.updataPropDataFinish($event)"></property>

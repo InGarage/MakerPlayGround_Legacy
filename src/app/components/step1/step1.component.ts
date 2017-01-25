@@ -40,9 +40,9 @@ export class Step1Component  {
       'float': 'left',
       'padding-left': '15px',
       'width': this.windowWidth*0.2 + 'px',
-      //'min-width': this.minWidthMenu,
       'height': this.componentMenuHeight,
-      'background-color': 'lightpink',
+      'background-color': '#f6f7f8',
+      'border-right': '1px solid lightgray',
     };
     return styles;
   }
@@ -53,7 +53,7 @@ export class Step1Component  {
       'width': this.windowWidth*0.8 + 20 + 'px',
       //'width': this.windowWidth*0.8 + 'px',
       'height': this.componentMenuHeight,
-      'background-color': 'ivory',
+      'background-color': '#eff1f6',
       'overflow': 'scroll',
     };
     return styles;
