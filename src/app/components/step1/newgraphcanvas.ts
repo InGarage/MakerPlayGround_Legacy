@@ -36,14 +36,12 @@ type Coordinate = {
 }
 
 export class GraphCanvas {
-    private graph: GraphData;
-
     private canvas: fabric.ICanvas;
     private nodeFabricObject: Collections.Dictionary<string, NodeView>;
     private edgeFabricObject: Collections.Dictionary<string, EdgeView>;
     private callback: Collections.Dictionary<CanvasEventTypes, (options: CanvasEventOptions) => void>;
 
-    constructor(element: HTMLCanvasElement | string, options?: fabric.ICanvasOptions) {
+    constructor(private graph: GraphData, element: HTMLCanvasElement | string, options?: fabric.ICanvasOptions) {
         this.canvas = new fabric.Canvas(element, options);
         this.nodeFabricObject = new Collections.Dictionary<string, NodeView>();
         this.edgeFabricObject = new Collections.Dictionary<string, EdgeView>();
@@ -163,7 +161,6 @@ export class GraphCanvas {
     }
 
     drawNode(nodeData: NodeData) {
-        console.log('add',nodeData.getNodeId());
         let nodeView = new NodeView(this.graph, this.canvas, this.nodeFabricObject, this.edgeFabricObject
             , this.callback, nodeData.getNodeId(), nodeData);
         this.nodeFabricObject.setValue(nodeData.getNodeId(), nodeView);
@@ -176,7 +173,6 @@ export class GraphCanvas {
     }
 
     removeNode(nodeData: NodeData) {
-        console.log('remove',nodeData.getNodeId());
         let nodeView = this.nodeFabricObject.remove(nodeData.getNodeId());
         this.canvas.remove(nodeView.nodeActionImage, nodeView.nodeNameText
             , nodeView.nodeSelectingIndicator, nodeView.nodeConnectingIndicator);
@@ -191,43 +187,93 @@ export class GraphCanvas {
      * (Re)draw the canvas with the data provided 
      * @param graph graph to be drawn onto the canvas
      */
-    redraw(graph: GraphData): void {
-        //this.canvas.renderAll();
-        console.log('redraw');
-        graph.compareGraphModel(this.graph, (type, target) => {
-            console.log(type);
-            if (type === "addition") {
-                if (target instanceof NodeData) {
-                    this.drawNode(target);
-                } else {
-                    this.drawEdge(target);
-                }
-            } else if (type === "deletion") {
-                if (target instanceof NodeData) {
-                    this.removeNode(target);
-                } else {
-                    this.removeEdge(target);
-                }
-            } else if (type === "update") { // remove then add it again
-                if (target instanceof NodeData) {
-                    this.nodeFabricObject.getValue(target.getNodeId()).reinitializeFromModel(target);
-                    this.canvas.renderAll();
-                    //this.canvas.bringToFront(this.nodeFabricObject.getValue(target.getNodeId()).nodeRemoveButton);
-                } else {
-                    this.removeEdge(target);
-                    this.drawEdge(target);
-                }
-            }
-        });
-        this.graph = graph;
-        this.nodeFabricObject.forEach((nodeId, nodeView) => {
-            nodeView.graph = this.graph;
-        });
-        this.edgeFabricObject.forEach((edgeId, edgeView) => {
-            edgeView.graph = this.graph;
-        });
+    redraw(): void {
 
+        // Compare Node
+        this.nodeFabricObject.forEach((nodeId, nodeView) => {
+            let node = this.graph.getNodeById(nodeId);
+            if (node === undefined) {
+                console.log("Delete node");
+                this.removeNode(nodeView.nodeData);
+                }
+            else if (!node.isEqual(nodeView.nodeData)) {
+                    console.log("update node");
+                    this.nodeFabricObject.getValue(node.getNodeId()).reinitializeFromModel(node);
+                    this.canvas.renderAll();  
+                }
+
+            });
+
+        let allNode: NodeData[] = this.graph.getNodes();
+        for (let node of allNode) {
+            if (!this.nodeFabricObject.containsKey(node.getNodeId())) {
+                console.log("Add node");
+                this.drawNode(node);
+            }
+        }
+
+        // Compare Edge
+        this.edgeFabricObject.forEach((edgeId, edgeView) => {
+            let edge = this.graph.getEdgeById(edgeId);
+            if (edge === undefined) {
+                console.log("Delete edge");
+                this.removeEdge(edgeView.edgeData);
+                }
+            else if (!edge.isEqual(edgeView.edgeData)) {
+                    console.log("update edge");
+                    this.edgeFabricObject.getValue(edge.getEdgeId()).reinitializeFromModel(edge);
+                    this.canvas.renderAll();  
+                }
+
+            });
+
+        let allEdge: EdgeData[] = this.graph.getEdges();
+        for (let edge of allEdge) {
+            if (!this.edgeFabricObject.containsKey(edge.getEdgeId())) {
+                console.log("Add edge");
+                this.drawEdge(edge);
+            }
+        }
     }
+
+
+
+
+
+
+
+        // graph.compareGraphModel(this.graph, (type, target) => {
+        //     if (type === "addition") {
+        //         if (target instanceof NodeData) {
+        //             this.drawNode(target);
+        //         } else {
+        //             this.drawEdge(target);
+        //         }
+        //     } else if (type === "deletion") {
+        //         if (target instanceof NodeData) {
+        //             this.removeNode(target);
+        //         } else {
+        //             this.removeEdge(target);
+        //         }
+        //     } else if (type === "update") { // remove then add it again
+        //         if (target instanceof NodeData) {
+        //             this.nodeFabricObject.getValue(target.getNodeId()).reinitializeFromModel(target);
+        //             this.canvas.renderAll();
+        //             //this.canvas.bringToFront(this.nodeFabricObject.getValue(target.getNodeId()).nodeRemoveButton);
+        //         } else {
+        //             this.removeEdge(target);
+        //             this.drawEdge(target);
+        //         }
+        //     }
+        // });
+        // this.graph = graph;
+        // this.nodeFabricObject.forEach((nodeId, nodeView) => {
+        //     nodeView.graph = this.graph;
+        // });
+        // this.edgeFabricObject.forEach((edgeId, edgeView) => {
+        //     edgeView.graph = this.graph;
+        // });
+
 
     /**
      * Register a callback for a specific event
@@ -273,7 +319,7 @@ class NodeView {
         readonly nodeFabricObject: Collections.Dictionary<string, NodeView>,
         readonly edgeFabricObject: Collections.Dictionary<string, EdgeView>,
         readonly callback: Collections.Dictionary<CanvasEventTypes, (options: CanvasEventOptions) => void>,
-        readonly id: string, private nodeData: NodeData) {
+        readonly id: string, public nodeData: NodeData) {
 
         // TODO: remove to its own class
         let action = this.findActionById(nodeData.getActionId());
@@ -649,7 +695,7 @@ class EdgeView {
         readonly nodeFabricObject: Collections.Dictionary<string, NodeView>,
         readonly edgeFabricObject: Collections.Dictionary<string, EdgeView>,
         readonly callback: Collections.Dictionary<CanvasEventTypes, (options: CanvasEventOptions) => void>,
-        readonly id: string, readonly edgeData: EdgeData) {
+        readonly id: string, public edgeData: EdgeData) {
 
         let startX = edgeData.getStartX();
         let startY = edgeData.getStartY();
@@ -659,61 +705,27 @@ class EdgeView {
         let difX = Math.abs(startX - endX) / 2;
         let difY = Math.abs(startY - endY) / 2;
 
-        this.line = new fabric.Line([
-            startX,
-            startY,
-            endX - EDGE_ARROW_HEAD_SIZE / 2 * Math.cos(angle),
-            endY - EDGE_ARROW_HEAD_SIZE / 2 * Math.sin(angle)
-        ], {
-                originX: 'center',
-                originY: 'center',
-                strokeWidth: EDGE_ARROW_WIDTH,
-                stroke: '#000',
-                hasControls: false,
-                hasBorders: false
-            });
-
-        this.triangle = new fabric.Triangle({
-            left: endX - EDGE_ARROW_HEAD_SIZE / 2 * Math.cos(angle),
-            top: endY - EDGE_ARROW_HEAD_SIZE / 2 * Math.sin(angle),
-            width: EDGE_ARROW_HEAD_SIZE,
-            height: EDGE_ARROW_HEAD_SIZE,
-            originX: 'center',  // rotate using center point of the triangle as the origin
-            originY: 'center',
-            angle: 90 + (angle * 180 / Math.PI),
-            hasControls: false,
-            hasBorders: false
-        });
-
-        this.dotHead = new fabric.Circle({
-            left: startX,
-            top: startY,
-            radius: 6,
-            fill: 'black',
+        this.line = new fabric.Line([],{
             originX: 'center',
             originY: 'center',
-            hasControls: false,
-            hasBorders: false,
-            visible: false
+            padding: 50,
+            perPixelTargetFind: true
         });
 
-        this.dotTail = new fabric.Circle({
-            left: endX,
-            top: endY,
-            radius: 6,
-            fill: 'black',
-            originX: 'center',
-            originY: 'center',
-            hasControls: false,
-            hasBorders: false,
-            visible: false
-        });
+        this.triangle = new fabric.Triangle();
+
+        this.dotHead = new fabric.Circle();
+        this.dotHead.set({visible: false});
+
+        this.dotTail = new fabric.Circle();
+        this.dotTail.set({visible: false});
 
         this.initEdgeEvent();
         this.line.set('uid', this.id);
         this.triangle.set('uid', this.id);
         this.dotHead.set('uid', this.id);
         this.dotTail.set('uid', this.id);
+        this.reinitializeFromModel(edgeData);
         this.canvas.add(this.line, this.triangle, this.dotTail, this.dotHead);
     }
 
@@ -722,13 +734,14 @@ class EdgeView {
     }
 
     private initEdgeEvent() {
-        let startX = this.edgeData.getStartX();
-        let startY = this.edgeData.getStartY();
-        let endX = this.edgeData.getEndX();
-        let endY = this.edgeData.getEndY();
-        let angle = Math.atan2((endY - startY), (endX - startX));
+        // let startX = this.edgeData.getStartX();
+        // let startY = this.edgeData.getStartY();
+        // let endX = this.edgeData.getEndX();
+        // let endY = this.edgeData.getEndY();
+        // let angle = Math.atan2((endY - startY), (endX - startX));
 
         this.line.on('moving', (options) => {
+            let [startX, startY, endX, endY, angle] = this.getCurrentPointAfterReinitialize();
             let currentOriginLineX = this.line.getLeft() + (EDGE_ARROW_HEAD_SIZE / 2 * Math.cos(angle)) / 2;
             let currentOriginLineY = this.line.getTop() + (EDGE_ARROW_HEAD_SIZE / 2 * Math.sin(angle)) / 2;
             let [nStartX, nEndX, nStartY, nEndY] = this.getLineCoordinateFromOrigin(currentOriginLineX, currentOriginLineY);
@@ -736,6 +749,7 @@ class EdgeView {
             this.processEdgeEvent(nStartX, nStartY, nEndX, nEndY, angle);
         });
         this.line.on('modified', (options) => {
+            let [startX, startY, endX, endY, angle] = this.getCurrentPointAfterReinitialize();
             let currentOriginLineX = this.line.getLeft() + (EDGE_ARROW_HEAD_SIZE / 2 * Math.cos(angle)) / 2;
             let currentOriginLineY = this.line.getTop() + (EDGE_ARROW_HEAD_SIZE / 2 * Math.sin(angle)) / 2;
             let [nStartX, nEndX, nStartY, nEndY] = this.getLineCoordinateFromOrigin(currentOriginLineX, currentOriginLineY);
@@ -748,6 +762,7 @@ class EdgeView {
         });
 
         this.triangle.on('moving', (options) => {
+            let [startX, startY, endX, endY, angle] = this.getCurrentPointAfterReinitialize();
             let currentOriginTriangleX = this.triangle.getLeft();
             let currentOriginTriangleY = this.triangle.getTop();
             let [currentOriginLineX, currentOriginLineY] = this.getLineOriginFromTriangleOrigin(currentOriginTriangleX, currentOriginTriangleY);
@@ -756,6 +771,7 @@ class EdgeView {
             this.processEdgeEvent(nStartX, nStartY, nEndX, nEndY, angle);
         });
         this.triangle.on('modified', (options) => {
+            let [startX, startY, endX, endY, angle] = this.getCurrentPointAfterReinitialize();
             let currentOriginTriangleX = this.triangle.getLeft();
             let currentOriginTriangleY = this.triangle.getTop();
             let [currentOriginLineX, currentOriginLineY] = this.getLineOriginFromTriangleOrigin(currentOriginTriangleX, currentOriginTriangleY);
@@ -769,34 +785,116 @@ class EdgeView {
         });
 
         this.dotHead.on('moving', (options) => {
+            let [startX, startY, endX, endY, angle] = this.getCurrentPointAfterReinitialize();
             let newStartX = this.dotHead.getLeft();
             let newStartY = this.dotHead.getTop();
-            let angle = Math.atan2((endY - newStartY), (endX - newStartX));
-            this.moveEdge(newStartX, newStartY, endX, endY, angle);
-            this.processEdgeEvent(newStartX, newStartY, endX, endY, angle);
+            let newAngle = Math.atan2((endY - newStartY), (endX - newStartX));
+            this.moveEdge(newStartX, newStartY, endX, endY, newAngle);
+            this.processEdgeEvent(newStartX, newStartY, endX, endY, newAngle);
         });
         this.dotHead.on('modified', (options) => {
+            let [startX, startY, endX, endY, angle] = this.getCurrentPointAfterReinitialize();
             let newStartX = this.dotHead.getLeft();
             let newStartY = this.dotHead.getTop();
-            let angle = Math.atan2((endY - newStartY), (endX - newStartX));
-            this.moveEdge(newStartX, newStartY, endX, endY, angle);
-            this.processEdgeEvent(newStartX, newStartY, endX, endY, angle, true);
+            let newAngle = Math.atan2((endY - newStartY), (endX - newStartX));
+            this.moveEdge(newStartX, newStartY, endX, endY, newAngle);
+            this.processEdgeEvent(newStartX, newStartY, endX, endY, newAngle, true);
         });
 
         this.dotTail.on('moving', (options) => {
+            let [startX, startY, endX, endY, angle] = this.getCurrentPointAfterReinitialize();
             let currentEndX = this.dotTail.getLeft();
             let currentEndY = this.dotTail.getTop();
-            let angle = Math.atan2((currentEndY - startY), (currentEndX - startX));
-            this.moveEdge(startX, startY, currentEndX, currentEndY, angle);
-            this.processEdgeEvent(startX, startY, currentEndX, currentEndY, angle);
+            let newAngle = Math.atan2((currentEndY - startY), (currentEndX - startX));
+            this.moveEdge(startX, startY, currentEndX, currentEndY, newAngle);
+            this.processEdgeEvent(startX, startY, currentEndX, currentEndY, newAngle);
         });
         this.dotTail.on('modified', (options) => {
+            let [startX, startY, endX, endY, angle] = this.getCurrentPointAfterReinitialize();
             let currentEndX = this.dotTail.getLeft();
             let currentEndY = this.dotTail.getTop();
-            let angle = Math.atan2((currentEndY - startY), (currentEndX - startX));
-            this.moveEdge(startX, startY, currentEndX, currentEndY, angle);
-            this.processEdgeEvent(startX, startY, currentEndX, currentEndY, angle, true);
+            let newAngle = Math.atan2((currentEndY - startY), (currentEndX - startX));
+            this.moveEdge(startX, startY, currentEndX, currentEndY, newAngle);
+            this.processEdgeEvent(startX, startY, currentEndX, currentEndY, newAngle, true);
         });
+    }
+
+    getCurrentPointAfterReinitialize() {
+        let startX = this.edgeData.getStartX();
+        let startY = this.edgeData.getStartY();
+        let endX = this.edgeData.getEndX();
+        let endY = this.edgeData.getEndY();
+        let angle = Math.atan2((endY - startY), (endX - startX));
+        return [startX, startY, endX, endY, angle];
+    }
+
+    reinitializeFromModel(edgeData: EdgeData) {
+        this.edgeData = edgeData;
+
+        let startX = edgeData.getStartX();
+        let startY = edgeData.getStartY();
+        let endX = edgeData.getEndX();
+        let endY = edgeData.getEndY();
+        let angle = Math.atan2((endY - startY), (endX - startX));   // in radian
+        let difX = Math.abs(startX - endX) / 2;
+        let difY = Math.abs(startY - endY) / 2;
+
+        console.log(startX, startY, endX, endY);
+
+        this.line.set({
+            x1: startX,
+            y1: startY,
+            x2: endX - EDGE_ARROW_HEAD_SIZE / 2 * Math.cos(angle),
+            y2: endY - EDGE_ARROW_HEAD_SIZE / 2 * Math.sin(angle),
+            originX: 'center',
+            originY: 'center',
+            strokeWidth: EDGE_ARROW_WIDTH,
+            stroke: '#000',
+            hasControls: false,
+            hasBorders: false
+        });
+        // this.line.originX = 'center';
+        // this.line.originY = 'center';
+        this.line.setCoords(); 
+
+        this.triangle.set({
+            left: endX - EDGE_ARROW_HEAD_SIZE / 2 * Math.cos(angle),
+            top: endY - EDGE_ARROW_HEAD_SIZE / 2 * Math.sin(angle),
+            width: EDGE_ARROW_HEAD_SIZE,
+            height: EDGE_ARROW_HEAD_SIZE,
+            originX: 'center',  // rotate using center point of the triangle as the origin
+            originY: 'center',
+            angle: 90 + (angle * 180 / Math.PI),
+            hasControls: false,
+            hasBorders: false
+        });
+        this.triangle.setCoords();
+
+        this.dotHead.set({
+            left: startX,
+            top: startY,
+            radius: 6,
+            fill: 'black',
+            originX: 'center',
+            originY: 'center',
+            hasControls: false,
+            hasBorders: false,
+            visible: false
+        });
+        this.dotHead.setCoords();
+
+        this.dotTail.set({
+            left: endX,
+            top: endY,
+            radius: 6,
+            fill: 'black',
+            originX: 'center',
+            originY: 'center',
+            hasControls: false,
+            hasBorders: false,
+            visible: false
+        })
+        this.dotTail.setCoords();
     }
 
     moveEdge(startX: number, startY: number, endX: number, endY: number, angle: number) {

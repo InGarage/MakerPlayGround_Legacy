@@ -17,7 +17,6 @@
 
 
 <div class="step1">
-
   <div class="under-nav">
     <p class="under-nav-basic  under-nav-column1">Project name</p>
     <p class="under-nav-basic  under-nav-space1"></p>
@@ -27,18 +26,13 @@
     <p class="under-nav-basic  under-nav-space2"></p>
   </div>
 
-  <div class="right-side">
-    <property #right (updateData)="middle.updataPropData($event)" (updateDataFinish)="middle.updataPropDataFinish($event)"></property>
-  </div>
-
-
   <div class="row">
     <div [ngStyle]="setComponentMenuStyles()">
       <action #left (myEvent)="middle.addNewNode($event)"></action>
     </div>
 
     <div [ngStyle]="setCanvasStyles()">
-      <middle #middle (nodeSelect)="right.populatePropertyWindow($event)"></middle>
+      <middle #middle></middle>
     </div>
   </div>
 

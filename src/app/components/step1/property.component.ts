@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter, SimpleChange } from '@angular/core';
 import { NgModule }      from '@angular/core';
 //import { GraphData, ActionData, TriggerData } from './graph';
 import { Action, ActionGroup, ActionProperty } from './action';
@@ -12,7 +12,7 @@ import { GraphData, NodeData } from './graphmodel';
   styleUrls: ['./step1.component.css']
 })
 export class PropertyComponent  {
-  @Input() count = 0;
+  @Input() selectedNode: NodeData;
   @Output() updateDataFinish = new EventEmitter();
   @Output() updateData = new EventEmitter(); 
 
@@ -34,6 +34,11 @@ export class PropertyComponent  {
     this.triggers = require("./trigger.json"); 
   }
 
+  ngOnChanges(changes: SimpleChange) { 
+    if (this.selectedNode !== undefined)
+      this.populatePropertyWindow(this.selectedNode);
+  }
+
     private findActionById(id: number): Action {
         for (let actionGroup of this.actions) {
             for (let action of actionGroup.children) {
@@ -49,10 +54,8 @@ export class PropertyComponent  {
     if (objData === null) {
       if (this.dirty)
         this.updateDataFinish.emit(this.ObjProperties);
-      this.showProperties = false;
 
-     // if (this.previousObjData !== null)
-     //     this.updateDataFinish.emit(this.valueToBeUpdated);
+      this.showProperties = false;
     }
     // Only show data
     else {
@@ -95,10 +98,6 @@ export class PropertyComponent  {
 
   onKey(objData) {
     this.dirty = true;
-    for (const o of this.ObjProperties)
-      console.log(o.value);
-    // objData.value = newValue;
-    // this.valueToBeUpdated = objData;
     this.updateData.emit(objData);
   }
 

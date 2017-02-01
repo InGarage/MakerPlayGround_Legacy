@@ -4,8 +4,11 @@ import * as UUID from 'uuid';
 import { Action } from './action';
 import { CanvasEventOptions } from './graphcanvas';
 
+import { UndoStack } from './undostack';
+
 export class GraphData {
 
+    private undoStack: UndoStack<Immutable.Map<string, Immutable.Map<string, Immutable.Map<string, string>>>>;
     /** 
      * Create model from JSON representation of the graph according to the following format
      * ``` 
@@ -56,6 +59,9 @@ export class GraphData {
     }
 
     private constructor(public data: Immutable.Map<string, Immutable.Map<string, Immutable.Map<string, string>>>) {
+        
+        this.undoStack = new UndoStack<Immutable.Map<string, Immutable.Map<string, Immutable.Map<string, string>>>>();
+        this.undoStack.push(data);        
     }
 
     /**
@@ -63,64 +69,67 @@ export class GraphData {
      * @param graph the graph data to compare with
      * @param callback 
      */
-    compareGraphModel(otherGraph: GraphData, callback: (type: 'addition' | 'deletion' | 'update', target: NodeData | EdgeData) => void) {
-        if (otherGraph === undefined) {
-            this.data.get('nodes').forEach((value, key) => {
-                callback('addition', new NodeData(key, value));
-            });
-            this.data.get('edges').forEach((value, key) => {
-                callback('addition', new EdgeData(key, value));
-            });
-        } else {
-            let val: { value: string, done: boolean };
+    // compareGraphModel(otherGraph: GraphData, callback: (type: 'addition' | 'deletion' | 'update', target: NodeData | EdgeData) => void) {
+    //     if (otherGraph === undefined) {
+    //         this.data.get('nodes').forEach((value, key) => {
+    //             callback('addition', new NodeData(key, value));
+    //         });
+    //         this.data.get('edges').forEach((value, key) => {
+    //             callback('addition', new EdgeData(key, value));
+    //         });
+    //     } else {
+    //         let val: { value: string, done: boolean };
 
-            let iter = otherGraph.data.get('nodes').keys();
-            while (!(val = iter.next()).done) {
-                let newData = this.data.getIn(['nodes', val.value]);
-                let oldData = otherGraph.data.getIn(['nodes', val.value]);
+    //         let iter = otherGraph.data.get('nodes').keys();
+    //         while (!(val = iter.next()).done) {
+    //             let newData = this.data.getIn(['nodes', val.value]);
+    //             let oldData = otherGraph.data.getIn(['nodes', val.value]);
 
-                if (newData === undefined)
-                    callback('deletion', new NodeData(val.value, oldData));
-                else if (!Immutable.is(oldData, newData))
-                    callback('update', new NodeData(val.value, newData));
-                else
-                    console.log('the same');
-            }
+    //             if (newData === undefined)
+    //                 callback('deletion', new NodeData(val.value, oldData));
+    //             else if (!Immutable.is(oldData, newData))
+    //                 callback('update', new NodeData(val.value, newData));
+    //             else
+    //                 console.log('the same');
+    //         }
 
-            iter = this.data.get('nodes').keys();
-            while (!(val = iter.next()).done) {
-                let newData = this.data.getIn(['nodes', val.value]);
-                let oldData = otherGraph.data.getIn(['nodes', val.value]);
+    //         iter = this.data.get('nodes').keys();
+    //         while (!(val = iter.next()).done) {
+    //             let newData = this.data.getIn(['nodes', val.value]);
+    //             let oldData = otherGraph.data.getIn(['nodes', val.value]);
 
-                if (oldData === undefined)
-                    callback('addition', new NodeData(val.value, newData));
-            }
+    //             if (oldData === undefined)
+    //                 callback('addition', new NodeData(val.value, newData));
+    //         }
 
-            // Edge compare
-            iter = otherGraph.data.get('edges').keys();
-            while (!(val = iter.next()).done) {
-                let newData = this.data.getIn(['edges', val.value]);
-                let oldData = otherGraph.data.getIn(['edges', val.value]);
+    //         // Edge compare
+    //         iter = otherGraph.data.get('edges').keys();
+    //         while (!(val = iter.next()).done) {
+    //             let newData = this.data.getIn(['edges', val.value]);
+    //             let oldData = otherGraph.data.getIn(['edges', val.value]);
 
-                if (newData === undefined)
-                    callback('deletion', new EdgeData(val.value, oldData));
-                else if (!Immutable.is(oldData, newData))
-                    callback('update', new EdgeData(val.value, newData));
-            }
+    //             if (newData === undefined)
+    //                 callback('deletion', new EdgeData(val.value, oldData));
+    //             else if (!Immutable.is(oldData, newData))
+    //                 callback('update', new EdgeData(val.value, newData));
+    //         }
 
-            iter = this.data.get('edges').keys();
-            while (!(val = iter.next()).done) {
-                let newData = this.data.getIn(['edges', val.value]);
-                let oldData = otherGraph.data.getIn(['edges', val.value]);
+    //         iter = this.data.get('edges').keys();
+    //         while (!(val = iter.next()).done) {
+    //             let newData = this.data.getIn(['edges', val.value]);
+    //             let oldData = otherGraph.data.getIn(['edges', val.value]);
 
-                if (oldData === undefined)
-                    callback('addition', new EdgeData(val.value, newData));
-            }
-        }
+    //             if (oldData === undefined)
+    //                 callback('addition', new EdgeData(val.value, newData));
+    //         }
+    //     }
+    // }
+
+    undo() {
+        this.data = this.undoStack.undo();
     }
 
-    getNode(nodeID: string): NodeData {
-        //console.log(nodeID);
+    getNodeById(nodeID: string): NodeData {
         let check = this.data.getIn(['nodes', nodeID]);
         if (check !== undefined) {
             return new NodeData(nodeID, check);
@@ -129,14 +138,43 @@ export class GraphData {
         }
     }
 
-    addNode(action: Action): GraphData {
+    getEdgeById(edgeID: string): EdgeData {
+        let check = this.data.getIn(['edges', edgeID]);
+        if (check !== undefined) {
+            return new EdgeData(edgeID, check);
+        } else {
+            return undefined;
+        }
+    }
+
+    getNodes() {
+        let allNode: NodeData[] = [];
+
+        this.data.get('nodes').forEach((value, key) => {
+            allNode.push(new NodeData(key, value));
+        });
+
+        return allNode;
+    }
+
+    getEdges() {
+        let allEdge: EdgeData[] = [];
+
+        this.data.get('edges').forEach((value, key) => {
+            allEdge.push(new EdgeData(key, value));
+        });
+
+        return allEdge;
+    }
+
+    addNode(action: Action) {
         let newNode_key = UUID.v4();
         let newObj = {};
         let allParams = {};
         newObj = {
             "action_id": action.id,
-            "display_x": '500',
-            "display_y": '150',
+            "display_x": '100',
+            "display_y": '100',
         };
 
         for (let prop of action.property) {
@@ -147,15 +185,17 @@ export class GraphData {
         }
         newObj['params'] = allParams;
 
-        return new GraphData(this.data.setIn(['nodes', newNode_key], Immutable.fromJS(newObj)));
+        this.data = this.data.setIn(['nodes', newNode_key], Immutable.fromJS(newObj));
+        this.undoStack.push(this.data);
     }
 
     // removeNode(nodeId: string): GraphData {
     //     return 
     // }
 
-    removeNode(nodeId: string): GraphData {
-        return new GraphData(this.data.deleteIn(['nodes', nodeId]));
+    removeNode(nodeId: string) {
+        this.data = this.data.deleteIn(['nodes', nodeId]);
+        this.undoStack.push(this.data);
     }
 
     getNodeInRange(endX: number, endY: number, range: number = 70): NodeData {
@@ -241,52 +281,66 @@ export class GraphData {
         return allEdgesDst;
     }
 
-    connectionEdgeOfDstNode(nodeId, edgeId, x1, x2, y1, y2): GraphData {
-        return new GraphData(this.data.withMutations(map => {
+    connectionEdgeOfDstNode(nodeId, edgeId, x1, x2, y1, y2) {
+        this.data = this.data.withMutations(map => {
             map.setIn(['edges', edgeId, 'start_x'], x1)
                 .setIn(['edges', edgeId, 'start_y'], y1)
                 .setIn(['edges', edgeId, 'end_x'], x2)
                 .setIn(['edges', edgeId, 'end_y'], y2)
                 .setIn(['edges', edgeId, 'dst_node_id'], nodeId)
-        }));
+        });
+
+        this.undoStack.push(this.data);
     }
 
-    connectionEdgeOfSrcNode(nodeId, edgeId, x1, x2, y1, y2): GraphData {
-        return new GraphData(this.data.withMutations(map => {
+    connectionEdgeOfSrcNode(nodeId, edgeId, x1, x2, y1, y2) {
+        this.data = this.data.withMutations(map => {
             map.setIn(['edges', edgeId, 'start_x'], x1)
                 .setIn(['edges', edgeId, 'start_y'], y1)
                 .setIn(['edges', edgeId, 'end_x'], x2)
                 .setIn(['edges', edgeId, 'end_y'], y2)
                 .setIn(['edges', edgeId, 'src_node_id'], nodeId)
-        }));
+        });
+
+        this.undoStack.push(this.data);
     }
 
     moveNode(id: string, leftPos: number, topPos: number) {
-        return new GraphData(this.data.withMutations(map => {
+        this.data = this.data.withMutations(map => {
             map.setIn(['nodes', id, 'display_x'], leftPos)
                 .setIn(['nodes', id, 'display_y'], topPos)
-        }));
+        });
+
+        this.undoStack.push(this.data);
     }
 
 
     /**
      * Update location of edge, also remove any src/dst connection
      */
-    moveEdge(id, x1, x2, y1, y2): GraphData {
-        return new GraphData(this.data.withMutations(map => {
+    moveEdge(id, x1, x2, y1, y2) {
+        this.data = this.data.withMutations(map => {
             map.setIn(['edges', id, 'start_x'], x1)
                 .setIn(['edges', id, 'start_y'], y1)
                 .setIn(['edges', id, 'end_x'], x2)
                 .setIn(['edges', id, 'end_y'], y2)
                 .setIn(['edges', id, 'dst_node_id'], '')
                 .setIn(['edges', id, 'src_node_id'], '')
-        }));
+        });
+
+        this.undoStack.push(this.data);
     }
 
-    updateProperty(data): GraphData {
-        return new GraphData(this.data.withMutations(map => {
-            map.setIn(['nodes', data.uid, 'params', data.name], data.value)
-        }));
+    updateProperty(data) {
+        this.data = this.data.asMutable();
+        for (let d of data) {
+            this.data = this.data.setIn(['nodes', d.uid, 'params', d.name], d.value)
+        }
+        this.data = this.data.asImmutable();
+        // this.data = this.data.withMutations(map => {
+        //     map.setIn(['nodes', data.uid, 'params', data.name], data.value)
+        // });
+        this.undoStack.push(this.data);
     }
 }
 
@@ -316,6 +370,10 @@ export class NodeData {
 
     getY(): number {
         return parseFloat(this.data.get('display_y'));
+    }
+
+    isEqual(other: NodeData): boolean {
+        return Immutable.is(other.data, this.data);
     }
 
 
@@ -363,6 +421,10 @@ export class EdgeData {
 
     getEndY(): number {
         return parseFloat(this.data.get('end_y'));
+    }
+
+    isEqual(other: EdgeData): boolean {
+        return Immutable.is(other.data, this.data);
     }
 }
 

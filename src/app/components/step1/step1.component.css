@@ -4,8 +4,8 @@
 
 .right-side{
     position: fixed;
-    left: 77%;
-    width: 20%;
+    right: 5%;
+    width: 15%;
     z-index: 5;
 }
 

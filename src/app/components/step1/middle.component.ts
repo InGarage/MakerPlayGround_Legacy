@@ -20,21 +20,19 @@ import 'fabric';
 
 export class MiddleComponent implements OnInit {
 
-    @Output() nodeSelect = new EventEmitter<NodeData>(); 
+    nodeSelect: NodeData; 
     private canvas: GraphCanvas;
     private model: GraphData;
-    private undoStack: UndoStack<GraphData>;
 
     constructor() {
         this.model = GraphData.createGraphDataFromJSON(this.dummyGraph);
-        this.undoStack = new UndoStack<GraphData>();
-        this.undoStack.push(this.model);
+        // this.undoStack = new UndoStack<GraphData>();
+        // this.undoStack.push(this.model);
     }
 
     addNewNode(newAction: Action) {
-        this.model = this.model.addNode(newAction);
-        this.undoStack.push(this.model);
-        this.canvas.redraw(this.model);
+        this.model.addNode(newAction);
+        this.canvas.redraw();
     }
 
     updataPropData(data) {
@@ -43,73 +41,57 @@ export class MiddleComponent implements OnInit {
     }
 
     updataPropDataFinish(data) {
-        //console.log('finish', data);
-        for (const o of data) {
-            //console.log('prop finish', o.name, o.value);
-             this.model = this.model.updateProperty(o);
-        }
-        this.undoStack.push(this.model);
-        this.canvas.redraw(this.model);
-        //if (data !== undefined) {
-            //this.model = this.model.updateProperty(data);
-            //this.canvas.redraw(this.model);
-        //}
+        // console.log('finish', data);
+        this.model.updateProperty(data);
+        this.canvas.redraw();
     }
 
     undo() {
-        console.log('undo');
-        this.nodeSelect.emit(null);
-        this.model = this.undoStack.undo();
-        // Emit this event to hide properties window after undo button is clicked
-
+        this.nodeSelect = null;
         this.canvas.deselectAllNode();
-        this.canvas.redraw(this.model);
+        this.model.undo();
+        this.canvas.redraw();
     }
 
     ngOnInit() {
-        this.canvas = new GraphCanvas('c');
-        this.canvas.redraw(this.model);
+        this.canvas = new GraphCanvas(this.model,'c');
+        this.canvas.redraw();
 
         this.canvas.on('node:move', (options) => {
-            this.model = this.model.moveNode(options.target_id, options.center_x, options.center_y);
-            this.undoStack.push(this.model);
-            this.canvas.redraw(this.model);
+            this.model.moveNode(options.target_id, options.center_x, options.center_y);
+            this.canvas.redraw();
         });
 
         this.canvas.on('node:remove', (options) => {
-            this.model = this.model.removeNode(options.target_id);
-            this.undoStack.push(this.model);
-            this.canvas.redraw(this.model);
+            console.log('remove');
+            this.model.removeNode(options.target_id);
+            this.canvas.redraw();
         });
 
         this.canvas.on('edge:move', (options) => {
-            this.model = this.model.moveEdge(options.target_id, options.start_x, options.end_x, options.start_y, options.end_y); 
-            this.undoStack.push(this.model);
-            this.canvas.redraw(this.model);
+            this.model.moveEdge(options.target_id, options.start_x, options.end_x, options.start_y, options.end_y); 
+            this.canvas.redraw();
         });
 
         this.canvas.on('node:selected', (options) => {
-            this.nodeSelect.emit(this.model.getNode(options.target_id));
+            this.nodeSelect = this.model.getNodeById(options.target_id);
         });
 
         this.canvas.on('object:deselected', (options) => {
-            console.log('ei');
-            this.nodeSelect.emit(null);
-            this.canvas.redraw(this.model);
+            this.nodeSelect = null;
+            this.canvas.redraw();
         });
 
         this.canvas.on('edge:connectionDst', (options) => {
-            this.model = this.model.connectionEdgeOfDstNode(options.dst_node_id
+            this.model.connectionEdgeOfDstNode(options.dst_node_id
             , options.target_id, options.start_x, options.end_x, options.start_y, options.end_y);
-            this.undoStack.push(this.model);
-            this.canvas.redraw(this.model);
+            this.canvas.redraw();
         });
 
         this.canvas.on('edge:connectionSrc', (options) => {
-            this.model = this.model.connectionEdgeOfSrcNode(options.src_node_id
+            this.model.connectionEdgeOfSrcNode(options.src_node_id
             , options.target_id, options.start_x, options.end_x, options.start_y, options.end_y);
-            this.undoStack.push(this.model);
-            this.canvas.redraw(this.model);      
+            this.canvas.redraw();      
         });
     }
 
