@@ -152,9 +152,9 @@ export class GraphData {
         return new GraphData(this.data.setIn(['nodes', newNode_key], Immutable.fromJS(newObj)));
     }
 
-    removeNode(actionData: NodeData): GraphData {
-        return undefined;
-    }
+    // removeNode(nodeId: number): GraphData {
+    //     return new GraphData(this.data.setIn(['nodes', nodeId], Immutable.Map()).delete(nodeId).toJS());
+    // }
 
     getNodeInRange(endX: number, endY: number, range: number = 70) : NodeData {
         //const NODE_SIZE: number = 100
@@ -173,34 +173,32 @@ export class GraphData {
         return result;
     }
 
-    getEdgeInRangeSrc(originX: number, originY: number, range: number = 70) : EdgeData {
+    getEdgeInRangeSrc(originX: number, originY: number, range: number = 70) : EdgeData[] {
         //const NODE_SIZE: number = 100
-        let result : EdgeData;
+        let result: EdgeData[] = [];
         this.data.get('edges').forEach((value, key) => {
             let start_x = parseFloat(value.get('start_x'));
             let start_y = parseFloat(value.get('start_y'));
 
             // 60 is radius of circle
             if (Math.sqrt((start_x-originX)*(start_x-originX) + (start_y-originY)*(start_y-originY)) < range) {
-                result = new EdgeData(key, value);
-                return false;
+                result.push(new EdgeData(key, value));
             }
         });
 
         return result;
     }
 
-    getEdgeInRangeDst(originX: number, originY: number, range: number = 70) : EdgeData {
+    getEdgeInRangeDst(originX: number, originY: number, range: number = 70) : EdgeData[] {
         //const NODE_SIZE: number = 100
-        let result : EdgeData;
+        let result : EdgeData[] = [];
         this.data.get('edges').forEach((value, key) => {
             let end_x = parseFloat(value.get('end_x'));
             let end_y = parseFloat(value.get('end_y'));
 
             // 60 is radius of circle
             if (Math.sqrt((end_x-originX)*(end_x-originX) + (end_y-originY)*(end_y-originY)) < range) {
-                result = new EdgeData(key, value);
-                return false;
+                result.push(new EdgeData(key, value));
             }
         });
 
@@ -280,6 +278,15 @@ export class GraphData {
         }));
     }
 
+    moveEdgeWithoutDisconnect(id, x1, x2, y1, y2): GraphData {
+        return new GraphData(this.data.withMutations(map => {
+            map.setIn(['edges', id, 'start_x'], x1)
+                .setIn(['edges', id, 'start_y'], y1)
+                .setIn(['edges', id, 'end_x'], x2)
+                .setIn(['edges', id, 'end_y'], y2)
+        }));
+    }
+
     
 /**
  * Update location of edge, also remove any src/dst connection
@@ -294,7 +301,10 @@ export class GraphData {
                 .setIn(['edges', id, 'src_node_id'], 0)
         }));
     }
+
 }
+
+
 
 /**
  * Small wrapper class to pass action data to the view (GraphCanvas).
