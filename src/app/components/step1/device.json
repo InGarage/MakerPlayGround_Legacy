@@ -1,1978 +1,5007 @@
-[
- {
-   "Type": ["Amplifiers","SDcard","Record"],
-   "Brand": "Adafruit",
-   "Model": 1381,
-   "IC": "VS1053",
-   "Price": 24.95,
-   "Detail": "VS1053 Codec + MicroSD Breakout - MP3/WAV/MIDI/OGG Play + Record - v4",
-   "Image": "https://cdn-shop.adafruit.com/970x728/1381-03.jpg",
-   "Connect": ["SPI"],
-   "MinVolt": 3,
-   "MaxVolt": 5,
-   "Datasheet": "https://learn.adafruit.com/adafruit-vs1053-mp3-aac-ogg-midi-wav-play-and-record-codec-tutorial/downloads-and-links",
-   "Link": "https://www.adafruit.com/products/1381"
- },
- {
-   "Type": ["Amplifiers"],
-   "Brand": "Adafruit",
-   "Model": 2130,
-   "IC": "PAM8302",
-   "Price": 3.95,
-   "Detail": "Adafruit Mono 2.5W Class D Audio Amplifier - PAM8302",
-   "Image": "https://cdn-shop.adafruit.com/970x728/2130-01.jpg",
-   "Connect": ["GPIO"],
-   "MinVolt": 2,
-   "MaxVolt": 5.5,
-   "Datasheet": "https://cdn-shop.adafruit.com/datasheets/PAM8302A.pdf",
-   "Link": "https://www.adafruit.com/products/2130"
- },
- {
-   "Type": ["Amplifiers"],
-   "Brand": "Adafruit",
-   "Model": 1063,
-   "IC": "MAX4466",
-   "Price": 6.95,
-   "Detail": "Electret Microphone Amplifier - MAX4466 with Adjustable Gain",
-   "Image": "https://cdn-shop.adafruit.com/970x728/1063-03.jpg",
-   "Connect": ["GPIO"],
-   "MinVolt": 2.4,
-   "MaxVolt": 5.5,
-   "Datasheet": "https://cdn-shop.adafruit.com/datasheets/CMA-4544PF-W.pdf",
-   "Link": "https://www.adafruit.com/products/1063"
- },
- {
-   "Type": ["Amplifiers"],
-   "Brand": "Adafruit",
-   "Model": 987,
-   "IC": "MAX98306",
-   "Price": 8.95,
-   "Detail": "Stereo 3.7W Class D Audio Amplifier - MAX98306",
-   "Image": "https://cdn-shop.adafruit.com/970x728/987-00.jpg",
-   "Connect": ["GPIO"],
-   "MinVolt": 2.7,
-   "MaxVolt": 5.5,
-   "Datasheet": "https://learn.adafruit.com/stereo-3-7w-class-d-audio-amplifier/downloads",
-   "Link": "https://www.adafruit.com/products/987"
- },
- {
-   "Type": ["Amplifiers"],
-   "Brand": "Adafruit",
-   "Model": 3006,
-   "IC": "MAX98357A",
-   "Price": 5.95,
-   "Detail": "Adafruit I2S 3W Class D Amplifier Breakout - MAX98357A",
-   "Image": "https://cdn-shop.adafruit.com/970x728/3006-00.jpg",
-   "Connect": ["GPIO"],
-   "MinVolt": 2.7,
-   "MaxVolt": 5.5,
-   "Datasheet": "https://learn.adafruit.com/adafruit-max98357-i2s-class-d-mono-amp/downloads",
-   "Link": "https://www.adafruit.com/products/3006"
- },
- {
-   "Type": ["Amplifiers"],
-   "Brand": "Adafruit",
-   "Model": 1552,
-   "IC": "TPA2012",
-   "Price": 9.95,
-   "Detail": "Stereo 2.1W Class D Audio Amplifier - TPA2012",
-   "Image": "https://cdn-shop.adafruit.com/970x728/1552-03.jpg",
-   "Connect": ["GPIO"],
-   "MinVolt": 2.7,
-   "MaxVolt": 5.5,
-   "Datasheet": "https://learn.adafruit.com/adafruit-ts2012-2-8w-stereo-audio-amplifier/downloads",
-   "Link": "https://www.adafruit.com/products/1552"
- },
- {
-   "Type": ["Amplifiers"],
-   "Brand": "Adafruit",
-   "Model": 1712,
-   "IC": "TPA2016",
-   "Price": 9.95,
-   "Detail": "Stereo 2.8W Class D Audio Amplifier - I2C Control AGC - TPA2016",
-   "Image": "https://cdn-shop.adafruit.com/970x728/1712-00.jpg",
-   "Connect": ["GPIO" ,"I2C"],
-   "MinVolt": 2.7,
-   "MaxVolt": 5.5,
-   "Datasheet": "https://learn.adafruit.com/adafruit-tpa2016-2-8w-agc-stereo-audio-amplifier/downloads",
-   "Link": "https://www.adafruit.com/products/1712"
- },
- {
-   "Type": ["Amplifiers"],
-   "Brand": "Adafruit",
-   "Model": 1752,
-   "IC": "MAX9744",
-   "Price": 19.95,
-   "Detail": "Stereo 20W Class D Audio Amplifier - MAX9744",
-   "Image": "https://cdn-shop.adafruit.com/970x728/1752-00.jpg",
-   "Connect": ["GPIO", "Analog"],
-   "MinVolt": 4.5,
-   "MaxVolt": 14,
-   "Datasheet": "https://learn.adafruit.com/adafruit-20w-stereo-audio-amplifier-class-d-max9744/downloads",
-   "Link": "https://www.adafruit.com/products/1752"
- },
- {
-   "Type": ["Barometer","Pressure","Temperature","Altitude"],
-   "Brand": "Adafruit",
-   "Model": 2652,
-   "IC": "BME280",
-   "Price": 19.95,
-   "Detail": "Adafruit BME280 I2C or SPI Temperature Humidity Pressure Sensor",
-   "Image": "https://cdn-shop.adafruit.com/970x728/2652-00.jpg",
-   "Connect": ["SPI ","I2C"],
-   "MinVolt": 3.3,
-   "MaxVolt": 3.3,
-   "Datasheet": "https://learn.adafruit.com/adafruit-bme280-humidity-barometric-pressure-temperature-sensor-breakout/downloads",
-   "Link": "https://www.adafruit.com/products/2652"
- },
- {
-   "Type": ["Barometer","Pressure","Temperature","Altitude"],
-   "Brand": "Adafruit",
-   "Model": 2651,
-   "IC": "BMP280",
-   "Price": 9.95,
-   "Detail": "Adafruit BMP280 I2C or SPI Barometric Pressure & Altitude Sensor",
-   "Image": "https://cdn-shop.adafruit.com/970x728/2651-00.jpg",
-   "Connect": ["SPI ","I2C"],
-   "MinVolt": 3.3,
-   "MaxVolt": 3.3,
-   "Datasheet": "https://learn.adafruit.com/adafruit-bmp280-barometric-pressure-plus-temperature-sensor-breakout/downloads",
-   "Link": "https://www.adafruit.com/products/2651"
- },
- {
-   "Type": ["Barometer","Pressure","Temperature","Altitude"],
-   "Brand": "Adafruit",
-   "Model": 1893,
-   "IC": "MPL3115A2",
-   "Price": 9.95,
-   "Detail": "MPL3115A2 - I2C Barometric Pressure/Altitude/Temperature Sensor",
-   "Image": "https://cdn-shop.adafruit.com/970x728/1893-02.jpg",
-   "Connect": ["I2C"],
-   "MinVolt": 2,
-   "MaxVolt": 3.6,
-   "Datasheet": "https://cdn-shop.adafruit.com/datasheets/1893_datasheet.pdf",
-   "Link": "https://www.adafruit.com/products/1893"
- },
- {
-   "Type": ["Barometer","Pressure","Temperature","Altitude"],
-   "Brand": "Adafruit",
-   "Model": 1603,
-   "IC": "BMP180",
-   "Price": 9.95,
-   "Detail": "BMP180 Barometric Pressure/Temperature/Altitude Sensor- 5V ready",
-   "Image": "https://cdn-shop.adafruit.com/970x728/1603-03.jpg",
-   "Connect": ["I2C"],
-   "MinVolt": 3,
-   "MaxVolt": 5,
-   "Datasheet": "https://learn.adafruit.com/bmp085/downloads",
-   "Link": "https://www.adafruit.com/products/1603"
- },
- {
-   "Type": ["Barometer","Pressure","Temperature","Altitude"],
-   "Brand": "Adafruit",
-   "Model": 1900,
-   "IC": "BMP183",
-   "Price": 9.95,
-   "Detail": "Adafruit BMP183 SPI Barometric Pressure & Altitude Sensor",
-   "Image": "https://cdn-shop.adafruit.com/970x728/1900-00.jpg",
-   "Connect": ["SPI"],
-   "MinVolt": 3,
-   "MaxVolt": 5,
-   "Datasheet": "https://learn.adafruit.com/adafruit-bmp183-spi-barometric-pressure-and-altitude-sensor/downloads",
-   "Link": "https://www.adafruit.com/products/1900"
- },
- {
-   "Type": ["Barometer","Pressure","Temperature","Altitude"],
-   "Brand": "Adafruit",
-   "Model": 992,
-   "IC": "MPL115A2",
-   "Price": 7.95,
-   "Detail": "MPL115A2 - I2C Barometric Pressure/Temperature Sensor",
-   "Image": "https://cdn-shop.adafruit.com/970x728/992-00.jpg",
-   "Connect": ["I2C"],
-   "MinVolt": 2.4,
-   "MaxVolt": 5.5,
-   "Datasheet": "https://cdn-shop.adafruit.com/datasheets/MPL115A2.pdf",
-   "Link": "https://www.adafruit.com/products/992"
- },
- {
-   "Type": ["Biometric","Pulse"],
-   "Brand": "Adafruit",
-   "Model": 1093,
-   "IC": "",
-   "Price": 25,
-   "Detail": "Pulse Sensor Amped",
-   "Image": "https://cdn-shop.adafruit.com/970x728/1093-00.jpg",
-   "Connect": ["GPIO"],
-   "MinVolt": 5,
-   "MaxVolt": 5,
-   "Datasheet": "https://media.digikey.com/pdf/Data%20Sheets/Pulse%20PDFs/PulseSensorAmpedGettingStartedGuide.pdf",
-   "Link": "https://www.adafruit.com/products/1093"
- },
- {
-   "Type": ["Biometric","Muscle"],
-   "Brand": "Adafruit",
-   "Model": 2699,
-   "IC": "",
-   "Price": 37.95,
-   "Detail": "MyoWare Muscle Sensor",
-   "Image": "https://cdn-shop.adafruit.com/970x728/2699-02.jpg",
-   "Connect": ["Analog"],
-   "MinVolt": 2.9,
-   "MaxVolt": 5.7,
-   "Datasheet": "https://cdn-shop.adafruit.com/product-files/2699/AT-04-001.pdf",
-   "Link": "https://www.adafruit.com/products/2699"
- },
- {
-   "Type": ["Biometric","Fingerprint"],
-   "Brand": "Adafruit",
-   "Model": 751,
-   "IC": "",
-   "Price": 49.95,
-   "Detail": "Fingerprint sensor",
-   "Image": "https://cdn-shop.adafruit.com/970x728/751-03.jpg",
-   "Connect": ["GPIO"],
-   "MinVolt": 3.6,
-   "MaxVolt": 6,
-   "Datasheet": "https://cdn-shop.adafruit.com/datasheets/DY001fingerprint.pdf",
-   "Link": "https://www.adafruit.com/products/751"
- },
- {
-   "Type": ["Bluetooth","UART"],
-   "Brand": "Adafruit",
-   "Model": 2487,
-   "IC": "",
-   "Price": 17.5,
-   "Detail": "Flora Wearable Bluefruit LE Module",
-   "Image": "https://cdn-shop.adafruit.com/970x728/2487-03.jpg",
-   "Connect": ["UART"],
-   "MinVolt": 2.7,
-   "MaxVolt": 3.6,
-   "Datasheet": "https://learn.adafruit.com/adafruit-flora-bluefruit-le/downloads",
-   "Link": "https://www.adafruit.com/products/2487"
- },
- {
-   "Type": ["Bluetooth","UART"],
-   "Brand": "Adafruit",
-   "Model": 1697,
-   "IC": "",
-   "Price": 19.95,
-   "Detail": "Bluefruit LE - Bluetooth Low Energy (BLE 4.0) - nRF8001 Breakout - v1.0",
-   "Image": "https://cdn-shop.adafruit.com/970x728/1697-04.jpg",
-   "Connect": ["SPI","UART"],
-   "MinVolt": 3.3,
-   "MaxVolt": 5,
-   "Datasheet": "https://learn.adafruit.com/getting-started-with-the-nrf8001-bluefruit-le-breakout/downloads",
-   "Link": "https://www.adafruit.com/products/1697"
- },
- {
-   "Type": ["Bluetooth","UART"],
-   "Brand": "Adafruit",
-   "Model": 2479,
-   "IC": "",
-   "Price": 17.5,
-   "Detail": "Adafruit Bluefruit LE UART Friend - Bluetooth Low Energy (BLE)",
-   "Image": "https://cdn-shop.adafruit.com/970x728/2479-00.jpg",
-   "Connect": ["UART"],
-   "MinVolt": 3,
-   "MaxVolt": 16,
-   "Datasheet": "https://learn.adafruit.com/introducing-the-adafruit-bluefruit-le-uart-friend/downloads",
-   "Link": "https://www.adafruit.com/products/2479"
- },
- {
-   "Type": ["Bluetooth"],
-   "Brand": "Adafruit",
-   "Model": 2633,
-   "IC": "",
-   "Price": 17.5,
-   "Detail": "Adafruit Bluefruit LE SPI Friend - Bluetooth Low Energy (BLE)",
-   "Image": "https://cdn-shop.adafruit.com/970x728/2633-00.jpg",
-   "Connect": ["SPI"],
-   "MinVolt": 3,
-   "MaxVolt": 16,
-   "Datasheet": "https://learn.adafruit.com/introducing-the-adafruit-bluefruit-spi-breakout/downloads",
-   "Link": "https://www.adafruit.com/products/2633"
- },
- {
-   "Type": ["Bluetooth","UART"],
-   "Brand": "Adafruit",
-   "Model": 1588,
-   "IC": "",
-   "Price": 22.5,
-   "Detail": "Bluefruit EZ-Link - Bluetooth Serial Link & Arduino Programmer - v1.3",
-   "Image": "https://cdn-shop.adafruit.com/970x728/1588-00.jpg",
-   "Connect": ["UART"],
-   "MinVolt": 3.5,
-   "MaxVolt": 16,
-   "Datasheet": "https://learn.adafruit.com/introducing-bluefruit-ez-link/downloads",
-   "Link": "https://www.adafruit.com/products/1588"
- },
- {
-   "Type": ["Cellular","UART"],
-   "Brand": "Adafruit",
-   "Model": 1946,
-   "IC": "",
-   "Price": 39.95,
-   "Detail": "Adafruit FONA - Mini Cellular GSM Breakout uFL Version",
-   "Image": "https://cdn-shop.adafruit.com/970x728/1946-05.jpg",
-   "Connect": ["UART"],
-   "MinVolt": 3,
-   "MaxVolt": 5,
-   "Datasheet": "https://learn.adafruit.com/adafruit-fona-mini-gsm-gprs-cellular-phone-module/downloads",
-   "Link": "https://www.adafruit.com/products/1946"
- },
- {
-   "Type": ["Cellular","UART"],
-   "Brand": "Adafruit",
-   "Model": 2542,
-   "IC": "",
-   "Price": 49.95,
-   "Detail": "Adafruit FONA 808 - Mini Cellular GSM + GPS Breakout",
-   "Image": "https://cdn-shop.adafruit.com/970x728/2542-06.jpg",
-   "Connect": ["UART"],
-   "MinVolt": 3,
-   "MaxVolt": 5,
-   "Datasheet": "https://learn.adafruit.com/adafruit-fona-808-cellular-plus-gps-breakout/downloads",
-   "Link": "https://www.adafruit.com/products/2542"
- },
- {
-   "Type": ["Cellular"],
-   "Brand": "Adafruit",
-   "Model": 2468,
-   "IC": "",
-   "Price": 39.95,
-   "Detail": "Adafruit FONA 800 Shield - Voice/Data Cellular GSM for Arduino",
-   "Image": "https://cdn-shop.adafruit.com/970x728/2468-06.jpg",
-   "Connect": ["Shield"],
-   "MinVolt": null,
-   "MaxVolt": null,
-   "Datasheet": "https://learn.adafruit.com/adafruit-fona-800-shield/downloads",
-   "Link": "https://www.adafruit.com/products/2468"
- },
- {
-   "Type": ["Clock"],
-   "Brand": "Adafruit",
-   "Model": 3013,
-   "IC": "DS3231",
-   "Price": 13.95,
-   "Detail": "Adafruit DS3231 Precision RTC Breakout",
-   "Image": "https://cdn-shop.adafruit.com/970x728/3013-01.jpg",
-   "Connect": ["I2C"],
-   "MinVolt": 3.3,
-   "MaxVolt": 3.3,
-   "Datasheet": "https://learn.adafruit.com/adafruit-ds3231-precision-rtc-breakout/downloads",
-   "Link": "https://www.adafruit.com/products/3013"
- },
- {
-   "Type": ["Clock"],
-   "Brand": "Adafruit",
-   "Model": 3296,
-   "IC": "DS1307",
-   "Price": 8.95,
-   "Detail": "Adafruit DS1307 Real Time Clock Assembled Breakout Board",
-   "Image": "https://cdn-shop.adafruit.com/970x728/3296-00.jpg",
-   "Connect": ["I2C"],
-   "MinVolt": 5,
-   "MaxVolt": 5,
-   "Datasheet": "",
-   "Link": "https://www.adafruit.com/products/3296"
- },
- {
-   "Type": ["Clock"],
-   "Brand": "Adafruit",
-   "Model": 3295,
-   "IC": "PCF8523",
-   "Price": 4.95,
-   "Detail": "Adafruit PCF8523 Real Time Clock Assembled Breakout Board",
-   "Image": "https://cdn-shop.adafruit.com/970x728/3295-00.jpg",
-   "Connect": ["I2C"],
-   "MinVolt": 5,
-   "MaxVolt": 5,
-   "Datasheet": "",
-   "Link": "https://www.adafruit.com/products/3295"
- },
- {
-   "Type": ["Diode"],
-   "Brand": "sparkfun",
-   "Model": 8589,
-   "IC": "",
-   "Price": 0.15,
-   "Detail": "Diode Rectifier - 1A 50V",
-   "Image": "https://cdn.sparkfun.com//assets/parts/1/5/7/8/08588-02-L.jpg",
-   "Connect": ["GPIO","Analog"],
-   "MinVolt": 0,
-   "MaxVolt": 50,
-   "Datasheet": "http://www.fairchildsemi.com/ds/1N/1N4001.pdf",
-   "Link": "https://www.sparkfun.com/products/8589"
- },
- {
-   "Type": ["Gas"],
-   "Brand": "Adafruit",
-   "Model": 3199,
-   "IC": "MiCS5524",
-   "Price": 14.95,
-   "Detail": "Adafruit MiCS5524 CO, Alcohol and VOC Gas Sensor Breakout",
-   "Image": "https://cdn-shop.adafruit.com/1200x900/3199-00.jpg",
-   "Connect": ["Analog"],
-   "MinVolt": 5,
-   "MaxVolt": 5,
-   "Datasheet": "https://cdn-shop.adafruit.com/product-files/3199/MiCS-5524.pdf",
-   "Link": "https://www.adafruit.com/products/3199"
- },
- {
-   "Type": ["Humidity","Temperature"],
-   "Brand": "Adafruit",
-   "Model": 1899,
-   "IC": "HTU21D-F",
-   "Price": 14.95,
-   "Detail": "Adafruit HTU21D-F Temperature & Humidity Sensor Breakout Board",
-   "Image": "https://cdn-shop.adafruit.com/970x728/1899-00.jpg",
-   "Connect": ["I2C"],
-   "MinVolt": 3.3,
-   "MaxVolt": 5,
-   "Datasheet": "https://learn.adafruit.com/adafruit-htu21d-f-temperature-humidity-sensor/downloads",
-   "Link": "https://www.adafruit.com/products/1899"
- },
- {
-   "Type": ["Humidity","Temperature"],
-   "Brand": "Adafruit",
-   "Model": 2857,
-   "IC": "SHT31-D",
-   "Price": 13.95,
-   "Detail": "Adafruit Sensiron SHT31-D Temperature & Humidity Sensor Breakout",
-   "Image": "https://cdn-shop.adafruit.com/970x728/2857-00.jpg",
-   "Connect": ["I2C"],
-   "MinVolt": 3.3,
-   "MaxVolt": 5,
-   "Datasheet": "https://learn.adafruit.com/adafruit-sht31-d-temperature-and-humidity-sensor-breakout/downloads",
-   "Link": "https://www.adafruit.com/products/2857"
- },
- {
-   "Type": ["Humidity","Temperature"],
-   "Brand": "Adafruit",
-   "Model": 3251,
-   "IC": "Si7021",
-   "Price": 6.95,
-   "Detail": "Adafruit Si7021 Temperature & Humidity Sensor Breakout Board",
-   "Image": "https://cdn-shop.adafruit.com/970x728/3251-00.jpg",
-   "Connect": ["I2C"],
-   "MinVolt": 3.3,
-   "MaxVolt": 5,
-   "Datasheet": "https://learn.adafruit.com/adafruit-si7021-temperature-plus-humidity-sensor/downloads",
-   "Link": "https://www.adafruit.com/products/3251"
- },
- {
-   "Type": ["Humidity","Temperature"],
-   "Brand": "Adafruit",
-   "Model": 1293,
-   "IC": "DS18B20",
-   "Price": 29.95,
-   "Detail": "AM2315 - Encased I2C Temperature/Humidity Sensor",
-   "Image": "https://cdn-shop.adafruit.com/970x728/1293-00.jpg",
-   "Connect": ["I2C"],
-   "MinVolt": 3.3,
-   "MaxVolt": 5,
-   "Datasheet": "https://cdn-shop.adafruit.com/datasheets/AM2315.pdf",
-   "Link": "https://www.adafruit.com/products/1293"
- },
- {
-   "Type": ["Humidity","Temperature"],
-   "Brand": "Adafruit",
-   "Model": 385,
-   "IC": "DHT22",
-   "Price": 9.95,
-   "Detail": "DHT22 temperature-humidity sensor + extras",
-   "Image": "https://cdn-shop.adafruit.com/970x728/385-00.jpg",
-   "Connect": ["GPIO"],
-   "MinVolt": 3,
-   "MaxVolt": 5,
-   "Datasheet": "https://cdn-shop.adafruit.com/datasheets/DHT22.pdf",
-   "Link": "https://www.adafruit.com/products/385"
- },
- {
-   "Type": ["Humidity","Temperature"],
-   "Brand": "Adafruit",
-   "Model": 386,
-   "IC": "DHT11",
-   "Price": 5,
-   "Detail": "DHT11 basic temperature-humidity sensor + extras",
-   "Image": "https://cdn-shop.adafruit.com/970x728/386-00.jpg",
-   "Connect": ["GPIO"],
-   "MinVolt": 3,
-   "MaxVolt": 5,
-   "Datasheet": "https://cdn-shop.adafruit.com/datasheets/DHT22.pdf",
-   "Link": "https://www.adafruit.com/products/386"
- },
- {
-   "Type": ["Humidity","Temperature"],
-   "Brand": "Adafruit",
-   "Model": 1298,
-   "IC": "SHT10",
-   "Price": 49.95,
-   "Detail": "Soil Temperature/Moisture Sensor - SHT10",
-   "Image": "https://cdn-shop.adafruit.com/970x728/1298-00.jpg",
-   "Connect": ["I2C"],
-   "MinVolt": 3,
-   "MaxVolt": 5,
-   "Datasheet": "https://cdn-shop.adafruit.com/datasheets/SLHT5.pdf",
-   "Link": "https://www.adafruit.com/products/1298"
- },
- {
-   "Type": ["LCD16X2"],
-   "Brand": "Adafruit",
-   "Model": 181,
-   "IC": "",
-   "Price": 9.95,
-   "Detail": "Standard LCD 16x2 + extras - white on blue",
-   "Image": "https://cdn-shop.adafruit.com/970x728/181-02.jpg",
-   "Connect": ["GPIO"],
-   "MinVolt": 5,
-   "MaxVolt": 5,
-   "Datasheet": "https://cdn-shop.adafruit.com/product-files/181/p181.pdf",
-   "Link": "https://www.adafruit.com/products/181"
- },
- {
-   "Type": ["LCD16X2","LCDbacklightcolour"],
-   "Brand": "Adafruit",
-   "Model": 399,
-   "IC": "",
-   "Price": 13.95,
-   "Detail": "RGB backlight negative LCD 16x2 + extras - RGB on black",
-   "Image": "https://cdn-shop.adafruit.com/970x728/399-11.jpg",
-   "Connect": ["GPIO"],
-   "MinVolt": 5,
-   "MaxVolt": 5,
-   "Datasheet": "https://www.adafruit.com/datasheets/HD44780.pdf",
-   "Link": "https://www.adafruit.com/products/399"
- },
-
+ [
 {
-   "Type": ["LCD"],
-   "Brand": "Adafruit",
-   "Model": 292,
-   "IC": "",
-   "Price": 9.95,
-   "Detail": "i2c / SPI character LCD backpack",
-   "Image": "https://cdn-shop.adafruit.com/970x728/292-04.jpg",
-   "Connect": ["I2C","SPI"],
-   "MinVolt": 5,
-   "MaxVolt": 5,
-   "Datasheet": "https://learn.adafruit.com/i2c-spi-lcd-backpack/downloads",
-   "Link": "https://www.adafruit.com/products/292"
- },
- {
-   "Type": ["LCD"],
-   "Brand": "Adafruit",
-   "Model": 388,
-   "IC": "",
-   "Price": 10,
-   "Detail": "Nokia 5110/3310 monochrome LCD + extras",
-   "Image": "https://cdn-shop.adafruit.com/970x728/338-02.jpg",
-   "Connect": ["Specific"],
-   "MinVolt": 3.3,
-   "MaxVolt": 5,
-   "Datasheet": "http://learn.adafruit.com/nokia-5110-3310-monochrome-lcd",
-   "Link": "https://www.adafruit.com/products/338"
- },
- {
-   "Type": ["LCD"],
-   "Brand": "Adafruit",
-   "Model": 358,
-   "IC": "ST7735R",
-   "Price": 19.95,
-   "Detail": "1.8\" Color TFT LCD display with MicroSD Card Breakout - ST7735R",
-   "Image": "https://cdn-shop.adafruit.com/970x728/358-00.jpg",
-   "Connect": ["SPI"],
-   "MinVolt": 3.3,
-   "MaxVolt": 6,
-   "Datasheet": "https://learn.adafruit.com/1-8-tft-display/downloads",
-   "Link": "https://www.adafruit.com/products/358"
- },
- {
-   "Type": ["LCD"],
-   "Brand": "Adafruit",
-   "Model": 1651,
-   "IC": "",
-   "Price": 34.95,
-   "Detail": "2.8\" TFT Touch Shield for Arduino with Resistive Touch Screen",
-   "Image": "https://cdn-shop.adafruit.com/970x728/1651-00.jpg",
-   "Connect": ["Shield"],
-   "MinVolt": null,
-   "MaxVolt": null,
-   "Datasheet": "https://learn.adafruit.com/adafruit-2-8-tft-touch-shield-v2/downloads",
-   "Link": "https://www.adafruit.com/products/1651"
- },
- {
-   "Type": ["RGBLED"],
-   "Brand": "Adafruit",
-   "Model": 159,
-   "IC": "",
-   "Price": 2,
-   "Detail": "Diffused RGB (tri-color) LED - Common Anode",
-   "Image": "https://cdn-shop.adafruit.com/970x728/159-00.jpg",
-   "Connect": ["GPIO"],
-   "MinVolt": 5,
-   "MaxVolt": 5,
-   "Datasheet": "http://www.adafruit.com/datasheets/FD-5WSRGB-A.pdf",
-   "Link": "https://www.adafruit.com/products/159"
- },
-
-{
-   "Type": ["Dotmatrix"],
-   "Brand": "Adafruit",
-   "Model": 1484,
-   "IC": "",
-   "Price": 39.95,
-   "Detail": "32x32 RGB LED Matrix Panel - 6mm pitch",
-   "Image": "https://cdn-shop.adafruit.com/970x728/1484-00.jpg",
-   "Connect": ["Specific"],
-   "MinVolt": 5,
-   "MaxVolt": 5,
-   "Datasheet": "http://learn.adafruit.com/32x16-32x32-rgb-led-matrix/",
-   "Link": "https://www.adafruit.com/products/1484"
- },
- {
-   "Type": ["Dotmatrix"],
-   "Brand": "Adafruit",
-   "Model": 2946,
-   "IC": "IS31FL3731",
-   "Price": 5.95,
-   "Detail": "Adafruit 16x9 Charlieplexed PWM LED Matrix Driver - IS31FL3731",
-   "Image": "https://cdn-shop.adafruit.com/970x728/2946-00.jpg",
-   "Connect": ["I2C"],
-   "MinVolt": 2.7,
-   "MaxVolt": 5.5,
-   "Datasheet": "https://learn.adafruit.com/i31fl3731-16x9-charliplexed-pwm-led-driver/downloads",
-   "Link": "https://www.adafruit.com/products/2946"
- },
- {
-   "Type": ["LED"],
-   "Brand": "sparkfun",
-   "Model": 9590,
-   "IC": "",
-   "Price": 0.35,
-   "Detail": "LED - Basic Red 5mm",
-   "Image": "https://cdn.sparkfun.com//assets/parts/8/3/4/08377-02-L.jpg",
-   "Connect": ["GPIO","Analog"],
-   "MinVolt": 2.2,
-   "MaxVolt": null,
-   "Datasheet": "http://www.sparkfun.com/datasheets/Components/LED/COM-09590-YSL-R531R3D-D2.pdf",
-   "Link": "https://www.sparkfun.com/products/9590"
- },
- {
-   "Type": ["LED"],
-   "Brand": "sparkfun",
-   "Model": 9650,
-   "IC": "",
-   "Price": 0.35,
-   "Detail": "LED - Basic Green 3mm",
-   "Image": "https://cdn.sparkfun.com//assets/parts/3/5/0/1/09650-01.jpg",
-   "Connect": ["GPIO","Analog"],
-   "MinVolt": 2.4,
-   "MaxVolt": null,
-   "Datasheet": "http://www.sparkfun.com/datasheets/Components/LED/YSL-R341K3D-D2.pdf",
-   "Link": "https://www.sparkfun.com/products/9650"
- },
- {
-   "Type": ["LED"],
-   "Brand": "sparkfun",
-   "Model": 532,
-   "IC": "",
-   "Price": 0.35,
-   "Detail": "LED - Basic Yellow 3mm",
-   "Image": "https://cdn.sparkfun.com//assets/parts/1/6/7/3/00532-02-L.jpg",
-   "Connect": ["GPIO","Analog"],
-   "MinVolt": 2.4,
-   "MaxVolt": null,
-   "Datasheet": "http://www.sparkfun.com/datasheets/Components/LED/COM-00532-YSL-R341Y3D-D2.pdf",
-   "Link": "https://www.sparkfun.com/products/532"
- },
- {
-   "Type": ["LED"],
-   "Brand": "sparkfun",
-   "Model": 11372,
-   "IC": "",
-   "Price": 0.5,
-   "Detail": "LED - Basic Blue 5mm",
-   "Image": "https://cdn.sparkfun.com//assets/parts/7/1/1/3/11372-01b.jpg",
-   "Connect": ["GPIO","Analog"],
-   "MinVolt": 3.4,
-   "MaxVolt": null,
-   "Datasheet": "",
-   "Link": "https://www.sparkfun.com/products/11372"
- },
- {
-   "Type": ["Dotmatrix"],
-   "Brand": "Adafruit",
-   "Model": 2974,
-   "IC": "",
-   "Price": 7.95,
-   "Detail": "LED Charlieplexed Matrix - 9x16 LEDs - Cool White",
-   "Image": "https://cdn-shop.adafruit.com/970x728/2974-02.jpg",
-   "Connect": ["LEDMatrixDriver"],
-   "MinVolt": null,
-   "MaxVolt": null,
-   "Datasheet": "https://learn.adafruit.com/i31fl3731-16x9-charliplexed-pwm-led-driver/downloads",
-   "Link": "https://www.adafruit.com/products/2974"
- },
- {
-   "Type": ["Level Shifter"],
-   "Brand": "Adafruit",
-   "Model": 395,
-   "IC": "TXB0108",
-   "Price": 8,
-   "Detail": "8-channel Bi-directional Logic Level Converter - TXB0108",
-   "Image": "https://cdn-shop.adafruit.com/970x728/395-06.jpg",
-   "Connect": ["GPIO"],
-   "MinVolt": 1.65,
-   "MaxVolt": 5.5,
-   "Datasheet": "https://cdn-shop.adafruit.com/datasheets/txb0108.pdf",
-   "Link": "https://www.adafruit.com/products/395"
- },
- {
-   "Type": ["Level Shifter"],
-   "Brand": "Adafruit",
-   "Model": 1875,
-   "IC": "TXB0104",
-   "Price": 3.5,
-   "Detail": "TXB0104 Bi-Directional Level Shifter - TXB0104",
-   "Image": "https://cdn-shop.adafruit.com/970x728/1875-00.jpg",
-   "Connect": ["GPIO"],
-   "MinVolt": 1.65,
-   "MaxVolt": 5.5,
-   "Datasheet": "https://cdn-shop.adafruit.com/datasheets/txb0104.pdf",
-   "Link": "https://www.adafruit.com/products/1875"
- },
- {
-   "Type": ["Level Shifter"],
-   "Brand": "Adafruit",
-   "Model": 757,
-   "IC": "BSS138",
-   "Price": 3.95,
-   "Detail": "4-channel I2C-safe Bi-directional Logic Level Converter - BSS138",
-   "Image": "https://cdn-shop.adafruit.com/970x728/757-03.jpg",
-   "Connect": ["GPIO"],
-   "MinVolt": 1.8,
-   "MaxVolt": 10,
-   "Datasheet": "https://cdn-shop.adafruit.com/datasheets/BSS138.pdf",
-   "Link": "https://www.adafruit.com/products/757"
- },
- {
-   "Type": ["Illuminance"],
-   "Brand": "Adafruit",
-   "Model": 2349,
-   "IC": "",
-   "Price": 1.95,
-   "Detail": "Reflective IR Sensor with 470 and 10K Resistors",
-   "Image": "https://cdn-shop.adafruit.com/970x728/2349-00.jpg",
-   "Connect": ["GPIO"],
-   "MinVolt": 5,
-   "MaxVolt": 5,
-   "Datasheet": "",
-   "Link": "https://www.adafruit.com/products/2349"
- },
- {
-   "Type": ["UV"],
-   "Brand": "Adafruit",
-   "Model": 1918,
-   "IC": "GUVA-S12SD",
-   "Price": 6.5,
-   "Detail": "Analog UV Light Sensor Breakout - GUVA-S12SD",
-   "Image": "https://cdn-shop.adafruit.com/970x728/1918-01.jpg",
-   "Connect": ["I2C"],
-   "MinVolt": 2,
-   "MaxVolt": 5,
-   "Datasheet": "https://cdn-shop.adafruit.com/datasheets/1918guva.pdf",
-   "Link": "https://www.adafruit.com/products/1918"
- },
- {
-   "Type": ["UV"],
-   "Brand": "Adafruit",
-   "Model": 2899,
-   "IC": "VEML6070",
-   "Price": 5.95,
-   "Detail": "Adafruit VEML6070 UV Index Sensor Breakout",
-   "Image": "https://cdn-shop.adafruit.com/970x728/2899-00.jpg",
-   "Connect": ["I2C"],
-   "MinVolt": 2.8,
-   "MaxVolt": 5,
-   "Datasheet": "https://learn.adafruit.com/adafruit-veml6070-uv-light-sensor-breakout/downloads",
-   "Link": "https://www.adafruit.com/products/2899"
- },
- {
-   "Type": ["Illuminance"],
-   "Brand": "Adafruit",
-   "Model": 1980,
-   "IC": "TSL2591",
-   "Price": 6.95,
-   "Detail": "Adafruit TSL2591 High Dynamic Range Digital Light Sensor",
-   "Image": "https://cdn-shop.adafruit.com/970x728/1980-01.jpg",
-   "Connect": ["I2C"],
-   "MinVolt": 3.3,
-   "MaxVolt": 5,
-   "Datasheet": "https://learn.adafruit.com/adafruit-tsl2591/downloads",
-   "Link": "https://www.adafruit.com/products/1980"
- },
- {
-   "Type": ["Illuminance","Distance"],
-   "Brand": "Adafruit",
-   "Model": 466,
-   "IC": "VCNL4010",
-   "Price": 7.5,
-   "Detail": "VCNL4010 Proximity/Light sensor",
-   "Image": "https://cdn-shop.adafruit.com/970x728/466-02.jpg",
-   "Connect": ["I2C"],
-   "MinVolt": 3.3,
-   "MaxVolt": 5,
-   "Datasheet": "https://cdn-shop.adafruit.com/datasheets/vcnl4000.pdf",
-   "Link": "https://www.adafruit.com/products/466"
- },
- {
-   "Type": ["Illuminance"],
-   "Brand": "Adafruit",
-   "Model": 439,
-   "IC": "TSL2561",
-   "Price": 5.95,
-   "Detail": "Adafruit TSL2561 Digital Luminosity/Lux/Light Sensor Breakout",
-   "Image": "https://cdn-shop.adafruit.com/970x728/439-00.jpg",
-   "Connect": ["I2C"],
-   "MinVolt": 3,
-   "MaxVolt": 5,
-   "Datasheet": "https://learn.adafruit.com/tsl2561/downloads",
-   "Link": "https://www.adafruit.com/products/439"
- },
- {
-   "Type": ["Illuminance","Colour"],
-   "Brand": "Adafruit",
-   "Model": 1334,
-   "IC": "TCS34725",
-   "Price": 7.95,
-   "Detail": "RGB Color Sensor with IR filter and White LED - TCS34725",
-   "Image": "https://cdn-shop.adafruit.com/970x728/1334-04.jpg",
-   "Connect": ["I2C"],
-   "MinVolt": 3,
-   "MaxVolt": 5,
-   "Datasheet": "https://learn.adafruit.com/adafruit-color-sensors/downloads",
-   "Link": "https://www.adafruit.com/products/1334"
- },
- {
-   "Type": ["IR"],
-   "Brand": "Adafruit",
-   "Model": 157,
-   "IC": "TSOP38238",
-   "Price": 1.95,
-   "Detail": "IR (Infrared) Receiver Sensor - TSOP38238",
-   "Image": "https://cdn-shop.adafruit.com/970x728/157-00.jpg",
-   "Connect": ["GPIO"],
-   "MinVolt": 3,
-   "MaxVolt": 5,
-   "Datasheet": "http://www.adafruit.com/datasheets/tsop382.pdf",
-   "Link": "https://www.adafruit.com/products/157"
- },
- {
-   "Type": ["Illuminance","Distance","IR","UV"],
-   "Brand": "Adafruit",
-   "Model": 1777,
-   "IC": "SI1145",
-   "Price": 9.95,
-   "Detail": "SI1145 Digital UV Index / IR / Visible Light Sensor",
-   "Image": "https://cdn-shop.adafruit.com/970x728/1777-00.jpg",
-   "Connect": ["I2C"],
-   "MinVolt": 3,
-   "MaxVolt": 5,
-   "Datasheet": "https://learn.adafruit.com/adafruit-si1145-breakout-board-uv-ir-visible-sensor/downloads",
-   "Link": "https://www.adafruit.com/products/1777"
- },
- {
-   "Type": ["Illuminance"],
-   "Brand": "Adafruit",
-   "Model": 2748,
-   "IC": "ALS-PT19",
-   "Price": 2.5,
-   "Detail": "Adafruit ALS-PT19 Analog Light Sensor Breakout",
-   "Image": "https://cdn-shop.adafruit.com/970x728/2748-00.jpg",
-   "Connect": ["Analog"],
-   "MinVolt": 2.5,
-   "MaxVolt": 5.5,
-   "Datasheet": "https://cdn-shop.adafruit.com/product-files/2748/2748%20datasheet.pdf",
-   "Link": "https://www.adafruit.com/products/2748"
- },
- {
-   "Type": ["Illuminance"],
-   "Brand": "Adafruit",
-   "Model": 1384,
-   "IC": "GA1A12S202",
-   "Price": 3.95,
-   "Detail": "GA1A12S202 Log-scale Analog Light Sensor",
-   "Image": "https://cdn-shop.adafruit.com/970x728/1384-02.jpg",
-   "Connect": ["Analog"],
-   "MinVolt": 2.3,
-   "MaxVolt": 6,
-   "Datasheet": "https://learn.adafruit.com/adafruit-ga1a12s202-log-scale-Analog-light-sensor/downloads",
-   "Link": "https://www.adafruit.com/products/1384"
- },
- {
-   "Type": ["Illuminance"],
-   "Brand": "Adafruit",
-   "Model": 2831,
-   "IC": "",
-   "Price": 0.95,
-   "Detail": "Photo Transistor Light Sensor",
-   "Image": "https://cdn-shop.adafruit.com/970x728/2831-00.jpg",
-   "Connect": ["GPIO"],
-   "MinVolt": 3,
-   "MaxVolt": 15,
-   "Datasheet": "https://cdn-shop.adafruit.com/product-files/2831/HW5P-1_2015__1_.pdf",
-   "Link": "https://www.adafruit.com/products/2831"
- },
- {
-   "Type": ["Illuminance"],
-   "Brand": "Adafruit",
-   "Model": 161,
-   "IC": "",
-   "Price": 0.95,
-   "Detail": "Photo cell (CdS photoresistor)",
-   "Image": "https://cdn-shop.adafruit.com/970x728/161-00.jpg",
-   "Connect": ["GPIO"],
-   "MinVolt": 2.5,
-   "MaxVolt": null,
-   "Datasheet": "",
-   "Link": "https://www.adafruit.com/products/161"
- },
- {
-   "Type": ["LiquidLevel"],
-   "Brand": "Adafruit",
-   "Model": 464,
-   "IC": "",
-   "Price": 39.95,
-   "Detail": "12inchs eTape Liquid Level Sensor + extras",
-   "Image": "https://cdn-shop.adafruit.com/970x728/464-00.jpg",
-   "Connect": ["Analog"],
-   "MinVolt": 0,
-   "MaxVolt": 10,
-   "Datasheet": "https://cdn-shop.adafruit.com/datasheets/eTape%20Datasheet%2012110215TC-12_040213.pdf",
-   "Link": "https://www.adafruit.com/products/464"
- },
- {
-   "Type": ["LiquidLevel"],
-   "Brand": "Adafruit",
-   "Model": 463,
-   "IC": "",
-   "Price": 39.95,
-   "Detail": "8inchs eTape Liquid Level Sensor + extras",
-   "Image": "https://cdn-shop.adafruit.com/970x728/463-00.jpg",
-   "Connect": ["Analog"],
-   "MinVolt": 0,
-   "MaxVolt": 10,
-   "Datasheet": "https://cdn-shop.adafruit.com/datasheets/eTape%20Datasheet%2012110215TC-8_040213.pdf",
-   "Link": "https://www.adafruit.com/products/463"
- },
- {
-   "Type": ["LiquidLevel"],
-   "Brand": "Adafruit",
-   "Model": 1786,
-   "IC": "",
-   "Price": 69.95,
-   "Detail": "12inchs Chemical eTape Liquid Level Sensor with Teflon Jacket",
-   "Image": "https://cdn-shop.adafruit.com/970x728/1786-00.jpg",
-   "Connect": ["Analog"],
-   "MinVolt": 0,
-   "MaxVolt": 10,
-   "Datasheet": "https://cdn-shop.adafruit.com/datasheets/1786_Chemical_eTape_Datasheet.pdf",
-   "Link": "https://www.adafruit.com/products/1786"
- },
- {
-   "Type": ["LiquidLevel"],
-   "Brand": "Adafruit",
-   "Model": 2656,
-   "IC": "",
-   "Price": 59.95,
-   "Detail": "12inchs Standard eTape Liquid Level Sensor with Plastic Casing",
-   "Image": "https://cdn-shop.adafruit.com/970x728/2656-00.jpg",
-   "Connect": ["Analog"],
-   "MinVolt": 0,
-   "MaxVolt": 10,
-   "Datasheet": "https://cdn-shop.adafruit.com/product-files/2656/Standard_eTape_Datasheet.pdf",
-   "Link": "https://www.adafruit.com/products/2656"
- },
- {
-   "Type": ["LiquidFlow"],
-   "Brand": "Adafruit",
-   "Model": 997,
-   "IC": "",
-   "Price": 6.95,
-   "Detail": "Plastic Water Solenoid Valve - 12V - 1/2inchs Nominal",
-   "Image": "https://cdn-shop.adafruit.com/970x728/997-04.jpg",
-   "Connect": ["GPIO"],
-   "MinVolt": 12,
-   "MaxVolt": 12,
-   "Datasheet": "",
-   "Link": "https://www.adafruit.com/products/997"
- },
- {
-   "Type": ["LiquidFlow"],
-   "Brand": "Adafruit",
-   "Model": 996,
-   "IC": "",
-   "Price": 24.95,
-   "Detail": "Brass Liquid Solenoid Valve - 12V - 1/2 NPS",
-   "Image": "https://cdn-shop.adafruit.com/970x728/996-07.jpg",
-   "Connect": ["GPIO"],
-   "MinVolt": 12,
-   "MaxVolt": 12,
-   "Datasheet": "",
-   "Link": "https://www.adafruit.com/products/996"
- },
- {
-   "Type": ["LiquidFlow"],
-   "Brand": "Adafruit",
-   "Model": 828,
-   "IC": "",
-   "Price": 9.95,
-   "Detail": "Liquid Flow Meter - Plastic 1/2inch NPS Threaded",
-   "Image": "https://cdn-shop.adafruit.com/970x728/828-00.jpg",
-   "Connect": ["GPIO"],
-   "MinVolt": 5,
-   "MaxVolt": 18,
-   "Datasheet": "https://github.com/adafruit/Adafruit-Flow-Meter",
-   "Link": "https://www.adafruit.com/products/828"
- },
- {
-   "Type": ["LiquidFlow"],
-   "Brand": "Adafruit",
-   "Model": 833,
-   "IC": "",
-   "Price": 24.95,
-   "Detail": "Liquid Flow Meter - Brass 1/2inch Nominal Threaded",
-   "Image": "https://cdn-shop.adafruit.com/970x728/833-00.jpg",
-   "Connect": ["GPIO"],
-   "MinVolt": 5,
-   "MaxVolt": 18,
-   "Datasheet": "https://github.com/adafruit/Adafruit-Flow-Meter",
-   "Link": "https://www.adafruit.com/products/833"
- },
- {
-   "Type": ["AccelX","AccelY","AccelZ","Magnetic Field","GyroX","GyroY","GyroZ","Compass","Barometer","Temperature","Pressure","Altitude"],
-   "Brand": "Adafruit",
-   "Model": 1604,
-   "IC": "L3GD20H + LSM303 + BMP180",
-   "Price": 29.95,
-   "Detail": "Adafruit 10-DOF IMU Breakout - L3GD20H + LSM303 + BMP180",
-   "Image": "https://cdn-shop.adafruit.com/970x728/1604-01.jpg",
-   "Connect": ["I2C"],
-   "MinVolt": 3.3,
-   "MaxVolt": 3.3,
-   "Datasheet": "https://learn.adafruit.com/adafruit-10-dof-imu-breakout-lsm303-l3gd20-bmp180/design-files",
-   "Link": "https://www.adafruit.com/products/1604"
- },
- {
-   "Type": ["Amplifiers","Compass","AccelX","AccelY","AccelZ","Magnetic Field","GyroX","GyroY","GyroZ","Compass","Barometer","Temperature","Pressure","Altitude"],
-   "Brand": "Adafruit",
-   "Model": 3085,
-   "IC": "",
-   "Price": 22.5,
-   "Detail": "PJRC Prop Shield with Motion Sensor for Teensy 3.2 and Teensy-LC",
-   "Image": "https://cdn-shop.adafruit.com/970x728/3085-00.jpg",
-   "Connect": ["I2C"],
-   "MinVolt": 5,
-   "MaxVolt": 5,
-   "Datasheet": "",
-   "Link": "https://www.adafruit.com/products/3085"
- },
- {
-   "Type": ["Compass","AccelX","AccelY","AccelZ","Magnetic Field","GyroX","GyroY","GyroZ","Compass","Barometer","Temperature","Pressure","Altitude"],
-   "Brand": "Adafruit",
-   "Model": 1714,
-   "IC": "L3GD20H + LSM303",
-   "Price": 19.95,
-   "Detail": "Adafruit 9-DOF IMU Breakout - L3GD20H + LSM303",
-   "Image": "https://cdn-shop.adafruit.com/970x728/1714-05.jpg",
-   "Connect": ["I2C"],
-   "MinVolt": 3.3,
-   "MaxVolt": 5,
-   "Datasheet": "https://learn.adafruit.com/adafruit-9-dof-imu-breakout/design-files",
-   "Link": "https://www.adafruit.com/products/1714"
- },
- {
-   "Type": ["AccelX","AccelY","AccelZ"],
-   "Brand": "Adafruit",
-   "Model": 1231,
-   "IC": "ADXL345",
-   "Price": 17.5,
-   "Detail": "ADXL345 - Triple-Axis Accelerometer (+-2g/4g/8g/16g) w/ I2C/SPI",
-   "Image": "https://cdn-shop.adafruit.com/970x728/1231-00.jpg",
-   "Connect": ["I2C","SPI"],
-   "MinVolt": 3.3,
-   "MaxVolt": 5,
-   "Datasheet": "https://learn.adafruit.com/adxl345-digital-accelerometer/downloads",
-   "Link": "https://www.adafruit.com/products/1231"
- },
- {
-   "Type": ["GyroX","GyroY","GyroZ"],
-   "Brand": "Adafruit",
-   "Model": 1032,
-   "IC": "L3GD20H",
-   "Price": 12.5,
-   "Detail": "L3GD20H Triple-Axis Gyro Breakout Board - L3GD20/L3G4200 Upgrade - L3GD20H",
-   "Image": "https://cdn-shop.adafruit.com/970x728/1032-03.jpg",
-   "Connect": ["I2C"],
-   "MinVolt": 3.3,
-   "MaxVolt": 5,
-   "Datasheet": "https://learn.adafruit.com/adafruit-triple-axis-gyro-breakout/downloads",
-   "Link": "https://www.adafruit.com/products/1032"
- },
- {
-   "Type": ["AccelX","AccelY","AccelZ"],
-   "Brand": "Adafruit",
-   "Model": 163,
-   "IC": "ADXL335",
-   "Price": 14.95,
-   "Detail": "ADXL335 - 5V ready triple-axis accelerometer (+-3g Analog out)",
-   "Image": "https://cdn-shop.adafruit.com/970x728/163-02.jpg",
-   "Connect": ["Analog"],
-   "MinVolt": 3,
-   "MaxVolt": 5,
-   "Datasheet": "https://learn.adafruit.com/adafruit-Analog-accelerometer-breakouts/downloads",
-   "Link": "https://www.adafruit.com/products/163"
- },
-  {
-   "Type": ["AccelX","AccelY","AccelZ","Tap","DoubleTap","Freefall"],
-   "Brand": "Adafruit",
-   "Model": 2809,
-   "IC": "LIS3DH",
-   "Price": 4.95,
-   "Detail": "Adafruit LIS3DH Triple-Axis Accelerometer (+-2g/4g/8g/16g)",
-   "Image": "https://cdn-shop.adafruit.com/970x728/2809-03.jpg",
-   "Connect": ["I2C","SPI"],
-   "MinVolt": 3,
-   "MaxVolt": 5,
-   "Datasheet": "https://learn.adafruit.com/adafruit-lis3dh-triple-axis-accelerometer-breakout/downloads",
-   "Link": "https://www.adafruit.com/products/2809"
- },
- {
-   "Type": ["Orientation"],
-   "Brand": "Adafruit",
-   "Model": 2472,
-   "IC": "BNO055",
-   "Price": 34.95,
-   "Detail": "Adafruit 9-DOF Absolute Orientation IMU Fusion Breakout - BNO055",
-   "Image": "https://cdn-shop.adafruit.com/970x728/2472-00.jpg",
-   "Connect": ["I2C"],
-   "MinVolt": 3,
-   "MaxVolt": 5,
-   "Datasheet": "https://learn.adafruit.com/adafruit-bno055-absolute-orientation-sensor/downloads",
-   "Link": "https://www.adafruit.com/products/2472"
- },
- {
-   "Type": ["IRMotion"],
-   "Brand": "Adafruit",
-   "Model": 2167,
-   "IC": "",
-   "Price": 1.95,
-   "Detail": "IR Break Beam Sensor - 3mm LEDs",
-   "Image": "https://cdn-shop.adafruit.com/970x728/2167-02.jpg",
-   "Connect": ["GPIO"],
-   "MinVolt": 3.3,
-   "MaxVolt": 5.5,
-   "Datasheet": "https://cdn-shop.adafruit.com/product-files/2167/C2916.pdf",
-   "Link": "https://www.adafruit.com/products/2167"
- },
- {
-   "Type": ["IRMotion"],
-   "Brand": "Adafruit",
-   "Model": 2168,
-   "IC": "",
-   "Price": 6.5,
-   "Detail": "IR Break Beam Sensor - 5mm LEDs",
-   "Image": "https://cdn-shop.adafruit.com/970x728/2168-02.jpg",
-   "Connect": ["GPIO"],
-   "MinVolt": 3.3,
-   "MaxVolt": 5.5,
-   "Datasheet": "https://cdn-shop.adafruit.com/product-files/2168/C2917.pdf",
-   "Link": "https://www.adafruit.com/product/2168"
- },
-  {
-   "Type": ["Motion"],
-   "Brand": "Adafruit",
-   "Model": 1766,
-   "IC": "",
-   "Price": 0.95,
-   "Detail": "Fast Vibration Sensor Switch (Easy to trigger)",
-   "Image": "https://cdn-shop.adafruit.com/970x728/1766-00.jpg",
-   "Connect": ["GPIO"],
-   "MinVolt": 0,
-   "MaxVolt": 12,
-   "Datasheet": "",
-   "Link": "https://www.adafruit.com/products/1766"
- },
- {
-   "Type": ["Motion"],
-   "Brand": "Adafruit",
-   "Model": 2384,
-   "IC": "",
-   "Price": 0.95,
-   "Detail": "Medium Vibration Sensor Switch",
-   "Image": "https://cdn-shop.adafruit.com/970x728/2384-00.jpg",
-   "Connect": ["GPIO"],
-   "MinVolt": 0,
-   "MaxVolt": 12,
-   "Datasheet": "",
-   "Link": "https://www.adafruit.com/products/2384"
- },
- {
-   "Type": ["Orientation"],
-   "Brand": "Adafruit",
-   "Model": 173,
-   "IC": "",
-   "Price": 2,
-   "Detail": "Tilt ball switch",
-   "Image": "https://cdn-shop.adafruit.com/970x728/173-00.jpg",
-   "Connect": ["GPIO"],
-   "MinVolt": 0,
-   "MaxVolt": 24,
-   "Datasheet": "http://learn.adafruit.com/system/assets/assets/000/010/132/original/MS-100906.pdf",
-   "Link": "https://www.adafruit.com/products/173"
- },
- {
-   "Type": ["Anemometer"],
-   "Brand": "Adafruit",
-   "Model": 1733,
-   "IC": "",
-   "Price": 44.95,
-   "Detail": "Anemometer Wind Speed Sensor w/Analog Voltage Output",
-   "Image": "https://cdn-shop.adafruit.com/970x728/1733-00.jpg",
-   "Connect": ["Analog"],
-   "MinVolt": 7,
-   "MaxVolt": 24,
-   "Datasheet": "https://cdn-shop.adafruit.com/product-files/1733/C2192+datasheet.pdf",
-   "Link": "https://www.adafruit.com/products/1733"
- },
- {
-   "Type": ["Motor"],
-   "Brand": "sparkfun",
-   "Model": 13656,
-   "IC": "",
-   "Price": 23.95,
-   "Detail": "Stepper Motor - 125 oz.in (200 steps/rev, 600mm Wire)",
-   "Image": "https://cdn.sparkfun.com//assets/parts/1/1/0/6/7/13656-01.jpg",
-   "Connect": ["stepmortorx4"],
-   "MinVolt": 3.3,
-   "MaxVolt": 3.3,
-   "Datasheet": "http://cdn.sparkfun.com/datasheets/Robotics/57BYGH420-2.pdf",
-   "Link": "https://www.sparkfun.com/products/13656"
- },
- {
-   "Type": ["MotorController"],
-   "Brand": "Adafruit",
-   "Model": 2305,
-   "IC": "DRV2605L",
-   "Price": 7.95,
-   "Detail": "Adafruit DRV2605L Haptic Motor Controller",
-   "Image": "https://cdn-shop.adafruit.com/970x728/2305-00.jpg",
-   "Connect": ["I2C"],
-   "MinVolt": 3,
-   "MaxVolt": 5,
-   "Datasheet": "https://learn.adafruit.com/adafruit-drv2605-haptic-controller-breakout/downloads",
-   "Link": "https://www.adafruit.com/products/2305"
- },
- {
-   "Type": ["MotorController","StepperController"],
-   "Brand": "Adafruit",
-   "Model": 2448,
-   "IC": "TB6612",
-   "Price": 4.95,
-   "Detail": "Adafruit TB6612 1.2A DC/Stepper Motor Driver Breakout Board",
-   "Image": "https://cdn-shop.adafruit.com/970x728/2448-00.jpg",
-   "Connect": ["GPIO"],
-   "MinVolt": 2.7,
-   "MaxVolt": 5.5,
-   "Datasheet": "https://learn.adafruit.com/adafruit-tb6612-h-bridge-dc-stepper-motor-driver-breakout/downloads",
-   "Link": "https://www.adafruit.com/products/2448"
- },
- {
-   "Type": ["MotorController","StepperController"],
-   "Brand": "Adafruit",
-   "Model": 3297,
-   "IC": "DRV8833",
-   "Price": 4.95,
-   "Detail": "Adafruit DRV8833 DC/Stepper Motor Driver Breakout Board",
-   "Image": "https://cdn-shop.adafruit.com/970x728/3297-00.jpg",
-   "Connect": ["GPIO"],
-   "MinVolt": 2.7,
-   "MaxVolt": 10.8,
-   "Datasheet": "https://learn.adafruit.com/adafruit-drv8833-dc-stepper-motor-driver-breakout-board/downloads",
-   "Link": "https://www.adafruit.com/products/3297"
- },
- {
-   "Type": ["Motor"],
-   "Brand": "sparkfun",
-   "Model": 11696,
-   "IC": "",
-   "Price": 1.95,
-   "Detail": "Hobby Motor - Gear",
-   "Image": "https://cdn.sparkfun.com//assets/parts/7/8/6/0/11696-01.jpg",
-   "Connect": ["GPIO","Analog"],
-   "MinVolt": 1,
-   "MaxVolt": 12,
-   "Datasheet": "http://cdn.sparkfun.com/datasheets/Robotics/M260.pdf",
-   "Link": "https://www.sparkfun.com/products/11696"
- },
- {
-   "Type": ["MotorController","StepperController"],
-   "Brand": "Adafruit",
-   "Model": 1438,
-   "IC": "",
-   "Price": 19.95,
-   "Detail": "Adafruit Motor/Stepper/Servo Shield for Arduino v2 Kit - v2.3",
-   "Image": "https://cdn-shop.adafruit.com/970x728/2448-00.jpg",
-   "Connect": ["GPIO"],
-   "MinVolt": 4.5,
-   "MaxVolt": 13.5,
-   "Datasheet": "https://cdn-shop.adafruit.com/datasheets/TB6612FNG_datasheet_en_20121101.pdf",
-   "Link": "https://www.adafruit.com/products/1438"
- },
- {
-   "Type": ["MotorController"],
-   "Brand": "Adafruit",
-   "Model": 3190,
-   "IC": "DRV8871",
-   "Price": 7.5,
-   "Detail": "Adafruit DRV8871 DC Motor Driver Breakout Board - 3.6A Max",
-   "Image": "https://cdn-shop.adafruit.com/970x728/3190-00.jpg",
-   "Connect": ["GPIO"],
-   "MinVolt": 6.5,
-   "MaxVolt": 45,
-   "Datasheet": "https://cdn-shop.adafruit.com/product-files/3190/drv8871.pdf",
-   "Link": "https://www.adafruit.com/products/3190"
- },
- {
-   "Type": ["Distance"],
-   "Brand": "Adafruit",
-   "Model": 164,
-   "IC": "",
-   "Price": 14.95,
-   "Detail": "IR distance sensor includes cable (10cm-80cm) - GP2Y0A21YK0F",
-   "Image": "https://cdn-shop.adafruit.com/970x728/164-00.jpg",
-   "Connect": ["Analog"],
-   "MinVolt": 5,
-   "MaxVolt": 5,
-   "Datasheet": "http://sharp-world.com/products/device/lineup/data/pdf/datasheet/gp2y0a21yk_e.pdf",
-   "Link": "https://www.adafruit.com/products/164"
- },
- {
-   "Type": ["Distance"],
-   "Brand": "Adafruit",
-   "Model": 1031,
-   "IC": "",
-   "Price": 15.95,
-   "Detail": "IR distance sensor includes cable (20cm-150cm) - GP2Y0A02YK",
-   "Image": "https://cdn-shop.adafruit.com/970x728/1031-02.jpg",
-   "Connect": ["Analog"],
-   "MinVolt": 5,
-   "MaxVolt": 5,
-   "Datasheet": "http://sharp-world.com/products/device/lineup/data/pdf/datasheet/gp2y0a02_e.pdf",
-   "Link": "https://www.adafruit.com/products/1031"
- },
- {
-   "Type": ["Distance"],
-   "Brand": "Adafruit",
-   "Model": 1568,
-   "IC": "",
-   "Price": 24.95,
-   "Detail": "IR Distance Sensor - Includes Cable (100cm-500cm) - GP2Y0A710K0F",
-   "Image": "https://cdn-shop.adafruit.com/970x728/1568-00.jpg",
-   "Connect": ["Analog"],
-   "MinVolt": 5,
-   "MaxVolt": 5,
-   "Datasheet": "http://www.adafruit.com/datasheets/gp2y0a710k.pdf",
-   "Link": "https://www.adafruit.com/products/1568"
- },
- {
-   "Type": ["Distance","Illuminance"],
-   "Brand": "Adafruit",
-   "Model": 466,
-   "IC": "VCNL4010",
-   "Price": 7.5,
-   "Detail": "VCNL4010 Proximity/Light sensor",
-   "Image": "https://cdn-shop.adafruit.com/970x728/466-02.jpg",
-   "Connect": ["I2C"],
-   "MinVolt": 3.3,
-   "MaxVolt": 5,
-   "Datasheet": "https://cdn-shop.adafruit.com/product-files/466/vcnl4010.pdf",
-   "Link": "https://www.adafruit.com/products/466"
- },
- {
-   "Type": ["Distance"],
-   "Brand": "Adafruit",
-   "Model": 3317,
-   "IC": "VL53L0X",
-   "Price": 14.95,
-   "Detail": "Adafruit VL53L0X Time of Flight Distance Sensor - ~30 to 1000mm",
-   "Image": "https://cdn-shop.adafruit.com/970x728/3317-03.jpg",
-   "Connect": ["I2C"],
-   "MinVolt": 3,
-   "MaxVolt": 5,
-   "Datasheet": "https://learn.adafruit.com/adafruit-vl53l0x-micro-lidar-distance-sensor-breakout",
-   "Link": "https://www.adafruit.com/products/3317"
- },
- {
-   "Type": ["Distance"],
-   "Brand": "Adafruit",
-   "Model": 3316,
-   "IC": "VL6180X",
-   "Price": 13.95,
-   "Detail": "Adafruit VL6180X Time of Flight Distance Ranging Sensor (VL6180)",
-   "Image": "https://cdn-shop.adafruit.com/145x109/3316-00.jpg",
-   "Connect": ["I2C"],
-   "MinVolt": 3,
-   "MaxVolt": 5,
-   "Datasheet": "https://learn.adafruit.com/adafruit-vl6180x-time-of-flight-micro-lidar-distance-sensor-breakout/downloads",
-   "Link": "https://www.adafruit.com/products/3316"
- },
- {
-   "Type": ["Distance"],
-   "Brand": "Adafruit",
-   "Model": 172,
-   "IC": "",
-   "Price": 24.95,
-   "Detail": "Maxbotix Ultrasonic Rangefinder - LV-EZ1 - LV-EZ1",
-   "Image": "https://cdn-shop.adafruit.com/970x728/172-00.jpg",
-   "Connect": ["Analog", "PWM", "UART"],
-   "MinVolt": 2.5,
-   "MaxVolt": 5.5,
-   "Datasheet": "http://maxbotix.com/documents/LV-MaxSonar-EZ_Datasheet.pdf",
-   "Link": "https://www.adafruit.com/products/172"
- },
- {
-   "Type": ["Distance"],
-   "Brand": "Adafruit",
-   "Model": 980,
-   "IC": "",
-   "Price": 24.95,
-   "Detail": "Maxbotix Ultrasonic Rangefinder - LV-EZ2 - LV-EZ2",
-   "Image": "https://cdn-shop.adafruit.com/970x728/980-00.jpg",
-   "Connect": ["Analog", "PWM", "UART"],
-   "MinVolt": 2.5,
-   "MaxVolt": 5.5,
-   "Datasheet": "http://maxbotix.com/documents/LV-MaxSonar-EZ_Datasheet.pdf",
-   "Link": "https://www.adafruit.com/products/980"
- },
- {
-   "Type": ["Distance"],
-   "Brand": "Adafruit",
-   "Model": 981,
-   "IC": "",
-   "Price": 24.95,
-   "Detail": "Maxbotix Ultrasonic Rangefinder - LV-EZ3 - LV-EZ3",
-   "Image": "https://cdn-shop.adafruit.com/970x728/981-00.jpg",
-   "Connect": ["Analog", "PWM", "UART"],
-   "MinVolt": 2.5,
-   "MaxVolt": 5.5,
-   "Datasheet": "http://maxbotix.com/documents/LV-MaxSonar-EZ_Datasheet.pdf",
-   "Link": "https://www.adafruit.com/products/981"
- },
- {
-   "Type": ["Distance"],
-   "Brand": "Adafruit",
-   "Model": 982,
-   "IC": "",
-   "Price": 24.95,
-   "Detail": "Maxbotix Ultrasonic Rangefinder - LV-EZ4 - LV-EZ4",
-   "Image": "https://cdn-shop.adafruit.com/970x728/982-00.jpg",
-   "Connect": ["Analog", "PWM", "UART"],
-   "MinVolt": 2.5,
-   "MaxVolt": 5.5,
-   "Datasheet": "http://maxbotix.com/documents/LV-MaxSonar-EZ_Datasheet.pdf",
-   "Link": "https://www.adafruit.com/products/982"
- },
- {
-   "Type": ["Distance"],
-   "Brand": "Adafruit",
-   "Model": 979,
-   "IC": "",
-   "Price": 26.95,
-   "Detail": "Maxbotix Ultrasonic Rangefinder - LV-EZ0 - LV-EZ0",
-   "Image": "https://cdn-shop.adafruit.com/970x728/979-00.jpg",
-   "Connect": ["Analog", "PWM", "UART"],
-   "MinVolt": 2.5,
-   "MaxVolt": 5.5,
-   "Datasheet": "http://maxbotix.com/documents/LV-MaxSonar-EZ_Datasheet.pdf",
-   "Link": "https://www.adafruit.com/products/979"
- },
- {
-   "Type": ["Distance"],
-   "Brand": "Adafruit",
-   "Model": 983,
-   "IC": "",
-   "Price": 33.95,
-   "Detail": "Maxbotix Ultrasonic Rangefinder - HRLV-EZ0 - HRLV-EZ0",
-   "Image": "https://cdn-shop.adafruit.com/970x728/983-02.jpg",
-   "Connect": ["Analog", "PWM", "UART"],
-   "MinVolt": 2.5,
-   "MaxVolt": 5.5,
-   "Datasheet": "http://www.maxbotix.com/documents/HRLV-MaxSonar-EZ_Datasheet.pdf",
-   "Link": "https://www.adafruit.com/products/983"
- },
- {
-   "Type": ["Distance"],
-   "Brand": "Adafruit",
-   "Model": 984,
-   "IC": "",
-   "Price": 32.95,
-   "Detail": "Maxbotix Ultrasonic Rangefinder - HRLV-EZ1 - HRLV-EZ1",
-   "Image": "https://cdn-shop.adafruit.com/970x728/984-02.jpg",
-   "Connect": ["Analog", "PWM", "UART"],
-   "MinVolt": 2.5,
-   "MaxVolt": 5.5,
-   "Datasheet": "http://www.maxbotix.com/documents/HRLV-MaxSonar-EZ_Datasheet.pdf",
-   "Link": "https://www.adafruit.com/products/984"
- },
- {
-   "Type": ["Distance"],
-   "Brand": "Adafruit",
-   "Model": 985,
-   "IC": "",
-   "Price": 32.95,
-   "Detail": "Maxbotix Ultrasonic Rangefinder - HRLV-EZ4 - HRLV-EZ4",
-   "Image": "https://cdn-shop.adafruit.com/970x728/985-02.jpg",
-   "Connect": ["Analog", "PWM", "UART"],
-   "MinVolt": 2.5,
-   "MaxVolt": 5.5,
-   "Datasheet": "http://www.maxbotix.com/documents/HRLV-MaxSonar-EZ_Datasheet.pdf",
-   "Link": "https://www.adafruit.com/products/985"
- },
- {
-   "Type": ["Distance"],
-   "Brand": "Adafruit",
-   "Model": 1137,
-   "IC": "MB7092",
-   "Price": 84.95,
-   "Detail": "Maxbotix Weather-Resistant Ultrasonic Rangefinder - MB7092 XL-MaxSonar-WRMA1",
-   "Image": "https://cdn-shop.adafruit.com/970x728/1137-03.jpg",
-   "Connect": ["Analog" , "UART"],
-   "MinVolt": 3,
-   "MaxVolt": 5.5,
-   "Datasheet": "http://www.maxbotix.com/documents/MB7052-MB7092_Datasheet.pdf",
-   "Link": "https://www.adafruit.com/products/1137"
- },
- {
-   "Type": ["PIR"],
-   "Brand": "sparkfun",
-   "Model": 13285,
-   "IC": "",
-   "Price": 9.95,
-   "Detail": "PIR Motion Sensor (JST)",
-   "Image": "https://cdn.sparkfun.com//assets/parts/1/0/5/3/5/13285-01.jpg",
-   "Connect": ["GPIO"],
-   "MinVolt": 3.3,
-   "MaxVolt": 12,
-   "Datasheet": "http://www.sparkfun.com/datasheets/Sensors/Proximity/SE-10.pdf",
-   "Link": "https://www.sparkfun.com/products/13285"
- },
- {
-   "Type": ["PIR"],
-   "Brand": "Adafruit",
-   "Model": 189,
-   "IC": "",
-   "Price": 9.95,
-   "Detail": "PIR (motion) sensor",
-   "Image": "https://cdn-shop.adafruit.com/970x728/189-00.jpg",
-   "Connect": ["GPIO"],
-   "MinVolt": 5,
-   "MaxVolt": 12,
-   "Datasheet": "",
-   "Link": "https://www.adafruit.com/products/189"
- },
- {
-   "Type": ["PWM"],
-   "Brand": "Adafruit",
-   "Model": 815,
-   "IC": "PCA9685",
-   "Price": 14.95,
-   "Detail": "Adafruit 16-Channel 12-bit PWM/Servo Driver - I2C interface - PCA9685",
-   "Image": "https://cdn-shop.adafruit.com/970x728/815-04.jpg",
-   "Connect": ["I2C"],
-   "MinVolt": 3.3,
-   "MaxVolt": 6,
-   "Datasheet": "https://learn.adafruit.com/16-channel-pwm-servo-driver/downloads",
-   "Link": "https://www.adafruit.com/products/815"
- },
- {
-   "Type": ["Dotmatrix"],
-   "Brand": "Adafruit",
-   "Model": 1455,
-   "IC": "TLC59711",
-   "Price": 7.5,
-   "Detail": "Adafruit 12-Channel 16-bit PWM LED Driver - SPI Interface - TLC5971",
-   "Image": "https://cdn-shop.adafruit.com/970x728/1455-00.jpg",
-   "Connect": ["SPI"],
-   "MinVolt": 5,
-   "MaxVolt": 17,
-   "Datasheet": "https://learn.adafruit.com/tlc5947-tlc59711-pwm-led-driver-breakout/downloads-and-links",
-   "Link": "https://www.adafruit.com/products/1455"
- },
- {
-   "Type": ["Dotmatrix"],
-   "Brand": "Adafruit",
-   "Model": 1429,
-   "IC": "TLC5947",
-   "Price": 14.95,
-   "Detail": "Adafruit 24-Channel 12-bit PWM LED Driver - SPI Interface - TLC5947",
-   "Image": "https://cdn-shop.adafruit.com/970x728/1429-00.jpg",
-   "Connect": ["SPI"],
-   "MinVolt": 5,
-   "MaxVolt": 30,
-   "Datasheet": "https://learn.adafruit.com/tlc5947-tlc59711-pwm-led-driver-breakout/downloads-and-links",
-   "Link": "https://www.adafruit.com/products/1429"
- },
- {
-   "Type": ["Resistor"],
-   "Brand": "sparkfun",
-   "Model": 8377,
-   "IC": "",
-   "Price": 0.25,
-   "Detail": "Resistor 330 Ohm 1/6th Watt PTH",
-   "Image": "https://cdn.sparkfun.com//assets/parts/8/3/4/08377-02-L.jpg",
-   "Connect": ["GPIO","Analog"],
-   "MinVolt": 0,
-   "MaxVolt": null,
-   "Datasheet": "",
-   "Link": "https://www.sparkfun.com/products/8377"
- },
- {
-   "Type": ["Resistor"],
-   "Brand": "sparkfun",
-   "Model": 8980,
-   "IC": "",
-   "Price": 0.25,
-   "Detail": "Resistor 1k Ohm 1/6 Watt PTH",
-   "Image": "https://cdn.sparkfun.com//assets/parts/2/3/0/6/ResistorPTH-01-L_i_ma.jpg",
-   "Connect": ["GPIO","Analog"],
-   "MinVolt": 0,
-   "MaxVolt": null,
-   "Datasheet": "",
-   "Link": "https://www.sparkfun.com/products/8980"
- },
- {
-   "Type": ["RFID"],
-   "Brand": "Adafruit",
-   "Model": 364,
-   "IC": "PN532",
-   "Price": 39.95,
-   "Detail": "PN532 NFC/RFID controller breakout board - v1.6",
-   "Image": "https://cdn-shop.adafruit.com/970x728/364-05.jpg",
-   "Connect": ["UART", "I2C", "SPI"],
-   "MinVolt": 3.3,
-   "MaxVolt": 5,
-   "Datasheet": "https://learn.adafruit.com/adafruit-pn532-rfid-nfc/downloads",
-   "Link": "https://www.adafruit.com/products/364"
- },
- {
-   "Type": ["Soil Moisture","Humidity"],
-   "Brand": "sparkfun",
-   "Model": 13322,
-   "IC": "",
-   "Price": 4.95,
-   "Detail": "SparkFun Soil Moisture Sensor",
-   "Image": "https://cdn.sparkfun.com//assets/parts/1/0/6/1/0/13322-01.jpg",
-   "Connect": ["Analog"],
-   "MinVolt": 3.3,
-   "MaxVolt": 5,
-   "Datasheet": "https://cdn.sparkfun.com/datasheets/Sensors/Biometric/SparkFun_Soil_Moisture_Sensor.pdf",
-   "Link": "https://www.sparkfun.com/products/13322"
- },
- {
-   "Type": ["Sound"],
-   "Brand": "Adafruit",
-   "Model": 2716,
-   "IC": "SPW2430",
-   "Price": 4.95,
-   "Detail": "Adafruit Silicon MEMS Microphone Breakout - SPW2430",
-   "Image": "https://cdn-shop.adafruit.com/970x728/2716-04.jpg",
-   "Connect": ["GPIO"],
-   "MinVolt": 3.3,
-   "MaxVolt": 5,
-   "Datasheet": "",
-   "Link": "https://www.adafruit.com/products/2716"
- },
- {
-   "Type": ["Sound"],
-   "Brand": "Adafruit",
-   "Model": 1063,
-   "IC": "MAX4466",
-   "Price": 6.95,
-   "Detail": "Electret Microphone Amplifier - MAX4466 with Adjustable Gain",
-   "Image": "https://cdn-shop.adafruit.com/970x728/1063-03.jpg",
-   "Connect": ["GPIO"],
-   "MinVolt": 2.4,
-   "MaxVolt": 5.5,
-   "Datasheet": "https://cdn-shop.adafruit.com/datasheets/MAX4465-MAX4469.pdf",
-   "Link": "https://www.adafruit.com/products/1063"
- },
- {
-   "Type": ["Sound","Amplifiers"],
-   "Brand": "Adafruit",
-   "Model": 1713,
-   "IC": "MAX9814",
-   "Price": 7.95,
-   "Detail": "Electret Microphone Amplifier - MAX9814 with Auto Gain Control",
-   "Image": "https://cdn-shop.adafruit.com/970x728/1713-00.jpg",
-   "Connect": ["GPIO"],
-   "MinVolt": 2.7,
-   "MaxVolt": 5.5,
-   "Datasheet": "https://learn.adafruit.com/adafruit-agc-electret-microphone-amplifier-max9814/downloads",
-   "Link": "https://www.adafruit.com/products/1713"
- },
- {
-   "Type": ["Buzzer"],
-   "Brand": "Adafruit",
-   "Model": 1739,
-   "IC": "",
-   "Price": 0.95,
-   "Detail": "Large Enclosed Piezo Element w/Wires",
-   "Image": "https://cdn-shop.adafruit.com/970x728/1739-00.jpg",
-   "Connect": ["GPIO"],
-   "MinVolt": 1,
-   "MaxVolt": 30,
-   "Datasheet": "",
-   "Link": "https://www.adafruit.com/products/1739"
- },
- {
-   "Type": ["Buzzer"],
-   "Brand": "Adafruit",
-   "Model": 160,
-   "IC": "",
-   "Price": 1.5,
-   "Detail": "Piezo Buzzer - PS1240",
-   "Image": "https://cdn-shop.adafruit.com/970x728/160-01.jpg",
-   "Connect": ["GPIO"],
-   "MinVolt": 3,
-   "MaxVolt": 30,
-   "Datasheet": "",
-   "Link": "https://www.adafruit.com/products/160"
- },
- {
-   "Type": ["Buzzer"],
-   "Brand": "Adafruit",
-   "Model": 1740,
-   "IC": "",
-   "Price": 0.95,
-   "Detail": "Small Enclosed Piezo w/Wires",
-   "Image": "https://cdn-shop.adafruit.com/970x728/1740-00.jpg",
-   "Connect": ["GPIO"],
-   "MinVolt": 3,
-   "MaxVolt": 40,
-   "Datasheet": "",
-   "Link": "https://www.adafruit.com/products/1740"
- },
- {
-   "Type": ["Speaker"],
-   "Brand": "sparkfun",
-   "Model": 7950,
-   "IC": "",
-   "Price": 1.95,
-   "Detail": "Mini Speaker - PC Mount 12mm 2.048kHz",
-   "Image": "https://cdn.sparkfun.com//assets/parts/6/2/3/07950-1.jpg",
-   "Connect": ["GPIO","Analog"],
-   "MinVolt": 3,
-   "MaxVolt": 5,
-   "Datasheet": "http://cdn.sparkfun.com/datasheets/Components/General/cem-1203-42-.pdf",
-   "Link": "https://www.sparkfun.com/products/7950"
- },
- {
-   "Type": ["Buzzer"],
-   "Brand": "sparkfun",
-   "Model": 13940,
-   "IC": "",
-   "Price": 2.95,
-   "Detail": "Large Piezo Alarm - 3KHz",
-   "Image": "https://cdn.sparkfun.com//assets/parts/1/1/6/2/1/13940-04.jpg",
-   "Connect": ["GPIO","Analog"],
-   "MinVolt": 3,
-   "MaxVolt": 18,
-   "Datasheet": "http://cdn.sparkfun.com/datasheets/Components/General/CE-C75.pdf",
-   "Link": "https://www.sparkfun.com/products/13940"
- },
- {
-   "Type": ["SDCard"],
-   "Brand": "Adafruit",
-   "Model": 254,
-   "IC": "",
-   "Price": 7.5,
-   "Detail": "MicroSD card breakout board+",
-   "Image": "https://cdn-shop.adafruit.com/970x728/254-05.jpg",
-   "Connect": ["Specific"],
-   "MinVolt": 5,
-   "MaxVolt": 5,
-   "Datasheet": "https://learn.adafruit.com/adafruit-micro-sd-breakout-board-card-tutorial/download",
-   "Link": "https://www.adafruit.com/products/254"
- },
- {
-   "Type": ["Storage"],
-   "Brand": "Adafruit",
-   "Model": 1141,
-   "IC": "",
-   "Price": 13.95,
-   "Detail": "Adafruit Assembled Data Logging shield for Arduino",
-   "Image": "https://cdn-shop.adafruit.com/970x728/1141-02.jpg",
-   "Connect": ["Shield"],
-   "MinVolt": null,
-   "MaxVolt": null,
-   "Datasheet": "https://learn.adafruit.com/adafruit-data-logger-shield/downloads",
-   "Link": "https://www.adafruit.com/products/1141"
- },
- {
-   "Type": ["Temperature"],
-   "Brand": "Adafruit",
-   "Model": 1747,
-   "IC": "MLX90614",
-   "Price": 15.95,
-   "Detail": "Melexis Contact-less Infrared Sensor - MLX90614 3V",
-   "Image": "https://cdn-shop.adafruit.com/970x728/1747-00.jpg",
-   "Connect": ["I2C"],
-   "MinVolt": 2.7,
-   "MaxVolt": 3.6,
-   "Datasheet": "https://cdn-shop.adafruit.com/datasheets/MLX90614.pdf",
-   "Link": "https://www.adafruit.com/products/1747"
- },
- {
-   "Type": ["Temperature"],
-   "Brand": "Adafruit",
-   "Model": 1296,
-   "IC": "TMP006",
-   "Price": 9.95,
-   "Detail": "Contact-less Infrared Thermopile Sensor Breakout - TMP006",
-   "Image": "https://cdn-shop.adafruit.com/970x728/1296-00.jpg",
-   "Connect": ["I2C"],
-   "MinVolt": 2.2,
-   "MaxVolt": 5.5,
-   "Datasheet": "https://learn.adafruit.com/infrared-thermopile-sensor-breakout/downloads",
-   "Link": "https://www.adafruit.com/products/1296"
- },
- {
-   "Type": ["Temperature"],
-   "Brand": "Adafruit",
-   "Model": 2023,
-   "IC": "TMP007",
-   "Price": 12.5,
-   "Detail": "Contact-less Infrared Thermopile Sensor Breakout - TMP007",
-   "Image": "https://cdn-shop.adafruit.com/970x728/2023-00.jpg",
-   "Connect": ["I2C"],
-   "MinVolt": 2.2,
-   "MaxVolt": 5.5,
-   "Datasheet": "https://learn.adafruit.com/adafruit-tmp007-sensor-breakout/downloads",
-   "Link": "https://www.adafruit.com/products/2023"
- },
- {
-   "Type": ["Temperature"],
-   "Brand": "Adafruit",
-   "Model": 165,
-   "IC": "TMP36",
-   "Price": 1.5,
-   "Detail": "TMP36 - Analog Temperature sensor - TMP36",
-   "Image": "https://cdn-shop.adafruit.com/970x728/165-00.jpg",
-   "Connect": ["Analog"],
-   "MinVolt": 2.7,
-   "MaxVolt": 5.5,
-   "Datasheet": "http://www.Analog.com/en/products/Analog-to-digital-converters/integrated-special-purpose-converters/digital-temperature-sensors/tmp36.html#product-overview",
-   "Link": "https://www.adafruit.com/products/165"
- },
- {
-   "Type": ["Temperature"],
-   "Brand": "Adafruit",
-   "Model": 1782,
-   "IC": "MCP9808",
-   "Price": 4.95,
-   "Detail": "MCP9808 High Accuracy I2C Temperature Sensor Breakout Board",
-   "Image": "https://cdn-shop.adafruit.com/970x728/1782-00.jpg",
-   "Connect": ["I2C"],
-   "MinVolt": 2.7,
-   "MaxVolt": 5.5,
-   "Datasheet": "https://learn.adafruit.com/adafruit-mcp9808-precision-i2c-temperature-sensor-guide/downloads",
-   "Link": "https://www.adafruit.com/products/1782"
- },
- {
-   "Type": ["Temperature"],
-   "Brand": "Adafruit",
-   "Model": 374,
-   "IC": "DS18B20",
-   "Price": 3.95,
-   "Detail": "DS18B20 Digital temperature sensor + extras",
-   "Image": "https://cdn-shop.adafruit.com/970x728/374-00.jpg",
-   "Connect": ["Analog"],
-   "MinVolt": 3,
-   "MaxVolt": 5.5,
-   "Datasheet": "https://cdn-shop.adafruit.com/datasheets/DS18B20.pdf",
-   "Link": "https://www.adafruit.com/products/374"
- },
- {
-   "Type": ["Temperature"],
-   "Brand": "Adafruit",
-   "Model": 1748,
-   "IC": "MLX90614",
-   "Price": 15.95,
-   "Detail": "Melexis Contact-less Infrared Sensor - MLX90614 5V",
-   "Image": "https://cdn-shop.adafruit.com/970x728/1748-00.jpg",
-   "Connect": ["I2C"],
-   "MinVolt": 4.5,
-   "MaxVolt": 5.5,
-   "Datasheet": "https://cdn-shop.adafruit.com/datasheets/MLX90614.pdf",
-   "Link": "https://www.adafruit.com/products/1748"
- },
- {
-   "Type": ["Transistor"],
-   "Brand": "sparkfun",
-   "Model": 13689,
-   "IC": "",
-   "Price": 0.5,
-   "Detail": "Transistor - NPN (BC337)",
-   "Image": "https://cdn.sparkfun.com//assets/parts/1/1/1/5/9/13689-01.jpg",
-   "Connect": ["GPIO","Analog"],
-   "MinVolt": 0,
-   "MaxVolt": 50,
-   "Datasheet": "https://cdn.sparkfun.com/datasheets/Components/General/BC337.pdf",
-   "Link": "https://www.sparkfun.com/products/13689"
- },
- {
-   "Type": ["Voltage regulator"],
-   "Brand": "sparkfun",
-   "Model": 10301,
-   "IC": "",
-   "Price": 0.25,
-   "Detail": "Zener Diode - 5.1V 1W",
-   "Image": "https://cdn.sparkfun.com//assets/parts/4/7/0/4/10301-01.jpg",
-   "Connect": ["GPIO","Analog"],
-   "MinVolt": 4.845,
-   "MaxVolt": 5.355,
-   "Datasheet": "http://www.sparkfun.com/datasheets/Components/General/85816.pdf",
-   "Link": "https://www.sparkfun.com/products/10301"
- },
- {
-   "Type": ["WIFI","UART"],
-   "Brand": "Adafruit",
-   "Model": 2999,
-   "IC": "",
-   "Price": 24.95,
-   "Detail": "Adafruit ATWINC1500 WiFi Breakout",
-   "Image": "https://cdn-shop.adafruit.com/970x728/2999-00.jpg",
-   "Connect": ["UART", "SPI"],
-   "MinVolt": 3,
-   "MaxVolt": 5,
-   "Datasheet": "https://learn.adafruit.com/adafruit-atwinc1500-wifi-module-breakout/downloads",
-   "Link": "https://www.adafruit.com/products/2999"
- },
- {
-   "Type": ["WIFI","UART"],
-   "Brand": "Adafruit",
-   "Model": 2471,
-   "IC": "ESP8266",
-   "Price": 9.95,
-   "Detail": "Adafruit HUZZAH ESP8266 Breakout",
-   "Image": "https://cdn-shop.adafruit.com/970x728/2471-10.jpg",
-   "Connect": ["UART"],
-   "MinVolt": 3.5,
-   "MaxVolt": 6,
-   "Datasheet": "https://learn.adafruit.com/adafruit-huzzah-esp8266-breakout/downloads",
-   "Link": "https://www.adafruit.com/products/2471"
- }
-]
+    "Model": "1381",
+    "MaxVolt": "5",
+    "Image": "https://cdn-shop.adafruit.com/970x728/1381-03.jpg",
+    "Brand": "Adafruit",
+    "Detail": "VS1053 Codec + MicroSD Breakout - MP3/WAV/MIDI/OGG Play + Record - v4",
+    "SupportTrigger": [],
+    "Datasheet": "https://learn.adafruit.com/adafruit-vs1053-mp3-aac-ogg-midi-wav-play-and-record-codec-tutorial/downloads-and-links",
+    "Dependency": [
+        {
+            "Type": "SDcard"
+        }
+    ],
+    "SupportAction": [
+        "Audio_1",
+        "Audio_2",
+        "Audio_3",
+        "Audio_4",
+        "Audio_5",
+        "Audio_6"
+    ],
+    "Link": "https://www.adafruit.com/products/1381",
+    "Connect": [
+        "SPI"
+    ],
+    "Price": "24.95",
+    "IC": [
+        "VS1053"
+    ],
+    "Property": [
+        {
+            "Type": "Amplifiers"
+        },
+        {
+            "Type": "Record"
+        }
+    ],
+    "id": "1",
+    "MinVolt": "3"
+},{
+    "Model": "2130",
+    "MaxVolt": "5.5",
+    "Image": "https://cdn-shop.adafruit.com/970x728/2130-01.jpg",
+    "Brand": "Adafruit",
+    "Detail": "Adafruit Mono 2.5W Class D Audio Amplifier - PAM8302",
+    "SupportTrigger": [],
+    "Datasheet": "https://cdn-shop.adafruit.com/datasheets/PAM8302A.pdf",
+    "Dependency": [],
+    "SupportAction": [
+        "Audio_1",
+        "Audio_2",
+        "Audio_3",
+        "Audio_4",
+        "Audio_5",
+        "Audio_6"
+    ],
+    "Link": "https://www.adafruit.com/products/2130",
+    "Connect": [
+        "GPIO"
+    ],
+    "Price": "3.95",
+    "IC": [
+        "PAM8302"
+    ],
+    "Property": [
+        {
+            "Type": "Amplifiers"
+        }
+    ],
+    "id": "2",
+    "MinVolt": "2"
+},{
+    "Model": "1063",
+    "MaxVolt": "5.5",
+    "Image": "https://cdn-shop.adafruit.com/970x728/1063-03.jpg",
+    "Brand": "Adafruit",
+    "Detail": "Electret Microphone Amplifier - MAX4466 with Adjustable Gain",
+    "SupportTrigger": [],
+    "Datasheet": "https://cdn-shop.adafruit.com/datasheets/CMA-4544PF-W.pdf",
+    "Dependency": [],
+    "SupportAction": [
+        "Audio_1",
+        "Audio_2",
+        "Audio_3",
+        "Audio_4",
+        "Audio_5",
+        "Audio_6"
+    ],
+    "Link": "https://www.adafruit.com/products/1063",
+    "Connect": [
+        "GPIO"
+    ],
+    "Price": "6.95",
+    "IC": [
+        "MAX4466"
+    ],
+    "Property": [
+        {
+            "Type": "Amplifiers"
+        }
+    ],
+    "id": "3",
+    "MinVolt": "2.4"
+},{
+    "Model": "987",
+    "MaxVolt": "5.5",
+    "Image": "https://cdn-shop.adafruit.com/970x728/987-00.jpg",
+    "Brand": "Adafruit",
+    "Detail": "Stereo 3.7W Class D Audio Amplifier - MAX98306",
+    "SupportTrigger": [],
+    "Datasheet": "https://learn.adafruit.com/stereo-3-7w-class-d-audio-amplifier/downloads",
+    "Dependency": [],
+    "SupportAction": [
+        "Audio_1",
+        "Audio_2",
+        "Audio_3",
+        "Audio_4",
+        "Audio_5",
+        "Audio_6"
+    ],
+    "Link": "https://www.adafruit.com/products/987",
+    "Connect": [
+        "GPIO"
+    ],
+    "Price": "8.95",
+    "IC": [
+        "MAX98306"
+    ],
+    "Property": [
+        {
+            "Type": "Amplifiers"
+        }
+    ],
+    "id": "4",
+    "MinVolt": "2.7"
+},{
+    "Model": "3006",
+    "MaxVolt": "5.5",
+    "Image": "https://cdn-shop.adafruit.com/970x728/3006-00.jpg",
+    "Brand": "Adafruit",
+    "Detail": "Adafruit I2S 3W Class D Amplifier Breakout - MAX98357A",
+    "SupportTrigger": [],
+    "Datasheet": "https://learn.adafruit.com/adafruit-max98357-i2s-class-d-mono-amp/downloads",
+    "Dependency": [],
+    "SupportAction": [
+        "Audio_1",
+        "Audio_2",
+        "Audio_3",
+        "Audio_4",
+        "Audio_5",
+        "Audio_6"
+    ],
+    "Link": "https://www.adafruit.com/products/3006",
+    "Connect": [
+        "GPIO"
+    ],
+    "Price": "5.95",
+    "IC": [
+        "MAX98357A"
+    ],
+    "Property": [
+        {
+            "Type": "Amplifiers"
+        }
+    ],
+    "id": "5",
+    "MinVolt": "2.7"
+},{
+    "Model": "1552",
+    "MaxVolt": "5.5",
+    "Image": "https://cdn-shop.adafruit.com/970x728/1552-03.jpg",
+    "Brand": "Adafruit",
+    "Detail": "Stereo 2.1W Class D Audio Amplifier - TPA2012",
+    "SupportTrigger": [],
+    "Datasheet": "https://learn.adafruit.com/adafruit-ts2012-2-8w-stereo-audio-amplifier/downloads",
+    "Dependency": [],
+    "SupportAction": [
+        "Audio_1",
+        "Audio_2",
+        "Audio_3",
+        "Audio_4",
+        "Audio_5",
+        "Audio_6"
+    ],
+    "Link": "https://www.adafruit.com/products/1552",
+    "Connect": [
+        "GPIO"
+    ],
+    "Price": "9.95",
+    "IC": [
+        "TPA2012"
+    ],
+    "Property": [
+        {
+            "Type": "Amplifiers"
+        }
+    ],
+    "id": "6",
+    "MinVolt": "2.7"
+},{
+    "Model": "1712",
+    "MaxVolt": "5.5",
+    "Image": "https://cdn-shop.adafruit.com/970x728/1712-00.jpg",
+    "Brand": "Adafruit",
+    "Detail": "Stereo 2.8W Class D Audio Amplifier - I2C Control AGC - TPA2016",
+    "SupportTrigger": [],
+    "Datasheet": "https://learn.adafruit.com/adafruit-tpa2016-2-8w-agc-stereo-audio-amplifier/downloads",
+    "Dependency": [],
+    "SupportAction": [
+        "Audio_1",
+        "Audio_2",
+        "Audio_3",
+        "Audio_4",
+        "Audio_5",
+        "Audio_6"
+    ],
+    "Link": "https://www.adafruit.com/products/1712",
+    "Connect": [
+        "GPIO",
+        "I2C"
+    ],
+    "Price": "9.95",
+    "IC": [
+        "TPA2016"
+    ],
+    "Property": [
+        {
+            "Type": "Amplifiers"
+        }
+    ],
+    "id": "7",
+    "MinVolt": "2.7"
+},{
+    "Model": "1752",
+    "MaxVolt": "14",
+    "Image": "https://cdn-shop.adafruit.com/970x728/1752-00.jpg",
+    "Brand": "Adafruit",
+    "Detail": "Stereo 20W Class D Audio Amplifier - MAX9744",
+    "SupportTrigger": [],
+    "Datasheet": "https://learn.adafruit.com/adafruit-20w-stereo-audio-amplifier-class-d-max9744/downloads",
+    "Dependency": [],
+    "SupportAction": [
+        "Audio_1",
+        "Audio_2",
+        "Audio_3",
+        "Audio_4",
+        "Audio_5",
+        "Audio_6"
+    ],
+    "Link": "https://www.adafruit.com/products/1752",
+    "Connect": [
+        "GPIO",
+        "Analog"
+    ],
+    "Price": "19.95",
+    "IC": [
+        "MAX9744"
+    ],
+    "Property": [
+        {
+            "Type": "Amplifiers"
+        }
+    ],
+    "id": "8",
+    "MinVolt": "4.5"
+},{
+    "Model": "2652",
+    "MaxVolt": "3.3",
+    "Image": "https://cdn-shop.adafruit.com/970x728/2652-00.jpg",
+    "Brand": "Adafruit",
+    "Detail": "Adafruit BME280 I2C or SPI Temperature Humidity Pressure Sensor",
+    "SupportTrigger": [
+        "Barometer_1",
+        "Temp_1"
+    ],
+    "Datasheet": "https://learn.adafruit.com/adafruit-bme280-humidity-barometric-pressure-temperature-sensor-breakout/downloads",
+    "Dependency": [],
+    "SupportAction": [
+        "AN_LCD_7",
+        "AN_LCD_5"
+    ],
+    "Link": "https://www.adafruit.com/products/2652",
+    "Connect": [
+        "SPI",
+        "I2C"
+    ],
+    "Price": "19.95",
+    "IC": [
+        "BME280"
+    ],
+    "Property": [
+        {
+            "Type": "Barometer"
+        },
+        {
+            "Max": "1100",
+            "Type": "Pressure",
+            "Unit": "pa",
+            "Min": "300"
+        },
+        {
+            "Max": "85",
+            "Type": "Temperature",
+            "Unit": "c",
+            "Min": "-40"
+        }
+    ],
+    "id": "9",
+    "MinVolt": "3.3"
+},{
+    "Model": "2651",
+    "MaxVolt": "3.3",
+    "Image": "https://cdn-shop.adafruit.com/970x728/2651-00.jpg",
+    "Brand": "Adafruit",
+    "Detail": "Adafruit BMP280 I2C or SPI Barometric Pressure & Altitude Sensor",
+    "SupportTrigger": [
+        "Barometer_1",
+        "Temp_1"
+    ],
+    "Datasheet": "https://learn.adafruit.com/adafruit-bmp280-barometric-pressure-plus-temperature-sensor-breakout/downloads",
+    "Dependency": [],
+    "SupportAction": [
+        "AN_LCD_7",
+        "AN_LCD_5"
+    ],
+    "Link": "https://www.adafruit.com/products/2651",
+    "Connect": [
+        "SPI",
+        "I2C"
+    ],
+    "Price": "9.95",
+    "IC": [
+        "BMP280"
+    ],
+    "Property": [
+        {
+            "Type": "Barometer"
+        },
+        {
+            "Max": "1100",
+            "Type": "Pressure",
+            "Unit": "pa",
+            "Min": "300"
+        },
+        {
+            "Max": "85",
+            "Type": "Temperature",
+            "Unit": "c",
+            "Min": "-40"
+        }
+    ],
+    "id": "10",
+    "MinVolt": "3.3"
+},{
+    "Model": "1893",
+    "MaxVolt": "3.6",
+    "Image": "https://cdn-shop.adafruit.com/970x728/1893-02.jpg",
+    "Brand": "Adafruit",
+    "Detail": "MPL3115A2 - I2C Barometric Pressure/Altitude/Temperature Sensor",
+    "SupportTrigger": [
+        "Barometer_1",
+        "Barometer_2",
+        "Temp_1"
+    ],
+    "Datasheet": "https://cdn-shop.adafruit.com/datasheets/1893_datasheet.pdf",
+    "Dependency": [],
+    "SupportAction": [
+        "AN_LCD_7",
+        "AN_LCD_5"
+    ],
+    "Link": "https://www.adafruit.com/products/1893",
+    "Connect": [
+        "I2C",
+        "SPI"
+    ],
+    "Price": "9.95",
+    "IC": [
+        "MPL3115A2"
+    ],
+    "Property": [
+        {
+            "Type": "Barometer"
+        },
+        {
+            "Max": "110000",
+            "Type": "Pressure",
+            "Unit": "pa",
+            "Min": "50000"
+        },
+        {
+            "Max": "70",
+            "Type": "Temperature",
+            "Unit": "c",
+            "Min": "-10"
+        },
+        {
+            "Max": "1.5",
+            "Type": "AltitudeP",
+            "Unit": "pa",
+            "Min": "1.5"
+        },
+        {
+            "Max": "0.3",
+            "Type": "AltitudeD",
+            "Unit": "m",
+            "Min": "0.3"
+        }
+    ],
+    "id": "11",
+    "MinVolt": "2"
+},{
+    "Model": "1603",
+    "MaxVolt": "5",
+    "Image": "https://cdn-shop.adafruit.com/970x728/1603-03.jpg",
+    "Brand": "Adafruit",
+    "Detail": "BMP180 Barometric Pressure/Temperature/Altitude Sensor- 5V ready",
+    "SupportTrigger": [
+        "Barometer_1",
+        "Barometer_2",
+        "Temp_1"
+    ],
+    "Datasheet": "https://learn.adafruit.com/bmp085/downloads",
+    "Dependency": [],
+    "SupportAction": [
+        "AN_LCD_7",
+        "AN_LCD_5"
+    ],
+    "Link": "https://www.adafruit.com/products/1603",
+    "Connect": [
+        "I2C"
+    ],
+    "Price": "9.95",
+    "IC": [
+        "BMP180"
+    ],
+    "Property": [
+        {
+            "Type": "Barometer"
+        },
+        {
+            "Max": "1100",
+            "Type": "Pressure",
+            "Unit": "pa",
+            "Min": "300"
+        },
+        {
+            "Max": "85",
+            "Type": "Temperature",
+            "Unit": "c",
+            "Min": "-40"
+        },
+        {
+            "Max": "3",
+            "Type": "AltitudeP",
+            "Unit": "pa",
+            "Min": "3"
+        },
+        {
+            "Max": "0.25",
+            "Type": "AltitudeD",
+            "Unit": "m",
+            "Min": "0.25"
+        }
+    ],
+    "id": "12",
+    "MinVolt": "3"
+},{
+    "Model": "1900",
+    "MaxVolt": "5",
+    "Image": "https://cdn-shop.adafruit.com/970x728/1900-00.jpg",
+    "Brand": "Adafruit",
+    "Detail": "Adafruit BMP183 SPI Barometric Pressure & Altitude Sensor",
+    "SupportTrigger": [
+        "Barometer_1",
+        "Barometer_2",
+        "Temp_1"
+    ],
+    "Datasheet": "https://learn.adafruit.com/adafruit-bmp183-spi-barometric-pressure-and-altitude-sensor/downloads",
+    "Dependency": [],
+    "SupportAction": [
+        "AN_LCD_7",
+        "AN_LCD_5"
+    ],
+    "Link": "https://www.adafruit.com/products/1900",
+    "Connect": [
+        "SPI"
+    ],
+    "Price": "9.95",
+    "IC": [
+        "BMP183"
+    ],
+    "Property": [
+        {
+            "Type": "Barometer"
+        },
+        {
+            "Max": "110000",
+            "Type": "Pressure",
+            "Unit": "pa",
+            "Min": "30000"
+        },
+        {
+            "Max": "85",
+            "Type": "Temperature",
+            "Unit": "c",
+            "Min": "-40"
+        },
+        {
+            "Max": "100",
+            "Type": "AltitudeP",
+            "Unit": "pa",
+            "Min": "100"
+        },
+        {
+            "Max": "8.43",
+            "Type": "AltitudeD",
+            "Unit": "m",
+            "Min": "8.43"
+        }
+    ],
+    "id": "13",
+    "MinVolt": "3"
+},{
+    "Model": "992",
+    "MaxVolt": "5.5",
+    "Image": "https://cdn-shop.adafruit.com/970x728/992-00.jpg",
+    "Brand": "Adafruit",
+    "Detail": "MPL115A2 - I2C Barometric Pressure/Temperature Sensor",
+    "SupportTrigger": [
+        "Barometer_1",
+        "Barometer_2",
+        "Temp_1"
+    ],
+    "Datasheet": "https://cdn-shop.adafruit.com/datasheets/MPL115A2.pdf",
+    "Dependency": [],
+    "SupportAction": [
+        "AN_LCD_7",
+        "AN_LCD_5"
+    ],
+    "Link": "https://www.adafruit.com/products/992",
+    "Connect": [
+        "I2C"
+    ],
+    "Price": "7.95",
+    "IC": [
+        "MPL115A2"
+    ],
+    "Property": [
+        {
+            "Type": "Barometer"
+        },
+        {
+            "Max": "115000",
+            "Type": "Pressure",
+            "Unit": "pa",
+            "Min": "50000"
+        },
+        {
+            "Max": "105",
+            "Type": "Temperature",
+            "Unit": "c",
+            "Min": "-40"
+        },
+        {
+            "Max": "150",
+            "Type": "AltitudeP",
+            "Unit": "pa",
+            "Min": "150"
+        },
+        {
+            "Max": "50",
+            "Type": "AltitudeD",
+            "Unit": "m",
+            "Min": "50"
+        }
+    ],
+    "id": "14",
+    "MinVolt": "2.4"
+},{
+    "Model": "1093",
+    "MaxVolt": "5",
+    "Image": "https://cdn-shop.adafruit.com/970x728/1093-00.jpg",
+    "Brand": "Adafruit",
+    "Detail": "Pulse Sensor Amped",
+    "SupportTrigger": [],
+    "Datasheet": "https://media.digikey.com/pdf/Data%20Sheets/Pulse%20PDFs/PulseSensorAmpedGettingStartedGuide.pdf",
+    "Dependency": [],
+    "SupportAction": [],
+    "Link": "https://www.adafruit.com/products/1093",
+    "Connect": [
+        "GPIO"
+    ],
+    "Price": "25",
+    "IC": [],
+    "Property": [
+        {
+            "Type": "Biometric"
+        },
+        {
+            "Type": "Pluse"
+        }
+    ],
+    "id": "15",
+    "MinVolt": "5"
+},{
+    "Model": "2699",
+    "MaxVolt": "5.7",
+    "Image": "https://cdn-shop.adafruit.com/970x728/2699-02.jpg",
+    "Brand": "Adafruit",
+    "Detail": "MyoWare Muscle Sensor",
+    "SupportTrigger": [],
+    "Datasheet": "https://cdn-shop.adafruit.com/product-files/2699/AT-04-001.pdf",
+    "Dependency": [],
+    "SupportAction": [],
+    "Link": "https://www.adafruit.com/products/2699",
+    "Connect": [
+        "Analog"
+    ],
+    "Price": "37.95",
+    "IC": [],
+    "Property": [
+        {
+            "Type": "Biometric"
+        },
+        {
+            "Type": "Muscle"
+        }
+    ],
+    "id": "16",
+    "MinVolt": "2.9"
+},{
+    "Model": "751",
+    "MaxVolt": "6",
+    "Image": "https://cdn-shop.adafruit.com/970x728/751-03.jpg",
+    "Brand": "Adafruit",
+    "Detail": "Fingerprint sensor",
+    "SupportTrigger": [],
+    "Datasheet": "https://cdn-shop.adafruit.com/datasheets/DY001fingerprint.pdf",
+    "Dependency": [],
+    "SupportAction": [],
+    "Link": "https://www.adafruit.com/products/751",
+    "Connect": [
+        "GPIO"
+    ],
+    "Price": "49.95",
+    "IC": [],
+    "Property": [
+        {
+            "Type": "Biometric"
+        },
+        {
+            "Type": "Fingerprint"
+        },
+        {
+            "Max": "162",
+            "Type": "Number",
+            "Min": "0"
+        }
+    ],
+    "id": "17",
+    "MinVolt": "3.6"
+},{
+    "Model": "2487",
+    "MaxVolt": "3.6",
+    "Image": "https://cdn-shop.adafruit.com/970x728/2487-03.jpg",
+    "Brand": "Adafruit",
+    "Detail": "Flora Wearable Bluefruit LE Module",
+    "SupportTrigger": [
+        "Comm_1"
+    ],
+    "Datasheet": "https://learn.adafruit.com/adafruit-flora-bluefruit-le/downloads",
+    "Dependency": [],
+    "SupportAction": [],
+    "Link": "https://www.adafruit.com/products/2487",
+    "Connect": [
+        "UART"
+    ],
+    "Price": "17.5",
+    "IC": [],
+    "Property": [
+        {
+            "Type": "Bluetooth"
+        },
+        {
+            "Type": "UART"
+        }
+    ],
+    "id": "18",
+    "MinVolt": "2.7"
+},{
+    "Model": "1697",
+    "MaxVolt": "5",
+    "Image": "https://cdn-shop.adafruit.com/970x728/1697-04.jpg",
+    "Brand": "Adafruit",
+    "Detail": "Bluefruit LE - Bluetooth Low Energy (BLE 4.0) - nRF8001 Breakout - v1.0",
+    "SupportTrigger": [
+        "Comm_1"
+    ],
+    "Datasheet": "https://learn.adafruit.com/getting-started-with-the-nrf8001-bluefruit-le-breakout/downloads",
+    "Dependency": [],
+    "SupportAction": [],
+    "Link": "https://www.adafruit.com/products/1697",
+    "Connect": [
+        "SPI",
+        "UART"
+    ],
+    "Price": "19.95",
+    "IC": [],
+    "Property": [
+        {
+            "Type": "Bluetooth"
+        },
+        {
+            "Type": "UART"
+        }
+    ],
+    "id": "19",
+    "MinVolt": "3.3"
+},{
+    "Model": "2479",
+    "MaxVolt": "16",
+    "Image": "https://cdn-shop.adafruit.com/970x728/2479-00.jpg",
+    "Brand": "Adafruit",
+    "Detail": "Adafruit Bluefruit LE UART Friend - Bluetooth Low Energy (BLE)",
+    "SupportTrigger": [
+        "Comm_1"
+    ],
+    "Datasheet": "https://learn.adafruit.com/introducing-the-adafruit-bluefruit-le-uart-friend/downloads",
+    "Dependency": [],
+    "SupportAction": [],
+    "Link": "https://www.adafruit.com/products/2479",
+    "Connect": [
+        "UART",
+        "SPI"
+    ],
+    "Price": "17.5",
+    "IC": [],
+    "Property": [
+        {
+            "Type": "Bluetooth"
+        },
+        {
+            "Type": "UART"
+        }
+    ],
+    "id": "20",
+    "MinVolt": "3"
+},{
+    "Model": "2633",
+    "MaxVolt": "16",
+    "Image": "https://cdn-shop.adafruit.com/970x728/2633-00.jpg",
+    "Brand": "Adafruit",
+    "Detail": "Adafruit Bluefruit LE SPI Friend - Bluetooth Low Energy (BLE)",
+    "SupportTrigger": [
+        "Comm_1"
+    ],
+    "Datasheet": "https://learn.adafruit.com/introducing-the-adafruit-bluefruit-spi-breakout/downloads",
+    "Dependency": [],
+    "SupportAction": [],
+    "Link": "https://www.adafruit.com/products/2633",
+    "Connect": [
+        "SPI"
+    ],
+    "Price": "17.5",
+    "IC": [],
+    "Property": [
+        {
+            "Type": "Bluetooth"
+        }
+    ],
+    "id": "21",
+    "MinVolt": "3"
+},{
+    "Model": "1588",
+    "MaxVolt": "16",
+    "Image": "https://cdn-shop.adafruit.com/970x728/1588-00.jpg",
+    "Brand": "Adafruit",
+    "Detail": "Bluefruit EZ-Link - Bluetooth Serial Link & Arduino Programmer - v1.3",
+    "SupportTrigger": [
+        "Comm_1"
+    ],
+    "Datasheet": "https://learn.adafruit.com/introducing-bluefruit-ez-link/downloads",
+    "Dependency": [],
+    "SupportAction": [],
+    "Link": "https://www.adafruit.com/products/1588",
+    "Connect": [
+        "UART"
+    ],
+    "Price": "22.5",
+    "IC": [],
+    "Property": [
+        {
+            "Type": "Bluetooth"
+        },
+        {
+            "Type": "UART"
+        }
+    ],
+    "id": "22",
+    "MinVolt": "3.5"
+},{
+    "Model": "1946",
+    "MaxVolt": "5",
+    "Image": "https://cdn-shop.adafruit.com/970x728/1946-05.jpg",
+    "Brand": "Adafruit",
+    "Detail": "Adafruit FONA - Mini Cellular GSM Breakout uFL Version",
+    "SupportTrigger": [
+        "Comm_1"
+    ],
+    "Datasheet": "https://learn.adafruit.com/adafruit-fona-mini-gsm-gprs-cellular-phone-module/downloads",
+    "Dependency": [],
+    "SupportAction": [],
+    "Link": "https://www.adafruit.com/products/1946",
+    "Connect": [
+        "UART"
+    ],
+    "Price": "39.95",
+    "IC": [],
+    "Property": [
+        {
+            "Type": "Cellular"
+        },
+        {
+            "Type": "UART"
+        }
+    ],
+    "id": "23",
+    "MinVolt": "3"
+},{
+    "Model": "2542",
+    "MaxVolt": "5",
+    "Image": "https://cdn-shop.adafruit.com/970x728/2542-06.jpg",
+    "Brand": "Adafruit",
+    "Detail": "Adafruit FONA 808 - Mini Cellular GSM + GPS Breakout",
+    "SupportTrigger": [
+        "Comm_1"
+    ],
+    "Datasheet": "https://learn.adafruit.com/adafruit-fona-808-cellular-plus-gps-breakout/downloads",
+    "Dependency": [],
+    "SupportAction": [],
+    "Link": "https://www.adafruit.com/products/2542",
+    "Connect": [
+        "UART"
+    ],
+    "Price": "49.95",
+    "IC": [],
+    "Property": [
+        {
+            "Type": "Cellular"
+        },
+        {
+            "Type": "UART"
+        }
+    ],
+    "id": "24",
+    "MinVolt": "3"
+},{
+    "Model": "2468",
+    "MaxVolt": "",
+    "Image": "https://cdn-shop.adafruit.com/970x728/2468-06.jpg",
+    "Brand": "Adafruit",
+    "Detail": "Adafruit FONA 800 Shield - Voice/Data Cellular GSM for Arduino",
+    "SupportTrigger": [
+        "Comm_1"
+    ],
+    "Datasheet": "https://learn.adafruit.com/adafruit-fona-800-shield/downloads",
+    "Dependency": [],
+    "SupportAction": [],
+    "Link": "https://www.adafruit.com/products/2468",
+    "Connect": [
+        "Shield"
+    ],
+    "Price": "39.95",
+    "IC": [],
+    "Property": [
+        {
+            "Type": "Cellular"
+        }
+    ],
+    "id": "25",
+    "MinVolt": ""
+},{
+    "Model": "3013",
+    "MaxVolt": "3.3",
+    "Image": "https://cdn-shop.adafruit.com/970x728/3013-01.jpg",
+    "Brand": "Adafruit",
+    "Detail": "Adafruit DS3231 Precision RTC Breakout",
+    "SupportTrigger": [
+        "Time_1"
+    ],
+    "Datasheet": "https://learn.adafruit.com/adafruit-ds3231-precision-rtc-breakout/downloads",
+    "Dependency": [],
+    "SupportAction": [],
+    "Link": "https://www.adafruit.com/products/3013",
+    "Connect": [
+        "I2C"
+    ],
+    "Price": "13.95",
+    "IC": [
+        "DS3231"
+    ],
+    "Property": [
+        {
+            "Type": "Clock"
+        }
+    ],
+    "id": "26",
+    "MinVolt": "3.3"
+},{
+    "Model": "3296",
+    "MaxVolt": "5",
+    "Image": "https://cdn-shop.adafruit.com/970x728/3296-00.jpg",
+    "Brand": "Adafruit",
+    "Detail": "Adafruit DS1307 Real Time Clock Assembled Breakout Board",
+    "SupportTrigger": [
+        "Time_1"
+    ],
+    "Datasheet": "",
+    "Dependency": [],
+    "SupportAction": [],
+    "Link": "https://www.adafruit.com/products/3296",
+    "Connect": [
+        "I2C"
+    ],
+    "Price": "8.95",
+    "IC": [
+        "DS1307"
+    ],
+    "Property": [
+        {
+            "Type": "Clock"
+        }
+    ],
+    "id": "27",
+    "MinVolt": "5"
+},{
+    "Model": "3295",
+    "MaxVolt": "5",
+    "Image": "https://cdn-shop.adafruit.com/970x728/3295-00.jpg",
+    "Brand": "Adafruit",
+    "Detail": "Adafruit PCF8523 Real Time Clock Assembled Breakout Board",
+    "SupportTrigger": [
+        "Time_1"
+    ],
+    "Datasheet": "",
+    "Dependency": [],
+    "SupportAction": [],
+    "Link": "https://www.adafruit.com/products/3295",
+    "Connect": [
+        "I2C"
+    ],
+    "Price": "4.95",
+    "IC": [
+        "PCF8523"
+    ],
+    "Property": [
+        {
+            "Type": "Clock"
+        }
+    ],
+    "id": "28",
+    "MinVolt": "5"
+},{
+    "Model": "8589",
+    "MaxVolt": "50",
+    "Image": "https://cdn.sparkfun.com//assets/parts/1/5/7/8/08588-02-L.jpg",
+    "Brand": "sparkfun",
+    "Detail": "Diode Rectifier - 1A 50V",
+    "SupportTrigger": [],
+    "Datasheet": "http://www.fairchildsemi.com/ds/1N/1N4001.pdf",
+    "Dependency": [],
+    "SupportAction": [],
+    "Link": "https://www.sparkfun.com/products/8589",
+    "Connect": [
+        "GPIO",
+        "Analog"
+    ],
+    "Price": "0.15",
+    "IC": [],
+    "Property": [
+        {
+            "Type": "Diode"
+        }
+    ],
+    "id": "29",
+    "MinVolt": "0"
+},{
+    "Model": "3199",
+    "MaxVolt": "5",
+    "Image": "https://cdn-shop.adafruit.com/1200x900/3199-00.jpg",
+    "Brand": "Adafruit",
+    "Detail": "Adafruit MiCS5524 CO Alcohol and VOC Gas Sensor Breakout",
+    "SupportTrigger": [],
+    "Datasheet": "https://cdn-shop.adafruit.com/product-files/3199/MiCS-5524.pdf",
+    "Dependency": [],
+    "SupportAction": [],
+    "Link": "https://www.adafruit.com/products/3199",
+    "Connect": [
+        "Analog"
+    ],
+    "Price": "14.95",
+    "IC": [
+        "MiCS5524"
+    ],
+    "Property": [
+        {
+            "Type": "Gas"
+        },
+        {
+            "Max": "1000",
+            "Type": "CO",
+            "Unit": "ppm",
+            "Min": "1"
+        },
+        {
+            "Max": "500",
+            "Type": "C2H6OH",
+            "Unit": "ppm",
+            "Min": "10"
+        },
+        {
+            "Max": "1000",
+            "Type": "H2",
+            "Unit": "ppm",
+            "Min": "1"
+        },
+        {
+            "Max": "500",
+            "Type": "NH3",
+            "Unit": "ppm",
+            "Min": "1"
+        },
+        {
+            "Type": "CH4",
+            "Unit": "ppm",
+            "Min": "1000"
+        }
+    ],
+    "id": "30",
+    "MinVolt": "5"
+},{
+    "Model": "1899",
+    "MaxVolt": "5",
+    "Image": "https://cdn-shop.adafruit.com/970x728/1899-00.jpg",
+    "Brand": "Adafruit",
+    "Detail": "Adafruit HTU21D-F Temperature & Humidity Sensor Breakout Board",
+    "SupportTrigger": [
+        "Humid_1",
+        "Temp_1"
+    ],
+    "Datasheet": "https://learn.adafruit.com/adafruit-htu21d-f-temperature-humidity-sensor/downloads",
+    "Dependency": [],
+    "SupportAction": [
+        "AN_LCD_12",
+        "AN_LCD_5"
+    ],
+    "Link": "https://www.adafruit.com/products/1899",
+    "Connect": [
+        "I2C"
+    ],
+    "Price": "14.95",
+    "IC": [
+        "HTU21D-F"
+    ],
+    "Property": [
+        {
+            "Max": "95",
+            "Type": "Humidity",
+            "Unit": "%RH",
+            "Min": "5"
+        },
+        {
+            "Max": "90",
+            "Type": "Temperature",
+            "Unit": "c",
+            "Min": "-30"
+        }
+    ],
+    "id": "31",
+    "MinVolt": "3.3"
+},{
+    "Model": "2857",
+    "MaxVolt": "5",
+    "Image": "https://cdn-shop.adafruit.com/970x728/2857-00.jpg",
+    "Brand": "Adafruit",
+    "Detail": "Adafruit Sensiron SHT31-D Temperature & Humidity Sensor Breakout",
+    "SupportTrigger": [
+        "Humid_1",
+        "Temp_1"
+    ],
+    "Datasheet": "https://learn.adafruit.com/adafruit-sht31-d-temperature-and-humidity-sensor-breakout/downloads",
+    "Dependency": [],
+    "SupportAction": [
+        "AN_LCD_12",
+        "AN_LCD_5"
+    ],
+    "Link": "https://www.adafruit.com/products/2857",
+    "Connect": [
+        "I2C"
+    ],
+    "Price": "13.95",
+    "IC": [
+        "SHT31-D"
+    ],
+    "Property": [
+        {
+            "Max": "100",
+            "Type": "Humidity",
+            "Unit": "%RH",
+            "Min": "0"
+        },
+        {
+            "Max": "125",
+            "Type": "Temperature",
+            "Unit": "c",
+            "Min": "-40"
+        }
+    ],
+    "id": "32",
+    "MinVolt": "3.3"
+},{
+    "Model": "3251",
+    "MaxVolt": "5",
+    "Image": "https://cdn-shop.adafruit.com/970x728/3251-00.jpg",
+    "Brand": "Adafruit",
+    "Detail": "Adafruit Si7021 Temperature & Humidity Sensor Breakout Board",
+    "SupportTrigger": [
+        "Humid_1",
+        "Temp_1"
+    ],
+    "Datasheet": "https://learn.adafruit.com/adafruit-si7021-temperature-plus-humidity-sensor/downloads",
+    "Dependency": [],
+    "SupportAction": [
+        "AN_LCD_12",
+        "AN_LCD_5"
+    ],
+    "Link": "https://www.adafruit.com/products/3251",
+    "Connect": [
+        "I2C"
+    ],
+    "Price": "6.95",
+    "IC": [
+        "Si7021"
+    ],
+    "Property": [
+        {
+            "Max": "80",
+            "Type": "Humidity",
+            "Unit": "%RH",
+            "Min": "0"
+        },
+        {
+            "Max": "85",
+            "Type": "Temperature",
+            "Unit": "c",
+            "Min": "-10"
+        }
+    ],
+    "id": "33",
+    "MinVolt": "3.3"
+},{
+    "Model": "1293",
+    "MaxVolt": "5",
+    "Image": "https://cdn-shop.adafruit.com/970x728/1293-00.jpg",
+    "Brand": "Adafruit",
+    "Detail": "AM2315 - Encased I2C Temperature/Humidity Sensor",
+    "SupportTrigger": [
+        "Humid_1",
+        "Temp_1"
+    ],
+    "Datasheet": "https://cdn-shop.adafruit.com/datasheets/AM2315.pdf",
+    "Dependency": [],
+    "SupportAction": [
+        "AN_LCD_12",
+        "AN_LCD_5"
+    ],
+    "Link": "https://www.adafruit.com/products/1293",
+    "Connect": [
+        "I2C"
+    ],
+    "Price": "29.95",
+    "IC": [
+        "DS18B20"
+    ],
+    "Property": [
+        {
+            "Max": "100",
+            "Type": "Humidity",
+            "Unit": "%RH",
+            "Min": "0"
+        },
+        {
+            "Max": "80",
+            "Type": "Temperature",
+            "Unit": "c",
+            "Min": "-20"
+        }
+    ],
+    "id": "34",
+    "MinVolt": "3.3"
+},{
+    "Model": "385",
+    "MaxVolt": "5",
+    "Image": "https://cdn-shop.adafruit.com/970x728/385-00.jpg",
+    "Brand": "Adafruit",
+    "Detail": "DHT22 temperature-humidity sensor + extras",
+    "SupportTrigger": [
+        "Humid_1",
+        "Temp_1"
+    ],
+    "Datasheet": "https://cdn-shop.adafruit.com/datasheets/DHT22.pdf",
+    "Dependency": [],
+    "SupportAction": [
+        "AN_LCD_12",
+        "AN_LCD_5"
+    ],
+    "Link": "https://www.adafruit.com/products/385",
+    "Connect": [
+        "GPIO"
+    ],
+    "Price": "9.95",
+    "IC": [
+        "DHT22"
+    ],
+    "Property": [
+        {
+            "Max": "100",
+            "Type": "Humidity",
+            "Unit": "%RH",
+            "Min": "0"
+        },
+        {
+            "Max": "125",
+            "Type": "Temperature",
+            "Unit": "c",
+            "Min": "-40"
+        }
+    ],
+    "id": "35",
+    "MinVolt": "3"
+},{
+    "Model": "386",
+    "MaxVolt": "5",
+    "Image": "https://cdn-shop.adafruit.com/970x728/386-00.jpg",
+    "Brand": "Adafruit",
+    "Detail": "DHT11 basic temperature-humidity sensor + extras",
+    "SupportTrigger": [
+        "Humid_1",
+        "Temp_1"
+    ],
+    "Datasheet": "https://cdn-shop.adafruit.com/datasheets/DHT22.pdf",
+    "Dependency": [],
+    "SupportAction": [
+        "AN_LCD_12",
+        "AN_LCD_5"
+    ],
+    "Link": "https://www.adafruit.com/products/386",
+    "Connect": [
+        "GPIO"
+    ],
+    "Price": "5",
+    "IC": [
+        "DHT11"
+    ],
+    "Property": [
+        {
+            "Max": "80",
+            "Type": "Humidity",
+            "Unit": "%RH",
+            "Min": "20"
+        },
+        {
+            "Max": "50",
+            "Type": "Temperature",
+            "Unit": "c",
+            "Min": "0"
+        }
+    ],
+    "id": "36",
+    "MinVolt": "3"
+},{
+    "Model": "1298",
+    "MaxVolt": "5",
+    "Image": "https://cdn-shop.adafruit.com/970x728/1298-00.jpg",
+    "Brand": "Adafruit",
+    "Detail": "Soil Temperature/Moisture Sensor - SHT10",
+    "SupportTrigger": [
+        "Humid_1",
+        "Temp_1"
+    ],
+    "Datasheet": "https://cdn-shop.adafruit.com/datasheets/SLHT5.pdf",
+    "Dependency": [],
+    "SupportAction": [
+        "AN_LCD_12",
+        "AN_LCD_5"
+    ],
+    "Link": "https://www.adafruit.com/products/1298",
+    "Connect": [
+        "I2C"
+    ],
+    "Price": "49.95",
+    "IC": [
+        "SHT10"
+    ],
+    "Property": [
+        {
+            "Max": "100",
+            "Type": "Humidity",
+            "Unit": "%RH",
+            "Min": "0"
+        },
+        {
+            "Max": "123.8",
+            "Type": "Temperature",
+            "Unit": "c",
+            "Min": "-40"
+        }
+    ],
+    "id": "37",
+    "MinVolt": "3"
+},{
+    "Model": "181",
+    "MaxVolt": "5",
+    "Image": "https://cdn-shop.adafruit.com/970x728/181-02.jpg",
+    "Brand": "Adafruit",
+    "Detail": "Standard LCD 16x2 + extras - white on blue",
+    "SupportTrigger": [],
+    "Datasheet": "https://cdn-shop.adafruit.com/product-files/181/p181.pdf",
+    "Dependency": [],
+    "SupportAction": [
+        "AN_LCD_1",
+        "AN_LCD_2",
+        "AN_LCD_3",
+        "AN_LCD_4"
+    ],
+    "Link": "https://www.adafruit.com/products/181",
+    "Connect": [
+        "GPIO"
+    ],
+    "Price": "9.95",
+    "IC": [],
+    "Property": [
+        {
+            "Type": "LCD16X2"
+        }
+    ],
+    "id": "38",
+    "MinVolt": "5"
+},{
+    "Model": "399",
+    "MaxVolt": "5",
+    "Image": "https://cdn-shop.adafruit.com/970x728/399-11.jpg",
+    "Brand": "Adafruit",
+    "Detail": "RGB backlight negative LCD 16x2 + extras - RGB on black",
+    "SupportTrigger": [],
+    "Datasheet": "https://www.adafruit.com/datasheets/HD44780.pdf",
+    "Dependency": [],
+    "SupportAction": [
+        "AN_LCD_1",
+        "AN_LCD_2",
+        "AN_LCD_3",
+        "AN_LCD_4"
+    ],
+    "Link": "https://www.adafruit.com/products/399",
+    "Connect": [
+        "GPIO"
+    ],
+    "Price": "13.95",
+    "IC": [],
+    "Property": [
+        {
+            "Type": "LCD16X2"
+        },
+        {
+            "Type": "LCDbacklightcolor"
+        }
+    ],
+    "id": "39",
+    "MinVolt": "5"
+},{
+    "Model": "292",
+    "MaxVolt": "5",
+    "Image": "https://cdn-shop.adafruit.com/970x728/292-04.jpg",
+    "Brand": "Adafruit",
+    "Detail": "i2c / SPI character LCD backpack",
+    "SupportTrigger": [],
+    "Datasheet": "https://learn.adafruit.com/i2c-spi-lcd-backpack/downloads",
+    "Dependency": [],
+    "SupportAction": [
+        "AN_LCD_1",
+        "AN_LCD_2",
+        "AN_LCD_3",
+        "AN_LCD_4"
+    ],
+    "Link": "https://www.adafruit.com/products/292",
+    "Connect": [
+        "I2C",
+        "SPI"
+    ],
+    "Price": "9.95",
+    "IC": [],
+    "Property": [
+        {
+            "Type": "LCD"
+        }
+    ],
+    "id": "40",
+    "MinVolt": "5"
+},{
+    "Model": "388",
+    "MaxVolt": "5",
+    "Image": "https://cdn-shop.adafruit.com/970x728/338-02.jpg",
+    "Brand": "Adafruit",
+    "Detail": "Nokia 5110/3310 monochrome LCD + extras",
+    "SupportTrigger": [],
+    "Datasheet": "http://learn.adafruit.com/nokia-5110-3310-monochrome-lcd",
+    "Dependency": [],
+    "SupportAction": [
+        "AN_LCD_1",
+        "AN_LCD_2",
+        "AN_LCD_3",
+        "AN_LCD_4"
+    ],
+    "Link": "https://www.adafruit.com/products/338",
+    "Connect": [
+        "Specific"
+    ],
+    "Price": "10",
+    "IC": [],
+    "Property": [
+        {
+            "Type": "LCD"
+        }
+    ],
+    "id": "41",
+    "MinVolt": "3.3"
+},{
+    "Model": "358",
+    "MaxVolt": "6",
+    "Image": "https://cdn-shop.adafruit.com/970x728/358-00.jpg",
+    "Brand": "Adafruit",
+    "Detail": "\"1.8\"\" Color TFT LCD display with MicroSD Card Breakout - ST7735R\"",
+    "SupportTrigger": [],
+    "Datasheet": "https://learn.adafruit.com/1-8-tft-display/downloads",
+    "Dependency": [],
+    "SupportAction": [
+        "AN_LCD_1",
+        "AN_LCD_2",
+        "AN_LCD_3",
+        "AN_LCD_4"
+    ],
+    "Link": "https://www.adafruit.com/products/358",
+    "Connect": [
+        "SPI"
+    ],
+    "Price": "19.95",
+    "IC": [
+        "ST7735R"
+    ],
+    "Property": [
+        {
+            "Type": "LCD"
+        }
+    ],
+    "id": "42",
+    "MinVolt": "3.3"
+},{
+    "Model": "1651",
+    "MaxVolt": "",
+    "Image": "https://cdn-shop.adafruit.com/970x728/1651-00.jpg",
+    "Brand": "Adafruit",
+    "Detail": "\"2.8\"\" TFT Touch Shield for Arduino with Resistive Touch Screen\"",
+    "SupportTrigger": [],
+    "Datasheet": "https://learn.adafruit.com/adafruit-2-8-tft-touch-shield-v2/downloads",
+    "Dependency": [],
+    "SupportAction": [
+        "AN_LCD_1",
+        "AN_LCD_2",
+        "AN_LCD_3",
+        "AN_LCD_4"
+    ],
+    "Link": "https://www.adafruit.com/products/1651",
+    "Connect": [
+        "Shield"
+    ],
+    "Price": "34.95",
+    "IC": [],
+    "Property": [
+        {
+            "Type": "LCD"
+        }
+    ],
+    "id": "43",
+    "MinVolt": ""
+},{
+    "Model": "159",
+    "MaxVolt": "5",
+    "Image": "https://cdn-shop.adafruit.com/970x728/159-00.jpg",
+    "Brand": "Adafruit",
+    "Detail": "Diffused RGB (tri-color) LED - Common Anode",
+    "SupportTrigger": [],
+    "Datasheet": "http://www.adafruit.com/datasheets/FD-5WSRGB-A.pdf",
+    "Dependency": [
+        {
+            "Max": "470",
+            "Type": "Resistor",
+            "Unit": "ohm",
+            "Min": "470"
+        }
+    ],
+    "SupportAction": [
+        "RGBLED_1",
+        "RGBLED_2",
+        "RGBLED_3",
+        "RGBLED_4",
+        "RGBLED_5"
+    ],
+    "Link": "https://www.adafruit.com/products/159",
+    "Connect": [
+        "GPIO"
+    ],
+    "Price": "2",
+    "IC": [],
+    "Property": [
+        {
+            "Type": "RGBLED"
+        }
+    ],
+    "id": "44",
+    "MinVolt": "5"
+},{
+    "Model": "1484",
+    "MaxVolt": "5",
+    "Image": "https://cdn-shop.adafruit.com/970x728/1484-00.jpg",
+    "Brand": "Adafruit",
+    "Detail": "32x32 RGB LED Matrix Panel - 6mm pitch",
+    "SupportTrigger": [],
+    "Datasheet": "http://learn.adafruit.com/32x16-32x32-rgb-led-matrix/",
+    "Dependency": [],
+    "SupportAction": [
+        "Dotmatrix_1"
+    ],
+    "Link": "https://www.adafruit.com/products/1484",
+    "Connect": [
+        "Specific"
+    ],
+    "Price": "39.95",
+    "IC": [],
+    "Property": [
+        {
+            "Type": "Dotmatrix"
+        }
+    ],
+    "id": "45",
+    "MinVolt": "5"
+},{
+    "Model": "2946",
+    "MaxVolt": "5.5",
+    "Image": "https://cdn-shop.adafruit.com/970x728/2946-00.jpg",
+    "Brand": "Adafruit",
+    "Detail": "Adafruit 16x9 Charlieplexed PWM LED Matrix Driver - IS31FL3731",
+    "SupportTrigger": [],
+    "Datasheet": "https://learn.adafruit.com/i31fl3731-16x9-charliplexed-pwm-led-driver/downloads",
+    "Dependency": [],
+    "SupportAction": [
+        "Dotmatrix_1"
+    ],
+    "Link": "https://www.adafruit.com/products/2946",
+    "Connect": [
+        "I2C"
+    ],
+    "Price": "5.95",
+    "IC": [
+        "IS31FL3731"
+    ],
+    "Property": [
+        {
+            "Max": "16X9",
+            "Type": "Dotmatrix",
+            "Min": "16X9"
+        }
+    ],
+    "id": "46",
+    "MinVolt": "2.7"
+},{
+    "Model": "9590",
+    "MaxVolt": "",
+    "Image": "https://cdn.sparkfun.com//assets/parts/8/3/4/08377-02-L.jpg",
+    "Brand": "sparkfun",
+    "Detail": "LED - Basic Red 5mm",
+    "SupportTrigger": [],
+    "Datasheet": "http://www.sparkfun.com/datasheets/Components/LED/COM-09590-YSL-R531R3D-D2.pdf",
+    "Dependency": [
+        {
+            "Max": "470",
+            "Type": "Resistor",
+            "Unit": "ohm",
+            "Min": "470"
+        }
+    ],
+    "SupportAction": [
+        "LED_1",
+        "LED_2",
+        "LED_3",
+        "LED_4"
+    ],
+    "Link": "https://www.sparkfun.com/products/9590",
+    "Connect": [
+        "GPIO",
+        "Analog"
+    ],
+    "Price": "0.35",
+    "IC": [],
+    "Property": [
+        {
+            "Type": "LED"
+        }
+    ],
+    "id": "47",
+    "MinVolt": "2.2"
+},{
+    "Model": "9650",
+    "MaxVolt": "",
+    "Image": "https://cdn.sparkfun.com//assets/parts/3/5/0/1/09650-01.jpg",
+    "Brand": "sparkfun",
+    "Detail": "LED - Basic Green 3mm",
+    "SupportTrigger": [],
+    "Datasheet": "http://www.sparkfun.com/datasheets/Components/LED/YSL-R341K3D-D2.pdf",
+    "Dependency": [
+        {
+            "Max": "470",
+            "Type": "Resistor",
+            "Unit": "ohm",
+            "Min": "470"
+        }
+    ],
+    "SupportAction": [
+        "LED_1",
+        "LED_2",
+        "LED_3",
+        "LED_4"
+    ],
+    "Link": "https://www.sparkfun.com/products/9650",
+    "Connect": [
+        "GPIO",
+        "Analog"
+    ],
+    "Price": "0.35",
+    "IC": [],
+    "Property": [
+        {
+            "Type": "LED"
+        }
+    ],
+    "id": "48",
+    "MinVolt": "2.4"
+},{
+    "Model": "532",
+    "MaxVolt": "",
+    "Image": "https://cdn.sparkfun.com//assets/parts/1/6/7/3/00532-02-L.jpg",
+    "Brand": "sparkfun",
+    "Detail": "LED - Basic Yellow 3mm",
+    "SupportTrigger": [],
+    "Datasheet": "http://www.sparkfun.com/datasheets/Components/LED/COM-00532-YSL-R341Y3D-D2.pdf",
+    "Dependency": [
+        {
+            "Max": "470",
+            "Type": "Resistor",
+            "Unit": "ohm",
+            "Min": "470"
+        }
+    ],
+    "SupportAction": [
+        "LED_1",
+        "LED_2",
+        "LED_3",
+        "LED_4"
+    ],
+    "Link": "https://www.sparkfun.com/products/532",
+    "Connect": [
+        "GPIO",
+        "Analog"
+    ],
+    "Price": "0.35",
+    "IC": [],
+    "Property": [
+        {
+            "Type": "LED"
+        }
+    ],
+    "id": "49",
+    "MinVolt": "2.4"
+},{
+    "Model": "11372",
+    "MaxVolt": "",
+    "Image": "https://cdn.sparkfun.com//assets/parts/7/1/1/3/11372-01b.jpg",
+    "Brand": "sparkfun",
+    "Detail": "LED - Basic Blue 5mm",
+    "SupportTrigger": [],
+    "Datasheet": "",
+    "Dependency": [
+        {
+            "Max": "470",
+            "Type": "Resistor",
+            "Unit": "ohm",
+            "Min": "470"
+        }
+    ],
+    "SupportAction": [
+        "LED_1",
+        "LED_2",
+        "LED_3",
+        "LED_4"
+    ],
+    "Link": "https://www.sparkfun.com/products/11372",
+    "Connect": [
+        "GPIO",
+        "Analog"
+    ],
+    "Price": "0.5",
+    "IC": [],
+    "Property": [
+        {
+            "Type": "LED"
+        }
+    ],
+    "id": "50",
+    "MinVolt": "3.4"
+},{
+    "Model": "2974",
+    "MaxVolt": "",
+    "Image": "https://cdn-shop.adafruit.com/970x728/2974-02.jpg",
+    "Brand": "Adafruit",
+    "Detail": "LED Charlieplexed Matrix - 9x16 LEDs - Cool White",
+    "SupportTrigger": [],
+    "Datasheet": "https://learn.adafruit.com/i31fl3731-16x9-charliplexed-pwm-led-driver/downloads",
+    "Dependency": [
+        {
+            "Max": "16X9",
+            "Type": "Dotmatrix",
+            "Min": "16X9"
+        }
+    ],
+    "SupportAction": [
+        "Dotmatrix_1"
+    ],
+    "Link": "https://www.adafruit.com/products/2974",
+    "Connect": [],
+    "Price": "7.95",
+    "IC": [],
+    "Property": [
+        {
+            "Type": "Dotmatrix"
+        }
+    ],
+    "id": "51",
+    "MinVolt": ""
+},{
+    "Model": "395",
+    "MaxVolt": "5.5",
+    "Image": "https://cdn-shop.adafruit.com/970x728/395-06.jpg",
+    "Brand": "Adafruit",
+    "Detail": "8-channel Bi-directional Logic Level Converter - TXB0108",
+    "SupportTrigger": [],
+    "Datasheet": "https://cdn-shop.adafruit.com/datasheets/txb0108.pdf",
+    "Dependency": [],
+    "SupportAction": [],
+    "Link": "https://www.adafruit.com/products/395",
+    "Connect": [
+        "GPIO"
+    ],
+    "Price": "8",
+    "IC": [
+        "TXB0108"
+    ],
+    "Property": [
+        {
+            "Type": "Level Shifter"
+        }
+    ],
+    "id": "52",
+    "MinVolt": "1.65"
+},{
+    "Model": "1875",
+    "MaxVolt": "5.5",
+    "Image": "https://cdn-shop.adafruit.com/970x728/1875-00.jpg",
+    "Brand": "Adafruit",
+    "Detail": "TXB0104 Bi-Directional Level Shifter - TXB0104",
+    "SupportTrigger": [],
+    "Datasheet": "https://cdn-shop.adafruit.com/datasheets/txb0104.pdf",
+    "Dependency": [],
+    "SupportAction": [],
+    "Link": "https://www.adafruit.com/products/1875",
+    "Connect": [
+        "GPIO"
+    ],
+    "Price": "3.5",
+    "IC": [
+        "TXB0104"
+    ],
+    "Property": [
+        {
+            "Type": "Level Shifter"
+        }
+    ],
+    "id": "53",
+    "MinVolt": "1.65"
+},{
+    "Model": "757",
+    "MaxVolt": "10",
+    "Image": "https://cdn-shop.adafruit.com/970x728/757-03.jpg",
+    "Brand": "Adafruit",
+    "Detail": "4-channel I2C-safe Bi-directional Logic Level Converter - BSS138",
+    "SupportTrigger": [],
+    "Datasheet": "https://cdn-shop.adafruit.com/datasheets/BSS138.pdf",
+    "Dependency": [],
+    "SupportAction": [],
+    "Link": "https://www.adafruit.com/products/757",
+    "Connect": [
+        "GPIO"
+    ],
+    "Price": "3.95",
+    "IC": [
+        "BSS138"
+    ],
+    "Property": [
+        {
+            "Type": "Level Shifter"
+        }
+    ],
+    "id": "54",
+    "MinVolt": "1.8"
+},{
+    "Model": "2349",
+    "MaxVolt": "5",
+    "Image": "https://cdn-shop.adafruit.com/970x728/2349-00.jpg",
+    "Brand": "Adafruit",
+    "Detail": "Reflective IR Sensor with 470 and 10K Resistors",
+    "SupportTrigger": [
+        "Light_1"
+    ],
+    "Datasheet": "",
+    "Dependency": [
+        {
+            "Max": "470",
+            "Type": "Resistor",
+            "Unit": "ohm",
+            "Min": "470"
+        }
+    ],
+    "SupportAction": [
+        "AN_LCD_10"
+    ],
+    "Link": "https://www.adafruit.com/products/2349",
+    "Connect": [
+        "GPIO"
+    ],
+    "Price": "1.95",
+    "IC": [],
+    "Property": [
+        {
+            "Type": "Illuminance"
+        }
+    ],
+    "id": "55",
+    "MinVolt": "5"
+},{
+    "Model": "1918",
+    "MaxVolt": "5",
+    "Image": "https://cdn-shop.adafruit.com/970x728/1918-01.jpg",
+    "Brand": "Adafruit",
+    "Detail": "Analog UV Light Sensor Breakout - GUVA-S12SD",
+    "SupportTrigger": [],
+    "Datasheet": "https://cdn-shop.adafruit.com/datasheets/1918guva.pdf",
+    "Dependency": [],
+    "SupportAction": [],
+    "Link": "https://www.adafruit.com/products/1918",
+    "Connect": [
+        "I2C"
+    ],
+    "Price": "6.5",
+    "IC": [
+        "GUVA-S12SD"
+    ],
+    "Property": [
+        {
+            "Max": "0.00000037",
+            "Type": "UV",
+            "Unit": "m",
+            "Min": "0.00000024"
+        }
+    ],
+    "id": "56",
+    "MinVolt": "2"
+},{
+    "Model": "2899",
+    "MaxVolt": "5",
+    "Image": "https://cdn-shop.adafruit.com/970x728/2899-00.jpg",
+    "Brand": "Adafruit",
+    "Detail": "Adafruit VEML6070 UV Index Sensor Breakout",
+    "SupportTrigger": [],
+    "Datasheet": "https://learn.adafruit.com/adafruit-veml6070-uv-light-sensor-breakout/downloads",
+    "Dependency": [],
+    "SupportAction": [],
+    "Link": "https://www.adafruit.com/products/2899",
+    "Connect": [
+        "I2C"
+    ],
+    "Price": "5.95",
+    "IC": [
+        "VEML6070"
+    ],
+    "Property": [
+        {
+            "Max": "0.00000041",
+            "Type": "UV",
+            "Unit": "m",
+            "Min": "0.00000032"
+        }
+    ],
+    "id": "57",
+    "MinVolt": "2.8"
+},{
+    "Model": "1980",
+    "MaxVolt": "5",
+    "Image": "https://cdn-shop.adafruit.com/970x728/1980-01.jpg",
+    "Brand": "Adafruit",
+    "Detail": "Adafruit TSL2591 High Dynamic Range Digital Light Sensor",
+    "SupportTrigger": [
+        "Light_1"
+    ],
+    "Datasheet": "https://learn.adafruit.com/adafruit-tsl2591/downloads",
+    "Dependency": [],
+    "SupportAction": [
+        "AN_LCD_10"
+    ],
+    "Link": "https://www.adafruit.com/products/1980",
+    "Connect": [
+        "I2C"
+    ],
+    "Price": "6.95",
+    "IC": [
+        "TSL2591"
+    ],
+    "Property": [
+        {
+            "Max": "88000",
+            "Type": "Illuminance",
+            "Unit": "lux",
+            "Min": "0.000188"
+        }
+    ],
+    "id": "58",
+    "MinVolt": "3.3"
+},{
+    "Model": "466",
+    "MaxVolt": "5",
+    "Image": "https://cdn-shop.adafruit.com/970x728/466-02.jpg",
+    "Brand": "Adafruit",
+    "Detail": "VCNL4010 Proximity/Light sensor",
+    "SupportTrigger": [
+        "Light_1",
+        "Proximity_2"
+    ],
+    "Datasheet": "https://cdn-shop.adafruit.com/datasheets/vcnl4000.pdf",
+    "Dependency": [],
+    "SupportAction": [
+        "AN_LCD_10"
+    ],
+    "Link": "https://www.adafruit.com/products/466",
+    "Connect": [
+        "I2C"
+    ],
+    "Price": "7.5",
+    "IC": [
+        "VCNL4010"
+    ],
+    "Property": [
+        {
+            "Max": "16383",
+            "Type": "Illuminance",
+            "Unit": "lux",
+            "Min": "0.25"
+        },
+        {
+            "Max": "0.2",
+            "Type": "Distance",
+            "Unit": "m",
+            "Min": "0.01"
+        }
+    ],
+    "id": "59",
+    "MinVolt": "3.3"
+},{
+    "Model": "439",
+    "MaxVolt": "5",
+    "Image": "https://cdn-shop.adafruit.com/970x728/439-00.jpg",
+    "Brand": "Adafruit",
+    "Detail": "Adafruit TSL2561 Digital Luminosity/Lux/Light Sensor Breakout",
+    "SupportTrigger": [
+        "Light_1"
+    ],
+    "Datasheet": "https://learn.adafruit.com/tsl2561/downloads",
+    "Dependency": [],
+    "SupportAction": [
+        "AN_LCD_10"
+    ],
+    "Link": "https://www.adafruit.com/products/439",
+    "Connect": [
+        "I2C"
+    ],
+    "Price": "5.95",
+    "IC": [
+        "TSL2561"
+    ],
+    "Property": [
+        {
+            "Max": "40000",
+            "Type": "Illuminance",
+            "Unit": "lux",
+            "Min": "0.1"
+        }
+    ],
+    "id": "60",
+    "MinVolt": "3"
+},{
+    "Model": "1334",
+    "MaxVolt": "5",
+    "Image": "https://cdn-shop.adafruit.com/970x728/1334-04.jpg",
+    "Brand": "Adafruit",
+    "Detail": "RGB Color Sensor with IR filter and White LED - TCS34725",
+    "SupportTrigger": [
+        "Light_1",
+        "Light_2"
+    ],
+    "Datasheet": "https://learn.adafruit.com/adafruit-color-sensors/downloads",
+    "Dependency": [],
+    "SupportAction": [
+        "AN_LCD_10"
+    ],
+    "Link": "https://www.adafruit.com/products/1334",
+    "Connect": [
+        "I2C"
+    ],
+    "Price": "7.95",
+    "IC": [
+        "TCS34725"
+    ],
+    "Property": [
+        {
+            "Type": "Illuminance"
+        },
+        {
+            "Type": "Color"
+        }
+    ],
+    "id": "61",
+    "MinVolt": "3"
+},{
+    "Model": "157",
+    "MaxVolt": "5",
+    "Image": "https://cdn-shop.adafruit.com/970x728/157-00.jpg",
+    "Brand": "Adafruit",
+    "Detail": "IR (Infrared) Receiver Sensor - TSOP38238",
+    "SupportTrigger": [],
+    "Datasheet": "http://www.adafruit.com/datasheets/tsop382.pdf",
+    "Dependency": [],
+    "SupportAction": [],
+    "Link": "https://www.adafruit.com/products/157",
+    "Connect": [
+        "GPIO"
+    ],
+    "Price": "1.95",
+    "IC": [
+        "TSOP38238"
+    ],
+    "Property": [
+        {
+            "Type": "IR"
+        }
+    ],
+    "id": "62",
+    "MinVolt": "3"
+},{
+    "Model": "1777",
+    "MaxVolt": "5",
+    "Image": "https://cdn-shop.adafruit.com/970x728/1777-00.jpg",
+    "Brand": "Adafruit",
+    "Detail": "SI1145 Digital UV Index / IR / Visible Light Sensor",
+    "SupportTrigger": [
+        "Light_1",
+        "Proximity_2"
+    ],
+    "Datasheet": "https://learn.adafruit.com/adafruit-si1145-breakout-board-uv-ir-visible-sensor/downloads",
+    "Dependency": [],
+    "SupportAction": [
+        "AN_LCD_10"
+    ],
+    "Link": "https://www.adafruit.com/products/1777",
+    "Connect": [
+        "I2C"
+    ],
+    "Price": "9.95",
+    "IC": [
+        "SI1145"
+    ],
+    "Property": [
+        {
+            "Type": "Illuminance"
+        },
+        {
+            "Max": "0.5",
+            "Type": "Distance",
+            "Unit": "m",
+            "Min": "0.01"
+        },
+        {
+            "Type": "IR"
+        },
+        {
+            "Type": "UV"
+        }
+    ],
+    "id": "63",
+    "MinVolt": "3"
+},{
+    "Model": "2748",
+    "MaxVolt": "5.5",
+    "Image": "https://cdn-shop.adafruit.com/970x728/2748-00.jpg",
+    "Brand": "Adafruit",
+    "Detail": "Adafruit ALS-PT19 Analog Light Sensor Breakout",
+    "SupportTrigger": [
+        "Light_1"
+    ],
+    "Datasheet": "https://cdn-shop.adafruit.com/product-files/2748/2748%20datasheet.pdf",
+    "Dependency": [],
+    "SupportAction": [
+        "AN_LCD_10"
+    ],
+    "Link": "https://www.adafruit.com/products/2748",
+    "Connect": [
+        "Analog"
+    ],
+    "Price": "2.5",
+    "IC": [
+        "ALS-PT19"
+    ],
+    "Property": [
+        {
+            "Type": "Illuminance"
+        }
+    ],
+    "id": "64",
+    "MinVolt": "2.5"
+},{
+    "Model": "1384",
+    "MaxVolt": "6",
+    "Image": "https://cdn-shop.adafruit.com/970x728/1384-02.jpg",
+    "Brand": "Adafruit",
+    "Detail": "GA1A12S202 Log-scale Analog Light Sensor",
+    "SupportTrigger": [
+        "Light_1"
+    ],
+    "Datasheet": "https://learn.adafruit.com/adafruit-ga1a12s202-log-scale-analog-light-sensor/downloads",
+    "Dependency": [],
+    "SupportAction": [
+        "AN_LCD_10"
+    ],
+    "Link": "https://www.adafruit.com/products/1384",
+    "Connect": [
+        "Analog"
+    ],
+    "Price": "3.95",
+    "IC": [
+        "GA1A12S202"
+    ],
+    "Property": [
+        {
+            "Type": "Illuminance"
+        }
+    ],
+    "id": "65",
+    "MinVolt": "2.3"
+},{
+    "Model": "2831",
+    "MaxVolt": "15",
+    "Image": "https://cdn-shop.adafruit.com/970x728/2831-00.jpg",
+    "Brand": "Adafruit",
+    "Detail": "Photo Transistor Light Sensor",
+    "SupportTrigger": [
+        "Light_1"
+    ],
+    "Datasheet": "https://cdn-shop.adafruit.com/product-files/2831/HW5P-1_2015__1_.pdf",
+    "Dependency": [],
+    "SupportAction": [
+        "AN_LCD_10"
+    ],
+    "Link": "https://www.adafruit.com/products/2831",
+    "Connect": [
+        "GPIO"
+    ],
+    "Price": "0.95",
+    "IC": [],
+    "Property": [
+        {
+            "Type": "Illuminance"
+        }
+    ],
+    "id": "66",
+    "MinVolt": "3"
+},{
+    "Model": "161",
+    "MaxVolt": "",
+    "Image": "https://cdn-shop.adafruit.com/970x728/161-00.jpg",
+    "Brand": "Adafruit",
+    "Detail": "Photo cell (CdS photoresistor)",
+    "SupportTrigger": [
+        "Light_1"
+    ],
+    "Datasheet": "",
+    "Dependency": [],
+    "SupportAction": [
+        "AN_LCD_10"
+    ],
+    "Link": "https://www.adafruit.com/products/161",
+    "Connect": [
+        "GPIO"
+    ],
+    "Price": "0.95",
+    "IC": [],
+    "Property": [
+        {
+            "Type": "Illuminance"
+        }
+    ],
+    "id": "67",
+    "MinVolt": "2.5"
+},{
+    "Model": "464",
+    "MaxVolt": "10",
+    "Image": "https://cdn-shop.adafruit.com/970x728/464-00.jpg",
+    "Brand": "Adafruit",
+    "Detail": "\"12\"\" eTape Liquid Level Sensor + extras\"",
+    "SupportTrigger": [
+        "Liquid_1"
+    ],
+    "Datasheet": "https://cdn-shop.adafruit.com/datasheets/eTape%20Datasheet%2012110215TC-12_040213.pdf",
+    "Dependency": [],
+    "SupportAction": [
+        "AN_LCD_17"
+    ],
+    "Link": "https://www.adafruit.com/products/464",
+    "Connect": [
+        "Analog"
+    ],
+    "Price": "39.95",
+    "IC": [],
+    "Property": [
+        {
+            "Max": "0.3048",
+            "Type": "LiquidLevel",
+            "Unit": "m",
+            "Min": "0"
+        }
+    ],
+    "id": "68",
+    "MinVolt": "0"
+},{
+    "Model": "463",
+    "MaxVolt": "10",
+    "Image": "https://cdn-shop.adafruit.com/970x728/463-00.jpg",
+    "Brand": "Adafruit",
+    "Detail": "\"8\"\" eTape Liquid Level Sensor + extras\"",
+    "SupportTrigger": [
+        "Liquid_1"
+    ],
+    "Datasheet": "https://cdn-shop.adafruit.com/datasheets/eTape%20Datasheet%2012110215TC-8_040213.pdf",
+    "Dependency": [],
+    "SupportAction": [
+        "AN_LCD_17"
+    ],
+    "Link": "https://www.adafruit.com/products/463",
+    "Connect": [
+        "Analog"
+    ],
+    "Price": "39.95",
+    "IC": [],
+    "Property": [
+        {
+            "Max": "0.2032",
+            "Type": "LiquidLevel",
+            "Unit": "m",
+            "Min": "0"
+        }
+    ],
+    "id": "69",
+    "MinVolt": "0"
+},{
+    "Model": "1786",
+    "MaxVolt": "10",
+    "Image": "https://cdn-shop.adafruit.com/970x728/1786-00.jpg",
+    "Brand": "Adafruit",
+    "Detail": "\"12\"\" Chemical eTape Liquid Level Sensor with Teflon Jacket\"",
+    "SupportTrigger": [
+        "Liquid_1"
+    ],
+    "Datasheet": "https://cdn-shop.adafruit.com/datasheets/1786_Chemical_eTape_Datasheet.pdf",
+    "Dependency": [],
+    "SupportAction": [
+        "AN_LCD_17"
+    ],
+    "Link": "https://www.adafruit.com/products/1786",
+    "Connect": [
+        "Analog"
+    ],
+    "Price": "69.95",
+    "IC": [],
+    "Property": [
+        {
+            "Max": "0.3048",
+            "Type": "LiquidLevel",
+            "Unit": "m",
+            "Min": "0"
+        }
+    ],
+    "id": "70",
+    "MinVolt": "0"
+},{
+    "Model": "2656",
+    "MaxVolt": "10",
+    "Image": "https://cdn-shop.adafruit.com/970x728/2656-00.jpg",
+    "Brand": "Adafruit",
+    "Detail": "\"12\"\" Standard eTape Liquid Level Sensor with Plastic Casing\"",
+    "SupportTrigger": [
+        "Liquid_1"
+    ],
+    "Datasheet": "https://cdn-shop.adafruit.com/product-files/2656/Standard_eTape_Datasheet.pdf",
+    "Dependency": [],
+    "SupportAction": [
+        "AN_LCD_17"
+    ],
+    "Link": "https://www.adafruit.com/products/2656",
+    "Connect": [
+        "Analog"
+    ],
+    "Price": "59.95",
+    "IC": [],
+    "Property": [
+        {
+            "Max": "0.3048",
+            "Type": "LiquidLevel",
+            "Unit": "m",
+            "Min": "0"
+        }
+    ],
+    "id": "71",
+    "MinVolt": "0"
+},{
+    "Model": "997",
+    "MaxVolt": "12",
+    "Image": "https://cdn-shop.adafruit.com/970x728/997-04.jpg",
+    "Brand": "Adafruit",
+    "Detail": "\"Plastic Water Solenoid Valve - 12V - 1/2\"\" Nominal\"",
+    "SupportTrigger": [
+        "Liquid_2"
+    ],
+    "Datasheet": "",
+    "Dependency": [],
+    "SupportAction": [
+        "AN_LCD_8"
+    ],
+    "Link": "https://www.adafruit.com/products/997",
+    "Connect": [
+        "GPIO"
+    ],
+    "Price": "6.95",
+    "IC": [],
+    "Property": [
+        {
+            "Max": "800000",
+            "Type": "LiquidPressure",
+            "Unit": "pa",
+            "Min": "20000"
+        }
+    ],
+    "id": "72",
+    "MinVolt": "12"
+},{
+    "Model": "996",
+    "MaxVolt": "12",
+    "Image": "https://cdn-shop.adafruit.com/970x728/996-07.jpg",
+    "Brand": "Adafruit",
+    "Detail": "Brass Liquid Solenoid Valve - 12V - 1/2 NPS",
+    "SupportTrigger": [
+        "Liquid_2"
+    ],
+    "Datasheet": "",
+    "Dependency": [],
+    "SupportAction": [
+        "AN_LCD_8"
+    ],
+    "Link": "https://www.adafruit.com/products/996",
+    "Connect": [
+        "GPIO"
+    ],
+    "Price": "24.95",
+    "IC": [],
+    "Property": [
+        {
+            "Max": "1000000",
+            "Type": "LiquidPressure",
+            "Unit": "pa",
+            "Min": "0"
+        }
+    ],
+    "id": "73",
+    "MinVolt": "12"
+},{
+    "Model": "828",
+    "MaxVolt": "18",
+    "Image": "https://cdn-shop.adafruit.com/970x728/828-00.jpg",
+    "Brand": "Adafruit",
+    "Detail": "\"Liquid Flow Meter - Plastic 1/2\"\" NPS Threaded\"",
+    "SupportTrigger": [
+        "Liquid_3"
+    ],
+    "Datasheet": "https://github.com/adafruit/Adafruit-Flow-Meter",
+    "Dependency": [],
+    "SupportAction": [
+        "AN_LCD_6"
+    ],
+    "Link": "https://www.adafruit.com/products/828",
+    "Connect": [
+        "GPIO"
+    ],
+    "Price": "9.95",
+    "IC": [],
+    "Property": [
+        {
+            "Max": "0.000501",
+            "Type": "LiquidFlow",
+            "Unit": "m^3/s",
+            "Min": "0.0000167"
+        }
+    ],
+    "id": "74",
+    "MinVolt": "5"
+},{
+    "Model": "833",
+    "MaxVolt": "18",
+    "Image": "https://cdn-shop.adafruit.com/970x728/833-00.jpg",
+    "Brand": "Adafruit",
+    "Detail": "\"Liquid Flow Meter - Brass 1/2\"\" Nominal Threaded\"",
+    "SupportTrigger": [
+        "Liquid_3"
+    ],
+    "Datasheet": "https://github.com/adafruit/Adafruit-Flow-Meter",
+    "Dependency": [],
+    "SupportAction": [
+        "AN_LCD_6"
+    ],
+    "Link": "https://www.adafruit.com/products/833",
+    "Connect": [
+        "GPIO"
+    ],
+    "Price": "24.95",
+    "IC": [],
+    "Property": [
+        {
+            "Max": "0.000501",
+            "Type": "LiquidFlow",
+            "Unit": "m^3/s",
+            "Min": "0.0000167"
+        }
+    ],
+    "id": "75",
+    "MinVolt": "5"
+},{
+    "Model": "1604",
+    "MaxVolt": "3.3",
+    "Image": "https://cdn-shop.adafruit.com/970x728/1604-01.jpg",
+    "Brand": "Adafruit",
+    "Detail": "Adafruit 10-DOF IMU Breakout - L3GD20H + LSM303 + BMP180",
+    "SupportTrigger": [
+        "Accel_1",
+        "Accel_2",
+        "Accel_3",
+        "Accel_4",
+        "Accel_5",
+        "Accel_6",
+        "Gyro_1",
+        "Gyro_2",
+        "Gyro_3",
+        "Mag_1",
+        "Mag_2",
+        "Mag_3",
+        "Mag_4",
+        "Barometer_1",
+        "Barometer_2",
+        "Temp_1"
+    ],
+    "Datasheet": "https://learn.adafruit.com/adafruit-10-dof-imu-breakout-lsm303-l3gd20-bmp180/design-files",
+    "Dependency": [],
+    "SupportAction": [
+        "AN_LCD_20",
+        "AN_LCD_21",
+        "AN_LCD_22",
+        "AN_LCD_26",
+        "AN_LCD_27",
+        "AN_LCD_28",
+        "AN_LCD_23",
+        "AN_LCD_24",
+        "AN_LCD_25",
+        "AN_LCD_5",
+        "AN_LCD_7"
+    ],
+    "Link": "https://www.adafruit.com/products/1604",
+    "Connect": [
+        "I2C"
+    ],
+    "Price": "29.95",
+    "IC": [
+        "L3GD20H ",
+        "LSM303",
+        "BMP180"
+    ],
+    "Property": [
+        {
+            "Max": "16",
+            "Type": "AccelX",
+            "Unit": "g",
+            "Min": "-16"
+        },
+        {
+            "Max": "16",
+            "Type": "AccelY",
+            "Unit": "g",
+            "Min": "-16"
+        },
+        {
+            "Max": "16",
+            "Type": "AccelZ",
+            "Unit": "g",
+            "Min": "-16"
+        },
+        {
+            "Max": "0.00081",
+            "Type": "MagneticX",
+            "Unit": "t",
+            "Min": "-0.00081"
+        },
+        {
+            "Max": "0.00081",
+            "Type": "MagneticY",
+            "Unit": "t",
+            "Min": "-0.00081"
+        },
+        {
+            "Max": "0.00081",
+            "Type": "MagneticZ",
+            "Unit": "t",
+            "Min": "-0.00081"
+        },
+        {
+            "Max": "0.002",
+            "Type": "GyroX",
+            "Unit": "degree/s",
+            "Min": "-0.002"
+        },
+        {
+            "Max": "0.002",
+            "Type": "GyroY",
+            "Unit": "degree/s",
+            "Min": "-0.002"
+        },
+        {
+            "Max": "0.002",
+            "Type": "GyroZ",
+            "Unit": "degree/s",
+            "Min": "-0.002"
+        },
+        {
+            "Max": "85",
+            "Type": "Temperature",
+            "Unit": "c",
+            "Min": "-40"
+        },
+        {
+            "Max": "110000",
+            "Type": "Pressure",
+            "Unit": "pa",
+            "Min": "30000"
+        },
+        {
+            "Max": "3",
+            "Type": "AltitudeP",
+            "Unit": "pa",
+            "Min": "3"
+        },
+        {
+            "Max": "0.25",
+            "Type": "AltitudeD",
+            "Unit": "m",
+            "Min": "0.25"
+        }
+    ],
+    "id": "76",
+    "MinVolt": "3.3"
+},{
+    "Model": "3085",
+    "MaxVolt": "5",
+    "Image": "https://cdn-shop.adafruit.com/970x728/3085-00.jpg",
+    "Brand": "Adafruit",
+    "Detail": "PJRC Prop Shield with Motion Sensor for Teensy 3.2 and Teensy-LC",
+    "SupportTrigger": [
+        "Accel_1",
+        "Accel_2",
+        "Accel_3",
+        "Accel_4",
+        "Accel_5",
+        "Accel_6",
+        "Gyro_1",
+        "Gyro_2",
+        "Gyro_3",
+        "Mag_1",
+        "Mag_2",
+        "Mag_3",
+        "Mag_4",
+        "Barometer_1",
+        "Temp_1"
+    ],
+    "Datasheet": "",
+    "Dependency": [],
+    "SupportAction": [
+        "Audio_1",
+        "Audio_2",
+        "Audio_3",
+        "Audio_4",
+        "Audio_5",
+        "Audio_6",
+        "AN_LCD_20",
+        "AN_LCD_21",
+        "AN_LCD_22",
+        "AN_LCD_26",
+        "AN_LCD_27",
+        "AN_LCD_28",
+        "AN_LCD_23",
+        "AN_LCD_24",
+        "AN_LCD_25",
+        "AN_LCD_5",
+        "AN_LCD_7"
+    ],
+    "Link": "https://www.adafruit.com/products/3085",
+    "Connect": [
+        "I2C"
+    ],
+    "Price": "22.5",
+    "IC": [
+        "FXOS8700CQ",
+        "FXAS21002C",
+        "MPL3115A2",
+        "LM48310",
+        "W25Q64FV",
+        "SN74AHCT1G08"
+    ],
+    "Property": [
+        {
+            "Max": "2.6",
+            "Type": "Amplifiers",
+            "Unit": "W",
+            "Min": "0"
+        },
+        {
+            "Max": "2",
+            "Type": "ANDgate",
+            "Min": "2"
+        },
+        {
+            "Max": "8",
+            "Type": "AccelX",
+            "Unit": "g",
+            "Min": "-8"
+        },
+        {
+            "Max": "8",
+            "Type": "AccelY",
+            "Unit": "g",
+            "Min": "-8"
+        },
+        {
+            "Max": "8",
+            "Type": "AccelZ",
+            "Unit": "g",
+            "Min": "-8"
+        },
+        {
+            "Max": "0.0012",
+            "Type": "MagneticX",
+            "Unit": "t",
+            "Min": "-0.0012"
+        },
+        {
+            "Max": "0.0012",
+            "Type": "MagneticY",
+            "Unit": "t",
+            "Min": "-0.0012"
+        },
+        {
+            "Max": "0.0012",
+            "Type": "MagneticZ",
+            "Unit": "t",
+            "Min": "-0.0012"
+        },
+        {
+            "Max": "0.002",
+            "Type": "GyroX",
+            "Unit": "degree/s",
+            "Min": "-0.002"
+        },
+        {
+            "Max": "0.002",
+            "Type": "GyroY",
+            "Unit": "degree/s",
+            "Min": "-0.002"
+        },
+        {
+            "Max": "0.002",
+            "Type": "GyroZ",
+            "Unit": "degree/s",
+            "Min": "-0.002"
+        },
+        {
+            "Max": "8000000",
+            "Type": "Memory",
+            "Unit": "byte",
+            "Min": "0"
+        },
+        {
+            "Max": "85",
+            "Type": "Temperature",
+            "Unit": "c",
+            "Min": "-40"
+        },
+        {
+            "Max": "110000",
+            "Type": "Pressure",
+            "Unit": "pa",
+            "Min": "50000"
+        }
+    ],
+    "id": "77",
+    "MinVolt": "5"
+},{
+    "Model": "1714",
+    "MaxVolt": "5",
+    "Image": "https://cdn-shop.adafruit.com/970x728/1714-05.jpg",
+    "Brand": "Adafruit",
+    "Detail": "Adafruit 9-DOF IMU Breakout - L3GD20H + LSM303",
+    "SupportTrigger": [
+        "Accel_1",
+        "Accel_2",
+        "Accel_3",
+        "Accel_4",
+        "Accel_5",
+        "Accel_6",
+        "Gyro_1",
+        "Gyro_2",
+        "Gyro_3",
+        "Mag_1",
+        "Mag_2",
+        "Mag_3",
+        "Mag_4"
+    ],
+    "Datasheet": "https://learn.adafruit.com/adafruit-9-dof-imu-breakout/design-files",
+    "Dependency": [],
+    "SupportAction": [
+        "AN_LCD_20",
+        "AN_LCD_21",
+        "AN_LCD_22",
+        "AN_LCD_26",
+        "AN_LCD_27",
+        "AN_LCD_28",
+        "AN_LCD_23",
+        "AN_LCD_24",
+        "AN_LCD_25"
+    ],
+    "Link": "https://www.adafruit.com/products/1714",
+    "Connect": [
+        "I2C"
+    ],
+    "Price": "19.95",
+    "IC": [
+        "L3GD20H",
+        "LSM303"
+    ],
+    "Property": [
+        {
+            "Max": "0.00081",
+            "Type": "MagneticX",
+            "Unit": "t",
+            "Min": "-0.00081"
+        },
+        {
+            "Max": "0.00081",
+            "Type": "MagneticY",
+            "Unit": "t",
+            "Min": "-0.00081"
+        },
+        {
+            "Max": "0.00081",
+            "Type": "MagneticZ",
+            "Unit": "t",
+            "Min": "-0.00081"
+        },
+        {
+            "Max": "16",
+            "Type": "AccelX",
+            "Unit": "g",
+            "Min": "-16"
+        },
+        {
+            "Max": "16",
+            "Type": "AccelY",
+            "Unit": "g",
+            "Min": "-16"
+        },
+        {
+            "Max": "16",
+            "Type": "AccelZ",
+            "Unit": "g",
+            "Min": "-16"
+        },
+        {
+            "Max": "2000",
+            "Type": "GyroX",
+            "Unit": "degree/s",
+            "Min": "-2000"
+        },
+        {
+            "Max": "2000",
+            "Type": "GyroY",
+            "Unit": "degree/s",
+            "Min": "-2000"
+        },
+        {
+            "Max": "2000",
+            "Type": "GyroZ",
+            "Unit": "degree/s",
+            "Min": "-2000"
+        }
+    ],
+    "id": "78",
+    "MinVolt": "3.3"
+},{
+    "Model": "1231",
+    "MaxVolt": "5",
+    "Image": "https://cdn-shop.adafruit.com/970x728/1231-00.jpg",
+    "Brand": "Adafruit",
+    "Detail": "ADXL345 - Triple-Axis Accelerometer (+-2g/4g/8g/16g) w/ I2C/SPI",
+    "SupportTrigger": [
+        "Accel_1",
+        "Accel_2",
+        "Accel_3",
+        "Accel_4",
+        "Accel_5",
+        "Accel_6"
+    ],
+    "Datasheet": "https://learn.adafruit.com/adxl345-digital-accelerometer/downloads",
+    "Dependency": [],
+    "SupportAction": [
+        "AN_LCD_20",
+        "AN_LCD_21",
+        "AN_LCD_22"
+    ],
+    "Link": "https://www.adafruit.com/products/1231",
+    "Connect": [
+        "I2C",
+        "SPI"
+    ],
+    "Price": "17.5",
+    "IC": [
+        "ADXL345"
+    ],
+    "Property": [
+        {
+            "Max": "16",
+            "Type": "AccelX",
+            "Unit": "g",
+            "Min": "-16"
+        },
+        {
+            "Max": "16",
+            "Type": "AccelY",
+            "Unit": "g",
+            "Min": "-16"
+        },
+        {
+            "Max": "16",
+            "Type": "AccelZ",
+            "Unit": "g",
+            "Min": "-16"
+        }
+    ],
+    "id": "79",
+    "MinVolt": "3.3"
+},{
+    "Model": "1032",
+    "MaxVolt": "5",
+    "Image": "https://cdn-shop.adafruit.com/970x728/1032-03.jpg",
+    "Brand": "Adafruit",
+    "Detail": "L3GD20H Triple-Axis Gyro Breakout Board - L3GD20/L3G4200 Upgrade - L3GD20H",
+    "SupportTrigger": [
+        "Gyro_1",
+        "Gyro_2",
+        "Gyro_3"
+    ],
+    "Datasheet": "https://learn.adafruit.com/adafruit-triple-axis-gyro-breakout/downloads",
+    "Dependency": [],
+    "SupportAction": [
+        "AN_LCD_23",
+        "AN_LCD_24",
+        "AN_LCD_25"
+    ],
+    "Link": "https://www.adafruit.com/products/1032",
+    "Connect": [
+        "I2C"
+    ],
+    "Price": "12.5",
+    "IC": [
+        "L3GD20H"
+    ],
+    "Property": [
+        {
+            "Max": "2000",
+            "Type": "GyroX",
+            "Unit": "degree/s",
+            "Min": "-2000"
+        },
+        {
+            "Max": "2000",
+            "Type": "GyroY",
+            "Unit": "degree/s",
+            "Min": "-2000"
+        },
+        {
+            "Max": "2000",
+            "Type": "GyroZ",
+            "Unit": "degree/s",
+            "Min": "-2000"
+        }
+    ],
+    "id": "80",
+    "MinVolt": "3.3"
+},{
+    "Model": "163",
+    "MaxVolt": "5",
+    "Image": "https://cdn-shop.adafruit.com/970x728/163-02.jpg",
+    "Brand": "Adafruit",
+    "Detail": "ADXL335 - 5V ready triple-axis accelerometer (+-3g analog out)",
+    "SupportTrigger": [
+        "Accel_1",
+        "Accel_2",
+        "Accel_3",
+        "Accel_4",
+        "Accel_5",
+        "Accel_6"
+    ],
+    "Datasheet": "https://learn.adafruit.com/adafruit-analog-accelerometer-breakouts/downloads",
+    "Dependency": [],
+    "SupportAction": [
+        "AN_LCD_20",
+        "AN_LCD_21",
+        "AN_LCD_22"
+    ],
+    "Link": "https://www.adafruit.com/products/163",
+    "Connect": [
+        "Analog"
+    ],
+    "Price": "14.95",
+    "IC": [
+        "ADXL335"
+    ],
+    "Property": [
+        {
+            "Max": "3",
+            "Type": "AccelX",
+            "Unit": "g",
+            "Min": "-3"
+        },
+        {
+            "Max": "3",
+            "Type": "AccelY",
+            "Unit": "g",
+            "Min": "-3"
+        },
+        {
+            "Max": "3",
+            "Type": "AccelZ",
+            "Unit": "g",
+            "Min": "-3"
+        }
+    ],
+    "id": "81",
+    "MinVolt": "3"
+},{
+    "Model": "2809",
+    "MaxVolt": "5",
+    "Image": "https://cdn-shop.adafruit.com/970x728/2809-03.jpg",
+    "Brand": "Adafruit",
+    "Detail": "Adafruit LIS3DH Triple-Axis Accelerometer (+-2g/4g/8g/16g)",
+    "SupportTrigger": [
+        "Accel_1",
+        "Accel_2",
+        "Accel_3",
+        "Accel_4",
+        "Accel_5",
+        "Accel_6"
+    ],
+    "Datasheet": "https://learn.adafruit.com/adafruit-lis3dh-triple-axis-accelerometer-breakout/downloads",
+    "Dependency": [],
+    "SupportAction": [
+        "AN_LCD_20",
+        "AN_LCD_21",
+        "AN_LCD_22"
+    ],
+    "Link": "https://www.adafruit.com/products/2809",
+    "Connect": [
+        "I2C",
+        "SPI"
+    ],
+    "Price": "4.95",
+    "IC": [
+        "LIS3DH"
+    ],
+    "Property": [
+        {
+            "Max": "16",
+            "Type": "AccelX",
+            "Unit": "g",
+            "Min": "-16"
+        },
+        {
+            "Max": "16",
+            "Type": "AccelY",
+            "Unit": "g",
+            "Min": "-16"
+        },
+        {
+            "Max": "16",
+            "Type": "AccelZ",
+            "Unit": "g",
+            "Min": "-16"
+        }
+    ],
+    "id": "82",
+    "MinVolt": "3"
+},{
+    "Model": "2472",
+    "MaxVolt": "5",
+    "Image": "https://cdn-shop.adafruit.com/970x728/2472-00.jpg",
+    "Brand": "Adafruit",
+    "Detail": "Adafruit 9-DOF Absolute Orientation IMU Fusion Breakout - BNO055",
+    "SupportTrigger": [
+        "Accel_1",
+        "Accel_2",
+        "Accel_3",
+        "Accel_4",
+        "Accel_5",
+        "Accel_6",
+        "Accel_7",
+        "Accel_8",
+        "Accel_9",
+        "Gyro_1",
+        "Gyro_2",
+        "Gyro_3",
+        "Mag_1",
+        "Mag_2",
+        "Mag_3",
+        "Mag_4"
+    ],
+    "Datasheet": "https://learn.adafruit.com/adafruit-bno055-absolute-orientation-sensor/downloads",
+    "Dependency": [],
+    "SupportAction": [
+        "AN_LCD_20",
+        "AN_LCD_21",
+        "AN_LCD_22",
+        "AN_LCD_26",
+        "AN_LCD_27",
+        "AN_LCD_28",
+        "AN_LCD_23",
+        "AN_LCD_24",
+        "AN_LCD_25"
+    ],
+    "Link": "https://www.adafruit.com/products/2472",
+    "Connect": [
+        "I2C",
+        "SPI"
+    ],
+    "Price": "34.95",
+    "IC": [
+        "BNO055"
+    ],
+    "Property": [
+        {
+            "Max": "16",
+            "Type": "AccelX",
+            "Unit": "g",
+            "Min": "-16"
+        },
+        {
+            "Max": "16",
+            "Type": "AccelY",
+            "Unit": "g",
+            "Min": "-16"
+        },
+        {
+            "Max": "16",
+            "Type": "AccelZ",
+            "Unit": "g",
+            "Min": "-16"
+        },
+        {
+            "Max": "2000",
+            "Type": "GyroX",
+            "Unit": "degree/s",
+            "Min": "125"
+        },
+        {
+            "Max": "2000",
+            "Type": "GyroY",
+            "Unit": "degree/s",
+            "Min": "125"
+        },
+        {
+            "Max": "2000",
+            "Type": "GyroZ",
+            "Unit": "degree/s",
+            "Min": "125"
+        },
+        {
+            "Max": "0.0013",
+            "Type": "MagneticX",
+            "Unit": "t",
+            "Min": "-0.0013"
+        },
+        {
+            "Max": "0.0013",
+            "Type": "MagneticY",
+            "Unit": "t",
+            "Min": "-0.0013"
+        },
+        {
+            "Max": "0.0025",
+            "Type": "MagneticZ",
+            "Unit": "t",
+            "Min": "-0.0025"
+        },
+        {
+            "Type": "Tap"
+        },
+        {
+            "Type": "DoubleTap"
+        },
+        {
+            "Type": "Freefall"
+        }
+    ],
+    "id": "83",
+    "MinVolt": "3"
+},{
+    "Model": "2167",
+    "MaxVolt": "5.5",
+    "Image": "https://cdn-shop.adafruit.com/970x728/2167-02.jpg",
+    "Brand": "Adafruit",
+    "Detail": "IR Break Beam Sensor - 3mm LEDs",
+    "SupportTrigger": [],
+    "Datasheet": "https://cdn-shop.adafruit.com/product-files/2167/C2916.pdf",
+    "Dependency": [],
+    "SupportAction": [],
+    "Link": "https://www.adafruit.com/products/2167",
+    "Connect": [
+        "GPIO"
+    ],
+    "Price": "1.95",
+    "IC": [],
+    "Property": [
+        {
+            "Max": "0.25",
+            "Type": "IRMotion",
+            "Unit": "m",
+            "Min": "0"
+        }
+    ],
+    "id": "84",
+    "MinVolt": "3.3"
+},{
+    "Model": "2168",
+    "MaxVolt": "5.5",
+    "Image": "https://cdn-shop.adafruit.com/970x728/2168-02.jpg",
+    "Brand": "Adafruit",
+    "Detail": "IR Break Beam Sensor - 5mm LEDs",
+    "SupportTrigger": [],
+    "Datasheet": "https://cdn-shop.adafruit.com/product-files/2168/C2917.pdf",
+    "Dependency": [],
+    "SupportAction": [],
+    "Link": "https://www.adafruit.com/product/2168",
+    "Connect": [
+        "GPIO"
+    ],
+    "Price": "6.5",
+    "IC": [],
+    "Property": [
+        {
+            "Max": "0.5",
+            "Type": "IRMotion",
+            "Unit": "m",
+            "Min": "0"
+        }
+    ],
+    "id": "85",
+    "MinVolt": "3.3"
+},{
+    "Model": "1766",
+    "MaxVolt": "12",
+    "Image": "https://cdn-shop.adafruit.com/970x728/1766-00.jpg",
+    "Brand": "Adafruit",
+    "Detail": "Fast Vibration Sensor Switch (Easy to trigger)",
+    "SupportTrigger": [],
+    "Datasheet": "",
+    "Dependency": [],
+    "SupportAction": [],
+    "Link": "https://www.adafruit.com/products/1766",
+    "Connect": [
+        "GPIO"
+    ],
+    "Price": "0.95",
+    "IC": [],
+    "Property": [
+        {
+            "Type": "Motion"
+        }
+    ],
+    "id": "86",
+    "MinVolt": "0"
+},{
+    "Model": "2384",
+    "MaxVolt": "12",
+    "Image": "https://cdn-shop.adafruit.com/970x728/2384-00.jpg",
+    "Brand": "Adafruit",
+    "Detail": "Medium Vibration Sensor Switch",
+    "SupportTrigger": [],
+    "Datasheet": "",
+    "Dependency": [],
+    "SupportAction": [],
+    "Link": "https://www.adafruit.com/products/2384",
+    "Connect": [
+        "GPIO"
+    ],
+    "Price": "0.95",
+    "IC": [],
+    "Property": [
+        {
+            "Type": "Motion"
+        }
+    ],
+    "id": "87",
+    "MinVolt": "0"
+},{
+    "Model": "173",
+    "MaxVolt": "24",
+    "Image": "https://cdn-shop.adafruit.com/970x728/173-00.jpg",
+    "Brand": "Adafruit",
+    "Detail": "Tilt ball switch",
+    "SupportTrigger": [
+        "Orientation_1"
+    ],
+    "Datasheet": "http://learn.adafruit.com/system/assets/assets/000/010/132/original/MS-100906.pdf",
+    "Dependency": [],
+    "SupportAction": [
+        "AN_LCD_9"
+    ],
+    "Link": "https://www.adafruit.com/products/173",
+    "Connect": [
+        "GPIO"
+    ],
+    "Price": "2",
+    "IC": [],
+    "Property": [
+        {
+            "Type": "Orientation"
+        }
+    ],
+    "id": "88",
+    "MinVolt": "0"
+},{
+    "Model": "1733",
+    "MaxVolt": "24",
+    "Image": "https://cdn-shop.adafruit.com/970x728/1733-00.jpg",
+    "Brand": "Adafruit",
+    "Detail": "Anemometer Wind Speed Sensor w/Analog Voltage Output",
+    "SupportTrigger": [],
+    "Datasheet": "https://cdn-shop.adafruit.com/product-files/1733/C2192+datasheet.pdf",
+    "Dependency": [],
+    "SupportAction": [],
+    "Link": "https://www.adafruit.com/products/1733",
+    "Connect": [
+        "Analog"
+    ],
+    "Price": "44.95",
+    "IC": [],
+    "Property": [
+        {
+            "Type": "Anemometer"
+        },
+        {
+            "Max": "70",
+            "Type": "Accelerate",
+            "Unit": "m/s2",
+            "Min": "0.5"
+        }
+    ],
+    "id": "89",
+    "MinVolt": "7"
+},{
+    "Model": "13656",
+    "MaxVolt": "3.3",
+    "Image": "https://cdn.sparkfun.com//assets/parts/1/1/0/6/7/13656-01.jpg",
+    "Brand": "sparkfun",
+    "Detail": "Stepper Motor - 125 oz.in (200 steps/rev 600mm Wire)",
+    "SupportTrigger": [],
+    "Datasheet": "http://cdn.sparkfun.com/datasheets/Robotics/57BYGH420-2.pdf",
+    "Dependency": [
+        {
+            "Max": "1",
+            "Type": "StepperController",
+            "Min": "1"
+        },
+        {
+            "Max": "3.2",
+            "Type": "Voltage",
+            "Unit": "v",
+            "Min": "0"
+        },
+        {
+            "Max": "2",
+            "Type": "Current",
+            "Unit": "a",
+            "Min": "0"
+        }
+    ],
+    "SupportAction": [
+        "DCMotor_1",
+        "DCMotor_2",
+        "DCMotor_3",
+        "DCMotor_4"
+    ],
+    "Link": "https://www.sparkfun.com/products/13656",
+    "Connect": [
+        "Dependency"
+    ],
+    "Price": "23.95",
+    "IC": [],
+    "Property": [
+        {
+            "Type": "Motor"
+        }
+    ],
+    "id": "90",
+    "MinVolt": "3.3"
+},{
+    "Model": "2305",
+    "MaxVolt": "5",
+    "Image": "https://cdn-shop.adafruit.com/970x728/2305-00.jpg",
+    "Brand": "Adafruit",
+    "Detail": "Adafruit DRV2605L Haptic Motor Controller",
+    "SupportTrigger": [],
+    "Datasheet": "https://learn.adafruit.com/adafruit-drv2605-haptic-controller-breakout/downloads",
+    "Dependency": [],
+    "SupportAction": [
+        "DCMotor_1",
+        "DCMotor_2",
+        "DCMotor_3",
+        "DCMotor_4"
+    ],
+    "Link": "https://www.adafruit.com/products/2305",
+    "Connect": [
+        "I2C"
+    ],
+    "Price": "7.95",
+    "IC": [
+        "DRV2605L"
+    ],
+    "Property": [
+        {
+            "Max": "1",
+            "Type": "MotorController",
+            "Min": "0"
+        }
+    ],
+    "id": "91",
+    "MinVolt": "2"
+},{
+    "Model": "2448",
+    "MaxVolt": "5.5",
+    "Image": "https://cdn-shop.adafruit.com/970x728/2448-00.jpg",
+    "Brand": "Adafruit",
+    "Detail": "Adafruit TB6612 1.2A DC/Stepper Motor Driver Breakout Board",
+    "SupportTrigger": [],
+    "Datasheet": "https://learn.adafruit.com/adafruit-tb6612-h-bridge-dc-stepper-motor-driver-breakout/downloads",
+    "Dependency": [],
+    "SupportAction": [
+        "DCMotor_1",
+        "DCMotor_2",
+        "DCMotor_3",
+        "DCMotor_4"
+    ],
+    "Link": "https://www.adafruit.com/products/2448",
+    "Connect": [
+        "GPIO"
+    ],
+    "Price": "4.95",
+    "IC": [
+        "TB6612"
+    ],
+    "Property": [
+        {
+            "Max": "2",
+            "Type": "MotorController",
+            "Min": "0"
+        },
+        {
+            "Max": "1",
+            "Type": "StepperController",
+            "Min": "0"
+        },
+        {
+            "Max": "13.5",
+            "Type": "Voltage",
+            "Unit": "v",
+            "Min": "4.5"
+        },
+        {
+            "Max": "1.2",
+            "Type": "Current",
+            "Unit": "a",
+            "Min": "0"
+        },
+        {
+            "Max": "1",
+            "Type": "RatioM/S",
+            "Min": "2"
+        }
+    ],
+    "id": "92",
+    "MinVolt": "2.7"
+},{
+    "Model": "3297",
+    "MaxVolt": "10.8",
+    "Image": "https://cdn-shop.adafruit.com/970x728/3297-00.jpg",
+    "Brand": "Adafruit",
+    "Detail": "Adafruit DRV8833 DC/Stepper Motor Driver Breakout Board",
+    "SupportTrigger": [],
+    "Datasheet": "https://learn.adafruit.com/adafruit-drv8833-dc-stepper-motor-driver-breakout-board/downloads",
+    "Dependency": [],
+    "SupportAction": [
+        "DCMotor_1",
+        "DCMotor_2",
+        "DCMotor_3",
+        "DCMotor_4"
+    ],
+    "Link": "https://www.adafruit.com/products/3297",
+    "Connect": [
+        "GPIO"
+    ],
+    "Price": "4.95",
+    "IC": [
+        "DRV8833"
+    ],
+    "Property": [
+        {
+            "Max": "2",
+            "Type": "MotorController",
+            "Min": "0"
+        },
+        {
+            "Max": "1",
+            "Type": "StepperController",
+            "Min": "0"
+        },
+        {
+            "Max": "10.8",
+            "Type": "Voltage",
+            "Unit": "v",
+            "Min": "2.7"
+        },
+        {
+            "Max": "1.2",
+            "Type": "Current",
+            "Unit": "a",
+            "Min": "0"
+        },
+        {
+            "Max": "1",
+            "Type": "RatioM/S",
+            "Min": "2"
+        }
+    ],
+    "id": "93",
+    "MinVolt": "2.7"
+},{
+    "Model": "11696",
+    "MaxVolt": "12",
+    "Image": "https://cdn.sparkfun.com//assets/parts/7/8/6/0/11696-01.jpg",
+    "Brand": "sparkfun",
+    "Detail": "Hobby Motor - Gear",
+    "SupportTrigger": [],
+    "Datasheet": "http://cdn.sparkfun.com/datasheets/Robotics/M260.pdf",
+    "Dependency": [
+        {
+            "Max": "1",
+            "Type": "Motorcontroller",
+            "Min": "1"
+        },
+        {
+            "Max": "3",
+            "Type": "Voltage",
+            "Unit": "v",
+            "Min": "1"
+        },
+        {
+            "Max": "0.11",
+            "Type": "Current",
+            "Unit": "a",
+            "Min": "0"
+        }
+    ],
+    "SupportAction": [
+        "DCMotor_1",
+        "DCMotor_2",
+        "DCMotor_3",
+        "DCMotor_4"
+    ],
+    "Link": "https://www.sparkfun.com/products/11696",
+    "Connect": [
+        "Dependency"
+    ],
+    "Price": "1.95",
+    "IC": [],
+    "Property": [
+        {
+            "Max": "1",
+            "Type": "Motor",
+            "Min": "1"
+        },
+        {
+            "Max": "6600",
+            "Type": "Speed",
+            "Unit": "rpm",
+            "Min": "0"
+        }
+    ],
+    "id": "94",
+    "MinVolt": "1"
+},{
+    "Model": "1438",
+    "MaxVolt": "13.5",
+    "Image": "https://cdn-shop.adafruit.com/970x728/2448-00.jpg",
+    "Brand": "Adafruit",
+    "Detail": "Adafruit Motor/Stepper/Servo Shield for Arduino v2 Kit - v2.3",
+    "SupportTrigger": [],
+    "Datasheet": "https://cdn-shop.adafruit.com/datasheets/TB6612FNG_datasheet_en_20121101.pdf",
+    "Dependency": [],
+    "SupportAction": [
+        "DCMotor_1",
+        "DCMotor_2",
+        "DCMotor_3",
+        "DCMotor_4"
+    ],
+    "Link": "https://www.adafruit.com/products/1438",
+    "Connect": [
+        "GPIO"
+    ],
+    "Price": "19.95",
+    "IC": [],
+    "Property": [
+        {
+            "Max": "4",
+            "Type": "MotorController",
+            "Min": "0"
+        },
+        {
+            "Max": "2",
+            "Type": "StepperController",
+            "Min": "0"
+        },
+        {
+            "Max": "2",
+            "Type": "ServoController",
+            "Min": "0"
+        },
+        {
+            "Max": "1",
+            "Type": "RatioM/S",
+            "Min": "2"
+        },
+        {
+            "Max": "3",
+            "Type": "Current",
+            "Unit": "a",
+            "Min": "0"
+        },
+        {
+            "Max": "13.5",
+            "Type": "Voltage",
+            "Unit": "v",
+            "Min": "4.5"
+        }
+    ],
+    "id": "95",
+    "MinVolt": "4.5"
+},{
+    "Model": "3190",
+    "MaxVolt": "45",
+    "Image": "https://cdn-shop.adafruit.com/970x728/3190-00.jpg",
+    "Brand": "Adafruit",
+    "Detail": "Adafruit DRV8871 DC Motor Driver Breakout Board - 3.6A Max",
+    "SupportTrigger": [],
+    "Datasheet": "https://cdn-shop.adafruit.com/product-files/3190/drv8871.pdf",
+    "Dependency": [],
+    "SupportAction": [
+        "DCMotor_1",
+        "DCMotor_2",
+        "DCMotor_3",
+        "DCMotor_4"
+    ],
+    "Link": "https://www.adafruit.com/products/3190",
+    "Connect": [
+        "GPIO"
+    ],
+    "Price": "7.5",
+    "IC": [
+        "DRV8871"
+    ],
+    "Property": [
+        {
+            "Max": "1",
+            "Type": "MotorController",
+            "Min": "0"
+        },
+        {
+            "Max": "45",
+            "Type": "Voltage",
+            "Unit": "v",
+            "Min": "6.5"
+        }
+    ],
+    "id": "96",
+    "MinVolt": "6.5"
+},{
+    "Model": "164",
+    "MaxVolt": "5",
+    "Image": "https://cdn-shop.adafruit.com/970x728/164-00.jpg",
+    "Brand": "Adafruit",
+    "Detail": "IR distance sensor includes cable (10cm-80cm) - GP2Y0A21YK0F",
+    "SupportTrigger": [
+        "Proximity_2"
+    ],
+    "Datasheet": "http://sharp-world.com/products/device/lineup/data/pdf/datasheet/gp2y0a21yk_e.pdf",
+    "Dependency": [],
+    "SupportAction": [
+        "AN_LCD_11"
+    ],
+    "Link": "https://www.adafruit.com/products/164",
+    "Connect": [
+        "Analog"
+    ],
+    "Price": "14.95",
+    "IC": [],
+    "Property": [
+        {
+            "Max": "0.8",
+            "Type": "Distance",
+            "Unit": "m",
+            "Min": "0.1"
+        }
+    ],
+    "id": "97",
+    "MinVolt": "5"
+},{
+    "Model": "1031",
+    "MaxVolt": "5",
+    "Image": "https://cdn-shop.adafruit.com/970x728/1031-02.jpg",
+    "Brand": "Adafruit",
+    "Detail": "IR distance sensor includes cable (20cm-150cm) - GP2Y0A02YK",
+    "SupportTrigger": [
+        "Proximity_2"
+    ],
+    "Datasheet": "http://sharp-world.com/products/device/lineup/data/pdf/datasheet/gp2y0a02_e.pdf",
+    "Dependency": [],
+    "SupportAction": [
+        "AN_LCD_11"
+    ],
+    "Link": "https://www.adafruit.com/products/1031",
+    "Connect": [
+        "Analog"
+    ],
+    "Price": "15.95",
+    "IC": [],
+    "Property": [
+        {
+            "Max": "1.5",
+            "Type": "Distance",
+            "Unit": "m",
+            "Min": "0.02"
+        }
+    ],
+    "id": "98",
+    "MinVolt": "5"
+},{
+    "Model": "1568",
+    "MaxVolt": "5",
+    "Image": "https://cdn-shop.adafruit.com/970x728/1568-00.jpg",
+    "Brand": "Adafruit",
+    "Detail": "IR Distance Sensor - Includes Cable (100cm-500cm) - GP2Y0A710K0F",
+    "SupportTrigger": [
+        "Proximity_2"
+    ],
+    "Datasheet": "http://www.adafruit.com/datasheets/gp2y0a710k.pdf",
+    "Dependency": [],
+    "SupportAction": [
+        "AN_LCD_11"
+    ],
+    "Link": "https://www.adafruit.com/products/1568",
+    "Connect": [
+        "Analog"
+    ],
+    "Price": "24.95",
+    "IC": [],
+    "Property": [
+        {
+            "Max": "5.5",
+            "Type": "Distance",
+            "Unit": "m",
+            "Min": "1"
+        }
+    ],
+    "id": "99",
+    "MinVolt": "5"
+},{
+    "Model": "466",
+    "MaxVolt": "5",
+    "Image": "https://cdn-shop.adafruit.com/970x728/466-02.jpg",
+    "Brand": "Adafruit",
+    "Detail": "VCNL4010 Proximity/Light sensor",
+    "SupportTrigger": [
+        "Proximity_2",
+        "Light_1"
+    ],
+    "Datasheet": "https://cdn-shop.adafruit.com/product-files/466/vcnl4010.pdf",
+    "Dependency": [],
+    "SupportAction": [
+        "AN_LCD_11",
+        "AN_LCD_10"
+    ],
+    "Link": "https://www.adafruit.com/products/466",
+    "Connect": [
+        "I2C"
+    ],
+    "Price": "7.5",
+    "IC": [
+        "VCNL4010"
+    ],
+    "Property": [
+        {
+            "Max": "0.2",
+            "Type": "Distance",
+            "Unit": "m",
+            "Min": "0.01"
+        },
+        {
+            "Max": "16.383",
+            "Type": "Illuminance",
+            "Unit": "lux",
+            "Min": "0.25"
+        }
+    ],
+    "id": "100",
+    "MinVolt": "3.3"
+},{
+    "Model": "3317",
+    "MaxVolt": "5",
+    "Image": "https://cdn-shop.adafruit.com/970x728/3317-03.jpg",
+    "Brand": "Adafruit",
+    "Detail": "Adafruit VL53L0X Time of Flight Distance Sensor - ~30 to 1000mm",
+    "SupportTrigger": [
+        "Proximity_2"
+    ],
+    "Datasheet": "https://learn.adafruit.com/adafruit-vl53l0x-micro-lidar-distance-sensor-breakout",
+    "Dependency": [],
+    "SupportAction": [
+        "AN_LCD_11"
+    ],
+    "Link": "https://www.adafruit.com/products/3317",
+    "Connect": [
+        "I2C"
+    ],
+    "Price": "14.95",
+    "IC": [
+        "VL53L0X"
+    ],
+    "Property": [
+        {
+            "Max": "1",
+            "Type": "Distance",
+            "Unit": "m",
+            "Min": "0.03"
+        }
+    ],
+    "id": "101",
+    "MinVolt": "3"
+},{
+    "Model": "3316",
+    "MaxVolt": "5",
+    "Image": "https://cdn-shop.adafruit.com/145x109/3316-00.jpg",
+    "Brand": "Adafruit",
+    "Detail": "Adafruit VL6180X Time of Flight Distance Ranging Sensor (VL6180)",
+    "SupportTrigger": [
+        "Proximity_2"
+    ],
+    "Datasheet": "https://learn.adafruit.com/adafruit-vl6180x-time-of-flight-micro-lidar-distance-sensor-breakout/downloads",
+    "Dependency": [],
+    "SupportAction": [
+        "AN_LCD_11"
+    ],
+    "Link": "https://www.adafruit.com/products/3316",
+    "Connect": [
+        "I2C"
+    ],
+    "Price": "13.95",
+    "IC": [
+        "VL6180X"
+    ],
+    "Property": [
+        {
+            "Max": "0.1",
+            "Type": "Distance",
+            "Unit": "m",
+            "Min": "0"
+        }
+    ],
+    "id": "102",
+    "MinVolt": "3"
+},{
+    "Model": "172",
+    "MaxVolt": "5.5",
+    "Image": "https://cdn-shop.adafruit.com/970x728/172-00.jpg",
+    "Brand": "Adafruit",
+    "Detail": "Maxbotix Ultrasonic Rangefinder - LV-EZ1 - LV-EZ1",
+    "SupportTrigger": [
+        "Proximity_2"
+    ],
+    "Datasheet": "http://maxbotix.com/documents/LV-MaxSonar-EZ_Datasheet.pdf",
+    "Dependency": [],
+    "SupportAction": [
+        "AN_LCD_11"
+    ],
+    "Link": "https://www.adafruit.com/products/172",
+    "Connect": [
+        "Analog",
+        "PWM",
+        "UART"
+    ],
+    "Price": "24.95",
+    "IC": [],
+    "Property": [
+        {
+            "Max": "6.45",
+            "Type": "Distance",
+            "Unit": "m",
+            "Min": "0"
+        }
+    ],
+    "id": "103",
+    "MinVolt": "2.5"
+},{
+    "Model": "980",
+    "MaxVolt": "5.5",
+    "Image": "https://cdn-shop.adafruit.com/970x728/980-00.jpg",
+    "Brand": "Adafruit",
+    "Detail": "Maxbotix Ultrasonic Rangefinder - LV-EZ2 - LV-EZ2",
+    "SupportTrigger": [
+        "Proximity_2"
+    ],
+    "Datasheet": "http://maxbotix.com/documents/LV-MaxSonar-EZ_Datasheet.pdf",
+    "Dependency": [],
+    "SupportAction": [
+        "AN_LCD_11"
+    ],
+    "Link": "https://www.adafruit.com/products/980",
+    "Connect": [
+        "Analog",
+        "PWM",
+        "UART"
+    ],
+    "Price": "24.95",
+    "IC": [],
+    "Property": [
+        {
+            "Max": "6.45",
+            "Type": "Distance",
+            "Unit": "m",
+            "Min": "0"
+        }
+    ],
+    "id": "104",
+    "MinVolt": "2.5"
+},{
+    "Model": "981",
+    "MaxVolt": "5.5",
+    "Image": "https://cdn-shop.adafruit.com/970x728/981-00.jpg",
+    "Brand": "Adafruit",
+    "Detail": "Maxbotix Ultrasonic Rangefinder - LV-EZ3 - LV-EZ3",
+    "SupportTrigger": [
+        "Proximity_2"
+    ],
+    "Datasheet": "http://maxbotix.com/documents/LV-MaxSonar-EZ_Datasheet.pdf",
+    "Dependency": [],
+    "SupportAction": [
+        "AN_LCD_11"
+    ],
+    "Link": "https://www.adafruit.com/products/981",
+    "Connect": [
+        "Analog",
+        "PWM",
+        "UART"
+    ],
+    "Price": "24.95",
+    "IC": [],
+    "Property": [
+        {
+            "Max": "6.45",
+            "Type": "Distance",
+            "Unit": "m",
+            "Min": "0"
+        }
+    ],
+    "id": "105",
+    "MinVolt": "2.5"
+},{
+    "Model": "982",
+    "MaxVolt": "5.5",
+    "Image": "https://cdn-shop.adafruit.com/970x728/982-00.jpg",
+    "Brand": "Adafruit",
+    "Detail": "Maxbotix Ultrasonic Rangefinder - LV-EZ4 - LV-EZ4",
+    "SupportTrigger": [
+        "Proximity_2"
+    ],
+    "Datasheet": "http://maxbotix.com/documents/LV-MaxSonar-EZ_Datasheet.pdf",
+    "Dependency": [],
+    "SupportAction": [
+        "AN_LCD_11"
+    ],
+    "Link": "https://www.adafruit.com/products/982",
+    "Connect": [
+        "Analog",
+        "PWM",
+        "UART"
+    ],
+    "Price": "24.95",
+    "IC": [],
+    "Property": [
+        {
+            "Max": "6.45",
+            "Type": "Distance",
+            "Unit": "m",
+            "Min": "0"
+        }
+    ],
+    "id": "106",
+    "MinVolt": "2.5"
+},{
+    "Model": "979",
+    "MaxVolt": "5.5",
+    "Image": "https://cdn-shop.adafruit.com/970x728/979-00.jpg",
+    "Brand": "Adafruit",
+    "Detail": "Maxbotix Ultrasonic Rangefinder - LV-EZ0 - LV-EZ0",
+    "SupportTrigger": [
+        "Proximity_2"
+    ],
+    "Datasheet": "http://maxbotix.com/documents/LV-MaxSonar-EZ_Datasheet.pdf",
+    "Dependency": [],
+    "SupportAction": [
+        "AN_LCD_11"
+    ],
+    "Link": "https://www.adafruit.com/products/979",
+    "Connect": [
+        "Analog",
+        "PWM",
+        "UART"
+    ],
+    "Price": "26.95",
+    "IC": [],
+    "Property": [
+        {
+            "Max": "6.45",
+            "Type": "Distance",
+            "Unit": "m",
+            "Min": "0"
+        }
+    ],
+    "id": "107",
+    "MinVolt": "2.5"
+},{
+    "Model": "983",
+    "MaxVolt": "5.5",
+    "Image": "https://cdn-shop.adafruit.com/970x728/983-02.jpg",
+    "Brand": "Adafruit",
+    "Detail": "Maxbotix Ultrasonic Rangefinder - HRLV-EZ0 - HRLV-EZ0",
+    "SupportTrigger": [
+        "Proximity_2"
+    ],
+    "Datasheet": "http://www.maxbotix.com/documents/HRLV-MaxSonar-EZ_Datasheet.pdf",
+    "Dependency": [],
+    "SupportAction": [
+        "AN_LCD_11"
+    ],
+    "Link": "https://www.adafruit.com/products/983",
+    "Connect": [
+        "Analog",
+        "PWM",
+        "UART"
+    ],
+    "Price": "33.95",
+    "IC": [],
+    "Property": [
+        {
+            "Max": "5",
+            "Type": "Distance",
+            "Unit": "m",
+            "Min": "0.3"
+        }
+    ],
+    "id": "108",
+    "MinVolt": "2.5"
+},{
+    "Model": "984",
+    "MaxVolt": "5.5",
+    "Image": "https://cdn-shop.adafruit.com/970x728/984-02.jpg",
+    "Brand": "Adafruit",
+    "Detail": "Maxbotix Ultrasonic Rangefinder - HRLV-EZ1 - HRLV-EZ1",
+    "SupportTrigger": [
+        "Proximity_2"
+    ],
+    "Datasheet": "http://www.maxbotix.com/documents/HRLV-MaxSonar-EZ_Datasheet.pdf",
+    "Dependency": [],
+    "SupportAction": [
+        "AN_LCD_11"
+    ],
+    "Link": "https://www.adafruit.com/products/984",
+    "Connect": [
+        "Analog",
+        "PWM",
+        "UART"
+    ],
+    "Price": "32.95",
+    "IC": [],
+    "Property": [
+        {
+            "Max": "5",
+            "Type": "Distance",
+            "Unit": "m",
+            "Min": "0.3"
+        }
+    ],
+    "id": "109",
+    "MinVolt": "2.5"
+},{
+    "Model": "985",
+    "MaxVolt": "5.5",
+    "Image": "https://cdn-shop.adafruit.com/970x728/985-02.jpg",
+    "Brand": "Adafruit",
+    "Detail": "Maxbotix Ultrasonic Rangefinder - HRLV-EZ4 - HRLV-EZ4",
+    "SupportTrigger": [
+        "Proximity_2"
+    ],
+    "Datasheet": "http://www.maxbotix.com/documents/HRLV-MaxSonar-EZ_Datasheet.pdf",
+    "Dependency": [],
+    "SupportAction": [
+        "AN_LCD_11"
+    ],
+    "Link": "https://www.adafruit.com/products/985",
+    "Connect": [
+        "Analog",
+        "PWM",
+        "UART"
+    ],
+    "Price": "32.95",
+    "IC": [],
+    "Property": [
+        {
+            "Max": "5",
+            "Type": "Distance",
+            "Unit": "m",
+            "Min": "0.3"
+        }
+    ],
+    "id": "110",
+    "MinVolt": "2.5"
+},{
+    "Model": "1137",
+    "MaxVolt": "5.5",
+    "Image": "https://cdn-shop.adafruit.com/970x728/1137-03.jpg",
+    "Brand": "Adafruit",
+    "Detail": "Maxbotix Weather-Resistant Ultrasonic Rangefinder - MB7092 XL-MaxSonar-WRMA1",
+    "SupportTrigger": [
+        "Proximity_2"
+    ],
+    "Datasheet": "http://www.maxbotix.com/documents/MB7052-MB7092_Datasheet.pdf",
+    "Dependency": [],
+    "SupportAction": [
+        "AN_LCD_11"
+    ],
+    "Link": "https://www.adafruit.com/products/1137",
+    "Connect": [
+        "Analog",
+        "UART"
+    ],
+    "Price": "84.95",
+    "IC": [
+        "MB7092"
+    ],
+    "Property": [
+        {
+            "Max": "7.65",
+            "Type": "Distance",
+            "Unit": "m",
+            "Min": "0"
+        }
+    ],
+    "id": "111",
+    "MinVolt": "3"
+},{
+    "Model": "13285",
+    "MaxVolt": "12",
+    "Image": "https://cdn.sparkfun.com//assets/parts/1/0/5/3/5/13285-01.jpg",
+    "Brand": "sparkfun",
+    "Detail": "PIR Motion Sensor (JST)",
+    "SupportTrigger": [
+        "Proximity_1"
+    ],
+    "Datasheet": "http://www.sparkfun.com/datasheets/Sensors/Proximity/SE-10.pdf",
+    "Dependency": [],
+    "SupportAction": [],
+    "Link": "https://www.sparkfun.com/products/13285",
+    "Connect": [
+        "GPIO"
+    ],
+    "Price": "9.95",
+    "IC": [],
+    "Property": [
+        {
+            "Type": "PIR"
+        }
+    ],
+    "id": "112",
+    "MinVolt": "3.3"
+},{
+    "Model": "189",
+    "MaxVolt": "12",
+    "Image": "https://cdn-shop.adafruit.com/970x728/189-00.jpg",
+    "Brand": "Adafruit",
+    "Detail": "PIR (motion) sensor",
+    "SupportTrigger": [
+        "Proximity_1"
+    ],
+    "Datasheet": "",
+    "Dependency": [],
+    "SupportAction": [],
+    "Link": "https://www.adafruit.com/products/189",
+    "Connect": [
+        "GPIO"
+    ],
+    "Price": "9.95",
+    "IC": [],
+    "Property": [
+        {
+            "Type": "PIR"
+        }
+    ],
+    "id": "113",
+    "MinVolt": "5"
+},{
+    "Model": "815",
+    "MaxVolt": "6",
+    "Image": "https://cdn-shop.adafruit.com/970x728/815-04.jpg",
+    "Brand": "Adafruit",
+    "Detail": "Adafruit 16-Channel 12-bit PWM/Servo Driver - I2C interface - PCA9685",
+    "SupportTrigger": [],
+    "Datasheet": "https://learn.adafruit.com/16-channel-pwm-servo-driver/downloads",
+    "Dependency": [],
+    "SupportAction": [],
+    "Link": "https://www.adafruit.com/products/815",
+    "Connect": [
+        "I2C"
+    ],
+    "Price": "14.95",
+    "IC": [
+        "PCA9685"
+    ],
+    "Property": [
+        {
+            "Max": "16",
+            "Type": "PWM",
+            "Min": "0"
+        }
+    ],
+    "id": "114",
+    "MinVolt": "3.3"
+},{
+    "Model": "1455",
+    "MaxVolt": "17",
+    "Image": "https://cdn-shop.adafruit.com/970x728/1455-00.jpg",
+    "Brand": "Adafruit",
+    "Detail": "Adafruit 12-Channel 16-bit PWM LED Driver - SPI Interface - TLC5971",
+    "SupportTrigger": [],
+    "Datasheet": "https://learn.adafruit.com/tlc5947-tlc59711-pwm-led-driver-breakout/downloads-and-links",
+    "Dependency": [],
+    "SupportAction": [
+        "Dotmatrix_1"
+    ],
+    "Link": "https://www.adafruit.com/products/1455",
+    "Connect": [
+        "SPI"
+    ],
+    "Price": "7.5",
+    "IC": [
+        "TLC59711"
+    ],
+    "Property": [
+        {
+            "Max": "12",
+            "Type": "Dotmatrix",
+            "Min": "0"
+        }
+    ],
+    "id": "115",
+    "MinVolt": "5"
+},{
+    "Model": "1429",
+    "MaxVolt": "30",
+    "Image": "https://cdn-shop.adafruit.com/970x728/1429-00.jpg",
+    "Brand": "Adafruit",
+    "Detail": "Adafruit 24-Channel 12-bit PWM LED Driver - SPI Interface - TLC5947",
+    "SupportTrigger": [],
+    "Datasheet": "https://learn.adafruit.com/tlc5947-tlc59711-pwm-led-driver-breakout/downloads-and-links",
+    "Dependency": [],
+    "SupportAction": [
+        "Dotmatrix_1"
+    ],
+    "Link": "https://www.adafruit.com/products/1429",
+    "Connect": [
+        "SPI"
+    ],
+    "Price": "14.95",
+    "IC": [
+        "TLC5947"
+    ],
+    "Property": [
+        {
+            "Max": "24",
+            "Type": "Dotmatrix",
+            "Min": "0"
+        }
+    ],
+    "id": "116",
+    "MinVolt": "5"
+},{
+    "Model": "2781",
+    "MaxVolt": "",
+    "Image": "https://cdn-shop.adafruit.com/970x728/2781-01.jpg",
+    "Brand": "Adafruit",
+    "Detail": "Through-Hole Resistors - 470 ohm 5% 1/4W - Pack of 25",
+    "SupportTrigger": [],
+    "Datasheet": "",
+    "Dependency": [],
+    "SupportAction": [],
+    "Link": "https://www.adafruit.com/product/2781",
+    "Connect": [
+        "GPIO",
+        "Analog"
+    ],
+    "Price": "0.75",
+    "IC": [],
+    "Property": [
+        {
+            "Max": "470",
+            "Type": "Resistor",
+            "Unit": "ohm",
+            "Min": "470"
+        }
+    ],
+    "id": "117",
+    "MinVolt": "0"
+},{
+    "Model": "8980",
+    "MaxVolt": "",
+    "Image": "https://cdn.sparkfun.com//assets/parts/2/3/0/6/ResistorPTH-01-L_i_ma.jpg",
+    "Brand": "sparkfun",
+    "Detail": "Resistor 1k Ohm 1/6 Watt PTH",
+    "SupportTrigger": [],
+    "Datasheet": "",
+    "Dependency": [],
+    "SupportAction": [],
+    "Link": "https://www.sparkfun.com/products/8980",
+    "Connect": [
+        "GPIO",
+        "Analog"
+    ],
+    "Price": "0.25",
+    "IC": [],
+    "Property": [
+        {
+            "Max": "1000",
+            "Type": "Resistor",
+            "Unit": "ohm",
+            "Min": "1000"
+        }
+    ],
+    "id": "118",
+    "MinVolt": "0"
+},{
+    "Model": "364",
+    "MaxVolt": "5",
+    "Image": "https://cdn-shop.adafruit.com/970x728/364-05.jpg",
+    "Brand": "Adafruit",
+    "Detail": "PN532 NFC/RFID controller breakout board - v1.6",
+    "SupportTrigger": [
+        "Comm_2"
+    ],
+    "Datasheet": "https://learn.adafruit.com/adafruit-pn532-rfid-nfc/downloads",
+    "Dependency": [],
+    "SupportAction": [],
+    "Link": "https://www.adafruit.com/products/364",
+    "Connect": [
+        "UART",
+        "I2C",
+        "SPI"
+    ],
+    "Price": "39.95",
+    "IC": [
+        "PN532"
+    ],
+    "Property": [
+        {
+            "Type": "RFID"
+        }
+    ],
+    "id": "119",
+    "MinVolt": "3.3"
+},{
+    "Model": "13322",
+    "MaxVolt": "5",
+    "Image": "https://cdn.sparkfun.com//assets/parts/1/0/6/1/0/13322-01.jpg",
+    "Brand": "sparkfun",
+    "Detail": "SparkFun Soil Moisture Sensor",
+    "SupportTrigger": [
+        "Humid_1"
+    ],
+    "Datasheet": "https://cdn.sparkfun.com/datasheets/Sensors/Biometric/SparkFun_Soil_Moisture_Sensor.pdf",
+    "Dependency": [],
+    "SupportAction": [
+        "AN_LCD_12"
+    ],
+    "Link": "https://www.sparkfun.com/products/13322",
+    "Connect": [
+        "Analog"
+    ],
+    "Price": "4.95",
+    "IC": [],
+    "Property": [
+        {
+            "Type": "Soil Moisture"
+        },
+        {
+            "Type": "Humidity"
+        }
+    ],
+    "id": "120",
+    "MinVolt": "3.3"
+},{
+    "Model": "2716",
+    "MaxVolt": "5",
+    "Image": "https://cdn-shop.adafruit.com/970x728/2716-04.jpg",
+    "Brand": "Adafruit",
+    "Detail": "Adafruit Silicon MEMS Microphone Breakout - SPW2430",
+    "SupportTrigger": [
+        "Sound_1"
+    ],
+    "Datasheet": "",
+    "Dependency": [
+        {
+            "Type": "SDCard"
+        }
+    ],
+    "SupportAction": [],
+    "Link": "https://www.adafruit.com/products/2716",
+    "Connect": [
+        "GPIO"
+    ],
+    "Price": "4.95",
+    "IC": [
+        "SPW2430"
+    ],
+    "Property": [
+        {
+            "Type": "Sound"
+        },
+        {
+            "Type": "Record"
+        }
+    ],
+    "id": "121",
+    "MinVolt": "3.3"
+},{
+    "Model": "1063",
+    "MaxVolt": "5.5",
+    "Image": "https://cdn-shop.adafruit.com/970x728/1063-03.jpg",
+    "Brand": "Adafruit",
+    "Detail": "Electret Microphone Amplifier - MAX4466 with Adjustable Gain",
+    "SupportTrigger": [
+        "Sound_1"
+    ],
+    "Datasheet": "https://cdn-shop.adafruit.com/datasheets/MAX4465-MAX4469.pdf",
+    "Dependency": [],
+    "SupportAction": [
+        "Audio_1",
+        "Audio_2",
+        "Audio_3",
+        "Audio_4",
+        "Audio_5",
+        "Audio_6"
+    ],
+    "Link": "https://www.adafruit.com/products/1063",
+    "Connect": [
+        "GPIO"
+    ],
+    "Price": "6.95",
+    "IC": [
+        "MAX4466"
+    ],
+    "Property": [
+        {
+            "Type": "Sound"
+        },
+        {
+            "Type": "Amplifiers"
+        }
+    ],
+    "id": "122",
+    "MinVolt": "2.4"
+},{
+    "Model": "1713",
+    "MaxVolt": "5.5",
+    "Image": "https://cdn-shop.adafruit.com/970x728/1713-00.jpg",
+    "Brand": "Adafruit",
+    "Detail": "Electret Microphone Amplifier - MAX9814 with Auto Gain Control",
+    "SupportTrigger": [
+        "Sound_1"
+    ],
+    "Datasheet": "https://learn.adafruit.com/adafruit-agc-electret-microphone-amplifier-max9814/downloads",
+    "Dependency": [],
+    "SupportAction": [
+        "Audio_1",
+        "Audio_2",
+        "Audio_3",
+        "Audio_4",
+        "Audio_5",
+        "Audio_6"
+    ],
+    "Link": "https://www.adafruit.com/products/1713",
+    "Connect": [
+        "GPIO"
+    ],
+    "Price": "7.95",
+    "IC": [
+        "MAX9814"
+    ],
+    "Property": [
+        {
+            "Type": "Sound"
+        },
+        {
+            "Type": "Amplifiers"
+        }
+    ],
+    "id": "123",
+    "MinVolt": "2.7"
+},{
+    "Model": "1739",
+    "MaxVolt": "30",
+    "Image": "https://cdn-shop.adafruit.com/970x728/1739-00.jpg",
+    "Brand": "Adafruit",
+    "Detail": "Large Enclosed Piezo Element w/Wires",
+    "SupportTrigger": [],
+    "Datasheet": "",
+    "Dependency": [],
+    "SupportAction": [
+        "Audio_6"
+    ],
+    "Link": "https://www.adafruit.com/products/1739",
+    "Connect": [
+        "GPIO"
+    ],
+    "Price": "0.95",
+    "IC": [],
+    "Property": [
+        {
+            "Type": "Buzzer"
+        }
+    ],
+    "id": "124",
+    "MinVolt": "1"
+},{
+    "Model": "160",
+    "MaxVolt": "30",
+    "Image": "https://cdn-shop.adafruit.com/970x728/160-01.jpg",
+    "Brand": "Adafruit",
+    "Detail": "Piezo Buzzer - PS1240",
+    "SupportTrigger": [],
+    "Datasheet": "",
+    "Dependency": [],
+    "SupportAction": [
+        "Audio_6"
+    ],
+    "Link": "https://www.adafruit.com/products/160",
+    "Connect": [
+        "GPIO"
+    ],
+    "Price": "1.5",
+    "IC": [],
+    "Property": [
+        {
+            "Type": "Buzzer"
+        }
+    ],
+    "id": "125",
+    "MinVolt": "3"
+},{
+    "Model": "1740",
+    "MaxVolt": "40",
+    "Image": "https://cdn-shop.adafruit.com/970x728/1740-00.jpg",
+    "Brand": "Adafruit",
+    "Detail": "Small Enclosed Piezo w/Wires",
+    "SupportTrigger": [],
+    "Datasheet": "",
+    "Dependency": [],
+    "SupportAction": [
+        "Audio_6"
+    ],
+    "Link": "https://www.adafruit.com/products/1740",
+    "Connect": [
+        "GPIO"
+    ],
+    "Price": "0.95",
+    "IC": [],
+    "Property": [
+        {
+            "Type": "Buzzer"
+        }
+    ],
+    "id": "126",
+    "MinVolt": "3"
+},{
+    "Model": "7950",
+    "MaxVolt": "5",
+    "Image": "https://cdn.sparkfun.com//assets/parts/6/2/3/07950-1.jpg",
+    "Brand": "sparkfun",
+    "Detail": "Mini Speaker - PC Mount 12mm 2.048kHz",
+    "SupportTrigger": [],
+    "Datasheet": "http://cdn.sparkfun.com/datasheets/Components/General/cem-1203-42-.pdf",
+    "Dependency": [
+        {
+            "Type": "Amplifiers"
+        }
+    ],
+    "SupportAction": [
+        "Audio_6"
+    ],
+    "Link": "https://www.sparkfun.com/products/7950",
+    "Connect": [
+        "GPIO",
+        "Analog"
+    ],
+    "Price": "1.95",
+    "IC": [],
+    "Property": [
+        {
+            "Type": "Speaker"
+        }
+    ],
+    "id": "127",
+    "MinVolt": "3"
+},{
+    "Model": "13940",
+    "MaxVolt": "18",
+    "Image": "https://cdn.sparkfun.com//assets/parts/1/1/6/2/1/13940-04.jpg",
+    "Brand": "sparkfun",
+    "Detail": "Large Piezo Alarm - 3KHz",
+    "SupportTrigger": [],
+    "Datasheet": "http://cdn.sparkfun.com/datasheets/Components/General/CE-C75.pdf",
+    "Dependency": [],
+    "SupportAction": [
+        "Audio_6"
+    ],
+    "Link": "https://www.sparkfun.com/products/13940",
+    "Connect": [
+        "GPIO",
+        "Analog"
+    ],
+    "Price": "2.95",
+    "IC": [],
+    "Property": [
+        {
+            "Type": "Buzzer"
+        }
+    ],
+    "id": "128",
+    "MinVolt": "3"
+},{
+    "Model": "254",
+    "MaxVolt": "5",
+    "Image": "https://cdn-shop.adafruit.com/970x728/254-05.jpg",
+    "Brand": "Adafruit",
+    "Detail": "MicroSD card breakout board+",
+    "SupportTrigger": [],
+    "Datasheet": "https://learn.adafruit.com/adafruit-micro-sd-breakout-board-card-tutorial/download",
+    "Dependency": [],
+    "SupportAction": [],
+    "Link": "https://www.adafruit.com/products/254",
+    "Connect": [
+        "Specific"
+    ],
+    "Price": "7.5",
+    "IC": [],
+    "Property": [
+        {
+            "Type": "SDCard"
+        }
+    ],
+    "id": "129",
+    "MinVolt": "5"
+},{
+    "Model": "1141",
+    "MaxVolt": "",
+    "Image": "https://cdn-shop.adafruit.com/970x728/1141-02.jpg",
+    "Brand": "Adafruit",
+    "Detail": "Adafruit Assembled Data Logging shield for Arduino",
+    "SupportTrigger": [],
+    "Datasheet": "https://learn.adafruit.com/adafruit-data-logger-shield/downloads",
+    "Dependency": [],
+    "SupportAction": [],
+    "Link": "https://www.adafruit.com/products/1141",
+    "Connect": [
+        "Shield"
+    ],
+    "Price": "13.95",
+    "IC": [],
+    "Property": [
+        {
+            "Type": "Storage"
+        }
+    ],
+    "id": "130",
+    "MinVolt": ""
+},{
+    "Model": "1747",
+    "MaxVolt": "3.6",
+    "Image": "https://cdn-shop.adafruit.com/970x728/1747-00.jpg",
+    "Brand": "Adafruit",
+    "Detail": "Melexis Contact-less Infrared Sensor - MLX90614 3V",
+    "SupportTrigger": [
+        "Temp_1"
+    ],
+    "Datasheet": "https://cdn-shop.adafruit.com/datasheets/MLX90614.pdf",
+    "Dependency": [],
+    "SupportAction": [
+        "AN_LCD_5"
+    ],
+    "Link": "https://www.adafruit.com/products/1747",
+    "Connect": [
+        "I2C"
+    ],
+    "Price": "15.95",
+    "IC": [
+        "MLX90614"
+    ],
+    "Property": [
+        {
+            "Max": "380",
+            "Type": "Temperature",
+            "Unit": "c",
+            "Min": "-70"
+        }
+    ],
+    "id": "131",
+    "MinVolt": "2.7"
+},{
+    "Model": "1296",
+    "MaxVolt": "5.5",
+    "Image": "https://cdn-shop.adafruit.com/970x728/1296-00.jpg",
+    "Brand": "Adafruit",
+    "Detail": "Contact-less Infrared Thermopile Sensor Breakout - TMP006",
+    "SupportTrigger": [
+        "Temp_1"
+    ],
+    "Datasheet": "https://learn.adafruit.com/infrared-thermopile-sensor-breakout/downloads",
+    "Dependency": [],
+    "SupportAction": [
+        "AN_LCD_5"
+    ],
+    "Link": "https://www.adafruit.com/products/1296",
+    "Connect": [
+        "I2C"
+    ],
+    "Price": "9.95",
+    "IC": [
+        "TMP006"
+    ],
+    "Property": [
+        {
+            "Max": "125",
+            "Type": "Temperature",
+            "Unit": "c",
+            "Min": "-40"
+        }
+    ],
+    "id": "132",
+    "MinVolt": "2.2"
+},{
+    "Model": "2023",
+    "MaxVolt": "5.5",
+    "Image": "https://cdn-shop.adafruit.com/970x728/2023-00.jpg",
+    "Brand": "Adafruit",
+    "Detail": "Contact-less Infrared Thermopile Sensor Breakout - TMP007",
+    "SupportTrigger": [
+        "Temp_1"
+    ],
+    "Datasheet": "https://learn.adafruit.com/adafruit-tmp007-sensor-breakout/downloads",
+    "Dependency": [],
+    "SupportAction": [
+        "AN_LCD_5"
+    ],
+    "Link": "https://www.adafruit.com/products/2023",
+    "Connect": [
+        "I2C"
+    ],
+    "Price": "12.5",
+    "IC": [
+        "TMP007"
+    ],
+    "Property": [
+        {
+            "Max": "125",
+            "Type": "Temperature",
+            "Unit": "c",
+            "Min": "-40"
+        }
+    ],
+    "id": "133",
+    "MinVolt": "2.2"
+},{
+    "Model": "165",
+    "MaxVolt": "5.5",
+    "Image": "https://cdn-shop.adafruit.com/970x728/165-00.jpg",
+    "Brand": "Adafruit",
+    "Detail": "TMP36 - Analog Temperature sensor - TMP36",
+    "SupportTrigger": [
+        "Temp_1"
+    ],
+    "Datasheet": "http://www.analog.com/en/products/analog-to-digital-converters/integrated-special-purpose-converters/digital-temperature-sensors/tmp36.html#product-overview",
+    "Dependency": [],
+    "SupportAction": [
+        "AN_LCD_5"
+    ],
+    "Link": "https://www.adafruit.com/products/165",
+    "Connect": [
+        "Analog"
+    ],
+    "Price": "1.5",
+    "IC": [
+        "TMP36"
+    ],
+    "Property": [
+        {
+            "Max": "125",
+            "Type": "Temperature",
+            "Unit": "c",
+            "Min": "-40"
+        }
+    ],
+    "id": "134",
+    "MinVolt": "2.7"
+},{
+    "Model": "1782",
+    "MaxVolt": "5.5",
+    "Image": "https://cdn-shop.adafruit.com/970x728/1782-00.jpg",
+    "Brand": "Adafruit",
+    "Detail": "MCP9808 High Accuracy I2C Temperature Sensor Breakout Board",
+    "SupportTrigger": [
+        "Temp_1"
+    ],
+    "Datasheet": "https://learn.adafruit.com/adafruit-mcp9808-precision-i2c-temperature-sensor-guide/downloads",
+    "Dependency": [],
+    "SupportAction": [
+        "AN_LCD_5"
+    ],
+    "Link": "https://www.adafruit.com/products/1782",
+    "Connect": [
+        "I2C"
+    ],
+    "Price": "4.95",
+    "IC": [
+        "MCP9808"
+    ],
+    "Property": [
+        {
+            "Max": "125",
+            "Type": "Temperature",
+            "Unit": "c",
+            "Min": "-40"
+        }
+    ],
+    "id": "135",
+    "MinVolt": "2.7"
+},{
+    "Model": "374",
+    "MaxVolt": "5.5",
+    "Image": "https://cdn-shop.adafruit.com/970x728/374-00.jpg",
+    "Brand": "Adafruit",
+    "Detail": "DS18B20 Digital temperature sensor + extras",
+    "SupportTrigger": [
+        "Temp_1"
+    ],
+    "Datasheet": "https://cdn-shop.adafruit.com/datasheets/DS18B20.pdf",
+    "Dependency": [],
+    "SupportAction": [
+        "AN_LCD_5"
+    ],
+    "Link": "https://www.adafruit.com/products/374",
+    "Connect": [
+        "Analog"
+    ],
+    "Price": "3.95",
+    "IC": [
+        "DS18B20"
+    ],
+    "Property": [
+        {
+            "Max": "125",
+            "Type": "Temperature",
+            "Unit": "c",
+            "Min": "-55"
+        }
+    ],
+    "id": "136",
+    "MinVolt": "3"
+},{
+    "Model": "1748",
+    "MaxVolt": "5.5",
+    "Image": "https://cdn-shop.adafruit.com/970x728/1748-00.jpg",
+    "Brand": "Adafruit",
+    "Detail": "Melexis Contact-less Infrared Sensor - MLX90614 5V",
+    "SupportTrigger": [
+        "Temp_1"
+    ],
+    "Datasheet": "https://cdn-shop.adafruit.com/datasheets/MLX90614.pdf",
+    "Dependency": [],
+    "SupportAction": [
+        "AN_LCD_5"
+    ],
+    "Link": "https://www.adafruit.com/products/1748",
+    "Connect": [
+        "I2C"
+    ],
+    "Price": "15.95",
+    "IC": [
+        "MLX90614"
+    ],
+    "Property": [
+        {
+            "Max": "125",
+            "Type": "Temperature",
+            "Unit": "c",
+            "Min": "-40"
+        }
+    ],
+    "id": "137",
+    "MinVolt": "4.5"
+},{
+    "Model": "13689",
+    "MaxVolt": "50",
+    "Image": "https://cdn.sparkfun.com//assets/parts/1/1/1/5/9/13689-01.jpg",
+    "Brand": "sparkfun",
+    "Detail": "Transistor - NPN (BC337)",
+    "SupportTrigger": [],
+    "Datasheet": "https://cdn.sparkfun.com/datasheets/Components/General/BC337.pdf",
+    "Dependency": [],
+    "SupportAction": [],
+    "Link": "https://www.sparkfun.com/products/13689",
+    "Connect": [
+        "GPIO",
+        "Analog"
+    ],
+    "Price": "0.5",
+    "IC": [],
+    "Property": [
+        {
+            "Type": "Transistor"
+        }
+    ],
+    "id": "138",
+    "MinVolt": "0"
+},{
+    "Model": "10301",
+    "MaxVolt": "5.355",
+    "Image": "https://cdn.sparkfun.com//assets/parts/4/7/0/4/10301-01.jpg",
+    "Brand": "sparkfun",
+    "Detail": "Zener Diode - 5.1V 1W",
+    "SupportTrigger": [],
+    "Datasheet": "http://www.sparkfun.com/datasheets/Components/General/85816.pdf",
+    "Dependency": [],
+    "SupportAction": [],
+    "Link": "https://www.sparkfun.com/products/10301",
+    "Connect": [
+        "GPIO",
+        "Analog"
+    ],
+    "Price": "0.25",
+    "IC": [],
+    "Property": [
+        {
+            "Type": "Voltage regulator"
+        }
+    ],
+    "id": "139",
+    "MinVolt": "4.845"
+},{
+    "Model": "2999",
+    "MaxVolt": "5",
+    "Image": "https://cdn-shop.adafruit.com/970x728/2999-00.jpg",
+    "Brand": "Adafruit",
+    "Detail": "Adafruit ATWINC1500 WiFi Breakout",
+    "SupportTrigger": [
+        "Comm_1"
+    ],
+    "Datasheet": "https://learn.adafruit.com/adafruit-atwinc1500-wifi-module-breakout/downloads",
+    "Dependency": [],
+    "SupportAction": [],
+    "Link": "https://www.adafruit.com/products/2999",
+    "Connect": [
+        "UART",
+        "SPI"
+    ],
+    "Price": "24.95",
+    "IC": [],
+    "Property": [
+        {
+            "Type": "WIFI"
+        },
+        {
+            "Type": "UART"
+        }
+    ],
+    "id": "140",
+    "MinVolt": "3"
+},{
+    "Model": "2471",
+    "MaxVolt": "6",
+    "Image": "https://cdn-shop.adafruit.com/970x728/2471-10.jpg",
+    "Brand": "Adafruit",
+    "Detail": "Adafruit HUZZAH ESP8266 Breakout",
+    "SupportTrigger": [
+        "Comm_1"
+    ],
+    "Datasheet": "https://learn.adafruit.com/adafruit-huzzah-esp8266-breakout/downloads",
+    "Dependency": [],
+    "SupportAction": [],
+    "Link": "https://www.adafruit.com/products/2471",
+    "Connect": [
+        "UART"
+    ],
+    "Price": "9.95",
+    "IC": [
+        "ESP8266"
+    ],
+    "Property": [
+        {
+            "Type": "WIFI"
+        },
+        {
+            "Type": "UART"
+        }
+    ],
+    "id": "141",
+    "MinVolt": "3.5"
+} ]

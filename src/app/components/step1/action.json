@@ -1,916 +1,1121 @@
-  [
+{
+  "LED": [
     {
-      "name" : "LED",
-      "children" : [
-        {
-          "id": 1,
-          "name" : "Dim",
-          "type" : ["LED"],
-          "description" : "Dim LED",
-          
-          "property" : [
-             {
-            "name":"name" ,
-            "control" : "TextBox"
-            },
-            {
-              "name": "Percentage",
-              "control": "Percentage"
-            }
+      "id": "LED_1",
+      "name": "Dim",
+      "short_description": "Adjust an LED brightness",
+      "params": {
+        "name": {
+          "control": "textbox",
+          "default_value": "",
+          "args": [
+            ""
           ],
-          "image" : "/assets/img/Motor_on.png",
-          "default" : "50"
+          "regex": "^[\\S]+$"
         },
-        {
-          "id": 2,
-          "name" : "Blink",
-          "type" : ["LED"],
-          "description" : "Turn on and turn off led depends on periode",
-          
-          "property" : [
-             {
-            "name":"name" ,
-            "control" : "TextBox"
-            },
-            {
-              "name": "Periode",
-              "control": "TextBox"
-            }
+        "brightness": {
+          "control": "slider",
+          "default_value": "50",
+          "args": [
+            "%"
           ],
-          "image" : "/assets/img/Motor_off.png"
-        },
-        {
-          "id": 3,
-          "name" : "Turn on",
-          "type" : ["LED"],
-          "description" : "Turn on LED",
-          
-          "property" : [
-             {
-            "name":"name" ,
-            "control" : "TextBox"
-            },
-            {
-              "name": "Brightness",
-              "control": "TextBox"
-            }
-          ],
-          "image" : "/assets/img/Motor_off.png"
-        },
-        {
-          "id": 4,
-          "name" : "Turn off",
-          "type" : ["LED"],
-          "description" : "Turn off led",
-           "property" : [
-             {
-            "name":"name" ,
-            "control" : "TextBox"
-            }],
-          "image" : "/assets/img/Motor_off.png"
+          "regex": "^(\\d([.]\\d{1,})?|[1-9]\\d([.]\\d{1,})?|100)$"
         }
-      ] 
+      }
     },
     {
-      "name" : "Colour LED",
-      "children" : [
-        {
-          "id": 5,
-          "name" : "Dim",
-          "type" : ["RGBLED"],
-          "description" : "Dim LED",
-          
-          "property" : [
-             {
-            "name":"name" ,
-            "control" : "TextBox"
-            },
-            {
-              "name": "Percentage",
-              "control": "Percentage"
-            }
+      "id": "LED_2",
+      "name": "Blink",
+      "short_description": "Blink an LED",
+      "params": {
+        "name": {
+          "control": "textbox",
+          "default_value": "",
+          "args": [
+            ""
           ],
-          "image" : "/assets/img/Motor_on.png",
-          "default" : "50"
+          "regex": "^[\\S]+$"
         },
-        {
-          "id": 6,
-          "name" : "Blink",
-          "type" : ["RGBLED"],
-          "description" : "Turn on and turn off led depends on periode",
-          
-          "property" : [
-             {
-            "name":"name" ,
-            "control" : "TextBox"
-            },
-            {
-              "name": "Periode",
-              "control": "TextBox"
-            }
+        "frequency": {
+          "control": "spinbox",
+          "default_value": "2",
+          "args": [
+            "Hz"
           ],
-          "image" : "/assets/img/Motor_off.png"
-        },
-        {
-          "id": 7,
-          "name" : "Turn on",
-          "type" : ["RGBLED"],
-          "description" : "Turn on LED",
-          
-          "property" : [
-             {
-            "name":"name" ,
-            "control" : "TextBox"
-            },
-            {
-              "name": "Brightness",
-              "control": "TextBox"
-            },
-            {
-              "name": "Colour",
-              "control": "Colour"
-            }
-          ],
-          "image" : "/assets/img/Motor_off.png"
-        },
-        {
-          "id": 8,
-          "name" : "Turn off",
-          "type" : ["RGBLED"],
-          "description" : "Turn off led",
-           "property" : [
-             {
-            "name":"name" ,
-            "control" : "TextBox"
-            }],
-          "image" : "/assets/img/Motor_off.png"
-        },
-        {
-          "id": 9,
-          "name" : "Change Colour",
-          "type" : ["RGBLED"],
-          "description" : "Change led colour",
-          
-          "property" : [
-             {
-            "name":"name" ,
-            "control" : "TextBox"
-            },
-            {
-              "name": "Colour",
-              "control": "Colour"
-            }
-          ],
-          "image" : "/assets/img/Motor_off.png"
+          "regex": "^(\\d{1,})$"
         }
-      ] 
+      }
     },
     {
-      "name" : "LCD 16X2",
-      "children" : [
-        {
-          "id": 10,
-          "name" : "Backlight On",
-          "type" : ["LCD16X2"],
-          "description" : "Turn the backlight on",
-           "property" : [
-             {
-            "name":"name" ,
-            "control" : "TextBox"
-            }],
-          "image" : "/assets/img/LED_on.png"
-        },
-        {
-          "id": 11,
-          "name" : "Backlight Off",
-          "type" : ["LCD16X2"],
-          "description" : "Turn the backlight off",
-           "property" : [
-             {
-            "name":"name" ,
-            "control" : "TextBox"
-            }],
-          "image" : "/assets/img/LED_off.png"
-        },
-        {
-          "id": 12,
-          "name" : "backlight colour",
-          "type" : ["LCD16X2","LCDbacklightcolour"],
-          "description" : "Change backlight colour",
-          
-          "property" : [
-             {
-            "name":"name" ,
-            "control" : "TextBox"
-            },
-            {
-              "name": "Colour",
-              "control": "Colour"
-            }
+      "id": "LED_3",
+      "name": "On",
+      "short_description": "Turn an LED on",
+      "params": {
+        "name": {
+          "control": "textbox",
+          "default_value": "",
+          "args": [
+            ""
           ],
-          "image" : "/assets/img/LED_off.png"
+          "regex": "^[\\S]+$"
         },
-        {
-          "id": 13,
-          "name" : "Show text",
-          "type" : ["LCD16X2"],
-          "description" : "Show text",
-          
-          "property" : [
-             {
-            "name":"name" ,
-            "control" : "TextBox"
-            },
-            {
-              "name": "Text",
-              "control": "LCD_TEXT_16X2"
-            }
+        "brightness": {
+          "control": "slider",
+          "default_value": "100",
+          "args": [
+            "%"
           ],
-          "image" : "/assets/img/LED_off.png"
+          "regex": "^(\\d([.]\\d{1,})?|[1-9]\\d([.]\\d{1,})?|100)$"
         }
-        , {
-          "id": 14,
-          "name" : "text colour",
-          "type" : ["LCD16X2","LCDtextcolour"],
-          "description" : "Change text colour",
-          
-          "property" : [
-             {
-            "name":"name" ,
-            "control" : "TextBox"
-            },
-            {
-              "name": "Colour",
-              "control": "Colour"
-            }
-          ],
-          "image" : "/assets/img/LED_off.png"
-        },{
-          "id": 15,
-          "name" : "Clear screen",
-          "type" : ["LCD16X2"],
-          "description" : "Clear led screen",
-           "property" : [
-             {
-            "name":"name" ,
-            "control" : "TextBox"
-            }],
-          "image" : "/assets/img/LED_off.png"
-        }
-      ] 
+      }
     },
     {
-      "name" : "Audio",
-      "children" : [
-        {
-          "id": 16,
-          "name" : "Play audio",
-          "type" : ["Amplifiers","SDcard"],
-          "description" : "Play audio in sdcard",
-          
-          "property" : [
-             {
-            "name":"name" ,
-            "control" : "TextBox"
-            },
-            {
-              "name": "Filename",
-              "control": "TextBox"
-            },
-            {
-              "name": "Volume",
-              "control" : "SpinBox"
-            }
+      "id": "LED_4",
+      "name": "Off",
+      "short_description": "Turn an LED off",
+      "params": {
+        "name": {
+          "control": "textbox",
+          "default_value": "",
+          "args": [
+            ""
           ],
-          "image" : "/assets/img/LED_on.png"
-        },
-        {
-          "id": 17,
-          "name" : "Increase Volume",
-          "type" : ["Amplifiers"],
-          "description" : "Increase Volume 1 step",
-           "property" : [
-             {
-            "name":"name" ,
-            "control" : "TextBox"
-            }],
-
-          "image" : "/assets/img/LED_off.png"
-        },
-        {
-          "id": 18,
-          "name" : "Decrease Volume",
-          "type" : ["Amplifiers"],
-          "description" : "Decrease Volume 1 step",
-           "property" : [
-             {
-            "name":"name" ,
-            "control" : "TextBox"
-            }],
-
-          "image" : "/assets/img/LED_off.png"
-        },
-        {
-          "id": 19,
-          "name" : "Set Volume",
-          "type" : ["Amplifiers"],
-          "description" : "Set Volume",
-          
-          "property" : [
-             {
-            "name":"name" ,
-            "control" : "TextBox"
-            },
-            {
-              "name": "Volume",
-              "control": "TextBox",
-              "unit" : "db"
-            }
-          ],
-          "image" : "/assets/img/LED_on.png"
-        },
-        {
-          "id": 20,
-          "name" : "Stop",
-          "type" : ["Amplifiers"],
-          "description" : "Set Volume",
-           "property" : [
-             {
-            "name":"name" ,
-            "control" : "TextBox"
-            }],
-          "image" : "/assets/img/LED_on.png",
-          "default" : "30" 
+          "regex": "^[\\S]+$"
         }
-      ] 
+      }
+    }
+  ],
+  "RGBLED": [
+    {
+      "id": "RGBLED_1",
+      "name": "Dim",
+      "short_description": "Adjust an LED brightness",
+      "params": {
+        "name": {
+          "control": "textbox",
+          "default_value": "",
+          "args": [
+            ""
+          ],
+          "regex": "^[\\S]+$"
+        },
+        "brightness": {
+          "control": "slider",
+          "default_value": "50",
+          "args": [
+            "%"
+          ],
+          "regex": "^(\\d([.]\\d{1,})?|[1-9]\\d([.]\\d{1,})?|100)$"
+        }
+      }
     },
     {
-      "name" : "Buzzer",
-      "children" : [
-        {
-          "id": 21,
-          "name" : "Play Buzzer",
-          "type" : ["Buzzer"],
-          "description" : "Play audio in sdcard",
-          
-          "property" : [
-             {
-            "name":"name" ,
-            "control" : "TextBox"
-            },
-            {
-              "name": "Volume",
-              "control" : "SpinBox"
-            }
+      "id": "RGBLED_2",
+      "name": "Blink",
+      "short_description": "Blink an LED",
+      "params": {
+        "name": {
+          "control": "textbox",
+          "default_value": "",
+          "args": [
+            ""
           ],
-          "image" : "/assets/img/LED_on.png"
+          "regex": "^[\\S]+$"
         },
-        {
-          "id": 22,
-          "name" : "Increase Volume",
-          "type" : ["Buzzer"],
-          "description" : "Increase Volume 1 step",
-           "property" : [
-             {
-            "name":"name" ,
-            "control" : "TextBox"
-            }],
-
-          "image" : "/assets/img/LED_off.png"
-        },
-        {
-          "id": 23,
-          "name" : "Decrease Volume",
-          "type" : ["Buzzer"],
-          "description" : "Decrease Volume 1 step",
-           "property" : [
-             {
-            "name":"name" ,
-            "control" : "TextBox"
-            }],
-
-          "image" : "/assets/img/LED_off.png"
-        },
-        {
-          "id": 24,
-          "name" : "Set Volume",
-          "type" : ["Buzzer"],
-          "description" : "Set Volume",
-          
-          "property" : [
-             {
-            "name":"name" ,
-            "control" : "TextBox"
-            },
-            {
-              "name": "Volume",
-              "control": "TextBox",
-              "unit" : "db"
-            }
+        "frequency": {
+          "control": "spinbox",
+          "default_value": "2",
+          "args": [
+            "Hz"
           ],
-          "image" : "/assets/img/LED_on.png",
-          "default" : "30" 
+          "regex": "^(\\d{1,})$"
         }
-      ] 
+      }
     },
     {
-      "name" : "Motor",
-      "children" : [
-        {
-          "id": 25,
-          "name" : "Rotate",
-          "type" : ["Motor"],
-          "description" : "Rotate motor depends on direction and speed",
-          
-          "property" : [
-             {
-            "name":"name" ,
-            "control" : "TextBox"
-            },
-            {
-              "name": "direction",
-              "control": "TextBox"
-            },
-            {
-              "name": "speed",
-              "control" : "TextBox"
-            }
+      "id": "RGBLED_3",
+      "name": "On",
+      "short_description": "Turn an LED on",
+      "params": {
+        "name": {
+          "control": "textbox",
+          "default_value": "",
+          "args": [
+            ""
           ],
-          "image" : "/assets/img/LED_on.png"
+          "regex": "^[\\S]+$"
         },
-        {
-          "id": 26,
-          "name" : "Reverse",
-          "type" : ["Motor"],
-          "description" : "Rotate motor to opposite direction",
-           "property" : [
-             {
-            "name":"name" ,
-            "control" : "TextBox"
-            }],
-          "image" : "/assets/img/LED_off.png"
-        },
-        {
-          "id": 27,
-          "name" : "Speed",
-          "type" : ["Motor"],
-          "description" : "Change motor speed",
-          
-          "property" : [
-             {
-            "name":"name" ,
-            "control" : "TextBox"
-            },
-            {
-              "name": "Speed",
-              "control": "TextBox"
-            }
+        "brightness": {
+          "control": "slider",
+          "default_value": "100",
+          "args": [
+            "%"
           ],
-          "image" : "/assets/img/LED_off.png"
+          "regex": "^(\\d([.]\\d{1,})?|[1-9]\\d([.]\\d{1,})?|100)$"
         },
-        {
-          "id": 28,
-          "name" : "Stop",
-          "type" : ["Motor"],
-          "description" : "Turn off the motor",
-           "property" : [
-             {
-            "name":"name" ,
-            "control" : "TextBox"
-            }],
-          "image" : "/assets/img/LED_off.png"
-        }, 
-        {
-          "id": 29,
-          "name" : "Rotate by degree",
-          "type" : ["Motor"],
-          "description" : "Rotate motor by degree",
-          
-          "property" : [
-             {
-            "name":"name" ,
-            "control" : "TextBox"
-            },
-            {
-              "name": "Degree",
-              "control": "TextBox"
-            }
+        "color": {
+          "control": "color",
+          "default_value": "#FFFFFF",
+          "args": [
+            ""
           ],
-          "image" : "/assets/img/LED_off.png"
+          "regex": "^#(\\d|[A-F]){6,6}$"
         }
-      ] 
+      }
     },
     {
-      "name" : "Real time clock",
-      "children" : [
-        {
-          "id": 30,
-          "name" : "Setup",
-          "type" : ["Clock"],
-          "description" : "Set initial time",
-          
-          "property" : [
-             {
-            "name":"name" ,
-            "control" : "TextBox"
-            },
-            {
-              "name": "time",
-              "control" : "TextBox"
-            }
+      "id": "RGBLED_4",
+      "name": "Off",
+      "short_description": "Turn an LED off",
+      "params": {
+        "name": {
+          "control": "textbox",
+          "default_value": "",
+          "args": [
+            ""
           ],
-          "image" : "/assets/img/LED_on.png",
-          "default" : "15:23:34"
+          "regex": "^[\\S]+$"
         }
-      ] 
+      }
     },
     {
-      "name" : "7 Segment",
-      "children" : [
-        {
-          "id": 31,
-          "name" : "Show number",
-          "type" : ["Sevensegment"],
-          "description" : "show number on 7segment only 1 digit",
-          
-          "property" : [
-             {
-            "name":"name" ,
-            "control" : "TextBox"
-            },
-            {
-              "name": "Number",
-              "control" : "TextBox"
-            }
+      "id": "RGBLED_5",
+      "name": "Set Color",
+      "short_description": "Set the color of an RGB LED",
+      "params": {
+        "name": {
+          "control": "textbox",
+          "default_value": "",
+          "args": [
+            ""
           ],
-          "image" : "/assets/img/LED_on.png",
-          "default" : "1"
+          "regex": "^[\\S]+$"
+        },
+        "color": {
+          "control": "color",
+          "default_value": "#FFFFFF",
+          "args": [
+            ""
+          ],
+          "regex": "^#(\\d|[A-F]){6,6}$"
         }
-      ] 
+      }
+    }
+  ],
+  "Alphanumeric LCD": [
+    {
+      "id": "AN_LCD_1",
+      "name": "Backlight On",
+      "short_description": "Turn the LCD backlight on",
+      "params": {
+        "name": {
+          "control": "textbox",
+          "default_value": "",
+          "args": [
+            ""
+          ],
+          "regex": "^[\\S]+$"
+        }
+      }
     },
     {
-      "name" : "Dotmatrix",
-      "children" : [
-        {
-          "id": 32,
-          "name" : "Display",
-          "type" : ["Dotmatrix"],
-          "description" : "Display data on dot matrix",
-          
-          "property" : [
-             {
-            "name":"name" ,
-            "control" : "TextBox"
-            },
-            {
-              "name": "Data",
-              "control" : "DOTMATRIX_CONTROL"
-            }
+      "id": "AN_LCD_2",
+      "name": "Backlight Off",
+      "short_description": "Turn the LCD backlight off",
+      "params": {
+        "name": {
+          "control": "textbox",
+          "default_value": "",
+          "args": [
+            ""
           ],
-          "image" : "/assets/img/LED_on.png"
-
+          "regex": "^[\\S]+$"
         }
-      ] 
+      }
     },
     {
-      "name" : "Display",
-      "children" : [
-        {
-          "id": 33,
-          "name" : "Temperature",
-          "type" : ["LCD16X2","Temperature"],
-          "description" : "Display temperature",
-          
-          "property" : [
-             {
-            "name":"name" ,
-            "control" : "TextBox"
-            },
-            {
-              "name": "LCD device name",
-              "control": "TextBox"
-            }
+      "id": "AN_LCD_3",
+      "name": "Show Text",
+      "short_description": "Show text",
+      "params": {
+        "name": {
+          "control": "textbox",
+          "default_value": "",
+          "args": [
+            ""
           ],
-          "image" : "/assets/img/LED_on.png"
+          "regex": "^[\\S]+$"
         },
-        {
-          "id": 34,
-          "name" : "Accelerometer_X",
-          "type" : ["AccelX","LCD16X2"],
-          "description" : "Display Accelerometer x axis",
-          
-          "property" : [
-             {
-            "name":"name" ,
-            "control" : "TextBox"
-            },
-            {
-              "name": "LCD device name",
-              "control": "TextBox"
-            }
+        "text": {
+          "control": "textbox",
+          "default_value": "",
+          "args": [
+            ""
           ],
-          "image" : "/assets/img/LED_on.png"
-        },
-        {
-          "id": 35,
-          "name" : "Pressure",
-          "type" : ["Barometer","LCD16X2"],
-          "description" : "Display Pressure",
-          
-          "property" : [
-             {
-            "name":"name" ,
-            "control" : "TextBox"
-            },
-            {
-              "name": "LCD device name",
-              "control": "TextBox"
-            }
-          ],
-          "image" : "/assets/img/LED_on.png"
-        },
-        {
-          "id": 36,
-          "name" : "Gyroscope",
-          "type" : ["Gyroscope","LCD16X2"],
-          "description" : "Display Gyroscope",
-          
-          "property" : [
-             {
-            "name":"name" ,
-            "control" : "TextBox"
-            },
-            {
-              "name": "LCD device name",
-              "control": "TextBox"
-            }
-          ],
-          "image" : "/assets/img/LED_on.png"
-        },
-        {
-          "id": 37,
-          "name" : "Direction",
-          "type" : ["Magnetometer","LCD16X2"],
-          "description" : "Display Accelerometer",
-          
-          "property" : [
-             {
-            "name":"name" ,
-            "control" : "TextBox"
-            },
-            {
-              "name": "LCD device name",
-              "control": "TextBox"
-            }
-          ],
-          "image" : "/assets/img/LED_on.png"
-        },
-        {
-          "id": 38,
-          "name" : "Orientation",
-          "type" : ["Orientation","LCD16X2"],
-          "description" : "Display Orientation",
-          
-          "property" : [
-             {
-            "name":"name" ,
-            "control" : "TextBox"
-            },
-            {
-              "name": "LCD device name",
-              "control": "TextBox"
-            }
-          ],
-          "image" : "/assets/img/LED_on.png"
-        },
-        {
-          "id": 39,
-          "name" : "Illumination",
-          "type" : ["Illuminance","LCD16X2"],
-          "description" : "Display Illumination",
-          
-          "property" : [
-             {
-            "name":"name" ,
-            "control" : "TextBox"
-            },
-            {
-              "name": "LCD device name",
-              "control": "TextBox"
-            }
-          ],
-          "image" : "/assets/img/LED_on.png"
-        },
-        {
-          "id": 40,
-          "name" : "Distance",
-          "type" : ["Distance","LCD16X2"],
-          "description" : "Display distance",
-          
-          "property" : [
-             {
-            "name":"name" ,
-            "control" : "TextBox"
-            },
-            {
-              "name": "LCD device name",
-              "control": "TextBox"
-            }
-          ],
-          "image" : "/assets/img/LED_on.png"
-        },
-
-        {
-          "id": 41,
-          "name" : "Humanity",
-          "type" : ["Humanity","LCD16X2"],
-          "description" : "Display humanity",
-          
-          "property" : [
-             {
-            "name":"name" ,
-            "control" : "TextBox"
-            },
-            {
-              "name": "LCD device name",
-              "control": "TextBox"
-            }
-          ],
-          "image" : "/assets/img/LED_on.png"
-        },
-
-        {
-          "id": 42,
-          "name" : "Colour",
-          "type" : ["Colour","LCD16X2"],
-          "description" : "Display RGB colour code",
-          
-          "property" : [
-             {
-            "name":"name" ,
-            "control" : "TextBox"
-            },
-            {
-              "name": "LCD device name",
-              "control": "TextBox"
-            }
-          ],
-          "image" : "/assets/img/LED_on.png"
-        },
-
-        {
-          "id": 43,
-          "name" : "Gesture",
-          "type" : ["Gesture","LCD16X2"],
-          "description" : "Display gesture direction",
-          
-          "property" : [
-             {
-            "name":"name" ,
-            "control" : "TextBox"
-            },
-            {
-              "name": "LCD device name",
-              "control": "TextBox"
-            }
-          ],
-          "image" : "/assets/img/LED_on.png"
-        },
-
-        {
-          "id": 44,
-          "name" : "UART",
-          "type" : ["UART","LCD16X2"],
-          "description" : "Display data in serial communication",
-          
-          "property" : [
-             {
-            "name":"name" ,
-            "control" : "TextBox"
-            },
-            {
-              "name": "LCD device name",
-              "control": "TextBox"
-            }
-          ],
-          "image" : "/assets/img/LED_on.png"
-        },
-
-
-        {
-          "id": 45,
-          "name" : "Button state",
-          "type" : ["Button","LCD16X2"],
-          "description" : "Display button state",
-          
-          "property" : [
-             {
-            "name":"name" ,
-            "control" : "TextBox"
-            },
-            {
-              "name": "LCD device name",
-              "control": "TextBox"
-            }
-          ],
-          "image" : "/assets/img/LED_on.png"
-        },
-
-
-        {
-          "id": 46,
-          "name" : "Liquid Level",
-          "type" : ["LiquidLevel","LCD16X2"],
-          "description" : "Display Liquid Level",
-          
-          "property" : [
-             {
-            "name":"name" ,
-            "control" : "TextBox"
-            },
-            {
-              "name": "LCD device name",
-              "control": "TextBox"
-            }
-          ],
-          "image" : "/assets/img/LED_on.png"
-        },
-
-        {
-          "id": 47,
-          "name" : "General Analog voltage",
-          "type" : ["Generic","LCD16X2"],
-          "description" : "Display General Analog voltage",
-          
-          "property" : [
-             {
-            "name":"name" ,
-            "control" : "TextBox"
-            },
-            {
-              "name": "LCD device name",
-              "control": "TextBox"
-            }
-          ],
-          "image" : "/assets/img/LED_on.png"
-        },
-
-
-        {
-          "id": 46,
-          "name" : "General Digital logic",
-          "type" : ["Generic","LCD16X2"],
-          "description" : "General Digital logic",
-          
-          "property" : [
-             {
-            "name":"name" ,
-            "control" : "TextBox"
-            },
-            {
-              "name": "LCD device name",
-              "control": "TextBox"
-            }
-          ],
-          "image" : "/assets/img/LED_on.png"
-        },
-             {
-          "id": 47,
-          "name" : "Accelerometer_Y",
-          "type" : ["AccelY","LCD16X2"],
-          "description" : "Display Accelerometer y axis",
-          
-          "property" : [
-             {
-            "name":"name" ,
-            "control" : "TextBox"
-            },
-            {
-              "name": "LCD device name",
-              "control": "TextBox"
-            }
-          ],
-          "image" : "/assets/img/LED_on.png"
-        },
-             {
-          "id": 48,
-          "name" : "Accelerometer_Z",
-          "type" : ["AccelZ","LCD16X2"],
-          "description" : "Display Accelerometer z axis",
-          
-          "property" : [
-             {
-            "name":"name" ,
-            "control" : "TextBox"
-            },
-            {
-              "name": "LCD device name",
-              "control": "TextBox"
-            }
-          ],
-          "image" : "/assets/img/LED_on.png"
+          "regex": "^[\\S ]{0,16}+\\n+[\\S ]{0,16}$"
         }
-        
-      ] 
+      }
+    },
+    {
+      "id": "AN_LCD_4",
+      "name": "Clear screen",
+      "short_description": "Erase all content in the screen",
+      "params": {
+        "name": {
+          "control": "textbox",
+          "default_value": "",
+          "args": [
+            ""
+          ],
+          "regex": "^[\\S]+$"
+        }
+      }
+    },
+    {
+      "id": "AN_LCD_5",
+      "name": "Temperature",
+      "short_description": "Temperature",
+      "params": {
+        "name": {
+          "control": "textbox",
+          "default_value": "",
+          "args": [
+            ""
+          ],
+          "regex": "^[\\S]+$"
+        },
+        "sensor name": {
+          "control": "textbox",
+          "default_value": "",
+          "args": [
+            ""
+          ],
+          "regex": "^[\\S]+$"
+        }
+      }
+    },
+    {
+      "id": "AN_LCD_6",
+      "name": "Liquid Flow",
+      "short_description": "LiquidFlow",
+      "params": {
+        "name": {
+          "control": "textbox",
+          "default_value": "",
+          "args": [
+            ""
+          ],
+          "regex": "^[\\S]+$"
+        },
+        "sensor name": {
+          "control": "textbox",
+          "default_value": "",
+          "args": [
+            ""
+          ],
+          "regex": "^[\\S]+$"
+        }
+      }
+    },
+    {
+      "id": "AN_LCD_7",
+      "name": "Pressure",
+      "short_description": "Barometer",
+      "params": {
+        "name": {
+          "control": "textbox",
+          "default_value": "",
+          "args": [
+            ""
+          ],
+          "regex": "^[\\S]+$"
+        },
+        "sensor name": {
+          "control": "textbox",
+          "default_value": "",
+          "args": [
+            ""
+          ],
+          "regex": "^[\\S]+$"
+        }
+      }
+    },
+    {
+      "id": "AN_LCD_8",
+      "name": "Liquid Pressure",
+      "short_description": "LiquidPressure",
+      "params": {
+        "name": {
+          "control": "textbox",
+          "default_value": "",
+          "args": [
+            ""
+          ],
+          "regex": "^[\\S]+$"
+        },
+        "sensor name": {
+          "control": "textbox",
+          "default_value": "",
+          "args": [
+            ""
+          ],
+          "regex": "^[\\S]+$"
+        }
+      }
+    },
+    {
+      "id": "AN_LCD_9",
+      "name": "Orientation",
+      "short_description": "Orientation",
+      "params": {
+        "name": {
+          "control": "textbox",
+          "default_value": "",
+          "args": [
+            ""
+          ],
+          "regex": "^[\\S]+$"
+        },
+        "sensor name": {
+          "control": "textbox",
+          "default_value": "",
+          "args": [
+            ""
+          ],
+          "regex": "^[\\S]+$"
+        }
+      }
+    },
+    {
+      "id": "AN_LCD_10",
+      "name": "Illumination",
+      "short_description": "Illuminance",
+      "params": {
+        "name": {
+          "control": "textbox",
+          "default_value": "",
+          "args": [
+            ""
+          ],
+          "regex": "^[\\S]+$"
+        },
+        "sensor name": {
+          "control": "textbox",
+          "default_value": "",
+          "args": [
+            ""
+          ],
+          "regex": "^[\\S]+$"
+        }
+      }
+    },
+    {
+      "id": "AN_LCD_11",
+      "name": "Distance",
+      "short_description": "Distance",
+      "params": {
+        "name": {
+          "control": "textbox",
+          "default_value": "",
+          "args": [
+            ""
+          ],
+          "regex": "^[\\S]+$"
+        },
+        "sensor name": {
+          "control": "textbox",
+          "default_value": "",
+          "args": [
+            ""
+          ],
+          "regex": "^[\\S]+$"
+        }
+      }
+    },
+    {
+      "id": "AN_LCD_12",
+      "name": "Humanity",
+      "short_description": "Humanity",
+      "params": {
+        "name": {
+          "control": "textbox",
+          "default_value": "",
+          "args": [
+            ""
+          ],
+          "regex": "^[\\S]+$"
+        },
+        "sensor name": {
+          "control": "textbox",
+          "default_value": "",
+          "args": [
+            ""
+          ],
+          "regex": "^[\\S]+$"
+        }
+      }
+    },
+    {
+      "id": "AN_LCD_13",
+      "name": "Color",
+      "short_description": "Color",
+      "params": {
+        "name": {
+          "control": "textbox",
+          "default_value": "",
+          "args": [
+            ""
+          ],
+          "regex": "^[\\S]+$"
+        },
+        "sensor name": {
+          "control": "textbox",
+          "default_value": "",
+          "args": [
+            ""
+          ],
+          "regex": "^[\\S]+$"
+        }
+      }
+    },
+    {
+      "id": "AN_LCD_14",
+      "name": "Gesture",
+      "short_description": "Gesture",
+      "params": {
+        "name": {
+          "control": "textbox",
+          "default_value": "",
+          "args": [
+            ""
+          ],
+          "regex": "^[\\S]+$"
+        },
+        "sensor name": {
+          "control": "textbox",
+          "default_value": "",
+          "args": [
+            ""
+          ],
+          "regex": "^[\\S]+$"
+        }
+      }
+    },
+    {
+      "id": "AN_LCD_15",
+      "name": "UART",
+      "short_description": "UART",
+      "params": {
+        "name": {
+          "control": "textbox",
+          "default_value": "",
+          "args": [
+            ""
+          ],
+          "regex": "^[\\S]+$"
+        },
+        "sensor name": {
+          "control": "textbox",
+          "default_value": "",
+          "args": [
+            ""
+          ],
+          "regex": "^[\\S]+$"
+        }
+      }
+    },
+    {
+      "id": "AN_LCD_16",
+      "name": "Button state",
+      "short_description": "Button",
+      "params": {
+        "name": {
+          "control": "textbox",
+          "default_value": "",
+          "args": [
+            ""
+          ],
+          "regex": "^[\\S]+$"
+        },
+        "sensor name": {
+          "control": "textbox",
+          "default_value": "",
+          "args": [
+            ""
+          ],
+          "regex": "^[\\S]+$"
+        }
+      }
+    },
+    {
+      "id": "AN_LCD_17",
+      "name": "Liquid Level",
+      "short_description": "LiquidLevel",
+      "params": {
+        "name": {
+          "control": "textbox",
+          "default_value": "",
+          "args": [
+            ""
+          ],
+          "regex": "^[\\S]+$"
+        },
+        "sensor name": {
+          "control": "textbox",
+          "default_value": "",
+          "args": [
+            ""
+          ],
+          "regex": "^[\\S]+$"
+        }
+      }
+    },
+    {
+      "id": "AN_LCD_18",
+      "name": "Voltage",
+      "short_description": "Generic",
+      "params": {
+        "name": {
+          "control": "textbox",
+          "default_value": "",
+          "args": [
+            ""
+          ],
+          "regex": "^[\\S]+$"
+        },
+        "sensor name": {
+          "control": "textbox",
+          "default_value": "",
+          "args": [
+            ""
+          ],
+          "regex": "^[\\S]+$"
+        }
+      }
+    },
+    {
+      "id": "AN_LCD_19",
+      "name": "Logic",
+      "short_description": "Generic",
+      "params": {
+        "name": {
+          "control": "textbox",
+          "default_value": "",
+          "args": [
+            ""
+          ],
+          "regex": "^[\\S]+$"
+        },
+        "sensor name": {
+          "control": "textbox",
+          "default_value": "",
+          "args": [
+            ""
+          ],
+          "regex": "^[\\S]+$"
+        }
+      }
+    },
+    {
+      "id": "AN_LCD_20",
+      "name": "Accelerometer_X",
+      "short_description": "AccelX",
+      "params": {
+        "name": {
+          "control": "textbox",
+          "default_value": "",
+          "args": [
+            ""
+          ],
+          "regex": "^[\\S]+$"
+        },
+        "sensor name": {
+          "control": "textbox",
+          "default_value": "",
+          "args": [
+            ""
+          ],
+          "regex": "^[\\S]+$"
+        }
+      }
+    },
+    {
+      "id": "AN_LCD_21",
+      "name": "Accelerometer_Y",
+      "short_description": "AccelY",
+      "params": {
+        "name": {
+          "control": "textbox",
+          "default_value": "",
+          "args": [
+            ""
+          ],
+          "regex": "^[\\S]+$"
+        },
+        "sensor name": {
+          "control": "textbox",
+          "default_value": "",
+          "args": [
+            ""
+          ],
+          "regex": "^[\\S]+$"
+        }
+      }
+    },
+    {
+      "id": "AN_LCD_22",
+      "name": "Accelerometer_Z",
+      "short_description": "AccelZ",
+      "params": {
+        "name": {
+          "control": "textbox",
+          "default_value": "",
+          "args": [
+            ""
+          ],
+          "regex": "^[\\S]+$"
+        },
+        "sensor name": {
+          "control": "textbox",
+          "default_value": "",
+          "args": [
+            ""
+          ],
+          "regex": "^[\\S]+$"
+        }
+      }
+    },
+    {
+      "id": "AN_LCD_23",
+      "name": "Gyroscope_X",
+      "short_description": "GyroX",
+      "params": {
+        "name": {
+          "control": "textbox",
+          "default_value": "",
+          "args": [
+            ""
+          ],
+          "regex": "^[\\S]+$"
+        },
+        "sensor name": {
+          "control": "textbox",
+          "default_value": "",
+          "args": [
+            ""
+          ],
+          "regex": "^[\\S]+$"
+        }
+      }
+    },
+    {
+      "id": "AN_LCD_24",
+      "name": "Gyroscope_Y",
+      "short_description": "GyroY",
+      "params": {
+        "name": {
+          "control": "textbox",
+          "default_value": "",
+          "args": [
+            ""
+          ],
+          "regex": "^[\\S]+$"
+        },
+        "sensor name": {
+          "control": "textbox",
+          "default_value": "",
+          "args": [
+            ""
+          ],
+          "regex": "^[\\S]+$"
+        }
+      }
+    },
+    {
+      "id": "AN_LCD_25",
+      "name": "Gyroscope_Z",
+      "short_description": "GyroZ",
+      "params": {
+        "name": {
+          "control": "textbox",
+          "default_value": "",
+          "args": [
+            ""
+          ],
+          "regex": "^[\\S]+$"
+        },
+        "sensor name": {
+          "control": "textbox",
+          "default_value": "",
+          "args": [
+            ""
+          ],
+          "regex": "^[\\S]+$"
+        }
+      }
+    },
+    {
+      "id": "AN_LCD_26",
+      "name": "Magnetic_X",
+      "short_description": "MagneticX",
+      "params": {
+        "name": {
+          "control": "textbox",
+          "default_value": "",
+          "args": [
+            ""
+          ],
+          "regex": "^[\\S]+$"
+        },
+        "sensor name": {
+          "control": "textbox",
+          "default_value": "",
+          "args": [
+            ""
+          ],
+          "regex": "^[\\S]+$"
+        }
+      }
+    },
+    {
+      "id": "AN_LCD_27",
+      "name": "Magnetic_Y",
+      "short_description": "MagneticY",
+      "params": {
+        "name": {
+          "control": "textbox",
+          "default_value": "",
+          "args": [
+            ""
+          ],
+          "regex": "^[\\S]+$"
+        },
+        "sensor name": {
+          "control": "textbox",
+          "default_value": "",
+          "args": [
+            ""
+          ],
+          "regex": "^[\\S]+$"
+        }
+      }
+    },
+    {
+      "id": "AN_LCD_28",
+      "name": "Magnetic_Z",
+      "short_description": "MagneticZ",
+      "params": {
+        "name": {
+          "control": "textbox",
+          "default_value": "",
+          "args": [
+            ""
+          ],
+          "regex": "^[\\S]+$"
+        },
+        "sensor name": {
+          "control": "textbox",
+          "default_value": "",
+          "args": [
+            ""
+          ],
+          "regex": "^[\\S]+$"
+        }
+      }
+    }
+  ],
+  "Audio": [
+    {
+      "id": "Audio_1",
+      "name": "Play audio",
+      "short_description": "Play an audio file from a SD card",
+      "params": {
+        "name": {
+          "control": "textbox",
+          "default_value": "",
+          "args": [
+            ""
+          ],
+          "regex": "^[\\S]+$"
+        },
+        "filename": {
+          "control": "textbox",
+          "default_value": "",
+          "args": [
+            ""
+          ],
+          "regex": "^[\\S]+$"
+        },
+        "volume": {
+          "control": "slider",
+          "default_value": "50",
+          "args": [
+            "%"
+          ],
+          "regex": "^(\\d([.]\\d{1,})?|[1-9]\\d([.]\\d{1,})?|100)$"
+        }
+      }
+    },
+    {
+      "id": "Audio_2",
+      "name": "Volume Up",
+      "short_description": "Increase volume by 10%",
+      "params": {
+        "name": {
+          "control": "textbox",
+          "default_value": "",
+          "args": [
+            ""
+          ],
+          "regex": "^[\\S]+$"
+        }
+      }
+    },
+    {
+      "id": "Audio_3",
+      "name": "Volume Down",
+      "short_description": "Decrease volume by 10%",
+      "params": {
+        "name": {
+          "control": "textbox",
+          "default_value": "",
+          "args": [
+            ""
+          ],
+          "regex": "^[\\S]+$"
+        }
+      }
+    },
+    {
+      "id": "Audio_4",
+      "name": "Set Volume",
+      "short_description": "Set audio playback volume",
+      "params": {
+        "name": {
+          "control": "textbox",
+          "default_value": "",
+          "args": [
+            ""
+          ],
+          "regex": "^[\\S]+$"
+        },
+        "volume": {
+          "control": "slider",
+          "default_value": "50",
+          "args": [
+            "%"
+          ],
+          "regex": "^(\\d([.]\\d{1,})?|[1-9]\\d([.]\\d{1,})?|100)$"
+        }
+      }
+    },
+    {
+      "id": "Audio_5",
+      "name": "Stop",
+      "short_description": "Stop playing an audio file",
+      "params": {
+        "name": {
+          "control": "textbox",
+          "default_value": "",
+          "args": [
+            ""
+          ],
+          "regex": "^[\\S]+$"
+        }
+      }
+    },
+    {
+      "id": "Audio_6",
+      "name": "Beep",
+      "short_description": "Play a beep sound",
+      "params": {
+        "name": {
+          "control": "textbox",
+          "default_value": "",
+          "args": [
+            ""
+          ],
+          "regex": "^[\\S]+$"
+        },
+        "frequency": {
+          "control": "spinbox",
+          "default_value": "1000",
+          "args": [
+            "Hz"
+          ],
+          "regex": "^(\\d{1,})$"
+        },
+        "duration": {
+          "control": "spinbox",
+          "default_value": "100",
+          "args": [
+            "ms"
+          ],
+          "regex": "^(\\d{1,})$"
+        }
+      }
+    }
+  ],
+  "DC Motor": [
+    {
+      "id": "DCMotor_1",
+      "name": "On",
+      "short_description": "Turn a motor on",
+      "params": {
+        "name": {
+          "control": "textbox",
+          "default_value": "",
+          "args": [
+            ""
+          ],
+          "regex": "^[\\S]+$"
+        },
+        "direction": {
+          "control": "radio",
+          "default_value": "",
+          "args": [
+            "CW",
+            "CCW"
+          ],
+          "regex": ""
+        },
+        "speed": {
+          "control": "slider",
+          "default_value": "50",
+          "args": [
+            "%"
+          ],
+          "regex": "^(\\d([.]\\d{1,})?|[1-9]\\d([.]\\d{1,})?|100)$"
+        }
+      }
+    },
+    {
+      "id": "DCMotor_2",
+      "name": "Reverse",
+      "short_description": "Change motor direction",
+      "params": {
+        "name": {
+          "control": "textbox",
+          "default_value": "",
+          "args": [
+            ""
+          ],
+          "regex": "^[\\S]+$"
+        }
+      }
+    },
+    {
+      "id": "DCMotor_3",
+      "name": "Set Speed",
+      "short_description": "Change motor speed",
+      "params": {
+        "name": {
+          "control": "textbox",
+          "default_value": "",
+          "args": [
+            ""
+          ],
+          "regex": "^[\\S]+$"
+        },
+        "speed": {
+          "control": "slider",
+          "default_value": "50",
+          "args": [
+            "%"
+          ],
+          "regex": "^(\\d([.]\\d{1,})?|[1-9]\\d([.]\\d{1,})?|100)$"
+        }
+      }
+    },
+    {
+      "id": "DCMotor_4",
+      "name": "Stop",
+      "short_description": "Turn a motor off",
+      "params": {
+        "name": {
+          "control": "textbox",
+          "default_value": "",
+          "args": [
+            ""
+          ],
+          "regex": "^[\\S]+$"
+        }
+      }
+    }
+  ],
+  "Time": [
+    {
+      "id": "Time_1",
+      "name": "Set time",
+      "short_description": "Set the current time",
+      "params": {
+        "name": {
+          "control": "textbox",
+          "default_value": "",
+          "args": [
+            ""
+          ],
+          "regex": "^[\\S]+$"
+        },
+        "time": {
+          "control": "textbox",
+          "default_value": "13:59:44",
+          "args": [
+            ""
+          ],
+          "regex": "^([01]\\d|2[0-3]):([0-5]\\d):([0-5]\\d)$"
+        }
+      }
+    }
+  ],
+  "Segment LED": [
+    {
+      "id": "SegmentLED_1",
+      "name": "Show number",
+      "short_description": "Display digit(s) on the segment LED",
+      "params": {
+        "name": {
+          "control": "textbox",
+          "default_value": "",
+          "args": [
+            ""
+          ],
+          "regex": "^[\\S]+$"
+        },
+        "number": {
+          "control": "textbox",
+          "default_value": "0",
+          "args": [
+            ""
+          ],
+          "regex": "^(\\d{1,})$"
+        }
+      }
+    }
+  ],
+  "Dotmatrix": [
+    {
+      "id": "Dotmatrix_1",
+      "name": "Display",
+      "short_description": "Display data on dot matrix",
+      "params": {
+        "name": {
+          "control": "TextBox",
+          "default_value": "",
+          "args": [
+            ""
+          ],
+          "regex": "^[\\S]+$"
+        },
+        "data": {
+          "control": "DOTMATRIX_CONTROL",
+          "default_value": "",
+          "args": [
+            ""
+          ],
+          "regex": ""
+        }
+      }
+    }
+  ]
 }
-]
