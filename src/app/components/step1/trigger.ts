@@ -1,4 +1,36 @@
-[
+export interface TriggerGroup {
+  name : string;
+  children : Trigger[];
+}
+
+export interface Trigger {
+  id: string;
+  name: string;
+  short_description: string;
+  display_text: string;
+  params?: TriggerParameter[];
+}
+
+export interface TriggerParameter {
+    name: string;
+    control: string;
+    default_value: string;
+    args: string[];
+    regex: string;  // regex use to validate the property value 
+}
+
+export namespace TriggerHelper {
+
+    export function findTriggerById(id: string): Trigger {
+        for (const category of triggerData) {
+            for (const trigger of category.children) {
+                if (trigger.id === id)
+                    return trigger;
+            }
+        }
+    }
+
+    export const triggerData: TriggerGroup[] = [
   {
     "name": "Accelerometer",
     "children": [
@@ -709,4 +741,6 @@
       }
     ]
   }
-]
+];
+
+}

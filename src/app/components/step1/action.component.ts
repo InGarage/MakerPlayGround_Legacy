@@ -1,6 +1,7 @@
 import { Component, Input, Output, EventEmitter, OnInit, AfterViewInit } from '@angular/core';
 import { TreeModule } from 'angular2-tree-component';
-import { ActionGroup, Action } from './action';
+import { Action, ActionGroup, ActionHelper } from './action';
+import { Trigger, TriggerGroup, TriggerHelper } from './trigger';
 import * as $ from 'jquery';
 
 @Component({
@@ -31,8 +32,8 @@ export class ActionComponent {
   styles: any;
 
   constructor() {
-    this.actions = require("./action.json");
-    this.triggers = require("./trigger.json");
+    this.actions = ActionHelper.actionData;
+    this.triggers = TriggerHelper.triggerData;
 
   }
 

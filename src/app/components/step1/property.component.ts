@@ -1,162 +1,140 @@
 import { Component, Input, Output, EventEmitter, SimpleChange } from '@angular/core';
-import { NgModule }      from '@angular/core';
+import { NgModule } from '@angular/core';
 //import { GraphData, ActionData, TriggerData } from './graph';
 
-import { Action, ActionGroup, ActionProperty, Trigger, TriggerGroup } from './action';
+import { Action, ActionGroup, ActionHelper } from './action';
+import { Trigger, TriggerGroup, TriggerHelper } from './trigger';
 import { GraphData, NodeData, EdgeData } from './graphmodel';
-
+import { PropertyValue } from './propertyvalue';
 
 @Component({
-  selector: 'property',
-  templateUrl: `./property.component.html`,
-  styleUrls: ['./step1.component.css']
+    selector: 'property',
+    templateUrl: `./property.component.html`,
+    styleUrls: ['./step1.component.css']
 })
-export class PropertyComponent  {
-  @Input() selectedNode: NodeData;
-  @Input() selectedEdge: EdgeData;
-  @Output() updateDataFinish = new EventEmitter();
-  @Output() updateData = new EventEmitter(); 
 
-  showPropertiesNode: boolean = false;
-  showPropertiesEdge: boolean = false;
-  //ObjProperties: ActionProperty[];
-  ObjPropertiesNode = [];
-  ObjPropertiesEdge = [];
-  previousObjDataNode: NodeData;
-  previousObjDataEdge: EdgeData;
-  dirty: boolean;
+export class PropertyComponent {
+    @Input() objectSelected: NodeData | EdgeData;
+    @Output() updateDataFinish = new EventEmitter<PropertyValue[]>();
+    @Output() updateData = new EventEmitter<PropertyValue[]>();
 
-  valueToBeUpdated;
+    showProperties: boolean = false;
+    objProperties: PropertyValue[] = [];
+    previousObjDataNode: NodeData;
+    previousObjDataEdge: EdgeData;
+    dirty: boolean;
 
-  name: string;
+    ngOnChanges(changes: SimpleChange) {
+        if (this.objectSelected instanceof NodeData) {
+            this.populatePropertyWindowNode(this.objectSelected);
+        } else if (this.objectSelected instanceof EdgeData) {
+            this.populatePropertyWindowEdge(this.objectSelected);
+        } // else this.objectSelected is undefined so we won't do anything
+    }
 
-  actions: ActionGroup[];
-  triggers: TriggerGroup[];
+    populatePropertyWindowNode(objData: NodeData) {
+        // Update data to data structure
+        if (objData === null) {
+            if (this.dirty)
+                this.updateDataFinish.emit(this.objProperties);
 
-  constructor() {
-    this.actions = require("./action.json");
-    this.triggers = require("./trigger.json"); 
-  }
+            this.showProperties = false;
+        }
+        // Only show data
+        else {
+            // other node is being selected so we need to save it's data before
+            // populate property window with property of new node
+            if ((this.previousObjDataNode !== null) && (this.dirty)) {
+                console.log('Save');
+                this.updateDataFinish.emit(this.objProperties);
+            }
+            this.dirty = false;
+            this.previousObjDataNode = objData;
+            this.objProperties = [];
+            this.showProperties = true;
+            let action = ActionHelper.findActionById(objData.getActionId());
 
-  ngOnChanges(changes: SimpleChange) { 
-    if (this.selectedNode !== undefined)
-      this.populatePropertyWindowNode(this.selectedNode);
-    if (this.selectedEdge !== undefined)
-      this.populatePropertyWindowEdge(this.selectedEdge);
-  }
-
-    private findActionById(id: number): Action {
-        for (let actionGroup of this.actions) {
-            for (let action of actionGroup.children) {
-                if (action.id === id)
-                    return action;
+            let obj: PropertyValue;
+            for (let prop of action.params) {
+                console.log(prop.control);
+                obj = {
+                    uid: objData.getNodeId(),
+                    name: prop.name,
+                    value: objData.getActionParams(prop.name),
+                    control: prop.control,
+                }
+                this.objProperties.push(obj);
             }
         }
-        return undefined;
     }
 
-    private findTriggerById(id: number): Trigger {
-        for (let triggerGroup of this.triggers) {
-            for (let trigger of triggerGroup.children) {
-                if (trigger.id === id)
-                    return trigger;
+    populatePropertyWindowEdge(objData: EdgeData) {
+        if (objData === null) {
+            if (this.dirty)
+                this.updateDataFinish.emit(this.objProperties);
+
+            this.showProperties = false;
+        } else {
+            // other trigger is being selected so we need to save it's data before
+            // populate property window with property of new trigger
+            if ((this.previousObjDataNode !== null) && (this.dirty)) {
+                console.log('Save');
+                this.updateDataFinish.emit(this.objProperties);
+            }
+            this.dirty = false;
+            this.previousObjDataEdge = objData;
+            this.objProperties = [];
+            this.showProperties = true;
+            
+            const triggleId = objData.getTriggerId();
+            for (const id of triggleId) {
+                let trigger = TriggerHelper.findTriggerById(id);
+
+                let obj: PropertyValue;
+                for (let prop of trigger.params) {
+                    console.log(prop.control);
+                    obj = {
+                        uid: objData.getEdgeId(),
+                        name: prop.name,
+                        value: objData.getTriggerParams(id, prop.name),
+                        control: prop.control,
+                    }
+                    this.objProperties.push(obj);
+                }
             }
         }
-        return undefined;
     }
 
-  populatePropertyWindowNode(objData: NodeData) {
-    // Update data to data structure
-    if (objData === null) {
-      if (this.dirty)
-        this.updateDataFinish.emit(this.ObjPropertiesNode);
-
-      this.showPropertiesNode = false;
+    setFormStyles() {
+        let styles = {
+            'padding-left': '30px',
+            'padding-right': '30px',
+            'padding-bottom': '15px',
+        };
+        return styles;
     }
-    // Only show data
-    else {
-      // click friend
-      if ((this.previousObjDataNode !== null) && (this.dirty)) { 
-          console.log('Save');
-          this.updateDataFinish.emit(this.ObjPropertiesNode);
-      }
-      this.dirty = false;
-      this.previousObjDataNode = objData;
-      this.ObjPropertiesNode = [];
-      this.showPropertiesNode = true;
-      let action = this.findActionById(objData.getActionId());
 
-      let obj = {};
-      for (let prop of action.property) {
-        obj = {
-          uid: objData.getNodeId(),
-          name: prop.name,
-          value: objData.getActionParams(prop.name),
-          control: prop.control,
+    /**
+     * This method will be called by the close button of the property window.
+     * We should save the content that has been edited (by checking the dirty bit)
+     * before hide it from the screen.
+     */
+    hideProperties() {
+        this.showProperties = false;
+        if (this.dirty) {
+            this.updateDataFinish.emit(this.objProperties);
+            this.dirty = false;
         }
-        this.ObjPropertiesNode.push(obj);
-      }
     }
-  }
 
-  populatePropertyWindowEdge(objData: EdgeData) {
-    if (objData === null) {
-      this.showPropertiesEdge = false;
+    onKey(objData) {
+        this.dirty = true;
+        this.updateData.emit(objData);
     }
-    else {
-      // click friend
-      // if ((this.previousObjData !== null) && (this.dirty)) { 
-      //     console.log('Save');
-      //     this.updateDataFinish.emit(this.ObjProperties);
-      // }
-      // this.dirty = false;
-      this.previousObjDataEdge = objData;
-      this.ObjPropertiesEdge = [];
-      this.showPropertiesEdge = true;
-      let trigger = this.findActionById(objData.getTriggerId());
 
-      console.log(objData.getEdgeId());
-      console.log(objData.getTriggerParams("Temperature"));
-
-      let obj = {};
-      for (let prop of trigger.property) {
-        console.log(prop.control);
-        obj = {
-          uid: objData.getEdgeId(),
-          name: prop.name,
-          value: objData.getTriggerParams(prop.name),
-          control: prop.control,
-        }
-        this.ObjPropertiesEdge.push(obj);
-  
-      }
+    onOutOfFocus() {
+        this.dirty = false;
+        this.updateDataFinish.emit(this.objProperties);
     }
-  }
-
-  setFormStyles() {
-    let styles = {
-      'padding-left': '30px',
-      'padding-right': '30px',
-      'padding-bottom': '15px',
-    };
-    return styles;
-  }
-
-  hideProperties() {
-    if (this.showPropertiesNode === true)
-      this.showPropertiesNode = false;
-    if (this.showPropertiesEdge === true)
-      this.showPropertiesEdge = false;
-  }
-
-  onKey(objData) {
-    this.dirty = true;
-    this.updateData.emit(objData);
-  }
-
-  onOutOfFocus() {
-    this.dirty = false;
-    this.updateDataFinish.emit(this.ObjPropertiesNode);
-  }
 
 }

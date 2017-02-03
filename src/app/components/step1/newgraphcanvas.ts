@@ -2,7 +2,8 @@
 import 'fabric';
 import * as Collections from 'typescript-collections';
 
-import { Action, ActionGroup } from './action';
+import { Action, ActionGroup, ActionHelper } from './action';
+import { Trigger, TriggerGroup, TriggerHelper } from './trigger';
 import { GraphData, NodeData, EdgeData } from './graphmodel';
 
 /* display constants */
@@ -40,6 +41,7 @@ export class GraphCanvas {
     private nodeFabricObject: Collections.Dictionary<string, NodeView>;
     private edgeFabricObject: Collections.Dictionary<string, EdgeView>;
     private callback: Collections.Dictionary<CanvasEventTypes, (options: CanvasEventOptions) => void>;
+    private selectingObject: NodeView | EdgeView;
 
     constructor(private graph: GraphData, element: HTMLCanvasElement | string, options?: fabric.ICanvasOptions) {
         this.canvas = new fabric.Canvas(element, options);
@@ -54,6 +56,22 @@ export class GraphCanvas {
             this.deselectAllEdge();
             this.callback.getValue('object:deselected')({});
         });
+
+        this.canvas.on('object:selected', (e) => {
+            if (e.target !== null) {
+                if (this.selectingObject !== undefined) {
+                    this.selectingObject.deselect();
+                    this.callback.getValue('object:deselected')({});
+                }
+                const uid = e.target.get('uid');
+                const object = this.nodeFabricObject.getValue(uid) || this.edgeFabricObject.getValue(uid);
+                if (object !== undefined) {
+                    this.selectingObject = object;
+                } else {
+                    console.log("We are in great danger!!!");
+                }
+            }
+        });
     }
 
     private handleGroupSelection() {
@@ -62,6 +80,9 @@ export class GraphCanvas {
         let selectedEdge = new Collections.Set<EdgeView>((item) => { return item.id });
 
         this.canvas.on('selection:created', (e) => {
+            this.selectingObject.deselect();
+            this.selectingObject = undefined;
+
             // Grab other pieces of nodes and egdes that should be selected but hasn't been selected by user
             for (let selectingObject of this.canvas.getActiveGroup().getObjects()) {
                 let uid = selectingObject.get('uid');
@@ -323,7 +344,7 @@ class NodeView {
     readonly nodeSelectingIndicator: fabric.ICircle;
     readonly nodeNameText: fabric.IText;
     readonly nodeRemoveButton: fabric.IGroup;
-    actionGroup: ActionGroup[] = require("./action.json"); // TODO: refactor into the action class / service
+    //actionGroup: ActionGroup[] = require("./action.json"); // TODO: refactor into the action class / service
 
     constructor(public graph: GraphData, readonly canvas: fabric.ICanvas,
         readonly nodeFabricObject: Collections.Dictionary<string, NodeView>,
@@ -332,9 +353,9 @@ class NodeView {
         readonly id: string, public nodeData: NodeData) {
 
         // TODO: remove to its own class
-        let action = this.findActionById(nodeData.getActionId());
+        let action = ActionHelper.findActionById(nodeData.getActionId());
 
-        fabric.Image.fromURL(action.image
+        fabric.Image.fromURL('/assets/img/'+action.id+'.png'
             , (im) => {
                 this.nodeActionImage = im;
                 this.initNodeEvent();
@@ -488,12 +509,12 @@ class NodeView {
 
         this.nodeActionImage.on('selected', (e) => {
             console.log('image select');
-            this.deselectAllNode();
-            this.deselectAllEdge();
+            // this.deselectAllNode();
+            // this.deselectAllEdge();
             this.nodeSelectingIndicator.visible = true;
             this.nodeRemoveButton.visible = true;
 
-            this.callback.getValue('object:deselected')({});
+            // this.callback.getValue('object:deselected')({});
             this.callback.getValue('node:selected')({
                 target_id: this.nodeData.getNodeId(),
             });
@@ -508,7 +529,7 @@ class NodeView {
         });
 
         this.nodeNameText.on('selected', (options) => {
-            this.deselectAllNode();
+            // this.deselectAllNode();
             this.nodeSelectingIndicator.visible = true;
             this.nodeRemoveButton.visible = true;
 
@@ -709,16 +730,11 @@ class NodeView {
         return { 'src': inRangeEdgeSrc, 'dest': inRangeEdgeDst };
     }
 
-    // TODO: move to other class
-    private findActionById(id: number): Action {
-        for (let actionGroup of this.actionGroup) {
-            for (let action of actionGroup.children) {
-                if (action.id === id)
-                    return action;
-            }
-        }
-        return undefined;
+    public deselect() {
+        this.nodeSelectingIndicator.visible = false;
+        this.nodeRemoveButton.visible = false;
     }
+
 }
 
 class EdgeView {
@@ -797,12 +813,12 @@ class EdgeView {
         });
         this.line.on('selected', (options) => {
             console.log('edge select');
-            this.deselectAllEdge();
-            this.deselectAllNode();
+            //this.deselectAllEdge();
+            //this.deselectAllNode();
             this.dotHead.visible = true;
             this.dotTail.visible = true;
 
-            this.callback.getValue('object:deselected')({});
+            //this.callback.getValue('object:deselected')({});
             this.callback.getValue('edge:selected')({
                 target_id: this.edgeData.getEdgeId(),
             });
@@ -830,12 +846,12 @@ class EdgeView {
         });
         this.triangle.on('selected', (options) => {
             console.log('edge select');
-            this.deselectAllEdge();
-            this.deselectAllNode();
+            // this.deselectAllEdge();
+            // this.deselectAllNode();
             this.dotHead.visible = true;
             this.dotTail.visible = true;
 
-            this.callback.getValue('object:deselected')({});
+            // this.callback.getValue('object:deselected')({});
             this.callback.getValue('edge:selected')({
                 target_id: this.edgeData.getEdgeId(),
             });
@@ -1109,6 +1125,11 @@ class EdgeView {
         this.nodeFabricObject.forEach((nodeId, nodeView) => {
             nodeView.nodeConnectingIndicator.visible = false;
         })
+    }
+
+    public deselect() {
+        this.dotHead.visible = false;
+        this.dotTail.visible = false;
     }
 }
 

@@ -2,8 +2,7 @@ import * as Immutable from 'immutable';
 import * as UUID from 'uuid';
 
 import { Action } from './action';
-import { CanvasEventOptions } from './graphcanvas';
-
+import { PropertyValue } from './propertyvalue';
 import { UndoStack } from './undostack';
 
 export class GraphData {
@@ -29,10 +28,10 @@ export class GraphData {
      *   },
      *   "edges": {
      *     1 : {
-     *       "trigger_id": 1,   // Trigger's unique id based on trigger.json 
+     *       "trigger_id": [],   // Trigger's unique id based on trigger.json 
      *       "params: {         // Trigger's parameters based on each trigger requirement
-     *         "key": "value",
-     *         // other params
+     *         "id": {"key": "value", },
+     *         "id": {"key": "value", },
      *       },
      *       "src_node_id": number, // Unique id of the source node    
      *       "dst_node_id": number, // Unique id of the destination node
@@ -177,7 +176,7 @@ export class GraphData {
             "display_y": '100',
         };
 
-        for (let prop of action.property) {
+        for (let prop of action.params) {
             if (prop.name === 'name')
                 allParams[prop.name] = action.name + ' 1';
             else
@@ -331,16 +330,22 @@ export class GraphData {
         this.undoStack.push(this.data);
     }
 
-    updateProperty(data) {
-        this.data = this.data.asMutable();
-        for (let d of data) {
-            this.data = this.data.setIn(['nodes', d.uid, 'params', d.name], d.value)
+    updateNodeProperty(data: PropertyValue[]) {
+        if (data[0].uid) {
+            this.data = this.data.asMutable();
+            for (let d of data) {
+                this.data = this.data.setIn(['nodes', d.uid, 'params', d.name], d.value)
+            }
+            this.data = this.data.asImmutable();
+            // this.data = this.data.withMutations(map => {
+            //     map.setIn(['nodes', data.uid, 'params', data.name], data.value)
+            // });
+            this.undoStack.push(this.data);
         }
-        this.data = this.data.asImmutable();
-        // this.data = this.data.withMutations(map => {
-        //     map.setIn(['nodes', data.uid, 'params', data.name], data.value)
-        // });
-        this.undoStack.push(this.data);
+    }
+
+    updateEdgeProperty(data: PropertyValue[]) {
+        
     }
 }
 
@@ -356,8 +361,8 @@ export class NodeData {
         return this.uid;
     }
 
-    getActionId(): number {
-        return parseInt(this.data.get('action_id'));
+    getActionId(): string {
+        return this.data.get('action_id');
     }
 
     getActionParams(name: string): string {
@@ -391,12 +396,12 @@ export class EdgeData {
         return this.uid;
     }
 
-    getTriggerId(): number {
-        return parseInt(this.data.get('trigger_id'));
+    getTriggerId(): string[] {
+        return (<Immutable.List<string>><any>this.data.get('trigger_id')).toJS();
     }
 
-    getTriggerParams(name: string): string {
-        return this.data.getIn(['params', name]);
+    getTriggerParams(triggerId: string, name: string): string {
+        return this.data.getIn(['params', triggerId, name]);
     }
 
     getSourceNodeId(): string {

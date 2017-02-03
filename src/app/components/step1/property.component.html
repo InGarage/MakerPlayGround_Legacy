@@ -1,4 +1,4 @@
-<div class="property-box" *ngIf="showPropertiesNode">
+<div class="property-box" *ngIf="showProperties">
     <div class="well-edit">
     
         <p class="labelProperties"><label>Properties</label>
@@ -7,32 +7,29 @@
         </button></p>
         
 
-        <form [ngStyle]="setFormStyles()" *ngFor="let property of ObjPropertiesNode; let i=index;">
+        <form [ngStyle]="setFormStyles()" *ngFor="let property of objProperties; let i=index;">
             <label>{{property.name}}</label><br/>
 
-            <div *ngIf="property.control==='TextBox'">
+            <div *ngIf="property.control==='textbox'">
                 <input #box type="text" [(ngModel)]="property.value" name="{{property.name}}" (keyup)="onKey(property)" (blur)="onOutOfFocus()">
             </div>
-            <div *ngIf="property.control==='RadioButton'">
+            <div *ngIf="property.control==='radio'">
                 <input #box type="radio" [(ngModel)]="property.value" name="{{property.name}}" (keyup)="onKey(property)" (blur)="onOutOfFocus()">
             </div>
-            <div *ngIf="property.control==='CheckBox'">
-                <input #box type="checkbox" [(ngModel)]="property.value" name="{{property.name}}" (keyup)="onKey(property)" (blur)="onOutOfFocus()">
-            </div>
-            <div *ngIf="property.control==='SpinBox'">
+            <div *ngIf="property.control==='spinbox'">
                 <input #box type="number" [(ngModel)]="property.value" name="{{property.name}}" (keyup)="onKey(property)" (blur)="onOutOfFocus()">
             </div>            
-            <div *ngIf="property.control==='Color'">
+            <div *ngIf="property.control==='color'">
                 <input #box type="color" [(ngModel)]="property.value" name="{{property.name}}" (keyup)="onKey(property)" (blur)="onOutOfFocus()">
             </div>
 
-            <div *ngIf="property.control==='Slider'">
+            <div *ngIf="property.control==='slider'">
                 <input #box type="range" [(ngModel)]="property.value" name="{{property.name}}" (keyup)="onKey(property)" (blur)="onOutOfFocus()">
             </div>
         </form>
     </div>
 </div>
-
+<!--
 <div class="property-box" *ngIf="showPropertiesEdge">
     <div class="well-edit">
     
@@ -51,4 +48,4 @@
 
         </form>
     </div>
-</div>
+</div>-->
