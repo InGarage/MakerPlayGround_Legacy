@@ -530,13 +530,7 @@ class NodeView {
         this.nodeSelectingIndicator.set({ left: originX, top: originY });
         this.nodeRemoveButton.set({ left: originX + NODE_REMOVEBTN_POSX, top: originY - NODE_REMOVEBTN_POSY });
 
-        if (shouldEmittedEvent) {
-            this.callback.getValue('node:move')({
-                target_id: this.nodeData.getNodeId(),
-                center_x: originX,
-                center_y: originY,
-            });
-        }
+        
 
         // show connecting indicator when this node is moving into the boundary of edge(s) that
         // this node hasn't connected to yet. The connecting indicator is shown only when we aren't
@@ -611,6 +605,14 @@ class NodeView {
                     dst_node_id: edge.getDestinationNodeId(),
                 });
             }
+        }
+
+        if (shouldEmittedEvent) {
+            this.callback.getValue('node:move')({
+                target_id: this.nodeData.getNodeId(),
+                center_x: originX,
+                center_y: originY,
+            });
         }
     }
 
