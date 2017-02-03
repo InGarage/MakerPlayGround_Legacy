@@ -1,6 +1,6 @@
 
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
-import { GraphData, NodeData } from './graphmodel';
+import { GraphData, NodeData, EdgeData } from './graphmodel';
 //import { GraphCanvas } from './graphcanvas';
 import { GraphCanvas, CanvasEventOptions, CanvasEventTypes } from './newgraphcanvas';
 import { Action } from './action';
@@ -21,6 +21,7 @@ import 'fabric';
 export class MiddleComponent implements OnInit {
 
     nodeSelect: NodeData; 
+    edgeSelect: EdgeData;
     private canvas: GraphCanvas;
     private model: GraphData;
 
@@ -77,8 +78,13 @@ export class MiddleComponent implements OnInit {
             this.nodeSelect = this.model.getNodeById(options.target_id);
         });
 
+        this.canvas.on('edge:selected', (options) => { 
+            this.edgeSelect = this.model.getEdgeById(options.target_id);
+        });
+
         this.canvas.on('object:deselected', (options) => {
             this.nodeSelect = null;
+            this.edgeSelect = null;
             this.canvas.redraw();
         });
 
@@ -121,7 +127,7 @@ export class MiddleComponent implements OnInit {
             '361cf758-db06-4c9d-9b31-2d88269554bb': {
                 'trigger_id': 1,
                 'params': {
-                    'temp': 50
+                    'Temperature': 50
                 },
                 'src_node_id': '',
                 'dst_node_id': '',
@@ -133,7 +139,7 @@ export class MiddleComponent implements OnInit {
             '87755327-ece5-4b80-bbf1-37a09c350196': {
                 'trigger_id': 2,
                 'params': {
-                    'temp': 50
+                    'Temperature': 50
                 },
                 'src_node_id': '',
                 'dst_node_id': '',

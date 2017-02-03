@@ -1,9 +1,9 @@
 import { Component, Input, Output, EventEmitter, SimpleChange } from '@angular/core';
 import { NgModule }      from '@angular/core';
 //import { GraphData, ActionData, TriggerData } from './graph';
-import { Action, ActionGroup, ActionProperty } from './action';
+import { Action, ActionGroup, ActionProperty, Trigger, TriggerGroup } from './action';
 import * as fabric from 'fabric';
-import { GraphData, NodeData } from './graphmodel';
+import { GraphData, NodeData, EdgeData } from './graphmodel';
 
 
 @Component({
@@ -13,13 +13,17 @@ import { GraphData, NodeData } from './graphmodel';
 })
 export class PropertyComponent  {
   @Input() selectedNode: NodeData;
+  @Input() selectedEdge: EdgeData;
   @Output() updateDataFinish = new EventEmitter();
   @Output() updateData = new EventEmitter(); 
 
-  showProperties: boolean = false;
+  showPropertiesNode: boolean = false;
+  showPropertiesEdge: boolean = false;
   //ObjProperties: ActionProperty[];
-  ObjProperties = [];
-  previousObjData: NodeData;
+  ObjPropertiesNode = [];
+  ObjPropertiesEdge = [];
+  previousObjDataNode: NodeData;
+  previousObjDataEdge: EdgeData;
   dirty: boolean;
 
   valueToBeUpdated;
@@ -27,7 +31,7 @@ export class PropertyComponent  {
   name: string;
 
   actions: ActionGroup[];
-  triggers: any[];
+  triggers: TriggerGroup[];
 
   constructor() {
     this.actions = require("./action.json");
@@ -36,7 +40,9 @@ export class PropertyComponent  {
 
   ngOnChanges(changes: SimpleChange) { 
     if (this.selectedNode !== undefined)
-      this.populatePropertyWindow(this.selectedNode);
+      this.populatePropertyWindowNode(this.selectedNode);
+    if (this.selectedEdge !== undefined)
+      this.populatePropertyWindowEdge(this.selectedEdge);
   }
 
     private findActionById(id: number): Action {
@@ -49,25 +55,35 @@ export class PropertyComponent  {
         return undefined;
     }
 
-  populatePropertyWindow(objData: NodeData) {
+    private findTriggerById(id: number): Trigger {
+        for (let triggerGroup of this.triggers) {
+            for (let trigger of triggerGroup.children) {
+                if (trigger.id === id)
+                    return trigger;
+            }
+        }
+        return undefined;
+    }
+
+  populatePropertyWindowNode(objData: NodeData) {
     // Update data to data structure
     if (objData === null) {
       if (this.dirty)
-        this.updateDataFinish.emit(this.ObjProperties);
+        this.updateDataFinish.emit(this.ObjPropertiesNode);
 
-      this.showProperties = false;
+      this.showPropertiesNode = false;
     }
     // Only show data
     else {
       // click friend
-      if ((this.previousObjData !== null) && (this.dirty)) { 
+      if ((this.previousObjDataNode !== null) && (this.dirty)) { 
           console.log('Save');
-          this.updateDataFinish.emit(this.ObjProperties);
+          this.updateDataFinish.emit(this.ObjPropertiesNode);
       }
       this.dirty = false;
-      this.previousObjData = objData;
-      this.ObjProperties = [];
-      this.showProperties = true;
+      this.previousObjDataNode = objData;
+      this.ObjPropertiesNode = [];
+      this.showPropertiesNode = true;
       let action = this.findActionById(objData.getActionId());
 
       let obj = {};
@@ -78,7 +94,41 @@ export class PropertyComponent  {
           value: objData.getActionParams(prop.name),
           control: prop.control,
         }
-        this.ObjProperties.push(obj);
+        this.ObjPropertiesNode.push(obj);
+      }
+    }
+  }
+
+  populatePropertyWindowEdge(objData: EdgeData) {
+    if (objData === null) {
+      this.showPropertiesEdge = false;
+    }
+    else {
+      // click friend
+      // if ((this.previousObjData !== null) && (this.dirty)) { 
+      //     console.log('Save');
+      //     this.updateDataFinish.emit(this.ObjProperties);
+      // }
+      // this.dirty = false;
+      this.previousObjDataEdge = objData;
+      this.ObjPropertiesEdge = [];
+      this.showPropertiesEdge = true;
+      let trigger = this.findActionById(objData.getTriggerId());
+
+      console.log(objData.getEdgeId());
+      console.log(objData.getTriggerParams("Temperature"));
+
+      let obj = {};
+      for (let prop of trigger.property) {
+        console.log(prop.control);
+        obj = {
+          uid: objData.getEdgeId(),
+          name: prop.name,
+          value: objData.getTriggerParams(prop.name),
+          control: prop.control,
+        }
+        this.ObjPropertiesEdge.push(obj);
+  
       }
     }
   }
@@ -93,7 +143,10 @@ export class PropertyComponent  {
   }
 
   hideProperties() {
-    this.showProperties = false;
+    if (this.showPropertiesNode === true)
+      this.showPropertiesNode = false;
+    if (this.showPropertiesEdge === true)
+      this.showPropertiesEdge = false;
   }
 
   onKey(objData) {
@@ -103,7 +156,7 @@ export class PropertyComponent  {
 
   onOutOfFocus() {
     this.dirty = false;
-    this.updateDataFinish.emit(this.ObjProperties);
+    this.updateDataFinish.emit(this.ObjPropertiesNode);
   }
 
 }

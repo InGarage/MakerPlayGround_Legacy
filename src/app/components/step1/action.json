@@ -18,7 +18,7 @@
               "control": "Percentage"
             }
           ],
-          "image" : "/assets/img/Motor_on.png",
+          "image" : "/assets/img/LED-green.svg",
           "default" : "50"
         },
         {
@@ -37,7 +37,7 @@
               "control": "TextBox"
             }
           ],
-          "image" : "/assets/img/Motor_off.png"
+          "image" : "/assets/img/LED-green.svg"
         },
         {
           "id": 3,

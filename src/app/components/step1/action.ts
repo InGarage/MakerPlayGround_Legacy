@@ -4,6 +4,11 @@ export interface ActionGroup {
   children : Action[];
 }
 
+export interface TriggerGroup {
+  name : string;
+  children : Trigger[];
+}
+
 export interface Action {
   id: number;
   name: string;
@@ -12,6 +17,16 @@ export interface Action {
   property?: ActionProperty[];
   image: string;  // path to an image that will be used to represent this action in the canvas
 }
+
+export interface Trigger {
+  id: number;
+  name: string;
+  type: ActionType[]; // Must be change to TriggerType[]
+  description: string;
+  property?: TriggerProperty[];
+  image: string;  // path to an image that will be used to represent this trigger in the canvas
+}
+
 export enum ActionType{
  Accel_X,
  Accel_Y,
@@ -53,6 +68,18 @@ export interface ActionProperty {
   name: string;
   control : ControlType;
   regex?: string;  // regex use to validate the property value 
+}
+
+export interface TriggerProperty {
+  name: string;
+  control : ControlType;
+  unit?: unitType[];  // regex use to validate the property value 
+}
+
+export enum unitType{
+  degree,
+  hPa,
+  bar
 }
 
 export enum ControlType {

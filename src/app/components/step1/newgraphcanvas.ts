@@ -28,7 +28,7 @@ export interface CanvasEventOptions {
 }
 
 export type CanvasEventTypes = 'node:selected' | 'node:move' | 'node:remove' | 'edge:move' | 'object:deselected'
-    | 'edge:connectionDst' | 'edge:connectionSrc';
+    | 'edge:connectionDst' | 'edge:connectionSrc' | 'edge:selected';
 
 type Coordinate = {
     x: number,
@@ -51,6 +51,7 @@ export class GraphCanvas {
 
         this.canvas.on('selection:cleared', (e) => {
             this.deselectAllNode();
+            this.deselectAllEdge();
             this.callback.getValue('object:deselected')({});
         });
     }
@@ -145,6 +146,14 @@ export class GraphCanvas {
         this.nodeFabricObject.forEach((nodeId, nodeView) => {
             nodeView.nodeSelectingIndicator.visible = false;
             nodeView.nodeRemoveButton.visible = false;
+        });
+    }
+
+    deselectAllEdge() {
+        this.canvas.deactivateAll().renderAll();
+        this.edgeFabricObject.forEach((edgeId, edgeView) => {
+            edgeView.dotHead.visible = false;
+            edgeView.dotTail.visible = false;
         });
     }
 
@@ -308,7 +317,8 @@ export class GraphCanvas {
 }
 
 class NodeView {
-    nodeActionImage: fabric.IImage;  // TODO: should be readonly if posible
+    //nodeActionImage: fabric.IImage;  // TODO: should be readonly if posible
+    nodeActionImage;
     readonly nodeConnectingIndicator: fabric.ICircle;
     readonly nodeSelectingIndicator: fabric.ICircle;
     readonly nodeNameText: fabric.IText;
@@ -336,6 +346,22 @@ class NodeView {
                 this.reinitializeFromModel(nodeData);
                 this.canvas.add(this.nodeConnectingIndicator, this.nodeSelectingIndicator, this.nodeNameText, this.nodeActionImage, this.nodeRemoveButton);
             });
+
+
+
+        // fabric.loadSVGFromURL(action.image, function(objects, options) {
+        //     var obj = fabric.util.groupSVGElements(objects, options);
+        //     this.nodeActionImage = obj;
+        //     this.initNodeEvent();
+        //     this.nodeActionImage.set('uid', this.id);
+        //     this.nodeConnectingIndicator.set('uid', this.id);
+        //     this.nodeSelectingIndicator.set('uid', this.id);
+        //     this.nodeNameText.set('uid', this.id);
+        //     this.nodeRemoveButton.set('uid', this.id);
+        //     this.reinitializeFromModel(nodeData);
+        //     this.canvas.add(this.nodeConnectingIndicator, this.nodeSelectingIndicator, this.nodeNameText, this.nodeActionImage, this.nodeRemoveButton);
+        // });
+
 
         this.nodeConnectingIndicator = new fabric.Circle();
         this.nodeConnectingIndicator.set({visible: false});
@@ -463,9 +489,11 @@ class NodeView {
         this.nodeActionImage.on('selected', (e) => {
             console.log('image select');
             this.deselectAllNode();
+            this.deselectAllEdge();
             this.nodeSelectingIndicator.visible = true;
             this.nodeRemoveButton.visible = true;
 
+            this.callback.getValue('object:deselected')({});
             this.callback.getValue('node:selected')({
                 target_id: this.nodeData.getNodeId(),
             });
@@ -590,6 +618,13 @@ class NodeView {
         this.nodeFabricObject.forEach((nodeId, nodeView) => {
             nodeView.nodeSelectingIndicator.visible = false;
             nodeView.nodeRemoveButton.visible = false;
+        });
+    }
+
+    private deselectAllEdge() {
+        this.edgeFabricObject.forEach((edgeId, edgeView) => {
+            edgeView.dotHead.visible = false;
+            edgeView.dotTail.visible = false;
         });
     }
 
@@ -755,10 +790,20 @@ class EdgeView {
             let [nStartX, nEndX, nStartY, nEndY] = this.getLineCoordinateFromOrigin(currentOriginLineX, currentOriginLineY);
             this.moveEdge(nStartX, nStartY, nEndX, nEndY, angle);
             this.processEdgeEvent(nStartX, nStartY, nEndX, nEndY, angle, true);
-        });
-        this.line.on('selected', (options) => {
             this.dotHead.visible = true;
             this.dotTail.visible = true;
+        });
+        this.line.on('selected', (options) => {
+            console.log('edge select');
+            this.deselectAllEdge();
+            this.deselectAllNode();
+            this.dotHead.visible = true;
+            this.dotTail.visible = true;
+
+            this.callback.getValue('object:deselected')({});
+            this.callback.getValue('edge:selected')({
+                target_id: this.edgeData.getEdgeId(),
+            });
         });
 
         this.triangle.on('moving', (options) => {
@@ -778,10 +823,20 @@ class EdgeView {
             let [nStartX, nEndX, nStartY, nEndY] = this.getLineCoordinateFromOrigin(currentOriginLineX, currentOriginLineY);
             this.moveEdge(nStartX, nStartY, nEndX, nEndY, angle);
             this.processEdgeEvent(nStartX, nStartY, nEndX, nEndY, angle, true);
-        });
-        this.triangle.on('selected', (options) => {
             this.dotHead.visible = true;
             this.dotTail.visible = true;
+        });
+        this.triangle.on('selected', (options) => {
+            console.log('edge select');
+            this.deselectAllEdge();
+            this.deselectAllNode();
+            this.dotHead.visible = true;
+            this.dotTail.visible = true;
+
+            this.callback.getValue('object:deselected')({});
+            this.callback.getValue('edge:selected')({
+                target_id: this.edgeData.getEdgeId(),
+            });
         });
 
         this.dotHead.on('moving', (options) => {
@@ -799,6 +854,8 @@ class EdgeView {
             let newAngle = Math.atan2((endY - newStartY), (endX - newStartX));
             this.moveEdge(newStartX, newStartY, endX, endY, newAngle);
             this.processEdgeEvent(newStartX, newStartY, endX, endY, newAngle, true);
+            this.dotHead.visible = true;
+            this.dotTail.visible = true;
         });
 
         this.dotTail.on('moving', (options) => {
@@ -816,6 +873,8 @@ class EdgeView {
             let newAngle = Math.atan2((currentEndY - startY), (currentEndX - startX));
             this.moveEdge(startX, startY, currentEndX, currentEndY, newAngle);
             this.processEdgeEvent(startX, startY, currentEndX, currentEndY, newAngle, true);
+            this.dotHead.visible = true;
+            this.dotTail.visible = true;
         });
     }
 
@@ -839,8 +898,6 @@ class EdgeView {
         let difX = Math.abs(startX - endX) / 2;
         let difY = Math.abs(startY - endY) / 2;
 
-        console.log(startX, startY, endX, endY);
-
         this.line.set({
             x1: startX,
             y1: startY,
@@ -853,8 +910,6 @@ class EdgeView {
             hasControls: false,
             hasBorders: false
         });
-        // this.line.originX = 'center';
-        // this.line.originY = 'center';
         this.line.setCoords(); 
 
         this.triangle.set({
@@ -911,6 +966,20 @@ class EdgeView {
         });
         this.dotHead.set({ left: startX, top: startY });
         this.dotTail.set({ left: endX, top: endY });
+    }
+
+    private deselectAllEdge() {
+        this.edgeFabricObject.forEach((edgeId, edgeView) => {
+            edgeView.dotHead.visible = false;
+            edgeView.dotTail.visible = false;
+        });
+    }
+
+    private deselectAllNode() {
+        this.nodeFabricObject.forEach((nodeId, nodeView) => {
+            nodeView.nodeSelectingIndicator.visible = false;
+            nodeView.nodeRemoveButton.visible = false;
+        });
     }
 
     processEdgeEvent(startX: number, startY: number, endX: number, endY: number, angle: number, shouldEmittedEvent: boolean = false) {

@@ -1,4 +1,4 @@
-<div class="property-box" *ngIf="showProperties">
+<div class="property-box" *ngIf="showPropertiesNode">
     <div class="well-edit">
     
         <p class="labelProperties"><label>Properties</label>
@@ -7,34 +7,48 @@
         </button></p>
         
 
-        <form [ngStyle]="setFormStyles()" *ngFor="let property of ObjProperties; let i=index;">
+        <form [ngStyle]="setFormStyles()" *ngFor="let property of ObjPropertiesNode; let i=index;">
             <label>{{property.name}}</label><br/>
 
             <div *ngIf="property.control==='TextBox'">
                 <input #box type="text" [(ngModel)]="property.value" name="{{property.name}}" (keyup)="onKey(property)" (blur)="onOutOfFocus()">
             </div>
-
-            <!--<div *ngIf="property.control==='RadioButton'">
-                <input type="radio" value="{{property.value}}">
+            <div *ngIf="property.control==='RadioButton'">
+                <input #box type="radio" [(ngModel)]="property.value" name="{{property.name}}" (keyup)="onKey(property)" (blur)="onOutOfFocus()">
             </div>
             <div *ngIf="property.control==='CheckBox'">
-                <input type="checkbox" value="{{property.value}}">
+                <input #box type="checkbox" [(ngModel)]="property.value" name="{{property.name}}" (keyup)="onKey(property)" (blur)="onOutOfFocus()">
             </div>
             <div *ngIf="property.control==='SpinBox'">
-                <input type="number" value="{{property.value}}">
+                <input #box type="number" [(ngModel)]="property.value" name="{{property.name}}" (keyup)="onKey(property)" (blur)="onOutOfFocus()">
             </div>            
             <div *ngIf="property.control==='Color'">
-                <input type="color" value="{{property.value}}">
+                <input #box type="color" [(ngModel)]="property.value" name="{{property.name}}" (keyup)="onKey(property)" (blur)="onOutOfFocus()">
             </div>
 
             <div *ngIf="property.control==='Slider'">
-                <input type="range" value="{{property.value}}">
-            </div>-->
+                <input #box type="range" [(ngModel)]="property.value" name="{{property.name}}" (keyup)="onKey(property)" (blur)="onOutOfFocus()">
+            </div>
         </form>
-        <!--
-        <div class="buttonSetProperty">
-            <button type="button" class="btn btn-primary">OK</button>
-        </div>-->
     </div>
 </div>
 
+<div class="property-box" *ngIf="showPropertiesEdge">
+    <div class="well-edit">
+    
+        <p class="labelProperties"><label>Properties</label>
+        <button class="butttonHideProperties" (click)="hideProperties()">
+        <span class="glyphicon-fix glyphicon-remove" aria-hidden="true"></span>
+        </button></p>
+        
+
+        <form [ngStyle]="setFormStyles()" *ngFor="let property of ObjPropertiesEdge; let i=index;">
+            <label>{{property.name}}</label><br/>
+
+            <div *ngIf="property.control==='NumberExpression'">
+                <input #box type="number" [(ngModel)]="property.value" name="{{property.name}}" (keyup)="onKey(property)" (blur)="onOutOfFocus()">
+            </div>
+
+        </form>
+    </div>
+</div>
