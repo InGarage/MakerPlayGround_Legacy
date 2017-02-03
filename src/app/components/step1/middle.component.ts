@@ -10,8 +10,6 @@ import { UndoStack } from './undostack';
 //import { EventManager } from './eventmanager';
 //import { ConnectEdgeToSrcNodeEvent } from './graphevent';
 
-import 'fabric';
-
 @Component({
     selector: 'middle',
     templateUrl: `./middle.component.html`,
@@ -55,7 +53,7 @@ export class MiddleComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.canvas = new GraphCanvas(this.model,'c');
+        this.canvas = new GraphCanvas(this.model, 'c');
         this.canvas.redraw();
 
         this.canvas.on('node:move', (options) => {

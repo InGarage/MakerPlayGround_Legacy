@@ -1,8 +1,8 @@
 import { Component, Input, Output, EventEmitter, SimpleChange } from '@angular/core';
 import { NgModule }      from '@angular/core';
 //import { GraphData, ActionData, TriggerData } from './graph';
+
 import { Action, ActionGroup, ActionProperty, Trigger, TriggerGroup } from './action';
-import * as fabric from 'fabric';
 import { GraphData, NodeData, EdgeData } from './graphmodel';
 
 
