@@ -1,5 +1,5 @@
 
-import 'fabric';
+import * as fabric from 'fabric';
 import * as Collections from 'typescript-collections';
 
 import { Action, ActionGroup } from './action';
@@ -36,7 +36,7 @@ type Coordinate = {
 }
 
 export class GraphCanvas {
-    private canvas: fabric.ICanvas;
+    private canvas: fabric.Canvas;
     private nodeFabricObject: Collections.Dictionary<string, NodeView>;
     private edgeFabricObject: Collections.Dictionary<string, EdgeView>;
     private callback: Collections.Dictionary<CanvasEventTypes, (options: CanvasEventOptions) => void>;
@@ -56,7 +56,7 @@ export class GraphCanvas {
     }
 
     private handleGroupSelection() {
-        let selectedGroup: fabric.IGroup;
+        let selectedGroup: fabric.Group;
         let selectedNode = new Collections.Set<NodeView>((item) => { return item.id });
         let selectedEdge = new Collections.Set<EdgeView>((item) => { return item.id });
 
@@ -308,14 +308,14 @@ export class GraphCanvas {
 }
 
 class NodeView {
-    nodeActionImage: fabric.IImage;  // TODO: should be readonly if posible
-    readonly nodeConnectingIndicator: fabric.ICircle;
-    readonly nodeSelectingIndicator: fabric.ICircle;
-    readonly nodeNameText: fabric.IText;
-    readonly nodeRemoveButton: fabric.IGroup;
+    nodeActionImage: fabric.Image;  // TODO: should be readonly if posible
+    readonly nodeConnectingIndicator: fabric.Circle;
+    readonly nodeSelectingIndicator: fabric.Circle;
+    readonly nodeNameText: fabric.Text;
+    readonly nodeRemoveButton: fabric.Group;
     actionGroup: ActionGroup[] = require("./action.json"); // TODO: refactor into the action class / service
 
-    constructor(public graph: GraphData, readonly canvas: fabric.ICanvas,
+    constructor(public graph: GraphData, readonly canvas: fabric.Canvas,
         readonly nodeFabricObject: Collections.Dictionary<string, NodeView>,
         readonly edgeFabricObject: Collections.Dictionary<string, EdgeView>,
         readonly callback: Collections.Dictionary<CanvasEventTypes, (options: CanvasEventOptions) => void>,
@@ -446,7 +446,7 @@ class NodeView {
 
     }
 
-    getAllFabricElement(): fabric.IObject[] {
+    getAllFabricElement(): fabric.Object[] {
         return [this.nodeActionImage, this.nodeConnectingIndicator, this.nodeSelectingIndicator
             , this.nodeNameText, this.nodeRemoveButton];
     }
@@ -686,12 +686,12 @@ class NodeView {
 
 class EdgeView {
 
-    readonly line: fabric.ILine;
-    readonly triangle: fabric.ITriangle;
-    readonly dotHead: fabric.ICircle;
-    readonly dotTail: fabric.ICircle;
+    readonly line: fabric.Line;
+    readonly triangle: fabric.Triangle;
+    readonly dotHead: fabric.Circle;
+    readonly dotTail: fabric.Circle;
 
-    constructor(public graph: GraphData, readonly canvas: fabric.ICanvas,
+    constructor(public graph: GraphData, readonly canvas: fabric.Canvas,
         readonly nodeFabricObject: Collections.Dictionary<string, NodeView>,
         readonly edgeFabricObject: Collections.Dictionary<string, EdgeView>,
         readonly callback: Collections.Dictionary<CanvasEventTypes, (options: CanvasEventOptions) => void>,
@@ -729,7 +729,7 @@ class EdgeView {
         this.canvas.add(this.line, this.triangle, this.dotTail, this.dotHead);
     }
 
-    getAllFabricElement(): fabric.IObject[] {
+    getAllFabricElement(): fabric.Object[] {
         return [this.line, this.triangle, this.dotHead, this.dotTail];
     }
 
