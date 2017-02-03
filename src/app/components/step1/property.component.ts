@@ -2,9 +2,7 @@ import { Component, Input, Output, EventEmitter, SimpleChange } from '@angular/c
 import { NgModule }      from '@angular/core';
 //import { GraphData, ActionData, TriggerData } from './graph';
 import { Action, ActionGroup, ActionProperty } from './action';
-import * as fabric from 'fabric';
 import { GraphData, NodeData } from './graphmodel';
-
 
 @Component({
   selector: 'property',
