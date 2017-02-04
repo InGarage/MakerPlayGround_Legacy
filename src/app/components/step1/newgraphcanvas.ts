@@ -551,7 +551,41 @@ class NodeView {
         this.nodeSelectingIndicator.set({ left: originX, top: originY });
         this.nodeRemoveButton.set({ left: originX + NODE_REMOVEBTN_POSX, top: originY - NODE_REMOVEBTN_POSY });
 
-        
+        // any edge that is already connected to this node, will be moved depends on this node new location
+        // this must be done before connect to the new edge otherwise the new edge will also be moved according
+        // to diffX and diffY calculate in calculateNewEdgePoint
+        for (let edge of this.graph.getEdgesBySrcNode(this.nodeData.getNodeId())) {
+            let [startX, startY] = this.calculateNewEdgePoint(edge.getStartX(), edge.getStartY());
+            let edgeView = this.edgeFabricObject.getValue(edge.getEdgeId());
+            let angle = Math.atan2((edge.getEndY() - startY), (edge.getEndX() - startX));
+            edgeView.moveEdge(startX, startY, edge.getEndX(), edge.getEndY(), angle);
+            if (shouldEmittedEvent) {
+                this.callback.getValue('edge:connectionSrc')({
+                    target_id: edge.getEdgeId(),
+                    start_x: startX,
+                    start_y: startY,
+                    end_x: edge.getEndX(),
+                    end_y: edge.getEndY(),
+                    src_node_id: edge.getSourceNodeId(),
+                });
+            }
+        }
+        for (let edge of this.graph.getEdgesByDstNode(this.nodeData.getNodeId())) {
+            let [endX, endY] = this.calculateNewEdgePoint(edge.getEndX(), edge.getEndY());
+            let edgeView = this.edgeFabricObject.getValue(edge.getEdgeId());
+            let angle = Math.atan2((endY - edge.getStartY()), (endX - edge.getStartX()));
+            edgeView.moveEdge(edge.getStartX(), edge.getStartY(), endX, endY, angle);
+            if (shouldEmittedEvent) {
+                this.callback.getValue('edge:connectionDst')({
+                    target_id: edge.getEdgeId(),
+                    start_x: edge.getStartX(),
+                    start_y: edge.getStartY(),
+                    end_x: endX,
+                    end_y: endY,
+                    dst_node_id: edge.getDestinationNodeId(),
+                });
+            }
+        }
 
         // show connecting indicator when this node is moving into the boundary of edge(s) that
         // this node hasn't connected to yet. The connecting indicator is shown only when we aren't
@@ -591,40 +625,6 @@ class NodeView {
                 } else {
                     this.nodeConnectingIndicator.visible = true;
                 }
-            }
-        }
-
-        // any edge connected to this node, will be moved depends on this node location
-        for (let edge of this.graph.getEdgesBySrcNode(this.nodeData.getNodeId())) {
-            let [startX, startY] = this.calculateNewEdgePoint(edge.getStartX(), edge.getStartY());
-            let edgeView = this.edgeFabricObject.getValue(edge.getEdgeId());
-            let angle = Math.atan2((edge.getEndY() - startY), (edge.getEndX() - startX));
-            edgeView.moveEdge(startX, startY, edge.getEndX(), edge.getEndY(), angle);
-            if (shouldEmittedEvent) {
-                this.callback.getValue('edge:connectionSrc')({
-                    target_id: edge.getEdgeId(),
-                    start_x: startX,
-                    start_y: startY,
-                    end_x: edge.getEndX(),
-                    end_y: edge.getEndY(),
-                    src_node_id: edge.getSourceNodeId(),
-                });
-            }
-        }
-        for (let edge of this.graph.getEdgesByDstNode(this.nodeData.getNodeId())) {
-            let [endX, endY] = this.calculateNewEdgePoint(edge.getEndX(), edge.getEndY());
-            let edgeView = this.edgeFabricObject.getValue(edge.getEdgeId());
-            let angle = Math.atan2((endY - edge.getStartY()), (endX - edge.getStartX()));
-            edgeView.moveEdge(edge.getStartX(), edge.getStartY(), endX, endY, angle);
-            if (shouldEmittedEvent) {
-                this.callback.getValue('edge:connectionDst')({
-                    target_id: edge.getEdgeId(),
-                    start_x: edge.getStartX(),
-                    start_y: edge.getStartY(),
-                    end_x: endX,
-                    end_y: endY,
-                    dst_node_id: edge.getDestinationNodeId(),
-                });
             }
         }
 

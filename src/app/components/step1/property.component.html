@@ -17,14 +17,14 @@
                 <input #box type="radio" [(ngModel)]="property.value" name="{{property.name}}" (keyup)="onKey(property)" (blur)="onOutOfFocus()">
             </div>
             <div *ngIf="property.control==='spinbox'">
-                <input #box type="number" [(ngModel)]="property.value" name="{{property.name}}" (keyup)="onKey(property)" (blur)="onOutOfFocus()">
+                <input #box type="number" [(ngModel)]="property.value" name="{{property.name}}" (change)="onKey(property)" (blur)="onOutOfFocus()">
             </div>            
             <div *ngIf="property.control==='color'">
                 <input #box type="color" [(ngModel)]="property.value" name="{{property.name}}" (keyup)="onKey(property)" (blur)="onOutOfFocus()">
             </div>
 
             <div *ngIf="property.control==='slider'">
-                <input #box type="range" [(ngModel)]="property.value" name="{{property.name}}" (keyup)="onKey(property)" (blur)="onOutOfFocus()">
+                <input #box type="range" [(ngModel)]="property.value" name="{{property.name}}" (change)="onKey(property)" (blur)="onOutOfFocus()">
             </div>
         </form>
     </div>

@@ -1,15 +1,10 @@
 
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { GraphData, NodeData, EdgeData } from './graphmodel';
-//import { GraphCanvas } from './graphcanvas';
 import { GraphCanvas, CanvasEventOptions, CanvasEventTypes } from './newgraphcanvas';
 import { Action } from './action';
 import { UndoStack } from './undostack';
 import { PropertyValue } from './propertyvalue';
-
-
-//import { EventManager } from './eventmanager';
-//import { ConnectEdgeToSrcNodeEvent } from './graphevent';
 
 @Component({
     selector: 'middle',
@@ -20,6 +15,7 @@ import { PropertyValue } from './propertyvalue';
 export class MiddleComponent implements OnInit {
 
     objectSelected: NodeData | EdgeData;
+    typeOfObjectSelected: typeof NodeData | typeof EdgeData;
     private canvas: GraphCanvas;
     private model: GraphData;
 
@@ -42,7 +38,7 @@ export class MiddleComponent implements OnInit {
     updataPropDataFinish(data: PropertyValue[]) {
         // We call the proper method to update property in graph model by looking
         // at type of object we are selecting
-        if (this.objectSelected instanceof NodeData)
+        if (this.typeOfObjectSelected === NodeData)
             this.model.updateNodeProperty(data);
         else
             this.model.updateEdgeProperty(data);
@@ -50,7 +46,7 @@ export class MiddleComponent implements OnInit {
     }
 
     undo() {
-        this.objectSelected = null;
+        this.objectSelected = undefined;
         this.canvas.deselectAllNode();
         this.model.undo();
         this.canvas.redraw();
@@ -78,14 +74,17 @@ export class MiddleComponent implements OnInit {
 
         this.canvas.on('node:selected', (options) => {
             this.objectSelected = this.model.getNodeById(options.target_id);
+            this.typeOfObjectSelected = NodeData;
         });
 
         this.canvas.on('edge:selected', (options) => { 
             this.objectSelected = this.model.getEdgeById(options.target_id);
+            this.typeOfObjectSelected = EdgeData;
         });
 
         this.canvas.on('object:deselected', (options) => {
-            this.objectSelected = null;
+            console.log('deselect');
+            this.objectSelected = undefined;
             this.canvas.redraw();
         });
 
@@ -151,55 +150,5 @@ export class MiddleComponent implements OnInit {
             }
         }       
     };
-    /*dummyGraph: any = {
-        'nodes': {
-            1: {
-                'action_id': 1,
-                'display_x': 500,
-                'display_y': 300,
-                'params': {
-                    'name': 'Motor 1'
-                }
-            },
-            2: {
-                'action_id': 2,
-                'display_x': 800,
-                'display_y': 300,
-                'params': {
-                    'name': 'Motor 1'
-                }
-            }
-        },
-        'edges': {
-            1: {
-                'trigger_id': 1,
-                'params': {
-                    'temp': 50
-                },
-                'src_node_id': 0,
-                'src_angle': 0,
-                'dst_node_id': 0,
-                'dst_angle': 0,
-                'start_x': 300,
-                'start_y': 300,
-                'end_x': 500,
-                'end_y': 500
-            },
-            2: {
-                'trigger_id': 2,
-                'params': {
-                    'temp': 50
-                },
-                'src_node_id': 0,
-                'src_angle': 0,
-                'dst_node_id': 0,
-                'dst_angle': 0,
-                'start_x': 400,
-                'start_y': 200,
-                'end_x': 500,
-                'end_y': 200
-            }
-        }       
-    };*/
-
+   
 }

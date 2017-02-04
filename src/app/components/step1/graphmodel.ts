@@ -58,9 +58,9 @@ export class GraphData {
     }
 
     private constructor(public data: Immutable.Map<string, Immutable.Map<string, Immutable.Map<string, string>>>) {
-        
+
         this.undoStack = new UndoStack<Immutable.Map<string, Immutable.Map<string, Immutable.Map<string, string>>>>();
-        this.undoStack.push(data);        
+        this.undoStack.push(data);
     }
 
     /**
@@ -331,21 +331,17 @@ export class GraphData {
     }
 
     updateNodeProperty(data: PropertyValue[]) {
-        if (data[0].uid) {
-            this.data = this.data.asMutable();
-            for (let d of data) {
-                this.data = this.data.setIn(['nodes', d.uid, 'params', d.name], d.value)
-            }
-            this.data = this.data.asImmutable();
-            // this.data = this.data.withMutations(map => {
-            //     map.setIn(['nodes', data.uid, 'params', data.name], data.value)
-            // });
-            this.undoStack.push(this.data);
+        this.data = this.data.asMutable();
+        for (let d of data) {
+            console.log('saving', d.uid, d.name, d.value);
+            this.data = this.data.setIn(['nodes', d.uid, 'params', d.name], d.value)
         }
+        this.data = this.data.asImmutable();
+        this.undoStack.push(this.data);
     }
 
     updateEdgeProperty(data: PropertyValue[]) {
-        
+
     }
 }
 

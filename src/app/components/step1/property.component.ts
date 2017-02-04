@@ -1,6 +1,5 @@
 import { Component, Input, Output, EventEmitter, SimpleChange } from '@angular/core';
 import { NgModule } from '@angular/core';
-//import { GraphData, ActionData, TriggerData } from './graph';
 
 import { Action, ActionGroup, ActionHelper } from './action';
 import { Trigger, TriggerGroup, TriggerHelper } from './trigger';
@@ -29,78 +28,69 @@ export class PropertyComponent {
             this.populatePropertyWindowNode(this.objectSelected);
         } else if (this.objectSelected instanceof EdgeData) {
             this.populatePropertyWindowEdge(this.objectSelected);
-        } // else this.objectSelected is undefined so we won't do anything
+        } else if (this.objectSelected === undefined) {
+            console.log('obj select change');
+            if (this.dirty) {
+                console.log('dirty');
+                this.updateDataFinish.emit(this.objProperties);
+                this.dirty = false;
+            }
+            this.showProperties = false;
+        }
     }
 
     populatePropertyWindowNode(objData: NodeData) {
-        // Update data to data structure
-        if (objData === null) {
-            if (this.dirty)
-                this.updateDataFinish.emit(this.objProperties);
-
-            this.showProperties = false;
+        // other node is being selected so we need to save it's data before
+        // populate property window with property of new node
+        if ((this.previousObjDataNode !== null) && (this.dirty)) {
+            console.log('Save');
+            this.updateDataFinish.emit(this.objProperties);
         }
-        // Only show data
-        else {
-            // other node is being selected so we need to save it's data before
-            // populate property window with property of new node
-            if ((this.previousObjDataNode !== null) && (this.dirty)) {
-                console.log('Save');
-                this.updateDataFinish.emit(this.objProperties);
-            }
-            this.dirty = false;
-            this.previousObjDataNode = objData;
-            this.objProperties = [];
-            this.showProperties = true;
-            let action = ActionHelper.findActionById(objData.getActionId());
+        this.dirty = false;
+        this.previousObjDataNode = objData;
+        this.objProperties = [];
+        this.showProperties = true;
+        let action = ActionHelper.findActionById(objData.getActionId());
 
-            let obj: PropertyValue;
-            for (let prop of action.params) {
-                console.log(prop.control);
-                obj = {
-                    uid: objData.getNodeId(),
-                    name: prop.name,
-                    value: objData.getActionParams(prop.name),
-                    control: prop.control,
-                }
-                this.objProperties.push(obj);
+        let obj: PropertyValue;
+        for (let prop of action.params) {
+            console.log(prop.control);
+            obj = {
+                uid: objData.getNodeId(),
+                name: prop.name,
+                value: objData.getActionParams(prop.name),
+                control: prop.control,
             }
+            this.objProperties.push(obj);
         }
     }
 
     populatePropertyWindowEdge(objData: EdgeData) {
-        if (objData === null) {
-            if (this.dirty)
-                this.updateDataFinish.emit(this.objProperties);
+        // other trigger is being selected so we need to save it's data before
+        // populate property window with property of new trigger
+        if ((this.previousObjDataNode !== null) && (this.dirty)) {
+            console.log('Save');
+            this.updateDataFinish.emit(this.objProperties);
+        }
+        this.dirty = false;
+        this.previousObjDataEdge = objData;
+        this.objProperties = [];
+        this.showProperties = true;
 
-            this.showProperties = false;
-        } else {
-            // other trigger is being selected so we need to save it's data before
-            // populate property window with property of new trigger
-            if ((this.previousObjDataNode !== null) && (this.dirty)) {
-                console.log('Save');
-                this.updateDataFinish.emit(this.objProperties);
-            }
-            this.dirty = false;
-            this.previousObjDataEdge = objData;
-            this.objProperties = [];
-            this.showProperties = true;
-            
-            const triggleId = objData.getTriggerId();
-            for (const id of triggleId) {
-                let trigger = TriggerHelper.findTriggerById(id);
+        const triggleId = objData.getTriggerId();
+        for (const id of triggleId) {
+            let trigger = TriggerHelper.findTriggerById(id);
 
-                let obj: PropertyValue;
-                for (let prop of trigger.params) {
-                    console.log(prop.control);
-                    obj = {
-                        uid: objData.getEdgeId(),
-                        name: prop.name,
-                        value: objData.getTriggerParams(id, prop.name),
-                        control: prop.control,
-                    }
-                    this.objProperties.push(obj);
+            let obj: PropertyValue;
+            for (let prop of trigger.params) {
+                console.log(prop.control);
+                obj = {
+                    uid: objData.getEdgeId(),
+                    name: prop.name,
+                    value: objData.getTriggerParams(id, prop.name),
+                    control: prop.control,
                 }
+                this.objProperties.push(obj);
             }
         }
     }
@@ -128,11 +118,13 @@ export class PropertyComponent {
     }
 
     onKey(objData) {
+        console.log('on key');
         this.dirty = true;
         this.updateData.emit(objData);
     }
 
     onOutOfFocus() {
+        console.log('out of focus');
         this.dirty = false;
         this.updateDataFinish.emit(this.objProperties);
     }
