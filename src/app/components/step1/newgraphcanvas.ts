@@ -813,9 +813,10 @@ class EdgeView {
         // Temp: Draw only one image for combined trigger
         // TODO: must draw all images!
         let promises = [];
-        let edgeTriggerId = edgeData.getTriggerId();
-        for (let id of edgeTriggerId) {
-            let trigger = TriggerHelper.findTriggerById(id);
+        //let edgeTriggerId = edgeData.getTriggerId();
+        //for (let id of edgeTriggerId) {
+        for (let i=0; i<edgeData.getNumberOfTrigger(); i++) {
+            let trigger = TriggerHelper.findTriggerById(edgeData.getTriggerId(i));
 
             let p = new Promise((resolve, reject) => {
                 fabric.Image.fromURL('/assets/img/' + trigger.id + '.png'
@@ -1083,20 +1084,20 @@ class EdgeView {
             this.triggerDescription.item(i).setCoords();
         }
 
-        // const args = [];
-        // const trigger = TriggerHelper.findTriggerById(this.edgeData.getTriggerId()[0]);
-        // if (trigger.display_text_param) {
-        //     for (let t of trigger.display_text_param) {
-        //         args.push(this.edgeData.getTriggerParams(trigger.id, t));
-        //     }
-        //     const text = trigger.display_text.replace(/{(\d+)}/g, (match, number) => {
-        //         return typeof args[number] != 'undefined'
-        //             ? args[number]
-        //             : match
-        //             ;
-        //     });
-        //     this.triggerDescription.item(1).setText(text);
-        // }
+        const args = [];
+        const trigger = TriggerHelper.findTriggerById(this.edgeData.getTriggerId(0));
+        if (trigger.display_text_param) {
+            for (let t of trigger.display_text_param) {
+                args.push(this.edgeData.getTriggerParams(0, t));
+            }
+            const text = trigger.display_text.replace(/{(\d+)}/g, (match, number) => {
+                return typeof args[number] != 'undefined'
+                    ? args[number]
+                    : match
+                    ;
+            });
+            //this.triggerDescription.item(1).setText(text);
+        }
     }
 
     getTopLeftForImage(angle: number) {

@@ -416,9 +416,9 @@ export class EdgeData {
         return this.data.count();
     }
 
-    // getTriggerId(): string[] {
-    //     return (<Immutable.List<string>><any>this.data.get('trigger_id')).toJS();
-    // }
+    getTriggerId(triggerIndex: number): string {
+        return (<Immutable.List<any>><any>this.data.get('trigger')).get(triggerIndex).toJS()['id'];
+    }
 
     getTriggerParams(triggerIndex: number, name: string): string[] {
         //return (<Immutable.List<string>><any>this.data.getIn(['params', triggerId, name])).toJS();

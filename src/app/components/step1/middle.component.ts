@@ -118,30 +118,32 @@ export class MiddleComponent implements OnInit {
         });
 
         this.canvas.on('edge:combine', (options) => {
-            let triggerId = options.toBeMissing.getTriggerId();
+            //let triggerId = options.toBeMissing.getTriggerId();
             let params = {};
-            for (const id of triggerId) {
-                let trigger = TriggerHelper.findTriggerById(id); // Get this trigger from json
+            //for (const id of triggerId) {
+            for (let i=0; i<options.toBeMissing.getNumberOfTrigger(); i++) {
+                let trigger = TriggerHelper.findTriggerById(options.toBeMissing.getTriggerId(i)); // Get this trigger from json
                 let obj = {};
                 trigger.params.forEach((param, index) => {
                     const param_name = param.name;
-                    obj[param_name] = options.toBeMissing.getTriggerParams(id, param.name);
+                    obj[param_name] = options.toBeMissing.getTriggerParams(i, param.name);
                 });
-                params[id] = obj;
+                params[i] = obj;
             }
 
-            triggerId = options.toBeCombined.getTriggerId();
-            for (const id of triggerId) {
-                let trigger = TriggerHelper.findTriggerById(id); // Get this trigger from json
+            //triggerId = options.toBeCombined.getTriggerId();
+            //for (const id of triggerId) {
+            for (let i=0; i<options.toBeCombined.getNumberOfTrigger(); i++) {
+                let trigger = TriggerHelper.findTriggerById(options.toBeCombined.getTriggerId(i)); // Get this trigger from json
                 let obj = {};
                 trigger.params.forEach((param, index) => {
                     const param_name = param.name;
-                    obj[param_name] = options.toBeCombined.getTriggerParams(id, param.name);
+                    obj[param_name] = options.toBeCombined.getTriggerParams(i, param.name);
                 });
-                params[id] = obj;
+                params[i] = obj;
             }
             
-            this.model.mergeEdge(options.toBeMissing.getEdgeId(), options.toBeMissing.getTriggerId(), params, options.toBeCombined.getEdgeId(), options.toBeCombined.getTriggerId());
+            //this.model.mergeEdge(options.toBeMissing.getEdgeId(), options.toBeMissing.getTriggerId(), params, options.toBeCombined.getEdgeId(), options.toBeCombined.getTriggerId());
             this.canvas.redraw();  
         });
     }

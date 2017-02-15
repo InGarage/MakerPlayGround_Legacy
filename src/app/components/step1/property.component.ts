@@ -93,9 +93,10 @@ export class PropertyComponent {
 
         let listEachTrigger: ParameterList[] = [];
 
-        const triggleId = objData.getTriggerId(); // obtain array of id
-        for (const id of triggleId) {
-            let trigger = TriggerHelper.findTriggerById(id); // Get this trigger from json
+        //const triggleId = objData.getTriggerId(); // obtain array of id
+        //for (const id of triggleId) {
+        for (let i=0; i<objData.getNumberOfTrigger(); i++) {
+            let trigger = TriggerHelper.findTriggerById(objData.getTriggerId(i)); // Get this trigger from json
             let paramObj: Parameter;
             let listParamObj: Parameter[] = [];
             let eachTrigger: ParameterList;
@@ -103,7 +104,7 @@ export class PropertyComponent {
             trigger.params.forEach((param, index) => {
                 paramObj = {
                     name: param.name,
-                    value: objData.getTriggerParams(id, param.name),
+                    value: objData.getTriggerParams(i, param.name),
                     control: param.control,
                     args: param.args
                 }
@@ -111,7 +112,7 @@ export class PropertyComponent {
             });
             eachTrigger = {
                 name: trigger.name,
-                id: id,
+                id: <any>i,
                 param: listParamObj,
             }
             listEachTrigger.push(eachTrigger);
