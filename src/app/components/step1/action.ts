@@ -14,7 +14,7 @@ export interface Action {
 export interface ActionParameter {
     name: string;
     control: string;
-    default_value: string;
+    default_value: string[];
     args: string[];
     regex: string;  // regex use to validate the property value 
 }
@@ -42,7 +42,7 @@ export namespace ActionHelper {
           {
             "name": "name",
             "control": "textbox",
-            "default_value": "",
+            "default_value": [""],
             "args": [
               ""
             ],
@@ -51,7 +51,7 @@ export namespace ActionHelper {
           {
             "name": "brightness",
             "control": "slider",
-            "default_value": "50",
+            "default_value": ["50","%"],
             "args": [
               "%"
             ],
@@ -67,7 +67,7 @@ export namespace ActionHelper {
           {
             "name": "name",
             "control": "textbox",
-            "default_value": "",
+            "default_value": [""],
             "args": [
               ""
             ],
@@ -76,7 +76,7 @@ export namespace ActionHelper {
           {
             "name": "frequency",
             "control": "spinbox",
-            "default_value": "2",
+            "default_value": ["2","Hz"],
             "args": [
               "Hz"
             ],
@@ -92,7 +92,7 @@ export namespace ActionHelper {
           {
             "name": "name",
             "control": "textbox",
-            "default_value": "",
+            "default_value": [""],
             "args": [
               ""
             ],
@@ -101,7 +101,7 @@ export namespace ActionHelper {
           {
             "name": "brightness",
             "control": "slider",
-            "default_value": "100",
+            "default_value": ["100"],
             "args": [
               "%"
             ],
@@ -117,7 +117,7 @@ export namespace ActionHelper {
           {
             "name": "name",
             "control": "textbox",
-            "default_value": "",
+            "default_value": [""],
             "args": [
               ""
             ],
@@ -138,7 +138,7 @@ export namespace ActionHelper {
           {
             "name": "name",
             "control": "textbox",
-            "default_value": "",
+            "default_value": [""],
             "args": [
               ""
             ],
@@ -147,7 +147,7 @@ export namespace ActionHelper {
           {
             "name": "brightness",
             "control": "slider",
-            "default_value": "50",
+            "default_value": ["50"],
             "args": [
               "%"
             ],
@@ -163,7 +163,7 @@ export namespace ActionHelper {
           {
             "name": "name",
             "control": "textbox",
-            "default_value": "",
+            "default_value": [""],
             "args": [
               ""
             ],
@@ -172,7 +172,7 @@ export namespace ActionHelper {
           {
             "name": "frequency",
             "control": "spinbox",
-            "default_value": "2",
+            "default_value": ["2"],
             "args": [
               "Hz"
             ],
@@ -188,7 +188,7 @@ export namespace ActionHelper {
           {
             "name": "name",
             "control": "textbox",
-            "default_value": "",
+            "default_value": [""],
             "args": [
               ""
             ],
@@ -197,7 +197,7 @@ export namespace ActionHelper {
           {
             "name": "brightness",
             "control": "slider",
-            "default_value": "100",
+            "default_value": ["100"],
             "args": [
               "%"
             ],
@@ -206,7 +206,7 @@ export namespace ActionHelper {
           {
             "name": "color",
             "control": "color",
-            "default_value": "#FFFFFF",
+            "default_value": ["#FFFFFF"],
             "args": [
               ""
             ],
@@ -222,7 +222,7 @@ export namespace ActionHelper {
           {
             "name": "name",
             "control": "textbox",
-            "default_value": "",
+            "default_value": [""],
             "args": [
               ""
             ],
@@ -238,7 +238,7 @@ export namespace ActionHelper {
           {
             "name": "name",
             "control": "textbox",
-            "default_value": "",
+            "default_value": [""],
             "args": [
               ""
             ],
@@ -247,7 +247,7 @@ export namespace ActionHelper {
           {
             "name": "color",
             "control": "color",
-            "default_value": "#FFFFFF",
+            "default_value": ["#FFFFFF"],
             "args": [
               ""
             ],
@@ -268,7 +268,7 @@ export namespace ActionHelper {
           {
             "name": "name",
             "control": "textbox",
-            "default_value": "",
+            "default_value": [""],
             "args": [
               ""
             ],
@@ -284,7 +284,7 @@ export namespace ActionHelper {
           {
             "name": "name",
             "control": "textbox",
-            "default_value": "",
+            "default_value": [""],
             "args": [
               ""
             ],
@@ -300,7 +300,7 @@ export namespace ActionHelper {
           {
             "name": "name",
             "control": "textbox",
-            "default_value": "",
+            "default_value": [""],
             "args": [
               ""
             ],
@@ -309,7 +309,7 @@ export namespace ActionHelper {
           {
             "name": "text",
             "control": "textbox",
-            "default_value": "",
+            "default_value": [""],
             "args": [
               ""
             ],
@@ -325,7 +325,7 @@ export namespace ActionHelper {
           {
             "name": "name",
             "control": "textbox",
-            "default_value": "",
+            "default_value": [""],
             "args": [
               ""
             ],
@@ -341,7 +341,7 @@ export namespace ActionHelper {
           {
             "name": "name",
             "control": "textbox",
-            "default_value": "",
+            "default_value": [""],
             "args": [
               ""
             ],
@@ -350,7 +350,7 @@ export namespace ActionHelper {
           {
             "name": "sensor name",
             "control": "textbox",
-            "default_value": "",
+            "default_value": [""],
             "args": [
               ""
             ],
@@ -366,7 +366,7 @@ export namespace ActionHelper {
           {
             "name": "name",
             "control": "textbox",
-            "default_value": "",
+            "default_value": [""],
             "args": [
               ""
             ],
@@ -375,7 +375,7 @@ export namespace ActionHelper {
           {
             "name": "sensor name",
             "control": "textbox",
-            "default_value": "",
+            "default_value": [""],
             "args": [
               ""
             ],
@@ -391,7 +391,7 @@ export namespace ActionHelper {
           {
             "name": "name",
             "control": "textbox",
-            "default_value": "",
+            "default_value": [""],
             "args": [
               ""
             ],
@@ -400,7 +400,7 @@ export namespace ActionHelper {
           {
             "name": "sensor name",
             "control": "textbox",
-            "default_value": "",
+            "default_value": [""],
             "args": [
               ""
             ],
@@ -416,7 +416,7 @@ export namespace ActionHelper {
           {
             "name": "name",
             "control": "textbox",
-            "default_value": "",
+            "default_value": [""],
             "args": [
               ""
             ],
@@ -425,7 +425,7 @@ export namespace ActionHelper {
           {
             "name": "sensor name",
             "control": "textbox",
-            "default_value": "",
+            "default_value": [""],
             "args": [
               ""
             ],
@@ -441,7 +441,7 @@ export namespace ActionHelper {
           {
             "name": "name",
             "control": "textbox",
-            "default_value": "",
+            "default_value": [""],
             "args": [
               ""
             ],
@@ -450,7 +450,7 @@ export namespace ActionHelper {
           {
             "name": "sensor name",
             "control": "textbox",
-            "default_value": "",
+            "default_value": [""],
             "args": [
               ""
             ],
@@ -466,7 +466,7 @@ export namespace ActionHelper {
           {
             "name": "name",
             "control": "textbox",
-            "default_value": "",
+            "default_value": [""],
             "args": [
               ""
             ],
@@ -475,7 +475,7 @@ export namespace ActionHelper {
           {
             "name": "sensor name",
             "control": "textbox",
-            "default_value": "",
+            "default_value": [""],
             "args": [
               ""
             ],
@@ -491,7 +491,7 @@ export namespace ActionHelper {
           {
             "name": "name",
             "control": "textbox",
-            "default_value": "",
+            "default_value": [""],
             "args": [
               ""
             ],
@@ -500,7 +500,7 @@ export namespace ActionHelper {
           {
             "name": "sensor name",
             "control": "textbox",
-            "default_value": "",
+            "default_value": [""],
             "args": [
               ""
             ],
@@ -516,7 +516,7 @@ export namespace ActionHelper {
           {
             "name": "name",
             "control": "textbox",
-            "default_value": "",
+            "default_value": [""],
             "args": [
               ""
             ],
@@ -525,7 +525,7 @@ export namespace ActionHelper {
           {
             "name": "sensor name",
             "control": "textbox",
-            "default_value": "",
+            "default_value": [""],
             "args": [
               ""
             ],
@@ -541,7 +541,7 @@ export namespace ActionHelper {
           {
             "name": "name",
             "control": "textbox",
-            "default_value": "",
+            "default_value": [""],
             "args": [
               ""
             ],
@@ -550,7 +550,7 @@ export namespace ActionHelper {
           {
             "name": "sensor name",
             "control": "textbox",
-            "default_value": "",
+            "default_value": [""],
             "args": [
               ""
             ],
@@ -566,7 +566,7 @@ export namespace ActionHelper {
           {
             "name": "name",
             "control": "textbox",
-            "default_value": "",
+            "default_value": [""],
             "args": [
               ""
             ],
@@ -575,7 +575,7 @@ export namespace ActionHelper {
           {
             "name": "sensor name",
             "control": "textbox",
-            "default_value": "",
+            "default_value": [""],
             "args": [
               ""
             ],
@@ -591,7 +591,7 @@ export namespace ActionHelper {
           {
             "name": "name",
             "control": "textbox",
-            "default_value": "",
+            "default_value": [""],
             "args": [
               ""
             ],
@@ -600,7 +600,7 @@ export namespace ActionHelper {
           {
             "name": "sensor name",
             "control": "textbox",
-            "default_value": "",
+            "default_value": [""],
             "args": [
               ""
             ],
@@ -616,7 +616,7 @@ export namespace ActionHelper {
           {
             "name": "name",
             "control": "textbox",
-            "default_value": "",
+            "default_value": [""],
             "args": [
               ""
             ],
@@ -625,7 +625,7 @@ export namespace ActionHelper {
           {
             "name": "sensor name",
             "control": "textbox",
-            "default_value": "",
+            "default_value": [""],
             "args": [
               ""
             ],
@@ -641,7 +641,7 @@ export namespace ActionHelper {
           {
             "name": "name",
             "control": "textbox",
-            "default_value": "",
+            "default_value": [""],
             "args": [
               ""
             ],
@@ -650,7 +650,7 @@ export namespace ActionHelper {
           {
             "name": "sensor name",
             "control": "textbox",
-            "default_value": "",
+            "default_value": [""],
             "args": [
               ""
             ],
@@ -666,7 +666,7 @@ export namespace ActionHelper {
           {
             "name": "name",
             "control": "textbox",
-            "default_value": "",
+            "default_value": [""],
             "args": [
               ""
             ],
@@ -675,7 +675,7 @@ export namespace ActionHelper {
           {
             "name": "sensor name",
             "control": "textbox",
-            "default_value": "",
+            "default_value": [""],
             "args": [
               ""
             ],
@@ -691,7 +691,7 @@ export namespace ActionHelper {
           {
             "name": "name",
             "control": "textbox",
-            "default_value": "",
+            "default_value": [""],
             "args": [
               ""
             ],
@@ -700,7 +700,7 @@ export namespace ActionHelper {
           {
             "name": "sensor name",
             "control": "textbox",
-            "default_value": "",
+            "default_value": [""],
             "args": [
               ""
             ],
@@ -716,7 +716,7 @@ export namespace ActionHelper {
           {
             "name": "name",
             "control": "textbox",
-            "default_value": "",
+            "default_value": [""],
             "args": [
               ""
             ],
@@ -725,7 +725,7 @@ export namespace ActionHelper {
           {
             "name": "sensor name",
             "control": "textbox",
-            "default_value": "",
+            "default_value": [""],
             "args": [
               ""
             ],
@@ -741,7 +741,7 @@ export namespace ActionHelper {
           {
             "name": "name",
             "control": "textbox",
-            "default_value": "",
+            "default_value": [""],
             "args": [
               ""
             ],
@@ -750,7 +750,7 @@ export namespace ActionHelper {
           {
             "name": "sensor name",
             "control": "textbox",
-            "default_value": "",
+            "default_value": [""],
             "args": [
               ""
             ],
@@ -766,7 +766,7 @@ export namespace ActionHelper {
           {
             "name": "name",
             "control": "textbox",
-            "default_value": "",
+            "default_value": [""],
             "args": [
               ""
             ],
@@ -775,7 +775,7 @@ export namespace ActionHelper {
           {
             "name": "sensor name",
             "control": "textbox",
-            "default_value": "",
+            "default_value": [""],
             "args": [
               ""
             ],
@@ -791,7 +791,7 @@ export namespace ActionHelper {
           {
             "name": "name",
             "control": "textbox",
-            "default_value": "",
+            "default_value": [""],
             "args": [
               ""
             ],
@@ -800,7 +800,7 @@ export namespace ActionHelper {
           {
             "name": "sensor name",
             "control": "textbox",
-            "default_value": "",
+            "default_value": [""],
             "args": [
               ""
             ],
@@ -816,7 +816,7 @@ export namespace ActionHelper {
           {
             "name": "name",
             "control": "textbox",
-            "default_value": "",
+            "default_value": [""],
             "args": [
               ""
             ],
@@ -825,7 +825,7 @@ export namespace ActionHelper {
           {
             "name": "sensor name",
             "control": "textbox",
-            "default_value": "",
+            "default_value": [""],
             "args": [
               ""
             ],
@@ -841,7 +841,7 @@ export namespace ActionHelper {
           {
             "name": "name",
             "control": "textbox",
-            "default_value": "",
+            "default_value": [""],
             "args": [
               ""
             ],
@@ -850,7 +850,7 @@ export namespace ActionHelper {
           {
             "name": "sensor name",
             "control": "textbox",
-            "default_value": "",
+            "default_value": [""],
             "args": [
               ""
             ],
@@ -866,7 +866,7 @@ export namespace ActionHelper {
           {
             "name": "name",
             "control": "textbox",
-            "default_value": "",
+            "default_value": [""],
             "args": [
               ""
             ],
@@ -875,7 +875,7 @@ export namespace ActionHelper {
           {
             "name": "sensor name",
             "control": "textbox",
-            "default_value": "",
+            "default_value": [""],
             "args": [
               ""
             ],
@@ -891,7 +891,7 @@ export namespace ActionHelper {
           {
             "name": "name",
             "control": "textbox",
-            "default_value": "",
+            "default_value": [""],
             "args": [
               ""
             ],
@@ -900,7 +900,7 @@ export namespace ActionHelper {
           {
             "name": "sensor name",
             "control": "textbox",
-            "default_value": "",
+            "default_value": [""],
             "args": [
               ""
             ],
@@ -916,7 +916,7 @@ export namespace ActionHelper {
           {
             "name": "name",
             "control": "textbox",
-            "default_value": "",
+            "default_value": [""],
             "args": [
               ""
             ],
@@ -925,7 +925,7 @@ export namespace ActionHelper {
           {
             "name": "sensor name",
             "control": "textbox",
-            "default_value": "",
+            "default_value": [""],
             "args": [
               ""
             ],
@@ -946,7 +946,7 @@ export namespace ActionHelper {
           {
             "name": "name",
             "control": "textbox",
-            "default_value": "",
+            "default_value": [""],
             "args": [
               ""
             ],
@@ -955,7 +955,7 @@ export namespace ActionHelper {
           {
             "name": "filename",
             "control": "textbox",
-            "default_value": "",
+            "default_value": [""],
             "args": [
               ""
             ],
@@ -964,7 +964,7 @@ export namespace ActionHelper {
           {
             "name": "volume",
             "control": "slider",
-            "default_value": "50",
+            "default_value": ["50"],
             "args": [
               "%"
             ],
@@ -980,7 +980,7 @@ export namespace ActionHelper {
           {
             "name": "name",
             "control": "textbox",
-            "default_value": "",
+            "default_value": [""],
             "args": [
               ""
             ],
@@ -996,7 +996,7 @@ export namespace ActionHelper {
           {
             "name": "name",
             "control": "textbox",
-            "default_value": "",
+            "default_value": [""],
             "args": [
               ""
             ],
@@ -1012,7 +1012,7 @@ export namespace ActionHelper {
           {
             "name": "name",
             "control": "textbox",
-            "default_value": "",
+            "default_value": [""],
             "args": [
               ""
             ],
@@ -1021,7 +1021,7 @@ export namespace ActionHelper {
           {
             "name": "volume",
             "control": "slider",
-            "default_value": "50",
+            "default_value": ["50"],
             "args": [
               "%"
             ],
@@ -1037,7 +1037,7 @@ export namespace ActionHelper {
           {
             "name": "name",
             "control": "textbox",
-            "default_value": "",
+            "default_value": [""],
             "args": [
               ""
             ],
@@ -1053,7 +1053,7 @@ export namespace ActionHelper {
           {
             "name": "name",
             "control": "textbox",
-            "default_value": "",
+            "default_value": [""],
             "args": [
               ""
             ],
@@ -1062,7 +1062,7 @@ export namespace ActionHelper {
           {
             "name": "frequency",
             "control": "spinbox",
-            "default_value": "1000",
+            "default_value": ["1000"],
             "args": [
               "Hz"
             ],
@@ -1071,7 +1071,7 @@ export namespace ActionHelper {
           {
             "name": "duration",
             "control": "spinbox",
-            "default_value": "100",
+            "default_value": ["100"],
             "args": [
               "ms"
             ],
@@ -1092,7 +1092,7 @@ export namespace ActionHelper {
           {
             "name": "name",
             "control": "textbox",
-            "default_value": "",
+            "default_value": [""],
             "args": [
               ""
             ],
@@ -1101,7 +1101,7 @@ export namespace ActionHelper {
           {
             "name": "direction",
             "control": "radio",
-            "default_value": "",
+            "default_value": [""],
             "args": [
               "CW",
               "CCW"
@@ -1111,7 +1111,7 @@ export namespace ActionHelper {
           {
             "name": "speed",
             "control": "slider",
-            "default_value": "50",
+            "default_value": ["50"],
             "args": [
               "%"
             ],
@@ -1127,7 +1127,7 @@ export namespace ActionHelper {
           {
             "name": "name",
             "control": "textbox",
-            "default_value": "",
+            "default_value": [""],
             "args": [
               ""
             ],
@@ -1143,7 +1143,7 @@ export namespace ActionHelper {
           {
             "name": "name",
             "control": "textbox",
-            "default_value": "",
+            "default_value": [""],
             "args": [
               ""
             ],
@@ -1152,7 +1152,7 @@ export namespace ActionHelper {
           {
             "name": "speed",
             "control": "slider",
-            "default_value": "50",
+            "default_value": ["50"],
             "args": [
               "%"
             ],
@@ -1168,7 +1168,7 @@ export namespace ActionHelper {
           {
             "name": "name",
             "control": "textbox",
-            "default_value": "",
+            "default_value": [""],
             "args": [
               ""
             ],
@@ -1189,7 +1189,7 @@ export namespace ActionHelper {
           {
             "name": "name",
             "control": "textbox",
-            "default_value": "",
+            "default_value": [""],
             "args": [
               ""
             ],
@@ -1198,7 +1198,7 @@ export namespace ActionHelper {
           {
             "name": "time",
             "control": "textbox",
-            "default_value": "13:59:44",
+            "default_value": ["13:59:44"],
             "args": [
               ""
             ],
@@ -1219,7 +1219,7 @@ export namespace ActionHelper {
           {
             "name": "name",
             "control": "textbox",
-            "default_value": "",
+            "default_value": [""],
             "args": [
               ""
             ],
@@ -1228,7 +1228,7 @@ export namespace ActionHelper {
           {
             "name": "number",
             "control": "textbox",
-            "default_value": "0",
+            "default_value": ["0"],
             "args": [
               ""
             ],
@@ -1249,7 +1249,7 @@ export namespace ActionHelper {
           {
             "name": "name",
             "control": "TextBox",
-            "default_value": "",
+            "default_value": [""],
             "args": [
               ""
             ],
@@ -1258,7 +1258,7 @@ export namespace ActionHelper {
           {
             "name": "data",
             "control": "DOTMATRIX_CONTROL",
-            "default_value": "",
+            "default_value": [""],
             "args": [
               ""
             ],

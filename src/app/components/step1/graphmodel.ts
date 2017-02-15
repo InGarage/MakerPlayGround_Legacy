@@ -2,6 +2,7 @@ import * as Immutable from 'immutable';
 import * as UUID from 'uuid';
 
 import { Action } from './action';
+import { Trigger } from './trigger';
 import { PropertyValue } from './propertyvalue';
 import { UndoStack } from './undostack';
 
@@ -18,7 +19,7 @@ export class GraphData {
      *       "display_x": 100,  // Center position of the node on the screen 
      *       "display_y": 100,
      *       "params" : {       // Action's parameters based on each action requirement
-     *         "name": "XXX",
+     *         "name": ["Motor 1"],
      *         // other params
      *       }
      *     },
@@ -30,8 +31,8 @@ export class GraphData {
      *     1 : {
      *       "trigger_id": [],   // Trigger's unique id based on trigger.json 
      *       "params: {         // Trigger's parameters based on each trigger requirement
-     *         "id": {"key": "value", },
-     *         "id": {"key": "value", },
+     *         "trigger_id1": {"key": ["value"], "key": ["value"] },
+     *         "trigger_id2": {"key": ["value"], },
      *       },
      *       "src_node_id": number, // Unique id of the source node    
      *       "dst_node_id": number, // Unique id of the destination node
@@ -62,67 +63,6 @@ export class GraphData {
         this.undoStack = new UndoStack<Immutable.Map<string, Immutable.Map<string, Immutable.Map<string, string>>>>();
         this.undoStack.push(data);
     }
-
-    /**
-     * Helper function to compare two GraphData instances and provide the caller list of changes through the callback
-     * @param graph the graph data to compare with
-     * @param callback 
-     */
-    // compareGraphModel(otherGraph: GraphData, callback: (type: 'addition' | 'deletion' | 'update', target: NodeData | EdgeData) => void) {
-    //     if (otherGraph === undefined) {
-    //         this.data.get('nodes').forEach((value, key) => {
-    //             callback('addition', new NodeData(key, value));
-    //         });
-    //         this.data.get('edges').forEach((value, key) => {
-    //             callback('addition', new EdgeData(key, value));
-    //         });
-    //     } else {
-    //         let val: { value: string, done: boolean };
-
-    //         let iter = otherGraph.data.get('nodes').keys();
-    //         while (!(val = iter.next()).done) {
-    //             let newData = this.data.getIn(['nodes', val.value]);
-    //             let oldData = otherGraph.data.getIn(['nodes', val.value]);
-
-    //             if (newData === undefined)
-    //                 callback('deletion', new NodeData(val.value, oldData));
-    //             else if (!Immutable.is(oldData, newData))
-    //                 callback('update', new NodeData(val.value, newData));
-    //             else
-    //                 console.log('the same');
-    //         }
-
-    //         iter = this.data.get('nodes').keys();
-    //         while (!(val = iter.next()).done) {
-    //             let newData = this.data.getIn(['nodes', val.value]);
-    //             let oldData = otherGraph.data.getIn(['nodes', val.value]);
-
-    //             if (oldData === undefined)
-    //                 callback('addition', new NodeData(val.value, newData));
-    //         }
-
-    //         // Edge compare
-    //         iter = otherGraph.data.get('edges').keys();
-    //         while (!(val = iter.next()).done) {
-    //             let newData = this.data.getIn(['edges', val.value]);
-    //             let oldData = otherGraph.data.getIn(['edges', val.value]);
-
-    //             if (newData === undefined)
-    //                 callback('deletion', new EdgeData(val.value, oldData));
-    //             else if (!Immutable.is(oldData, newData))
-    //                 callback('update', new EdgeData(val.value, newData));
-    //         }
-
-    //         iter = this.data.get('edges').keys();
-    //         while (!(val = iter.next()).done) {
-    //             let newData = this.data.getIn(['edges', val.value]);
-    //             let oldData = otherGraph.data.getIn(['edges', val.value]);
-
-    //             if (oldData === undefined)
-    //                 callback('addition', new EdgeData(val.value, newData));
-    //         }
-    //     }
-    // }
 
     undo() {
         this.data = this.undoStack.undo();
@@ -180,17 +120,13 @@ export class GraphData {
             if (prop.name === 'name')
                 allParams[prop.name] = action.name + ' 1';
             else
-                allParams[prop.name] = '';
+                allParams[prop.name] = prop.default_value;
         }
         newObj['params'] = allParams;
 
         this.data = this.data.setIn(['nodes', newNode_key], Immutable.fromJS(newObj));
         this.undoStack.push(this.data);
     }
-
-    // removeNode(nodeId: string): GraphData {
-    //     return 
-    // }
 
     removeNode(nodeId: string) {
         this.data = this.data.deleteIn(['nodes', nodeId]);
@@ -330,18 +266,102 @@ export class GraphData {
         this.undoStack.push(this.data);
     }
 
-    updateNodeProperty(data: PropertyValue[]) {
+    updateNodeProperty(data: PropertyValue) {
         this.data = this.data.asMutable();
-        for (let d of data) {
-            console.log('saving', d.uid, d.name, d.value);
-            this.data = this.data.setIn(['nodes', d.uid, 'params', d.name], d.value)
+        const node = data.children[0];  // This is an action, data contains only one child
+        for (let param of node.param) {
+            this.data = this.data.setIn(['nodes', data.uid, 'params', param.name], Immutable.fromJS(param.value));
         }
         this.data = this.data.asImmutable();
         this.undoStack.push(this.data);
     }
 
-    updateEdgeProperty(data: PropertyValue[]) {
+    updateEdgeProperty(data: PropertyValue) {
+        this.data = this.data.asMutable();
+        for (let trigger of data.children) {
+            for (let param of trigger.param) {
+                console.log('model', param.name, param.value);
+                this.data = this.data.setIn(['edges', data.uid, 'params', trigger.id, param.name], Immutable.fromJS(param.value));
+            }
+        }
+        this.data = this.data.asImmutable();
+        this.undoStack.push(this.data);
+    }
 
+    //  *   "edges": {
+    //  *     1 : {
+    //  *       "trigger_id": [],   // Trigger's unique id based on trigger.json 
+    //  *       "params: {         // Trigger's parameters based on each trigger requirement
+    //  *         "trigger_id1": {"key": ["value"], },
+    //  *         "trigger_id2": {"key": ["value"], },
+    //  *       },
+    //  *       "src_node_id": number, // Unique id of the source node    
+    //  *       "dst_node_id": number, // Unique id of the destination node
+    //  *       "start_x": number,     // Parameters needed to display the edge on the screen
+    //  *       "start_y": number,
+    //  *       "end_x": number,
+    //  *       "end_y": number
+    //  *     },
+    //  *     2 : {
+    //  *       // other edges
+    //  *     }  
+
+    addEdge(trigger: Trigger) {
+        let newEdge_key = UUID.v4();
+        let newObj = {};
+        let allParams = {};
+        let eachParam = {};
+
+        newObj = {
+            "trigger_id": [trigger.id],
+            "src_node_id": '',
+            "dst_node_id": '',
+            "start_x": '100',
+            "start_y": '100',
+            "end_x": '300',
+            "end_y": '100',
+        };
+
+        for (let prop of trigger.params) {
+
+            if (prop.name === 'name')
+                eachParam[prop.name] = [trigger.name + ' 1'];
+            else
+                eachParam[prop.name] = prop.default_value;
+        }
+
+        allParams[trigger.id] = eachParam;
+        newObj['params'] = allParams;
+
+        this.data = this.data.setIn(['edges', newEdge_key], Immutable.fromJS(newObj));
+        this.undoStack.push(this.data);
+    }
+
+    removeEdge(edgeId: string) {
+        this.data = this.data.deleteIn(['edges', edgeId]);
+        this.undoStack.push(this.data);
+    }
+
+    mergeEdge(missingEdgeId, missingTriggerId, params, remainEdgeId, remainTriggerId) {
+        console.log(missingEdgeId);
+
+        let newObj = {};
+        let newTriggerId = [];
+
+        // Get new trigger_id
+        for (let id of remainTriggerId) {
+            newTriggerId.push(id);
+        }
+        for (let id of missingTriggerId) {
+            newTriggerId.push(id);
+        }
+
+
+        this.data = this.data.setIn(['edges', remainEdgeId, 'trigger_id'], Immutable.fromJS(newTriggerId));
+        this.data = this.data.setIn(['edges', remainEdgeId, 'params'], Immutable.fromJS(params));
+
+        this.data = this.data.deleteIn(['edges', missingEdgeId]);
+        this.undoStack.push(this.data);
     }
 }
 
@@ -361,8 +381,8 @@ export class NodeData {
         return this.data.get('action_id');
     }
 
-    getActionParams(name: string): string {
-        return this.data.getIn(['params', name]);
+    getActionParams(name: string): string[] {
+        return (<Immutable.List<string>><any>this.data.getIn(['params', name])).toJS();
     }
 
     getX(): number {
@@ -392,12 +412,17 @@ export class EdgeData {
         return this.uid;
     }
 
-    getTriggerId(): string[] {
-        return (<Immutable.List<string>><any>this.data.get('trigger_id')).toJS();
+    getNumberOfTrigger() : number {
+        return this.data.count();
     }
 
-    getTriggerParams(triggerId: string, name: string): string {
-        return this.data.getIn(['params', triggerId, name]);
+    // getTriggerId(): string[] {
+    //     return (<Immutable.List<string>><any>this.data.get('trigger_id')).toJS();
+    // }
+
+    getTriggerParams(triggerIndex: number, name: string): string[] {
+        //return (<Immutable.List<string>><any>this.data.getIn(['params', triggerId, name])).toJS();
+        return (<Immutable.List<any>>(<any>this.data.get('trigger'))).get(triggerIndex).toJS()[name];
     }
 
     getSourceNodeId(): string {

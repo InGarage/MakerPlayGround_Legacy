@@ -3,8 +3,10 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { GraphData, NodeData, EdgeData } from './graphmodel';
 import { GraphCanvas, CanvasEventOptions, CanvasEventTypes } from './newgraphcanvas';
 import { Action } from './action';
+import { Trigger, TriggerGroup, TriggerHelper } from './trigger';
 import { UndoStack } from './undostack';
 import { PropertyValue } from './propertyvalue';
+
 
 @Component({
     selector: 'middle',
@@ -23,6 +25,16 @@ export class MiddleComponent implements OnInit {
         this.model = GraphData.createGraphDataFromJSON(this.dummyGraph);
         // this.undoStack = new UndoStack<GraphData>();
         // this.undoStack.push(this.model);
+
+        const test = '{0} is pressed {1} times';    
+        const args = ['test1', 'test2'];
+        const test2 = test.replace(/{(\d+)}/g, (match,number) => {
+            return typeof args[number] != 'undefined'
+                ? args[number]
+                : match
+            ;
+        });
+        console.log(test2);
     }
 
     addNewNode(newAction: Action) {
@@ -30,18 +42,23 @@ export class MiddleComponent implements OnInit {
         this.canvas.redraw();
     }
 
-    updataPropData(data: PropertyValue[]) {
-        this.canvas.updateDataBinding(data);
-        //this.model = this.model.updateProperty(data);
+    addNewEdge(newTrigger: Trigger) {
+        this.model.addEdge(newTrigger);
+        this.canvas.redraw();      
     }
 
-    updataPropDataFinish(data: PropertyValue[]) {
+    updataPropData(data: PropertyValue) {
+        this.canvas.updateDataBinding(data);
+    }
+
+    updataPropDataFinish(data: PropertyValue) {
         // We call the proper method to update property in graph model by looking
         // at type of object we are selecting
         if (this.typeOfObjectSelected === NodeData)
             this.model.updateNodeProperty(data);
-        else
+        else {
             this.model.updateEdgeProperty(data);
+        }
         this.canvas.redraw();
     }
 
@@ -99,6 +116,34 @@ export class MiddleComponent implements OnInit {
             , options.target_id, options.start_x, options.end_x, options.start_y, options.end_y);
             this.canvas.redraw();      
         });
+
+        this.canvas.on('edge:combine', (options) => {
+            let triggerId = options.toBeMissing.getTriggerId();
+            let params = {};
+            for (const id of triggerId) {
+                let trigger = TriggerHelper.findTriggerById(id); // Get this trigger from json
+                let obj = {};
+                trigger.params.forEach((param, index) => {
+                    const param_name = param.name;
+                    obj[param_name] = options.toBeMissing.getTriggerParams(id, param.name);
+                });
+                params[id] = obj;
+            }
+
+            triggerId = options.toBeCombined.getTriggerId();
+            for (const id of triggerId) {
+                let trigger = TriggerHelper.findTriggerById(id); // Get this trigger from json
+                let obj = {};
+                trigger.params.forEach((param, index) => {
+                    const param_name = param.name;
+                    obj[param_name] = options.toBeCombined.getTriggerParams(id, param.name);
+                });
+                params[id] = obj;
+            }
+            
+            this.model.mergeEdge(options.toBeMissing.getEdgeId(), options.toBeMissing.getTriggerId(), params, options.toBeCombined.getEdgeId(), options.toBeCombined.getTriggerId());
+            this.canvas.redraw();  
+        });
     }
 
 
@@ -110,7 +155,8 @@ export class MiddleComponent implements OnInit {
                 'display_x': 500,
                 'display_y': 300,
                 'params': {
-                    'name': 'Motor 1'
+                    'name': ['Dim 1'],
+                    'brightness': ["30","%"]
                 }
             },
             '3a27eaa4-7971-49d8-9d74-2e79a49054ed': {
@@ -118,17 +164,28 @@ export class MiddleComponent implements OnInit {
                 'display_x': 800,
                 'display_y': 300,
                 'params': {
-                    'name': 'Motor 1',
-                    'Periode': 'some value',
+                    'name': ['Blink 1'],
+                    'frequency': ["10","Hz"]
                 }
             }
         },
         'edges': {
             '361cf758-db06-4c9d-9b31-2d88269554bb': {
-                'trigger_id': ['Accel_1','Accel_3'],
-                'params': {
-                    'Temperature': 50
-                },
+                // 'trigger_id': ['Button_3','Button_3'],
+                // 'params': {
+                //     'Button_3': { 'name': ["xxx"], 'time': ["3","times"] },
+                //     'Button_3': { 'name': ["yyy"], 'time': ["4","times"]  },
+                // },
+                'trigger': [
+                    {
+                        'id': 'Button_3',
+                        'params': {'name': ['xxx'], 'time': ['3', 'times']}
+                    },
+                    {
+                        'id': 'Button_3',
+                        'params': {'name': ['yyy'], 'time': ['4', 'times']}
+                    }
+                ],
                 'src_node_id': '',
                 'dst_node_id': '',
                 'start_x': 300,
@@ -136,10 +193,10 @@ export class MiddleComponent implements OnInit {
                 'end_x': 500,
                 'end_y': 500
             },
-            '87755327-ece5-4b80-bbf1-37a09c350196': {
-                'trigger_id': ['Accel_2'],
+            '877cf758-ece5-4b80-bbf1-37a09c350196': {
+                'trigger_id': ['Button_3'],
                 'params': {
-                    'Temperature': 50
+                    'Button_3': { 'name': ["zzz"], 'time': ["3","times"] },
                 },
                 'src_node_id': '',
                 'dst_node_id': '',
@@ -148,7 +205,7 @@ export class MiddleComponent implements OnInit {
                 'end_x': 500,
                 'end_y': 200
             }
-        }       
+        }
     };
    
 }

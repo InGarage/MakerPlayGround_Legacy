@@ -8,13 +8,14 @@ export interface Trigger {
   name: string;
   short_description: string;
   display_text: string;
+  display_text_param?: string[];
   params?: TriggerParameter[];
 }
 
 export interface TriggerParameter {
     name: string;
     control: string;
-    default_value: string;
+    default_value: string[];
     args: string[];
     regex: string;  // regex use to validate the property value 
 }
@@ -43,7 +44,7 @@ export namespace TriggerHelper {
           {
             "name": "Accelerate",
             "control": "NumberExpression",
-            "default_value": "1",
+            "default_value": [">","1","m/s^2"],
             "args": [
               "m/s^2"
             ],
@@ -60,9 +61,9 @@ export namespace TriggerHelper {
           {
             "name": "Accelerate",
             "control": "NumberExpression",
-            "default_value": "1",
+            "default_value": [">","1","m/s^2"],
             "args": [
-              "m/s^2"
+              "m/s^2","test1","test2"
             ],
             "regex": "^\\-?(\\d{1,}([.]\\d{1,})?)$"
           }
@@ -77,7 +78,7 @@ export namespace TriggerHelper {
           {
             "name": "Accelerate",
             "control": "NumberExpression",
-            "default_value": "1",
+            "default_value": [">","3","m/s^2"],
             "args": [
               "m/s^2"
             ],
@@ -94,7 +95,7 @@ export namespace TriggerHelper {
           {
             "name": "Angle",
             "control": "NumberExpression",
-            "default_value": "180",
+            "default_value": ["<","180","degree"],
             "args": [
               "degree"
             ],
@@ -111,7 +112,7 @@ export namespace TriggerHelper {
           {
             "name": "Angle",
             "control": "NumberExpression",
-            "default_value": "180",
+            "default_value": ["180"],
             "args": [
               "degree"
             ],
@@ -128,7 +129,7 @@ export namespace TriggerHelper {
           {
             "name": "Angle",
             "control": "NumberExpression",
-            "default_value": "180",
+            "default_value": ["180"],
             "args": [
               "degree"
             ],
@@ -171,7 +172,7 @@ export namespace TriggerHelper {
           {
             "name": "Pressure",
             "control": "NumberExpression",
-            "default_value": "1000",
+            "default_value": ["1000"],
             "args": [
               "hPa"
             ],
@@ -188,7 +189,7 @@ export namespace TriggerHelper {
           {
             "name": "Altitude",
             "control": "NumberExpression",
-            "default_value": "10",
+            "default_value": ["10"],
             "args": [
               "cm"
             ],
@@ -210,7 +211,7 @@ export namespace TriggerHelper {
           {
             "name": "Temperature",
             "control": "NumberExpression",
-            "default_value": "25",
+            "default_value": ["25"],
             "args": [
               "C"
             ],
@@ -241,12 +242,20 @@ export namespace TriggerHelper {
         "id": "Button_3",
         "name": "Press x times",
         "short_description": "Press the button x times",
-        "display_text": "Press {value} {unit}",
+        "display_text": "{0} is pressed {1} times",
+        "display_text_param": ['name', 'time'],
         "params": [
           {
-            "name": "Times",
-            "control": "NumberExpression",
-            "default_value": "3",
+            "name": "name",
+            "control": "textbox",
+            "default_value": [""],
+            "args": [""],
+            "regex": ""
+          },
+          {
+            "name": "time",
+            "control": "spinbox",
+            "default_value": ["3","times"],
             "args": [
               "times"
             ],
@@ -263,7 +272,7 @@ export namespace TriggerHelper {
           {
             "name": "Time",
             "control": "NumberExpression",
-            "default_value": "3",
+            "default_value": ["3"],
             "args": [
               "seconds"
             ],
@@ -285,7 +294,7 @@ export namespace TriggerHelper {
           {
             "name": "Time",
             "control": "NumberExpression",
-            "default_value": "13:59:44",
+            "default_value": ["13:59:44"],
             "args": [
               ""
             ],
@@ -307,7 +316,7 @@ export namespace TriggerHelper {
           {
             "name": "Time",
             "control": "NumberExpression",
-            "default_value": "1000",
+            "default_value": ["1000"],
             "args": [
               "milliseconds"
             ],
@@ -324,7 +333,7 @@ export namespace TriggerHelper {
           {
             "name": "Voltage",
             "control": "NumberExpression",
-            "default_value": "3000",
+            "default_value": ["3000"],
             "args": [
               "millivolts"
             ],
@@ -341,7 +350,7 @@ export namespace TriggerHelper {
           {
             "name": "State",
             "control": "HighLow",
-            "default_value": "HIGH",
+            "default_value": ["HIGH"],
             "args": [
               ""
             ],
@@ -363,7 +372,7 @@ export namespace TriggerHelper {
           {
             "name": "Rotation",
             "control": "NumberExpression",
-            "default_value": "100",
+            "default_value": ["100"],
             "args": [
               "dps"
             ],
@@ -380,7 +389,7 @@ export namespace TriggerHelper {
           {
             "name": "Rotation",
             "control": "NumberExpression",
-            "default_value": "100",
+            "default_value": ["100"],
             "args": [
               "dps"
             ],
@@ -397,7 +406,7 @@ export namespace TriggerHelper {
           {
             "name": "Rotation",
             "control": "NumberExpression",
-            "default_value": "100",
+            "default_value": ["100"],
             "args": [
               "dps"
             ],
@@ -419,7 +428,7 @@ export namespace TriggerHelper {
           {
             "name": "Humidity",
             "control": "Percentage",
-            "default_value": "30",
+            "default_value": ["30"],
             "args": [
               "%"
             ],
@@ -441,7 +450,7 @@ export namespace TriggerHelper {
           {
             "name": "Illuminance",
             "control": "NumberExpression",
-            "default_value": "",
+            "default_value": [""],
             "args": [
               "Lux"
             ],
@@ -458,7 +467,7 @@ export namespace TriggerHelper {
           {
             "name": "Color",
             "control": "Color",
-            "default_value": "#FFFFFF",
+            "default_value": ["#FFFFFF"],
             "args": [
               ""
             ],
@@ -480,7 +489,7 @@ export namespace TriggerHelper {
           {
             "name": "Level",
             "control": "NumberExpression",
-            "default_value": "15",
+            "default_value": ["15"],
             "args": [
               "cm"
             ],
@@ -497,7 +506,7 @@ export namespace TriggerHelper {
           {
             "name": "Pressure",
             "control": "NumberExpression",
-            "default_value": "500",
+            "default_value": ["500"],
             "args": [
               "pa"
             ],
@@ -514,7 +523,7 @@ export namespace TriggerHelper {
           {
             "name": "Volume per sec",
             "control": "NumberExpression",
-            "default_value": "0.000301",
+            "default_value": ["0.000301"],
             "args": [
               "m^3/s"
             ],
@@ -536,7 +545,7 @@ export namespace TriggerHelper {
           {
             "name": "Direction",
             "control": "Direction",
-            "default_value": "NE",
+            "default_value": ["NE"],
             "args": [
               ""
             ],
@@ -553,7 +562,7 @@ export namespace TriggerHelper {
           {
             "name": "Magnetic",
             "control": "NumberExpression",
-            "default_value": "0.0003",
+            "default_value": ["0.0003"],
             "args": [
               "t"
             ],
@@ -570,7 +579,7 @@ export namespace TriggerHelper {
           {
             "name": "Magnetic",
             "control": "NumberExpression",
-            "default_value": "0.0003",
+            "default_value": ["0.0003"],
             "args": [
               "t"
             ],
@@ -587,7 +596,7 @@ export namespace TriggerHelper {
           {
             "name": "Magnetic",
             "control": "NumberExpression",
-            "default_value": "0.0003",
+            "default_value": ["0.0003"],
             "args": [
               "t"
             ],
@@ -609,7 +618,7 @@ export namespace TriggerHelper {
           {
             "name": "Gesture",
             "control": "Gesture",
-            "default_value": "",
+            "default_value": [""],
             "args": [
               ""
             ],
@@ -631,7 +640,7 @@ export namespace TriggerHelper {
           {
             "name": "Orientation",
             "control": "Orientation",
-            "default_value": "",
+            "default_value": [""],
             "args": [
               ""
             ],
@@ -653,7 +662,7 @@ export namespace TriggerHelper {
           {
             "name": "Sensitive",
             "control": "NumberExpression",
-            "default_value": "700",
+            "default_value": ["700"],
             "args": [
               ""
             ],
@@ -670,7 +679,7 @@ export namespace TriggerHelper {
           {
             "name": "Distance",
             "control": "NumberExpression",
-            "default_value": "70",
+            "default_value": ["70"],
             "args": [
               "cm"
             ],
@@ -692,7 +701,7 @@ export namespace TriggerHelper {
           {
             "name": "Volume",
             "control": "NumberExpression",
-            "default_value": "30",
+            "default_value": ["30"],
             "args": [
               "db"
             ],
@@ -714,7 +723,7 @@ export namespace TriggerHelper {
           {
             "name": "Text",
             "control": "Textbox",
-            "default_value": "Hello Arduino",
+            "default_value": ["Hello Arduino"],
             "args": [
               ""
             ],
@@ -731,7 +740,7 @@ export namespace TriggerHelper {
           {
             "name": "ID",
             "control": "Textbox",
-            "default_value": "",
+            "default_value": [""],
             "args": [
               ""
             ],

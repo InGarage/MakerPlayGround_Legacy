@@ -13,7 +13,8 @@ import * as $ from 'jquery';
 
 export class ActionComponent {
 
-  @Output() myEvent = new EventEmitter<Action>();
+  @Output() addNode = new EventEmitter<Action>();
+  @Output() addEdge = new EventEmitter<Trigger>();
 
   actions: ActionGroup[];
   triggers: any[];
@@ -150,29 +151,34 @@ export class ActionComponent {
     tree.treeModel.filterNodes(text, true);
   }
 
+  filterEdges(text, tree) {
+    tree.treeModel.filterEdges(text, true);
+  }
+
 
 /*******************************
  *  Output event handle        *
  *******************************/ 
 
-  deleteState($event: any) {
-    this.myEvent.emit($event);
-  }
+  // deleteState($event: any) {
+  //   this.myEvent.emit($event);
+  // }
 
   selectedAction($event: any) {
     // Only emit event when the selected tree node isn't a header node
     if ($event.node.isLeaf) {
-      this.myEvent.emit($event.node.data);
+      this.addNode.emit($event.node.data);
     }
+  }
 
-    /* Tempolary; 
-  if ($event.node.isLeaf) {
-        this.myEvent.emit($event.node.data);
-        
-      }*/
-
-
+  selectedTrigger($event: any) {
+    if ($event.node.isLeaf) {
+      this.addEdge.emit($event.node.data);
+    }
   }
 
 
 }
+
+
+

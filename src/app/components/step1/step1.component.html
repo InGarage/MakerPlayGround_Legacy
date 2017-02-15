@@ -28,7 +28,7 @@
 
   <div class="row">
     <div [ngStyle]="setComponentMenuStyles()">
-      <action #left (myEvent)="middle.addNewNode($event)"></action>
+      <action #left (addNode)="middle.addNewNode($event)" (addEdge)="middle.addNewEdge($event)"></action>
     </div>
 
     <div [ngStyle]="setCanvasStyles()">

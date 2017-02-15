@@ -5,6 +5,7 @@ import * as Collections from 'typescript-collections';
 import { Action, ActionGroup, ActionHelper } from './action';
 import { Trigger, TriggerGroup, TriggerHelper } from './trigger';
 import { GraphData, NodeData, EdgeData } from './graphmodel';
+import { PropertyValue } from './propertyvalue';
 
 /* display constants */
 const NODE_SIZE: number = 100;
@@ -15,6 +16,8 @@ const NODE_REMOVEBTN_POSY: number = (NODE_SIZE / 2);
 const NODE_REMOVEBTN_SIZE: number = 10;
 const EDGE_ARROW_HEAD_SIZE: number = 15;
 const EDGE_ARROW_WIDTH: number = 2;
+const EDGE_IMAGE_SIZE: number = 50;
+const EDGE_IMAGE_DISTANCE: number = 30;
 
 export interface CanvasEventOptions {
     target_id?: string,
@@ -25,15 +28,22 @@ export interface CanvasEventOptions {
     center_x?: number,
     center_y?: number,
     end_x?: number,
-    end_y?: number
+    end_y?: number,
+    toBeMissing?: EdgeData,     // EdgeData of edge that is going to disappear from canvas
+    toBeCombined?: EdgeData     // EdgeData of edge that is going to be combined
 }
 
 export type CanvasEventTypes = 'node:selected' | 'node:move' | 'node:remove' | 'edge:move' | 'object:deselected'
-    | 'edge:connectionDst' | 'edge:connectionSrc' | 'edge:selected';
+    | 'edge:connectionDst' | 'edge:connectionSrc' | 'edge:selected' | 'edge:combine';
 
 type Coordinate = {
     x: number,
     y: number
+}
+
+type combineEdge = {
+    toBeMissing: EdgeData,      // EdgeData of edge that is going to disappear from canvas
+    toBeCombined: EdgeData      // EdgeData of edge that is going to be combined
 }
 
 export class GraphCanvas {
@@ -178,15 +188,18 @@ export class GraphCanvas {
         });
     }
 
-    updateDataBinding(data) {
+    updateDataBinding(data: PropertyValue) {
         if (this.nodeFabricObject.containsKey(data.uid)) {
-            if (data.name === 'name') {
-                this.nodeFabricObject.getValue(data.uid).nodeNameText.setText(data.value);
-                this.canvas.renderAll();
+            const node = data.children[0];  // This is an action, data contains only one child
+            for (let param of node.param) {
+                if (param.name == "name") {
+                    this.nodeFabricObject.getValue(data.uid).nodeNameText.setText(param.value[0]);
+                    this.canvas.renderAll();
+                }
             }
         }
         if (this.edgeFabricObject.containsKey(data.uid)) {
-            
+
         }
     }
 
@@ -210,7 +223,7 @@ export class GraphCanvas {
 
     removeEdge(edgeData: EdgeData) {
         let edgeView = this.edgeFabricObject.remove(edgeData.getEdgeId());
-        this.canvas.remove(edgeView.line, edgeView.triangle, edgeView.dotHead, edgeView.dotTail);
+        this.canvas.remove(edgeView.triggerDescription, edgeView.line, edgeView.triangle, edgeView.dotHead, edgeView.dotTail);
     }
 
     /**
@@ -225,14 +238,14 @@ export class GraphCanvas {
             if (node === undefined) {
                 console.log("Delete node");
                 this.removeNode(nodeView.nodeData);
-                }
+            }
             else if (!node.isEqual(nodeView.nodeData)) {
-                    console.log("update node");
-                    this.nodeFabricObject.getValue(node.getNodeId()).reinitializeFromModel(node);
-                    this.canvas.renderAll();  
-                }
+                console.log("update node");
+                this.nodeFabricObject.getValue(node.getNodeId()).reinitializeFromModel(node);
+                this.canvas.renderAll();
+            }
 
-            });
+        });
 
         let allNode: NodeData[] = this.graph.getNodes();
         for (let node of allNode) {
@@ -248,16 +261,17 @@ export class GraphCanvas {
             if (edge === undefined) {
                 console.log("Delete edge");
                 this.removeEdge(edgeView.edgeData);
-                }
+            }
             else if (!edge.isEqual(edgeView.edgeData)) {
-                    console.log("update edge");
-                    this.edgeFabricObject.getValue(edge.getEdgeId()).reinitializeFromModel(edge);
-                    this.canvas.renderAll();  
-                }
+                console.log("update edge");
+                this.edgeFabricObject.getValue(edge.getEdgeId()).reinitializeFromModel(edge);
+                this.canvas.renderAll();
+            }
 
-            });
+        });
 
         let allEdge: EdgeData[] = this.graph.getEdges();
+        console.log('allEdge', allEdge);
         for (let edge of allEdge) {
             if (!this.edgeFabricObject.containsKey(edge.getEdgeId())) {
                 console.log("Add edge");
@@ -272,37 +286,37 @@ export class GraphCanvas {
 
 
 
-        // graph.compareGraphModel(this.graph, (type, target) => {
-        //     if (type === "addition") {
-        //         if (target instanceof NodeData) {
-        //             this.drawNode(target);
-        //         } else {
-        //             this.drawEdge(target);
-        //         }
-        //     } else if (type === "deletion") {
-        //         if (target instanceof NodeData) {
-        //             this.removeNode(target);
-        //         } else {
-        //             this.removeEdge(target);
-        //         }
-        //     } else if (type === "update") { // remove then add it again
-        //         if (target instanceof NodeData) {
-        //             this.nodeFabricObject.getValue(target.getNodeId()).reinitializeFromModel(target);
-        //             this.canvas.renderAll();
-        //             //this.canvas.bringToFront(this.nodeFabricObject.getValue(target.getNodeId()).nodeRemoveButton);
-        //         } else {
-        //             this.removeEdge(target);
-        //             this.drawEdge(target);
-        //         }
-        //     }
-        // });
-        // this.graph = graph;
-        // this.nodeFabricObject.forEach((nodeId, nodeView) => {
-        //     nodeView.graph = this.graph;
-        // });
-        // this.edgeFabricObject.forEach((edgeId, edgeView) => {
-        //     edgeView.graph = this.graph;
-        // });
+    // graph.compareGraphModel(this.graph, (type, target) => {
+    //     if (type === "addition") {
+    //         if (target instanceof NodeData) {
+    //             this.drawNode(target);
+    //         } else {
+    //             this.drawEdge(target);
+    //         }
+    //     } else if (type === "deletion") {
+    //         if (target instanceof NodeData) {
+    //             this.removeNode(target);
+    //         } else {
+    //             this.removeEdge(target);
+    //         }
+    //     } else if (type === "update") { // remove then add it again
+    //         if (target instanceof NodeData) {
+    //             this.nodeFabricObject.getValue(target.getNodeId()).reinitializeFromModel(target);
+    //             this.canvas.renderAll();
+    //             //this.canvas.bringToFront(this.nodeFabricObject.getValue(target.getNodeId()).nodeRemoveButton);
+    //         } else {
+    //             this.removeEdge(target);
+    //             this.drawEdge(target);
+    //         }
+    //     }
+    // });
+    // this.graph = graph;
+    // this.nodeFabricObject.forEach((nodeId, nodeView) => {
+    //     nodeView.graph = this.graph;
+    // });
+    // this.edgeFabricObject.forEach((edgeId, edgeView) => {
+    //     edgeView.graph = this.graph;
+    // });
 
 
     /**
@@ -355,9 +369,12 @@ class NodeView {
         // TODO: remove to its own class
         let action = ActionHelper.findActionById(nodeData.getActionId());
 
-        fabric.Image.fromURL('/assets/img/'+action.id+'.png'
+
+        fabric.Image.fromURL('/assets/img/' + action.id + '.png'
             , (im) => {
                 this.nodeActionImage = im;
+
+
                 this.initNodeEvent();
                 this.nodeActionImage.set('uid', this.id);
                 this.nodeConnectingIndicator.set('uid', this.id);
@@ -369,26 +386,41 @@ class NodeView {
             });
 
 
+        fabric.loadSVGFromURL('/assets/img/Asset-49.svg', (objects, options) => {
+            let temp = fabric.util.groupSVGElements(objects, options);
+            temp.set({
+                left: 100,
+                top: 100,
+                hasControls: false,
+                hasBorders: false,
+            });
+            this.canvas.add(temp);
+        });
 
-        // fabric.loadSVGFromURL(action.image, function(objects, options) {
-        //     var obj = fabric.util.groupSVGElements(objects, options);
-        //     this.nodeActionImage = obj;
-        //     this.initNodeEvent();
-        //     this.nodeActionImage.set('uid', this.id);
-        //     this.nodeConnectingIndicator.set('uid', this.id);
-        //     this.nodeSelectingIndicator.set('uid', this.id);
-        //     this.nodeNameText.set('uid', this.id);
-        //     this.nodeRemoveButton.set('uid', this.id);
-        //     this.reinitializeFromModel(nodeData);
-        //     this.canvas.add(this.nodeConnectingIndicator, this.nodeSelectingIndicator, this.nodeNameText, this.nodeActionImage, this.nodeRemoveButton);
+
+        // fabric.loadSVGFromURL('/assets/img/LED-green.svg', function (objects, options) {
+        //     this.nodeActionImage = fabric.util.groupSVGElements(objects, options);
         // });
 
+        // let group = [];
+        // fabric.loadSVGFromURL("http://fabricjs.com/assets/1.svg",function(objects,options) {
+        //     this.nodeActionImage = new fabric.Group(group);
+        //     this.nodeActionImage.set({
+        //         left: 100,
+        //         top: 100,
+        //         width:175,
+        //         height:175
+        //     });
+        // },function(item, object) {
+        //         object.set('id',item.getAttribute('id'));
+        //         group.push(object);
+        // });
 
         this.nodeConnectingIndicator = new fabric.Circle();
-        this.nodeConnectingIndicator.set({visible: false});
+        this.nodeConnectingIndicator.set({ visible: false });
 
         this.nodeSelectingIndicator = new fabric.Circle();
-        this.nodeSelectingIndicator.set({visible: false});
+        this.nodeSelectingIndicator.set({ visible: false });
 
         this.nodeNameText = new fabric.Text('');
 
@@ -417,6 +449,8 @@ class NodeView {
             });
 
         this.nodeRemoveButton = new fabric.Group([cross_1, cross_2]);
+
+
     }
 
     reinitializeFromModel(nodeData: NodeData) {
@@ -425,15 +459,15 @@ class NodeView {
         console.log('position', nodeData.getX(), nodeData.getY());
 
         this.nodeActionImage.set({
-                width: NODE_SIZE,
-                height: NODE_SIZE,
-                left: nodeData.getX(),
-                top: nodeData.getY(),
-                originX: 'center',
-                originY: 'center',
-                hasControls: false,
-                hasBorders: false
-            });
+            width: NODE_SIZE,
+            height: NODE_SIZE,
+            left: nodeData.getX(),
+            top: nodeData.getY(),
+            originX: 'center',
+            originY: 'center',
+            hasControls: false,
+            hasBorders: false
+        });
         this.nodeActionImage.setCoords();
 
         this.nodeConnectingIndicator.set({
@@ -476,7 +510,7 @@ class NodeView {
             fontSize: NODE_NAME_FONTSIZE,
             hasControls: false,
             hasBorders: false,
-            text: nodeData.getActionParams('name')
+            text: nodeData.getActionParams('name')[0],
         });
         this.nodeNameText.setCoords();
 
@@ -743,6 +777,7 @@ class EdgeView {
     readonly triangle: fabric.ITriangle;
     readonly dotHead: fabric.ICircle;
     readonly dotTail: fabric.ICircle;
+    readonly triggerDescription: fabric.IGroup;
 
     constructor(public graph: GraphData, readonly canvas: fabric.ICanvas,
         readonly nodeFabricObject: Collections.Dictionary<string, NodeView>,
@@ -758,7 +793,7 @@ class EdgeView {
         let difX = Math.abs(startX - endX) / 2;
         let difY = Math.abs(startY - endY) / 2;
 
-        this.line = new fabric.Line([],{
+        this.line = new fabric.Line([], {
             originX: 'center',
             originY: 'center',
             padding: 50,
@@ -768,36 +803,72 @@ class EdgeView {
         this.triangle = new fabric.Triangle();
 
         this.dotHead = new fabric.Circle();
-        this.dotHead.set({visible: false});
+        this.dotHead.set({ visible: false });
 
         this.dotTail = new fabric.Circle();
-        this.dotTail.set({visible: false});
+        this.dotTail.set({ visible: false });
 
-        this.initEdgeEvent();
-        this.line.set('uid', this.id);
-        this.triangle.set('uid', this.id);
-        this.dotHead.set('uid', this.id);
-        this.dotTail.set('uid', this.id);
-        this.reinitializeFromModel(edgeData);
-        this.canvas.add(this.line, this.triangle, this.dotTail, this.dotHead);
+        this.triggerDescription = new fabric.Group();
+
+        // Temp: Draw only one image for combined trigger
+        // TODO: must draw all images!
+        let promises = [];
+        let edgeTriggerId = edgeData.getTriggerId();
+        for (let id of edgeTriggerId) {
+            let trigger = TriggerHelper.findTriggerById(id);
+
+            let p = new Promise((resolve, reject) => {
+                fabric.Image.fromURL('/assets/img/' + trigger.id + '.png'
+                , (im) => {
+                    let triggerImage = im;
+                    triggerImage.set({
+                        width: EDGE_IMAGE_SIZE,
+                        height: EDGE_IMAGE_SIZE,
+                        originX: 'center',
+                        originY: 'center',
+                    });
+
+                    let triggerText = new fabric.Text('');
+                    triggerText.set({
+                        fontSize: NODE_NAME_FONTSIZE,
+                        originX: 'center',
+                        originY: 'center',
+                    });
+
+                    this.triggerDescription.addWithUpdate(triggerImage);
+                    this.triggerDescription.addWithUpdate(triggerText);
+                    //this.canvas.setActiveObject(this.triggerDescription);
+                    //this.triggerDescription.setCoords();
+
+                    resolve();
+                });
+            });
+            promises.push(p);
+        }
+
+        Promise.all(promises).then(() => {
+            this.initEdgeEvent();
+            this.triggerDescription.set('uid', this.id);
+            this.line.set('uid', this.id);
+            this.triangle.set('uid', this.id);
+            this.dotHead.set('uid', this.id);
+            this.dotTail.set('uid', this.id);
+            this.reinitializeFromModel(edgeData);
+            this.canvas.add(this.triggerDescription, this.line, this.triangle, this.dotTail, this.dotHead);
+        });
     }
 
     getAllFabricElement(): fabric.IObject[] {
-        return [this.line, this.triangle, this.dotHead, this.dotTail];
+        return [this.triggerDescription, this.line, this.triangle, this.dotHead, this.dotTail];
     }
 
     private initEdgeEvent() {
-        // let startX = this.edgeData.getStartX();
-        // let startY = this.edgeData.getStartY();
-        // let endX = this.edgeData.getEndX();
-        // let endY = this.edgeData.getEndY();
-        // let angle = Math.atan2((endY - startY), (endX - startX));
-
         this.line.on('moving', (options) => {
             let [startX, startY, endX, endY, angle] = this.getCurrentPointAfterReinitialize();
             let currentOriginLineX = this.line.getLeft() + (EDGE_ARROW_HEAD_SIZE / 2 * Math.cos(angle)) / 2;
             let currentOriginLineY = this.line.getTop() + (EDGE_ARROW_HEAD_SIZE / 2 * Math.sin(angle)) / 2;
             let [nStartX, nEndX, nStartY, nEndY] = this.getLineCoordinateFromOrigin(currentOriginLineX, currentOriginLineY);
+            let edge: combineEdge = this.findIntersectionPoint(nStartX, nStartY, nEndX, nEndY, false);
             this.moveEdge(nStartX, nStartY, nEndX, nEndY, angle);
             this.processEdgeEvent(nStartX, nStartY, nEndX, nEndY, angle);
         });
@@ -806,6 +877,13 @@ class EdgeView {
             let currentOriginLineX = this.line.getLeft() + (EDGE_ARROW_HEAD_SIZE / 2 * Math.cos(angle)) / 2;
             let currentOriginLineY = this.line.getTop() + (EDGE_ARROW_HEAD_SIZE / 2 * Math.sin(angle)) / 2;
             let [nStartX, nEndX, nStartY, nEndY] = this.getLineCoordinateFromOrigin(currentOriginLineX, currentOriginLineY);
+            let edge: combineEdge = this.findIntersectionPoint(nStartX, nStartY, nEndX, nEndY, true);
+
+            if (edge !== undefined) {
+                this.combineEdge(edge);
+                return;
+            }
+
             this.moveEdge(nStartX, nStartY, nEndX, nEndY, angle);
             this.processEdgeEvent(nStartX, nStartY, nEndX, nEndY, angle, true);
             this.dotHead.visible = true;
@@ -813,8 +891,6 @@ class EdgeView {
         });
         this.line.on('selected', (options) => {
             console.log('edge select');
-            //this.deselectAllEdge();
-            //this.deselectAllNode();
             this.dotHead.visible = true;
             this.dotTail.visible = true;
 
@@ -830,6 +906,7 @@ class EdgeView {
             let currentOriginTriangleY = this.triangle.getTop();
             let [currentOriginLineX, currentOriginLineY] = this.getLineOriginFromTriangleOrigin(currentOriginTriangleX, currentOriginTriangleY);
             let [nStartX, nEndX, nStartY, nEndY] = this.getLineCoordinateFromOrigin(currentOriginLineX, currentOriginLineY);
+            let edge: combineEdge = this.findIntersectionPoint(nStartX, nStartY, nEndX, nEndY, false);
             this.moveEdge(nStartX, nStartY, nEndX, nEndY, angle);
             this.processEdgeEvent(nStartX, nStartY, nEndX, nEndY, angle);
         });
@@ -839,13 +916,18 @@ class EdgeView {
             let currentOriginTriangleY = this.triangle.getTop();
             let [currentOriginLineX, currentOriginLineY] = this.getLineOriginFromTriangleOrigin(currentOriginTriangleX, currentOriginTriangleY);
             let [nStartX, nEndX, nStartY, nEndY] = this.getLineCoordinateFromOrigin(currentOriginLineX, currentOriginLineY);
+            let edge: combineEdge = this.findIntersectionPoint(nStartX, nStartY, nEndX, nEndY, true);
+            if (edge !== undefined) {
+                this.combineEdge(edge);
+                return;
+            }
             this.moveEdge(nStartX, nStartY, nEndX, nEndY, angle);
             this.processEdgeEvent(nStartX, nStartY, nEndX, nEndY, angle, true);
             this.dotHead.visible = true;
             this.dotTail.visible = true;
         });
         this.triangle.on('selected', (options) => {
-            console.log('edge select');
+
             // this.deselectAllEdge();
             // this.deselectAllNode();
             this.dotHead.visible = true;
@@ -896,14 +978,6 @@ class EdgeView {
         });
     }
 
-    getCurrentPointAfterReinitialize() {
-        let startX = this.edgeData.getStartX();
-        let startY = this.edgeData.getStartY();
-        let endX = this.edgeData.getEndX();
-        let endY = this.edgeData.getEndY();
-        let angle = Math.atan2((endY - startY), (endX - startX));
-        return [startX, startY, endX, endY, angle];
-    }
 
     reinitializeFromModel(edgeData: EdgeData) {
         this.edgeData = edgeData;
@@ -928,7 +1002,7 @@ class EdgeView {
             hasControls: false,
             hasBorders: false
         });
-        this.line.setCoords(); 
+        this.line.setCoords();
 
         this.triangle.set({
             left: endX - EDGE_ARROW_HEAD_SIZE / 2 * Math.cos(angle),
@@ -938,6 +1012,7 @@ class EdgeView {
             originX: 'center',  // rotate using center point of the triangle as the origin
             originY: 'center',
             angle: 90 + (angle * 180 / Math.PI),
+            fill: 'black',
             hasControls: false,
             hasBorders: false
         });
@@ -968,6 +1043,169 @@ class EdgeView {
             visible: false
         })
         this.dotTail.setCoords();
+
+        let top, left, newAngle: number;
+        [left, top, newAngle] = this.getTopLeftForImage(angle);
+
+        let widthGroup: number = 0;
+        let i, j: number = 0;
+
+        let items = this.triggerDescription.size();
+        console.log('size of group', items);
+        for (i = 0; i < items; i++) {
+            widthGroup += this.triggerDescription.item(i).getWidth();
+        }
+
+        this.triggerDescription.set({
+            width: widthGroup,
+            hasControls: false,
+            hasBorders: false,
+            left: left,
+            top: top,
+            angle: newAngle,
+            originX: 'center',
+            originY: 'center',
+            perPixelTargetFind: true
+        })
+        this.triggerDescription.setCoords();
+
+        let distance: number = 0;
+        //Find each point
+        for (i = 0; i < items; i++) {
+            distance = (widthGroup / 2) - (this.triggerDescription.item(i).getWidth() / 2);
+            for (j = i + 1; j < items; j++) {
+                distance -= this.triggerDescription.item(j).getWidth();
+            }
+            this.triggerDescription.item(i).set({
+                left: distance,
+                top: 0
+            });
+            this.triggerDescription.item(i).setCoords();
+        }
+
+        // const args = [];
+        // const trigger = TriggerHelper.findTriggerById(this.edgeData.getTriggerId()[0]);
+        // if (trigger.display_text_param) {
+        //     for (let t of trigger.display_text_param) {
+        //         args.push(this.edgeData.getTriggerParams(trigger.id, t));
+        //     }
+        //     const text = trigger.display_text.replace(/{(\d+)}/g, (match, number) => {
+        //         return typeof args[number] != 'undefined'
+        //             ? args[number]
+        //             : match
+        //             ;
+        //     });
+        //     this.triggerDescription.item(1).setText(text);
+        // }
+    }
+
+    getTopLeftForImage(angle: number) {
+        let top: number, left: number;
+        let newTop: number, newLeft: number;
+
+        top = this.line.getTop();
+        left = this.line.getLeft();
+        let angleInDegree = (angle * (180 / Math.PI));
+
+        if (Math.abs(angleInDegree) > 90)
+            return [left + (EDGE_IMAGE_DISTANCE * Math.sin(-angle)), top + (EDGE_IMAGE_DISTANCE * Math.cos(-angle)), (angle * 180 / Math.PI) + 180];
+        else
+            return [left - (EDGE_IMAGE_DISTANCE * Math.sin(-angle)), top - (EDGE_IMAGE_DISTANCE * Math.cos(-angle)), (angle * 180 / Math.PI)];
+    }
+
+    findIntersectionPoint(x1: number, y1: number, x2: number, y2: number, shouldEmittedEvent: boolean): combineEdge {
+        let x3, y3, x4, y4: number;
+        let allEdge: EdgeData[] = this.graph.getEdges();
+        let movingEdge: EdgeData;
+
+        for (let edge of allEdge) {
+            x3 = edge.getStartX(); y3 = edge.getStartY();
+            x4 = edge.getEndX(); y4 = edge.getEndY();
+
+            let a_dx = x2 - x1;
+            let a_dy = y2 - y1;
+            let b_dx = x4 - x3;
+            let b_dy = y4 - y3;
+
+            // This is the moving edge, must not compare with itself!
+            // Otherwise it will paint itself to be red too.
+            if (this.edgeData.getEdgeId() === edge.getEdgeId())
+                continue;
+
+            if (this.edgeData.getEdgeId() !== edge.getEdgeId()) {
+                // For the case where two lines are parallel to each other
+                if ((y1 === y2) && (y3 === y4) && ((x3 > x1 && x3 < x2) || (x4 > x1 && x4 < x2))) {
+                    if (y1 - y3 >= -10 && y1 - y3 <= 10) {
+                        let edgeView = this.edgeFabricObject.getValue(edge.getEdgeId());
+                        if (!shouldEmittedEvent) {
+                            edgeView.line.set('stroke', 'red');
+                            edgeView.triangle.set('fill', 'red');
+                        }
+                        return { toBeMissing: this.edgeData, toBeCombined: edge };
+                    } else {
+                        // No intersection point, paint arrow's color back to black
+                        let edgeView = this.edgeFabricObject.getValue(edge.getEdgeId());
+                        if (!shouldEmittedEvent) {
+                            edgeView.line.set('stroke', 'black');
+                            edgeView.triangle.set('fill', 'black');
+                        }
+                    }
+                } else if (x1 === x2 && x3 === x4 && ((y3 > y1 && y3 < y2) || (y4 > y1 && y4 < y2))) {
+                    if (x1 - x3 >= -10 && x1 - x3 <= 10) {
+                        let edgeView = this.edgeFabricObject.getValue(edge.getEdgeId());
+                        if (!shouldEmittedEvent) {
+                            edgeView.line.set('stroke', 'red');
+                            edgeView.triangle.set('fill', 'red');
+                        }
+                        return { toBeMissing: this.edgeData, toBeCombined: edge };
+                    } else {
+                        // No intersection point, paint arrow's color back to black
+                        let edgeView = this.edgeFabricObject.getValue(edge.getEdgeId());
+                        if (!shouldEmittedEvent) {
+                            edgeView.line.set('stroke', 'black');
+                            edgeView.triangle.set('fill', 'black');
+                        }
+                    }
+                } else if (y1 !== y2 || y3 !== y4 || x1 !== x2 || x3 !== x4) {
+                    let s = (-a_dy * (x1 - x3) + a_dx * (y1 - y3)) / (-b_dx * a_dy + a_dx * b_dy);
+                    let t = (+b_dx * (y1 - y3) - b_dy * (x1 - x3)) / (-b_dx * a_dy + a_dx * b_dy);
+                    let a = (s >= 0 && s <= 1 && t >= 0 && t <= 1);
+                    if (a === true) {
+                        let edgeView = this.edgeFabricObject.getValue(edge.getEdgeId());
+                        if (!shouldEmittedEvent) {
+                            edgeView.line.set('stroke', 'red');
+                            edgeView.triangle.set('fill', 'red');
+                        }
+                        return { toBeMissing: this.edgeData, toBeCombined: edge };
+                    } else {
+                        // No intersection point, paint arrow's color back to black
+                        let edgeView = this.edgeFabricObject.getValue(edge.getEdgeId());
+                        if (!shouldEmittedEvent) {
+                            edgeView.line.set('stroke', 'black');
+                            edgeView.triangle.set('fill', 'black');
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    combineEdge(edge: combineEdge) {
+
+        this.callback.getValue('edge:combine')({
+            toBeMissing: edge.toBeMissing,
+            toBeCombined: edge.toBeCombined
+        });
+    }
+
+
+    getCurrentPointAfterReinitialize() {
+        let startX = this.edgeData.getStartX();
+        let startY = this.edgeData.getStartY();
+        let endX = this.edgeData.getEndX();
+        let endY = this.edgeData.getEndY();
+        let angle = Math.atan2((endY - startY), (endX - startX));
+        return [startX, startY, endX, endY, angle];
     }
 
     moveEdge(startX: number, startY: number, endX: number, endY: number, angle: number) {

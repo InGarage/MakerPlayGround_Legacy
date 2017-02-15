@@ -33,11 +33,11 @@
           <!-- Search -->
           <div *ngIf="showTriggerMenu">
             <form class="search-action">
-              <input class="form-control step1_search" #filter (keyup)="filterNodes(filter.value, tree)" placeholder="Search" />
+              <input class="form-control step1_search" #filter (keyup)="filterEdges(filter.value, tree)" placeholder="Search" />
             </form>
 
             <ul [ngStyle]="setTriggerStyles()" (click)="toggleTreeview()">
-              <Tree #tree [nodes]="triggers" [focused]="true" (onActivate)="selectedAction($event)">
+              <Tree #tree [nodes]="triggers" [focused]="true" (onActivate)="selectedTrigger($event)">
                 <template #treeNodeTemplate let-node>
                   <b>{{ node.data.name }}</b><br>{{ node.data.description }}
                 </template>

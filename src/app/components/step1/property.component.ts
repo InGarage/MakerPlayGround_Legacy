@@ -4,7 +4,7 @@ import { NgModule } from '@angular/core';
 import { Action, ActionGroup, ActionHelper } from './action';
 import { Trigger, TriggerGroup, TriggerHelper } from './trigger';
 import { GraphData, NodeData, EdgeData } from './graphmodel';
-import { PropertyValue } from './propertyvalue';
+import { PropertyValue, ParameterList, Parameter } from './propertyvalue';
 
 @Component({
     selector: 'property',
@@ -14,14 +14,17 @@ import { PropertyValue } from './propertyvalue';
 
 export class PropertyComponent {
     @Input() objectSelected: NodeData | EdgeData;
-    @Output() updateDataFinish = new EventEmitter<PropertyValue[]>();
-    @Output() updateData = new EventEmitter<PropertyValue[]>();
+    @Output() updateDataFinish = new EventEmitter<PropertyValue>();
+    @Output() updateData = new EventEmitter<PropertyValue>();
 
     showProperties: boolean = false;
-    objProperties: PropertyValue[] = [];
+    objProperties: PropertyValue;
     previousObjDataNode: NodeData;
     previousObjDataEdge: EdgeData;
     dirty: boolean;
+
+    operators = [ {value: '>', text: '>'}, {value: '<', text: '<'}, {value: '>=', text: '>='}, 
+            {value: '<=', text: '<='}, {value: '==', text: '='}, {value: '!=', text: '!='}];
 
     ngOnChanges(changes: SimpleChange) {
         if (this.objectSelected instanceof NodeData) {
@@ -29,7 +32,6 @@ export class PropertyComponent {
         } else if (this.objectSelected instanceof EdgeData) {
             this.populatePropertyWindowEdge(this.objectSelected);
         } else if (this.objectSelected === undefined) {
-            console.log('obj select change');
             if (this.dirty) {
                 console.log('dirty');
                 this.updateDataFinish.emit(this.objProperties);
@@ -48,20 +50,33 @@ export class PropertyComponent {
         }
         this.dirty = false;
         this.previousObjDataNode = objData;
-        this.objProperties = [];
         this.showProperties = true;
-        let action = ActionHelper.findActionById(objData.getActionId());
 
-        let obj: PropertyValue;
-        for (let prop of action.params) {
-            console.log(prop.control);
-            obj = {
-                uid: objData.getNodeId(),
-                name: prop.name,
-                value: objData.getActionParams(prop.name),
-                control: prop.control,
+        let action = ActionHelper.findActionById(objData.getActionId());
+        let paramObj: Parameter;
+        let listParamObj: Parameter[] = [];
+        let eachAction: ParameterList;
+        let listEachAction: ParameterList[] = [];
+
+        action.params.forEach((param, index) => {
+            paramObj = {
+                name: param.name,
+                value: objData.getActionParams(param.name),
+                control: param.control,
+                args: param.args
             }
-            this.objProperties.push(obj);
+            listParamObj.push(paramObj);
+        });
+        eachAction = {
+            name: action.name,
+            id: objData.getActionId(),
+            param: listParamObj,
+        }
+        listEachAction.push(eachAction);
+
+        this.objProperties = {
+            uid: objData.getNodeId(),
+            children: listEachAction
         }
     }
 
@@ -74,28 +89,66 @@ export class PropertyComponent {
         }
         this.dirty = false;
         this.previousObjDataEdge = objData;
-        this.objProperties = [];
         this.showProperties = true;
 
-        const triggleId = objData.getTriggerId();
-        for (const id of triggleId) {
-            let trigger = TriggerHelper.findTriggerById(id);
+        let listEachTrigger: ParameterList[] = [];
 
-            let obj: PropertyValue;
-            for (let prop of trigger.params) {
-                console.log(prop.control);
-                obj = {
-                    uid: objData.getEdgeId(),
-                    name: prop.name,
-                    value: objData.getTriggerParams(id, prop.name),
-                    control: prop.control,
+        const triggleId = objData.getTriggerId(); // obtain array of id
+        for (const id of triggleId) {
+            let trigger = TriggerHelper.findTriggerById(id); // Get this trigger from json
+            let paramObj: Parameter;
+            let listParamObj: Parameter[] = [];
+            let eachTrigger: ParameterList;
+
+            trigger.params.forEach((param, index) => {
+                paramObj = {
+                    name: param.name,
+                    value: objData.getTriggerParams(id, param.name),
+                    control: param.control,
+                    args: param.args
                 }
-                this.objProperties.push(obj);
+                listParamObj.push(paramObj);
+            });
+            eachTrigger = {
+                name: trigger.name,
+                id: id,
+                param: listParamObj,
             }
+            listEachTrigger.push(eachTrigger);
+
+        }
+
+        this.objProperties = {
+            uid: objData.getEdgeId(),
+            children: listEachTrigger
         }
     }
 
-    setFormStyles() {
+    setInnerFormStyles() {
+        let styles = {
+            'margin-bottom': '15px',
+        };
+        return styles;
+    }
+
+    setInputStylesNumberExpression() {
+        let styles = {
+            'width': '30%',
+            'display': 'inline',
+        };
+        return styles;
+    }
+
+    setInputStyles() {
+        let styles = {
+            'width': '65%',
+            'display': 'inline',
+        };
+        return styles;
+    }
+
+
+    setOutmostFormStyles() {
         let styles = {
             'padding-left': '30px',
             'padding-right': '30px',
@@ -126,6 +179,11 @@ export class PropertyComponent {
     onOutOfFocus() {
         console.log('out of focus');
         this.dirty = false;
+        this.updateDataFinish.emit(this.objProperties);
+    }
+
+    onChangeOperat(selected: any, obj: any) {
+        obj.value[0] = selected;
         this.updateDataFinish.emit(this.objProperties);
     }
 
