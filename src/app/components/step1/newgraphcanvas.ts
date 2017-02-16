@@ -4,7 +4,7 @@ import * as Collections from 'typescript-collections';
 
 import { Action, ActionGroup, ActionHelper } from './action';
 import { Trigger, TriggerGroup, TriggerHelper } from './trigger';
-import { GraphData, NodeData, EdgeData } from './graphmodel';
+import { GraphData, NodeData, EdgeData, TriggerData } from './graphmodel';
 import { PropertyValue } from './propertyvalue';
 
 /* display constants */
@@ -279,45 +279,6 @@ export class GraphCanvas {
             }
         }
     }
-
-
-
-
-
-
-
-    // graph.compareGraphModel(this.graph, (type, target) => {
-    //     if (type === "addition") {
-    //         if (target instanceof NodeData) {
-    //             this.drawNode(target);
-    //         } else {
-    //             this.drawEdge(target);
-    //         }
-    //     } else if (type === "deletion") {
-    //         if (target instanceof NodeData) {
-    //             this.removeNode(target);
-    //         } else {
-    //             this.removeEdge(target);
-    //         }
-    //     } else if (type === "update") { // remove then add it again
-    //         if (target instanceof NodeData) {
-    //             this.nodeFabricObject.getValue(target.getNodeId()).reinitializeFromModel(target);
-    //             this.canvas.renderAll();
-    //             //this.canvas.bringToFront(this.nodeFabricObject.getValue(target.getNodeId()).nodeRemoveButton);
-    //         } else {
-    //             this.removeEdge(target);
-    //             this.drawEdge(target);
-    //         }
-    //     }
-    // });
-    // this.graph = graph;
-    // this.nodeFabricObject.forEach((nodeId, nodeView) => {
-    //     nodeView.graph = this.graph;
-    // });
-    // this.edgeFabricObject.forEach((edgeId, edgeView) => {
-    //     edgeView.graph = this.graph;
-    // });
-
 
     /**
      * Register a callback for a specific event
@@ -810,53 +771,16 @@ class EdgeView {
 
         this.triggerDescription = new fabric.Group();
 
-        // Temp: Draw only one image for combined trigger
-        // TODO: must draw all images!
-        let promises = [];
-        //let edgeTriggerId = edgeData.getTriggerId();
-        //for (let id of edgeTriggerId) {
-        for (let i=0; i<edgeData.getNumberOfTrigger(); i++) {
-            let trigger = TriggerHelper.findTriggerById(edgeData.getTriggerId(i));
-
-            let p = new Promise((resolve, reject) => {
-                fabric.Image.fromURL('/assets/img/' + trigger.id + '.png'
-                , (im) => {
-                    let triggerImage = im;
-                    triggerImage.set({
-                        width: EDGE_IMAGE_SIZE,
-                        height: EDGE_IMAGE_SIZE,
-                        originX: 'center',
-                        originY: 'center',
-                    });
-
-                    let triggerText = new fabric.Text('');
-                    triggerText.set({
-                        fontSize: NODE_NAME_FONTSIZE,
-                        originX: 'center',
-                        originY: 'center',
-                    });
-
-                    this.triggerDescription.addWithUpdate(triggerImage);
-                    this.triggerDescription.addWithUpdate(triggerText);
-                    //this.canvas.setActiveObject(this.triggerDescription);
-                    //this.triggerDescription.setCoords();
-
-                    resolve();
-                });
-            });
-            promises.push(p);
-        }
-
-        Promise.all(promises).then(() => {
-            this.initEdgeEvent();
-            this.triggerDescription.set('uid', this.id);
-            this.line.set('uid', this.id);
-            this.triangle.set('uid', this.id);
-            this.dotHead.set('uid', this.id);
-            this.dotTail.set('uid', this.id);
-            this.reinitializeFromModel(edgeData);
-            this.canvas.add(this.triggerDescription, this.line, this.triangle, this.dotTail, this.dotHead);
-        });
+        //Promise.all(promises).then(() => {
+        this.initEdgeEvent();
+        this.triggerDescription.set('uid', this.id);
+        this.line.set('uid', this.id);
+        this.triangle.set('uid', this.id);
+        this.dotHead.set('uid', this.id);
+        this.dotTail.set('uid', this.id);
+        this.reinitializeFromModel(edgeData);
+        this.canvas.add(this.triggerDescription, this.line, this.triangle, this.dotTail, this.dotHead);
+        //});
     }
 
     getAllFabricElement(): fabric.IObject[] {
@@ -979,7 +903,6 @@ class EdgeView {
         });
     }
 
-
     reinitializeFromModel(edgeData: EdgeData) {
         this.edgeData = edgeData;
 
@@ -1045,59 +968,91 @@ class EdgeView {
         })
         this.dotTail.setCoords();
 
-        let top, left, newAngle: number;
-        [left, top, newAngle] = this.getTopLeftForImage(angle);
+        for (const obj of this.triggerDescription.getObjects().concat())
+            this.triggerDescription.remove(obj);
 
-        let widthGroup: number = 0;
-        let i, j: number = 0;
+        let promises: Promise<void>[] = [];
+        const triggers: TriggerData[] = edgeData.getTrigger();
+        for (let trigger of triggers) {
+            let triggerInfo = TriggerHelper.findTriggerById(trigger.getTriggerId());
+            promises.push(new Promise<void>((resolve, reject) => {
+                fabric.Image.fromURL('/assets/img/' + triggerInfo.id + '.png'
+                    , (im) => {
+                        let triggerImage = im;
+                        triggerImage.set({
+                            width: EDGE_IMAGE_SIZE,
+                            height: EDGE_IMAGE_SIZE,
+                            originX: 'center',
+                            originY: 'center',
+                        });
 
-        let items = this.triggerDescription.size();
-        console.log('size of group', items);
-        for (i = 0; i < items; i++) {
-            widthGroup += this.triggerDescription.item(i).getWidth();
+                        let triggerText = new fabric.Text('');
+                        triggerText.set({
+                            fontSize: NODE_NAME_FONTSIZE,
+                            originX: 'center',
+                            originY: 'center',
+                        });
+
+                        this.triggerDescription.addWithUpdate(triggerImage);
+                        this.triggerDescription.addWithUpdate(triggerText);
+
+                        resolve();
+                    });
+            }));
         }
 
-        this.triggerDescription.set({
-            width: widthGroup,
-            hasControls: false,
-            hasBorders: false,
-            left: left,
-            top: top,
-            angle: newAngle,
-            originX: 'center',
-            originY: 'center',
-            perPixelTargetFind: true
-        })
-        this.triggerDescription.setCoords();
-
-        let distance: number = 0;
-        //Find each point
-        for (i = 0; i < items; i++) {
-            distance = (widthGroup / 2) - (this.triggerDescription.item(i).getWidth() / 2);
-            for (j = i + 1; j < items; j++) {
-                distance -= this.triggerDescription.item(j).getWidth();
+        Promise.all(promises).then(() => {
+            // Update display text of each trigger
+            //const triggers = this.edgeData.getTrigger();
+            for (const trigger of triggers) {
+                const args = [];
+                const triggerInfo = TriggerHelper.findTriggerById(trigger.getTriggerId());
+                for (const paramName of triggerInfo.display_text_param) {
+                    args.push(trigger.getTriggerParams(paramName));
+                }
+                const text = triggerInfo.display_text.replace(/{(\d+)}/g, (match, number) => {
+                    return typeof args[number] !== 'undefined' ? args[number] : match;
+                });
+                // group contains fabric.image follow by fabric.text so the index of fabric.text elements
+                // in a group are (trigger's index * 2) +1
+                (<fabric.IText><any>this.triggerDescription.item(trigger.getTriggerIndex() * 2 + 1)).setText(text);
             }
-            this.triggerDescription.item(i).set({
-                left: distance,
-                top: 0
-            });
-            this.triggerDescription.item(i).setCoords();
-        }
 
-        const args = [];
-        const trigger = TriggerHelper.findTriggerById(this.edgeData.getTriggerId(0));
-        if (trigger.display_text_param) {
-            for (let t of trigger.display_text_param) {
-                args.push(this.edgeData.getTriggerParams(0, t));
-            }
-            const text = trigger.display_text.replace(/{(\d+)}/g, (match, number) => {
-                return typeof args[number] != 'undefined'
-                    ? args[number]
-                    : match
-                    ;
+            let widthGroup: number = 0;
+            this.triggerDescription.forEachObject((currentObject, index, allObjects) => {
+                widthGroup += currentObject.getWidth();
             });
-            //this.triggerDescription.item(1).setText(text);
-        }
+
+            // calculate position of group
+            let [left, top, newAngle] = this.getTopLeftForImage(angle);
+
+            // Calculate offset from center of each object in a group
+            let numberOfTrigger = this.triggerDescription.size();
+            for (let i = 0; i < numberOfTrigger; i++) {
+                let distance = (widthGroup / 2) - (this.triggerDescription.item(i).getWidth() / 2);
+                for (let j = i + 1; j < numberOfTrigger; j++) {
+                    distance -= this.triggerDescription.item(j).getWidth();
+                }
+                this.triggerDescription.item(i).set({
+                    left: distance,
+                    top: 0
+                });
+                this.triggerDescription.item(i).setCoords();
+            }
+
+            this.triggerDescription.set({
+                width: widthGroup,
+                hasControls: false,
+                hasBorders: false,
+                left: left,
+                top: top,
+                angle: newAngle,
+                originX: 'center',
+                originY: 'center',
+                perPixelTargetFind: true
+            })
+            this.triggerDescription.setCoords();
+        });
     }
 
     getTopLeftForImage(angle: number) {
@@ -1198,7 +1153,6 @@ class EdgeView {
             toBeCombined: edge.toBeCombined
         });
     }
-
 
     getCurrentPointAfterReinitialize() {
         let startX = this.edgeData.getStartX();

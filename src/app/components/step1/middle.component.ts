@@ -118,32 +118,7 @@ export class MiddleComponent implements OnInit {
         });
 
         this.canvas.on('edge:combine', (options) => {
-            //let triggerId = options.toBeMissing.getTriggerId();
-            let params = {};
-            //for (const id of triggerId) {
-            for (let i=0; i<options.toBeMissing.getNumberOfTrigger(); i++) {
-                let trigger = TriggerHelper.findTriggerById(options.toBeMissing.getTriggerId(i)); // Get this trigger from json
-                let obj = {};
-                trigger.params.forEach((param, index) => {
-                    const param_name = param.name;
-                    obj[param_name] = options.toBeMissing.getTriggerParams(i, param.name);
-                });
-                params[i] = obj;
-            }
-
-            //triggerId = options.toBeCombined.getTriggerId();
-            //for (const id of triggerId) {
-            for (let i=0; i<options.toBeCombined.getNumberOfTrigger(); i++) {
-                let trigger = TriggerHelper.findTriggerById(options.toBeCombined.getTriggerId(i)); // Get this trigger from json
-                let obj = {};
-                trigger.params.forEach((param, index) => {
-                    const param_name = param.name;
-                    obj[param_name] = options.toBeCombined.getTriggerParams(i, param.name);
-                });
-                params[i] = obj;
-            }
-            
-            //this.model.mergeEdge(options.toBeMissing.getEdgeId(), options.toBeMissing.getTriggerId(), params, options.toBeCombined.getEdgeId(), options.toBeCombined.getTriggerId());
+            this.model.mergeEdge(options.toBeMissing.getEdgeId(), options.toBeCombined.getEdgeId());
             this.canvas.redraw();  
         });
     }
@@ -173,11 +148,6 @@ export class MiddleComponent implements OnInit {
         },
         'edges': {
             '361cf758-db06-4c9d-9b31-2d88269554bb': {
-                // 'trigger_id': ['Button_3','Button_3'],
-                // 'params': {
-                //     'Button_3': { 'name': ["xxx"], 'time': ["3","times"] },
-                //     'Button_3': { 'name': ["yyy"], 'time': ["4","times"]  },
-                // },
                 'trigger': [
                     {
                         'id': 'Button_3',
@@ -196,10 +166,16 @@ export class MiddleComponent implements OnInit {
                 'end_y': 500
             },
             '877cf758-ece5-4b80-bbf1-37a09c350196': {
-                'trigger_id': ['Button_3'],
-                'params': {
-                    'Button_3': { 'name': ["zzz"], 'time': ["3","times"] },
-                },
+                'trigger': [
+                    {
+                        'id': 'Button_3',
+                        'params': {'name': ['zzz'], 'time': ['5', 'times']}
+                    },
+                    {
+                        'id': 'Button_3',
+                        'params': {'name': ['aaa'], 'time': ['6', 'times']}
+                    }
+                ],
                 'src_node_id': '',
                 'dst_node_id': '',
                 'start_x': 400,
