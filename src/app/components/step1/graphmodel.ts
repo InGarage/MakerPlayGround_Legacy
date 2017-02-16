@@ -1,8 +1,8 @@
 import * as Immutable from 'immutable';
 import * as UUID from 'uuid';
 
-import { Action } from './action';
-import { Trigger } from './trigger';
+import { Action, ActionHelper } from './action';
+import { Trigger, TriggerHelper } from './trigger';
 import { PropertyValue } from './propertyvalue';
 import { UndoStack } from './undostack';
 
@@ -116,9 +116,11 @@ export class GraphData {
             "display_y": '100',
         };
 
+        const default_name = ActionHelper.getActionTypeById(action.id);
+
         for (let prop of action.params) {
             if (prop.name === 'name')
-                allParams[prop.name] = action.name + ' 1';
+                allParams[prop.name] = [default_name + ' 1'];
             else
                 allParams[prop.name] = prop.default_value;
         }
@@ -412,17 +414,17 @@ export class EdgeData {
         return this.uid;
     }
 
-    getNumberOfTrigger() : number {
-        return this.data.count();
-    }
-
-    // getTriggerId(): string[] {
-    //     return (<Immutable.List<string>><any>this.data.get('trigger_id')).toJS();
+    // getNumberOfTrigger() : number {
+    //     return this.data.count();
     // }
 
-    getTriggerParams(triggerIndex: number, name: string): string[] {
-        //return (<Immutable.List<string>><any>this.data.getIn(['params', triggerId, name])).toJS();
-        return (<Immutable.List<any>>(<any>this.data.get('trigger'))).get(triggerIndex).toJS()[name];
+    getTriggerId(): string[] {
+        return (<Immutable.List<string>><any>this.data.get('trigger_id')).toJS();
+    }
+
+    getTriggerParams(triggerId: string, name: string): string[] {
+        return (<Immutable.List<string>><any>this.data.getIn(['params', triggerId, name])).toJS();
+        //return (<Immutable.List<any>>(<any>this.data.get('trigger'))).get(triggerIndex).toJS()[name];
     }
 
     getSourceNodeId(): string {

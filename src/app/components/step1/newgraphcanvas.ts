@@ -8,8 +8,8 @@ import { GraphData, NodeData, EdgeData } from './graphmodel';
 import { PropertyValue } from './propertyvalue';
 
 /* display constants */
-const NODE_SIZE: number = 100;
-const NODE_NAME_YPOS: number = 70;
+const NODE_SIZE: number = 75;
+const NODE_NAME_YPOS: number = 60;
 const NODE_NAME_FONTSIZE: number = 20;
 const NODE_REMOVEBTN_POSX: number = (NODE_SIZE / 2);
 const NODE_REMOVEBTN_POSY: number = (NODE_SIZE / 2);
@@ -353,7 +353,7 @@ export class GraphCanvas {
 
 class NodeView {
     //nodeActionImage: fabric.IImage;  // TODO: should be readonly if posible
-    nodeActionImage;
+    nodeActionImage: fabric.IGroup;
     readonly nodeConnectingIndicator: fabric.ICircle;
     readonly nodeSelectingIndicator: fabric.ICircle;
     readonly nodeNameText: fabric.IText;
@@ -369,52 +369,59 @@ class NodeView {
         // TODO: remove to its own class
         let action = ActionHelper.findActionById(nodeData.getActionId());
 
+        this.nodeActionImage = new fabric.Group();
 
-        fabric.Image.fromURL('/assets/img/' + action.id + '.png'
-            , (im) => {
-                this.nodeActionImage = im;
-
-
-                this.initNodeEvent();
-                this.nodeActionImage.set('uid', this.id);
-                this.nodeConnectingIndicator.set('uid', this.id);
-                this.nodeSelectingIndicator.set('uid', this.id);
-                this.nodeNameText.set('uid', this.id);
-                this.nodeRemoveButton.set('uid', this.id);
-                this.reinitializeFromModel(nodeData);
-                this.canvas.add(this.nodeConnectingIndicator, this.nodeSelectingIndicator, this.nodeNameText, this.nodeActionImage, this.nodeRemoveButton);
-            });
-
-
-        fabric.loadSVGFromURL('/assets/img/Asset-49.svg', (objects, options) => {
-            let temp = fabric.util.groupSVGElements(objects, options);
-            temp.set({
-                left: 100,
-                top: 100,
+        fabric.loadSVGFromURL('/assets/img/Asset 3.svg', (objects, options) => {
+            let nodeSvg = fabric.util.groupSVGElements(objects, options);
+            nodeSvg.set({
+                originX: 'center',
+                originY: 'center',
                 hasControls: false,
                 hasBorders: false,
             });
-            this.canvas.add(temp);
+
+            let nodeSvgBorder = new fabric.Circle();
+            nodeSvgBorder.set({
+                originX: 'center',
+                originY: 'center',
+                fill: 'gray',
+                radius: NODE_SIZE / 2,
+                opacity: 0.15,
+            });
+
+            let nodeDisplayTag = new fabric.Circle({
+                radius: NODE_SIZE / 2,
+                originX: 'center',
+                originY: 'center',
+                startAngle: 120,
+                endAngle: Math.PI,
+                angle: -17.5,
+                fill: 'black',
+                opacity: 0.5,
+            });
+
+            let nodeDisplayText = new fabric.Text('Blink');
+            nodeDisplayText.set({
+                fontSize: 20,
+                fill: 'white',
+                originX: 'center',
+                originY: 'center',
+            });
+
+            this.nodeActionImage.addWithUpdate(nodeSvg);
+            this.nodeActionImage.addWithUpdate(nodeSvgBorder);
+            this.nodeActionImage.addWithUpdate(nodeDisplayTag);
+            this.nodeActionImage.addWithUpdate(nodeDisplayText);
+
+            this.initNodeEvent();
+            this.nodeActionImage.set('uid', this.id);
+            this.nodeConnectingIndicator.set('uid', this.id);
+            this.nodeSelectingIndicator.set('uid', this.id);
+            this.nodeNameText.set('uid', this.id);
+            this.nodeRemoveButton.set('uid', this.id);
+            this.reinitializeFromModel(nodeData);
+            this.canvas.add(this.nodeConnectingIndicator, this.nodeSelectingIndicator, this.nodeNameText, this.nodeActionImage, this.nodeRemoveButton);
         });
-
-
-        // fabric.loadSVGFromURL('/assets/img/LED-green.svg', function (objects, options) {
-        //     this.nodeActionImage = fabric.util.groupSVGElements(objects, options);
-        // });
-
-        // let group = [];
-        // fabric.loadSVGFromURL("http://fabricjs.com/assets/1.svg",function(objects,options) {
-        //     this.nodeActionImage = new fabric.Group(group);
-        //     this.nodeActionImage.set({
-        //         left: 100,
-        //         top: 100,
-        //         width:175,
-        //         height:175
-        //     });
-        // },function(item, object) {
-        //         object.set('id',item.getAttribute('id'));
-        //         group.push(object);
-        // });
 
         this.nodeConnectingIndicator = new fabric.Circle();
         this.nodeConnectingIndicator.set({ visible: false });
@@ -449,8 +456,6 @@ class NodeView {
             });
 
         this.nodeRemoveButton = new fabric.Group([cross_1, cross_2]);
-
-
     }
 
     reinitializeFromModel(nodeData: NodeData) {
@@ -466,15 +471,24 @@ class NodeView {
             originX: 'center',
             originY: 'center',
             hasControls: false,
-            hasBorders: false
+            hasBorders: false,
+            stroke: 'black',
+            strokeWidth: 1,
         });
         this.nodeActionImage.setCoords();
+
+        // set text position and remove stroke
+        this.nodeActionImage.item(3).set({
+            top: 20,
+            stroke: 'rgba(0,0,0,0)',
+        });
+        this.nodeActionImage.item(3).setCoords();
 
         this.nodeConnectingIndicator.set({
             left: nodeData.getX(),
             top: nodeData.getY(),
-            radius: NODE_SIZE / 2,
-            stroke: '#66afe9',
+            radius: (NODE_SIZE / 2) + 5,
+            stroke: 'yellow',
             strokeWidth: 15,
             opacity: 0.5,
             fill: 'rgba(0,0,0,0)',
@@ -489,9 +503,9 @@ class NodeView {
         this.nodeSelectingIndicator.set({
             left: nodeData.getX(),
             top: nodeData.getY(),
-            radius: NODE_SIZE / 2,
-            stroke: 'black',
-            strokeWidth: 8,
+            radius: (NODE_SIZE / 2) + 5,
+            stroke: '#66afe9',
+            strokeWidth: 10,
             opacity: 0.2,
             fill: 'rgba(0,0,0,0)',
             originX: 'center',
@@ -819,29 +833,29 @@ class EdgeView {
 
             let p = new Promise((resolve, reject) => {
                 fabric.Image.fromURL('/assets/img/' + trigger.id + '.png'
-                , (im) => {
-                    let triggerImage = im;
-                    triggerImage.set({
-                        width: EDGE_IMAGE_SIZE,
-                        height: EDGE_IMAGE_SIZE,
-                        originX: 'center',
-                        originY: 'center',
+                    , (im) => {
+                        let triggerImage = im;
+                        triggerImage.set({
+                            width: EDGE_IMAGE_SIZE,
+                            height: EDGE_IMAGE_SIZE,
+                            originX: 'center',
+                            originY: 'center',
+                        });
+
+                        let triggerText = new fabric.Text('');
+                        triggerText.set({
+                            fontSize: NODE_NAME_FONTSIZE,
+                            originX: 'center',
+                            originY: 'center',
+                        });
+
+                        this.triggerDescription.addWithUpdate(triggerImage);
+                        this.triggerDescription.addWithUpdate(triggerText);
+                        //this.canvas.setActiveObject(this.triggerDescription);
+                        //this.triggerDescription.setCoords();
+
+                        resolve();
                     });
-
-                    let triggerText = new fabric.Text('');
-                    triggerText.set({
-                        fontSize: NODE_NAME_FONTSIZE,
-                        originX: 'center',
-                        originY: 'center',
-                    });
-
-                    this.triggerDescription.addWithUpdate(triggerImage);
-                    this.triggerDescription.addWithUpdate(triggerText);
-                    //this.canvas.setActiveObject(this.triggerDescription);
-                    //this.triggerDescription.setCoords();
-
-                    resolve();
-                });
             });
             promises.push(p);
         }
@@ -899,6 +913,17 @@ class EdgeView {
                 target_id: this.edgeData.getEdgeId(),
             });
         });
+
+        this.triggerDescription.on('moving', (options) => {
+            let [startX, startY, endX, endY, angle] = this.getCurrentPointAfterReinitialize();
+            let currentOriginDesX = this.triggerDescription.getLeft();
+            let currentOriginDesY = this.triggerDescription.getTop();
+            let [currentOriginLineX, currentOriginLineY] = this.getLineOriginFromDesOrigin(currentOriginDesX, currentOriginDesY);
+            let [nStartX, nEndX, nStartY, nEndY] = this.getLineCoordinateFromOrigin(currentOriginLineX, currentOriginLineY);
+            let edge: combineEdge = this.findIntersectionPoint(nStartX, nStartY, nEndX, nEndY, false);
+            this.moveEdge(nStartX, nStartY, nEndX, nEndY, angle);
+            this.processEdgeEvent(nStartX, nStartY, nEndX, nEndY, angle);
+        })
 
         this.triangle.on('moving', (options) => {
             let [startX, startY, endX, endY, angle] = this.getCurrentPointAfterReinitialize();
@@ -1191,7 +1216,6 @@ class EdgeView {
     }
 
     combineEdge(edge: combineEdge) {
-
         this.callback.getValue('edge:combine')({
             toBeMissing: edge.toBeMissing,
             toBeCombined: edge.toBeCombined
@@ -1220,6 +1244,16 @@ class EdgeView {
             top: endY - EDGE_ARROW_HEAD_SIZE / 2 * Math.sin(angle),
             angle: 90 + (angle * 180 / Math.PI)
         });
+
+        let top, left, newAngle: number;
+        [left, top, newAngle] = this.getTopLeftForImage(angle);
+
+        this.triggerDescription.set({
+            left: left,
+            top: top,
+            angle: newAngle,
+        });
+
         this.dotHead.set({ left: startX, top: startY });
         this.dotTail.set({ left: endX, top: endY });
     }
@@ -1349,6 +1383,39 @@ class EdgeView {
             return [currentOriginTriangleX + difX + offsetX, currentOriginTriangleY + difY + offsetY];
         } else if ((startX >= endX) && (startY < endY)) {
             return [currentOriginTriangleX + difX + offsetX, currentOriginTriangleY - difY + offsetY];
+        }
+    }
+
+    private getLineOriginFromDesOrigin(currentOriginDesX, currentOriginDesY) {
+        let startX = this.edgeData.getStartX();
+        let startY = this.edgeData.getStartY();
+        let endX = this.edgeData.getEndX();
+        let endY = this.edgeData.getEndY();
+        let angle = Math.atan2((endY - startY), (endX - startX));
+        let difX = Math.abs(startX - endX) / 2;
+        let difY = Math.abs(startY - endY) / 2; 
+
+        let top = this.line.getTop();
+        let left = this.line.getLeft();
+        let angleInDegree = (angle * (180 / Math.PI));
+        let offsetX, offsetY: number;
+
+        if (Math.abs(angleInDegree) > 90) {
+            offsetX = left + (EDGE_IMAGE_DISTANCE * Math.sin(-angle)); 
+            offsetY = top + (EDGE_IMAGE_DISTANCE * Math.cos(-angle)), (angle * 180 / Math.PI) + 180;
+        } else {
+            offsetX = left - (EDGE_IMAGE_DISTANCE * Math.sin(-angle)), top - (EDGE_IMAGE_DISTANCE * Math.cos(-angle));
+            offsetY = top - (EDGE_IMAGE_DISTANCE * Math.cos(-angle)), (angle * 180 / Math.PI);
+        }
+
+        if ((startX < endX) && (startY >= endY)) {
+            return [currentOriginDesX - difX + offsetX, currentOriginDesY + difY + offsetY];
+        } else if ((startX <= endX) && (startY < endY)) {
+            return [currentOriginDesX - difX + offsetX, currentOriginDesY - difY + offsetY];
+        } else if ((startX > endX) && (startY >= endY)) {
+            return [currentOriginDesX + difX + offsetX, currentOriginDesY + difY + offsetY];
+        } else if ((startX >= endX) && (startY < endY)) {
+            return [currentOriginDesX + difX + offsetX, currentOriginDesY - difY + offsetY];
         }
     }
 

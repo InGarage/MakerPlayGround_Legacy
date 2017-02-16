@@ -176,16 +176,10 @@ export class MiddleComponent implements OnInit {
                 //     'Button_3': { 'name': ["xxx"], 'time': ["3","times"] },
                 //     'Button_3': { 'name': ["yyy"], 'time': ["4","times"]  },
                 // },
-                'trigger': [
-                    {
-                        'id': 'Button_3',
-                        'params': {'name': ['xxx'], 'time': ['3', 'times']}
-                    },
-                    {
-                        'id': 'Button_3',
-                        'params': {'name': ['yyy'], 'time': ['4', 'times']}
-                    }
-                ],
+                'trigger_id': ['Button_3'],
+                'params': {
+                    'Button_3': { 'name': ["xxx"], 'time': ["3","times"] },
+                },
                 'src_node_id': '',
                 'dst_node_id': '',
                 'start_x': 300,

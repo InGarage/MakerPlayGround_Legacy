@@ -141,7 +141,7 @@ export class PropertyComponent {
 
     setInputStyles() {
         let styles = {
-            'width': '65%',
+            'width': '60%',
             'display': 'inline',
         };
         return styles;
