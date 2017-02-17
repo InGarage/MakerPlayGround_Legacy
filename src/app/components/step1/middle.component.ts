@@ -99,6 +99,11 @@ export class MiddleComponent implements OnInit {
             this.typeOfObjectSelected = EdgeData;
         });
 
+        this.canvas.on('edge:remove', (options) => {
+            this.model.removeEdge(options.triggerIndex, options.target_id);
+            this.canvas.redraw();
+        })
+
         this.canvas.on('object:deselected', (options) => {
             console.log('deselect');
             this.objectSelected = undefined;
@@ -121,6 +126,18 @@ export class MiddleComponent implements OnInit {
             this.model.mergeEdge(options.toBeMissing.getEdgeId(), options.toBeCombined.getEdgeId());
             this.canvas.redraw();  
         });
+    }
+
+    setUndoBtnPosition() {
+        let styles = {
+            'padding-left': '10px',
+            'padding-top': '10px',
+            //'background-color': 'green',
+            'width': '70px',
+            'height': '40px',
+            'z-index': '5',
+        };
+        return styles;
     }
 
 
@@ -151,11 +168,11 @@ export class MiddleComponent implements OnInit {
                 'trigger': [
                     {
                         'id': 'Button_3',
-                        'params': {'name': ['xxx'], 'time': ['3', 'times']}
+                        'params': {'name': ['aaa'], 'time': ['3', 'times']}
                     },
                     {
                         'id': 'Button_3',
-                        'params': {'name': ['yyy'], 'time': ['4', 'times']}
+                        'params': {'name': ['bbb'], 'time': ['4', 'times']}
                     }
                 ],
                 'src_node_id': '',
@@ -169,11 +186,11 @@ export class MiddleComponent implements OnInit {
                 'trigger': [
                     {
                         'id': 'Button_3',
-                        'params': {'name': ['zzz'], 'time': ['5', 'times']}
+                        'params': {'name': ['xxx'], 'time': ['5', 'times']}
                     },
                     {
                         'id': 'Button_3',
-                        'params': {'name': ['aaa'], 'time': ['6', 'times']}
+                        'params': {'name': ['yyy'], 'time': ['6', 'times']}
                     }
                 ],
                 'src_node_id': '',

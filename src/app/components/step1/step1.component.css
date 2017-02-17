@@ -1,3 +1,8 @@
+@font-face {
+    font-family: Roboto;
+    src: url('Roboto-Regular.ttf');
+}
+
 .step1 {
     overflow: hidden;
 }

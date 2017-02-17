@@ -31,6 +31,16 @@ export namespace TriggerHelper {
         }
     }
 
+
+  export function getTriggerTypeById(id: string): string {
+    for (const category of triggerData) {
+      for (const trigger of category.children) {
+        if (trigger.id === id)
+          return category.name;
+      }
+    }
+  }
+
     export const triggerData: TriggerGroup[] = [
   {
     "name": "Accelerometer",

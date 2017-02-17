@@ -17,7 +17,7 @@ const NODE_REMOVEBTN_POSY: number = (NODE_SIZE / 2);
 const NODE_REMOVEBTN_SIZE: number = 10;
 const EDGE_ARROW_HEAD_SIZE: number = 15;
 const EDGE_ARROW_WIDTH: number = 2;
-const EDGE_IMAGE_SIZE: number = 50;
+const EDGE_IMAGE_SIZE: number = 30;
 const EDGE_IMAGE_DISTANCE: number = 30;
 
 export interface CanvasEventOptions {
@@ -31,11 +31,12 @@ export interface CanvasEventOptions {
     end_x?: number,
     end_y?: number,
     toBeMissing?: EdgeData,     // EdgeData of edge that is going to disappear from canvas
-    toBeCombined?: EdgeData     // EdgeData of edge that is going to be combined
+    toBeCombined?: EdgeData,     // EdgeData of edge that is going to be combined
+    triggerIndex?: number
 }
 
 export type CanvasEventTypes = 'node:selected' | 'node:move' | 'node:remove' | 'edge:move' | 'object:deselected'
-    | 'edge:connectionDst' | 'edge:connectionSrc' | 'edge:selected' | 'edge:combine';
+    | 'edge:connectionDst' | 'edge:connectionSrc' | 'edge:selected' | 'edge:combine' | 'edge:remove';
 
 type Coordinate = {
     x: number,
@@ -186,6 +187,8 @@ export class GraphCanvas {
         this.edgeFabricObject.forEach((edgeId, edgeView) => {
             edgeView.dotHead.visible = false;
             edgeView.dotTail.visible = false;
+            for (let delBtn of edgeView.triggerDeleteBtn)
+                delBtn.visible = false;
         });
     }
 
@@ -200,6 +203,7 @@ export class GraphCanvas {
             }
         }
         if (this.edgeFabricObject.containsKey(data.uid)) {
+            console.log(data);
 
         }
     }
@@ -272,7 +276,6 @@ export class GraphCanvas {
         });
 
         let allEdge: EdgeData[] = this.graph.getEdges();
-        console.log('allEdge', allEdge);
         for (let edge of allEdge) {
             if (!this.edgeFabricObject.containsKey(edge.getEdgeId())) {
                 console.log("Add edge");
@@ -333,7 +336,8 @@ class NodeView {
 
         this.nodeActionImage = new fabric.Group();
 
-        fabric.loadSVGFromURL('/assets/img/Asset 3.svg', (objects, options) => {
+        const actionType = ActionHelper.getActionTypeById(action.id);
+        fabric.loadSVGFromURL('/assets/img/' + actionType + '.svg', (objects, options) => {
             let nodeSvg = fabric.util.groupSVGElements(objects, options);
             nodeSvg.set({
                 originX: 'center',
@@ -364,6 +368,7 @@ class NodeView {
 
             let nodeDisplayText = new fabric.Text(action.name);
             nodeDisplayText.set({
+                fontFamily: "Roboto",
                 fontSize: NODE_ACTION_NAME_FONTSIZE,
                 fill: 'white',
                 originX: 'center',
@@ -423,8 +428,6 @@ class NodeView {
     reinitializeFromModel(nodeData: NodeData) {
         this.nodeData = nodeData;
 
-        console.log('position', nodeData.getX(), nodeData.getY());
-
         this.nodeActionImage.set({
             width: NODE_SIZE,
             height: NODE_SIZE,
@@ -441,6 +444,7 @@ class NodeView {
 
         // set text position and remove stroke
         this.nodeActionImage.item(3).set({
+            fontFamily: "Roboto",
             top: 20,
             stroke: 'rgba(0,0,0,0)',
         });
@@ -487,6 +491,7 @@ class NodeView {
             hasControls: false,
             hasBorders: false,
             text: nodeData.getActionParams('name')[0],
+            fontFamily: "Roboto",
         });
         this.nodeNameText.setCoords();
 
@@ -518,9 +523,6 @@ class NodeView {
         });
 
         this.nodeActionImage.on('selected', (e) => {
-            console.log('image select');
-            // this.deselectAllNode();
-            // this.deselectAllEdge();
             this.nodeSelectingIndicator.visible = true;
             this.nodeRemoveButton.visible = true;
 
@@ -539,7 +541,6 @@ class NodeView {
         });
 
         this.nodeNameText.on('selected', (options) => {
-            // this.deselectAllNode();
             this.nodeSelectingIndicator.visible = true;
             this.nodeRemoveButton.visible = true;
 
@@ -753,7 +754,8 @@ class EdgeView {
     readonly triangle: fabric.ITriangle;
     readonly dotHead: fabric.ICircle;
     readonly dotTail: fabric.ICircle;
-    readonly triggerDescription: fabric.IGroup;
+    triggerDescription: fabric.IGroup;
+    triggerDeleteBtn: fabric.IGroup[];
 
     constructor(public graph: GraphData, readonly canvas: fabric.ICanvas,
         readonly nodeFabricObject: Collections.Dictionary<string, NodeView>,
@@ -784,22 +786,23 @@ class EdgeView {
         this.dotTail = new fabric.Circle();
         this.dotTail.set({ visible: false });
 
-        this.triggerDescription = new fabric.Group();
+        //this.triggerDescription = new fabric.Group();
 
-        //Promise.all(promises).then(() => {
+        this.triggerDeleteBtn = [];
+
         this.initEdgeEvent();
-        this.triggerDescription.set('uid', this.id);
+        //this.triggerDescription.set('uid', this.id);
         this.line.set('uid', this.id);
         this.triangle.set('uid', this.id);
         this.dotHead.set('uid', this.id);
         this.dotTail.set('uid', this.id);
         this.reinitializeFromModel(edgeData);
-        this.canvas.add(this.triggerDescription, this.line, this.triangle, this.dotTail, this.dotHead);
-        //});
+        this.canvas.add(/*this.triggerDescription,*/ this.line, this.triangle, this.dotTail, this.dotHead);
+
     }
 
     getAllFabricElement(): fabric.IObject[] {
-        return [this.triggerDescription, this.line, this.triangle, this.dotHead, this.dotTail];
+        return [this.triggerDescription, this.line, this.triangle, this.dotHead, this.dotTail].concat(this.triggerDeleteBtn);
     }
 
     private initEdgeEvent() {
@@ -830,26 +833,16 @@ class EdgeView {
             this.dotTail.visible = true;
         });
         this.line.on('selected', (options) => {
-            console.log('edge select');
             this.dotHead.visible = true;
             this.dotTail.visible = true;
 
-            //this.callback.getValue('object:deselected')({});
+            for (const obj of this.triggerDeleteBtn)
+                obj.visible = true;
+
             this.callback.getValue('edge:selected')({
                 target_id: this.edgeData.getEdgeId(),
             });
         });
-
-        this.triggerDescription.on('moving', (options) => {
-            let [startX, startY, endX, endY, angle] = this.getCurrentPointAfterReinitialize();
-            let currentOriginDesX = this.triggerDescription.getLeft();
-            let currentOriginDesY = this.triggerDescription.getTop();
-            let [currentOriginLineX, currentOriginLineY] = this.getLineOriginFromDesOrigin(currentOriginDesX, currentOriginDesY);
-            let [nStartX, nEndX, nStartY, nEndY] = this.getLineCoordinateFromOrigin(currentOriginLineX, currentOriginLineY);
-            let edge: combineEdge = this.findIntersectionPoint(nStartX, nStartY, nEndX, nEndY, false);
-            this.moveEdge(nStartX, nStartY, nEndX, nEndY, angle);
-            this.processEdgeEvent(nStartX, nStartY, nEndX, nEndY, angle);
-        })
 
         this.triangle.on('moving', (options) => {
             let [startX, startY, endX, endY, angle] = this.getCurrentPointAfterReinitialize();
@@ -878,11 +871,10 @@ class EdgeView {
             this.dotTail.visible = true;
         });
         this.triangle.on('selected', (options) => {
-
-            // this.deselectAllEdge();
-            // this.deselectAllNode();
             this.dotHead.visible = true;
             this.dotTail.visible = true;
+            for (const obj of this.triggerDeleteBtn)
+                obj.visible = true;
 
             // this.callback.getValue('object:deselected')({});
             this.callback.getValue('edge:selected')({
@@ -926,6 +918,47 @@ class EdgeView {
             this.processEdgeEvent(startX, startY, currentEndX, currentEndY, newAngle, true);
             this.dotHead.visible = true;
             this.dotTail.visible = true;
+        });
+    }
+
+    private initTriggerEvent() {
+        this.triggerDescription.on('moving', (options) => {
+            let [startX, startY, endX, endY, angle] = this.getCurrentPointAfterReinitialize();
+            let currentOriginDesX = this.triggerDescription.getLeft();
+            let currentOriginDesY = this.triggerDescription.getTop();
+            let [currentOriginLineX, currentOriginLineY] = this.getLineOriginFromDesOrigin(currentOriginDesX, currentOriginDesY);
+            let [nStartX, nEndX, nStartY, nEndY] = this.getLineCoordinateFromOrigin(currentOriginLineX, currentOriginLineY);
+            let edge: combineEdge = this.findIntersectionPoint(nStartX, nStartY, nEndX, nEndY, false);
+            this.moveEdge(nStartX, nStartY, nEndX, nEndY, angle);
+            this.processEdgeEvent(nStartX, nStartY, nEndX, nEndY, angle);
+        });
+
+        this.triggerDescription.on('modified', (options) => {
+            let [startX, startY, endX, endY, angle] = this.getCurrentPointAfterReinitialize();
+            let currentOriginDesX = this.triggerDescription.getLeft();
+            let currentOriginDesY = this.triggerDescription.getTop();
+            let [currentOriginLineX, currentOriginLineY] = this.getLineOriginFromDesOrigin(currentOriginDesX, currentOriginDesY);
+            let [nStartX, nEndX, nStartY, nEndY] = this.getLineCoordinateFromOrigin(currentOriginLineX, currentOriginLineY);
+            let edge: combineEdge = this.findIntersectionPoint(nStartX, nStartY, nEndX, nEndY, true);
+            if (edge !== undefined) {
+                this.combineEdge(edge);
+                return;
+            }
+            this.moveEdge(nStartX, nStartY, nEndX, nEndY, angle);
+            this.processEdgeEvent(nStartX, nStartY, nEndX, nEndY, angle, true);
+            this.dotHead.visible = true;
+            this.dotTail.visible = true;
+        });
+
+        this.triggerDescription.on('selected', (options) => {
+            this.dotHead.visible = true;
+            this.dotTail.visible = true
+            for (const obj of this.triggerDeleteBtn)
+                obj.visible = true;
+
+            this.callback.getValue('edge:selected')({
+                target_id: this.edgeData.getEdgeId(),
+            });
         });
     }
 
@@ -994,101 +1027,213 @@ class EdgeView {
         })
         this.dotTail.setCoords();
 
-        for (const obj of this.triggerDescription.getObjects().concat())
-            this.triggerDescription.remove(obj);
+        this.canvas.remove(this.triggerDescription);
+        this.triggerDescription = new fabric.Group();
+        this.triggerDescription.set('uid', this.id);
+        this.initTriggerEvent();
 
-        let promises: Promise<void>[] = [];
-        const triggers: TriggerData[] = edgeData.getTrigger();
-        for (let trigger of triggers) {
-            let triggerInfo = TriggerHelper.findTriggerById(trigger.getTriggerId());
-            promises.push(new Promise<void>((resolve, reject) => {
-                fabric.Image.fromURL('/assets/img/' + triggerInfo.id + '.png'
-                    , (im) => {
-                        let triggerImage = im;
-                        triggerImage.set({
-                            width: EDGE_IMAGE_SIZE,
-                            height: EDGE_IMAGE_SIZE,
-                            originX: 'center',
-                            originY: 'center',
-                        });
-
-                        let triggerText = new fabric.Text('');
-                        triggerText.set({
-                            fontSize: NODE_NAME_FONTSIZE,
-                            originX: 'center',
-                            originY: 'center',
-                        });
-
-                        this.triggerDescription.addWithUpdate(triggerImage);
-                        this.triggerDescription.addWithUpdate(triggerText);
-
-                        resolve();
-                    });
-            }));
+        for (const deleteBtnGroup of this.triggerDeleteBtn) {
+            this.canvas.remove(deleteBtnGroup);
         }
+        this.triggerDeleteBtn = [];
 
-        Promise.all(promises).then(() => {
-            // Update display text of each trigger
-            //const triggers = this.edgeData.getTrigger();
-            for (const trigger of triggers) {
-                const args = [];
-                const triggerInfo = TriggerHelper.findTriggerById(trigger.getTriggerId());
-                for (const paramName of triggerInfo.display_text_param) {
-                    args.push(trigger.getTriggerParams(paramName));
-                }
-                const text = triggerInfo.display_text.replace(/{(\d+)}/g, (match, number) => {
-                    return typeof args[number] !== 'undefined' ? args[number] : match;
-                });
-                // group contains fabric.image follow by fabric.text so the index of fabric.text elements
-                // in a group are (trigger's index * 2) +1
-                (<fabric.IText><any>this.triggerDescription.item(trigger.getTriggerIndex() * 2 + 1)).setText(text);
-            }
+        //let svgAddSequence = [];
+        const triggers: TriggerData[] = edgeData.getTrigger();
 
-            let widthGroup: number = 0;
-            this.triggerDescription.forEachObject((currentObject, index, allObjects) => {
-                widthGroup += currentObject.getWidth();
-            });
+        for (let trigger of triggers) {
+            let triggerType = TriggerHelper.getTriggerTypeById(trigger.getTriggerId());
+            let triggerInfo = TriggerHelper.findTriggerById(trigger.getTriggerId());
+            let triggerIndex = trigger.getTriggerIndex();
+            const triggerName = trigger.getTriggerParams('name');
 
-            // calculate position of group
-            let [left, top, newAngle] = this.getTopLeftForImage(angle);
-
-            // Calculate offset from center of each object in a group
-            let numberOfTrigger = this.triggerDescription.size();
-            for (let i = 0; i < numberOfTrigger; i++) {
-                let distance = (widthGroup / 2) - (this.triggerDescription.item(i).getWidth() / 2);
-                for (let j = i + 1; j < numberOfTrigger; j++) {
-                    distance -= this.triggerDescription.item(j).getWidth();
-                }
-                this.triggerDescription.item(i).set({
-                    left: distance,
-                    top: 0
-                });
-                this.triggerDescription.item(i).setCoords();
-            }
-
-            this.triggerDescription.set({
-                width: widthGroup,
-                hasControls: false,
-                hasBorders: false,
-                left: left,
-                top: top,
-                angle: newAngle,
+            let triggerText = new fabric.Text('');
+            triggerText.set({
+                fontFamily: "Roboto",
+                fontSize: NODE_NAME_FONTSIZE,
                 originX: 'center',
                 originY: 'center',
-                perPixelTargetFind: true
-            })
-            this.triggerDescription.setCoords();
+                text: triggerName[0]
+            });
 
-            this.canvas.renderAll();
-        });
+            let cross_1 = new fabric.Line([5, 0, 5, 10], {
+                originX: 'center',
+                originY: 'center',
+                strokeWidth: 3,
+                stroke: 'red'
+            });
+
+            let cross_2 = new fabric.Line([0, 5, 10, 5], {
+                originX: 'center',
+                originY: 'center',
+                strokeWidth: 3,
+                stroke: 'red'
+            });
+
+            let deleteBtn = new fabric.Group([cross_1, cross_2]);
+            this.triggerDeleteBtn.push(deleteBtn);
+            //svgAddSequence.push(triggerIndex);
+
+            triggerText.setCoords();
+            cross_1.setCoords();
+            cross_2.setCoords();
+            deleteBtn.setCoords();
+
+            deleteBtn.set('id', triggerIndex);
+            deleteBtn.on('selected', (options) => {
+                this.callback.getValue('edge:remove')({
+                    target_id: this.edgeData.getEdgeId(),
+                    triggerIndex: triggerIndex,
+                });
+            });
+
+            this.triggerDescription.addWithUpdate(triggerText);
+        }
+
+
+        // calculate position of group
+        let [left, top, newAngle] = this.getTopLeftForDescription(angle);
+
+        // Set position of text and delete button of each trigger
+        let widthGroup: number = 0;
+        let widthText: number = 0;
+
+        let numberOfTrigger = this.edgeData.getNumberOfTrigger();
+        for (let i = 0; i < numberOfTrigger; i++)
+            widthText += this.triggerDescription.item(i).getWidth();
+        widthGroup = numberOfTrigger * EDGE_IMAGE_SIZE + widthText;
+
+        let distanceText = 0;
+        let distanceImg = 0;
+
+        for (let i = 0; i < numberOfTrigger; i++) {
+            // Set text's position
+            let otherWidthTextForTextDisplay = 0;
+            for (let j = i + 1; j < numberOfTrigger; j++) {
+                otherWidthTextForTextDisplay += this.triggerDescription.item(j).getWidth();
+            }
+            distanceText = (widthGroup / 2) - EDGE_IMAGE_SIZE * (numberOfTrigger - i - 1) - otherWidthTextForTextDisplay;
+            this.triggerDescription.item(i).set({
+                left: distanceText,
+                top: 0
+            });
+            this.triggerDescription.item(i).setCoords();
+
+            // Set Delete button's position
+            let widthTextForImgDisplay = 0;
+            for (let j = i; j < numberOfTrigger; j++) {
+                widthTextForImgDisplay += this.triggerDescription.item(j).getWidth();
+            }
+            distanceImg = (widthGroup / 2) - EDGE_IMAGE_SIZE * (numberOfTrigger - i - 1) - widthTextForImgDisplay;
+
+            // Calculate this to add delBtn match with triggerSVG
+            let angleInDegree = (angle * (180 / Math.PI));
+            let k = 0;
+            // if (Math.abs(angleInDegree) > 90) {
+            //     k = this.triggerDeleteBtn.length - 1;
+            // }
+            let leftBtn, topBtn: number;
+            let angleDelBtn: number;
+            //let btnIndex = svgAddSequence[k];
+
+            if (Math.abs(angleInDegree) < 90) {
+                if (distanceImg < 0) {
+                    leftBtn = left - Math.abs(distanceImg) * Math.cos(-angle) + 30 * Math.cos(-(angle - 45));
+                    topBtn = top + Math.abs(distanceImg) * Math.sin(-angle) - 30 * Math.sin(-(angle - 45));
+                }
+                if (distanceImg > 0) {
+                    leftBtn = left + Math.abs(distanceImg) * Math.cos(-angle) + 30 * Math.cos(-(angle - 45));
+                    topBtn = top - Math.abs(distanceImg) * Math.sin(-angle) - 30 * Math.sin(-(angle - 45));
+                }
+            } else {
+                leftBtn = left + distanceImg * Math.cos(-angle) + 30 * Math.cos(-angle - 45);
+                topBtn = top - distanceImg * Math.sin(-angle) - 30 * Math.sin(-angle - 45);
+            }
+
+            this.triggerDeleteBtn[/*btnIndex*/i].set({
+                left: leftBtn,
+                top: topBtn,
+                angle: 45 + newAngle,
+                perPixelTargetFind: true,
+                hasControls: false,
+                hasBorders: false,
+                visible: false,
+            });
+
+            this.triggerDeleteBtn[/*btnIndex*/i].setCoords();
+
+            this.canvas.add(this.triggerDeleteBtn[/*btnIndex*/i]);
+            // if (Math.abs(angleInDegree) > 90) {
+            //     console.log('-', i);
+            //     k--;
+            // } else {
+            //     console.log('+', i);
+            //     k++;
+            // }
+        }
+
+        // Load image SVG
+
+        for (const trigger of this.edgeData.getTrigger()) {
+            const triggerType = TriggerHelper.getTriggerTypeById(trigger.getTriggerId());
+            const triggerInfo = TriggerHelper.findTriggerById(trigger.getTriggerId());
+            const triggerIndex = trigger.getTriggerIndex();
+
+            fabric.loadSVGFromURL('/assets/img/' + triggerType + '.svg', (objects, options) => {
+                console.log(triggerType);
+                // calculate position of group
+                let [left, top, newAngle] = this.getTopLeftForDescription(angle);
+
+                widthGroup = numberOfTrigger * 30 + widthText;
+                let distanceText = 0;
+                let distanceImg = 0;
+
+                // Set ImageSVG position
+                let widthTextForImgDisplay = 0;
+                for (let i = triggerIndex; i < numberOfTrigger; i++) {
+                    widthTextForImgDisplay += this.triggerDescription.item(i).getWidth();
+                }
+                distanceImg = (widthGroup / 2) - EDGE_IMAGE_SIZE * (numberOfTrigger - triggerIndex - 1) - widthTextForImgDisplay;
+
+                let triggerSvg = fabric.util.groupSVGElements(objects, options);
+                triggerSvg.set({
+                    originX: 'center',
+                    originY: 'center',
+                    left: distanceImg,
+                    top: 0,
+                    scaleX: 0.7,
+                    scaleY: 0.7,
+                });
+                //triggerSvg.setCoords();
+                triggerSvg.set('id', triggerIndex);
+                this.triggerDescription.addWithUpdate(triggerSvg);
+                this.canvas.renderAll();
+            });
+        }
+
+        this.triggerDescription.set({
+            width: widthGroup,
+            hasControls: false,
+            hasBorders: false,
+            left: left,
+            top: top,
+            angle: newAngle,
+            originX: 'center',
+            originY: 'center',
+            perPixelTargetFind: true
+        })
+        this.triggerDescription.setCoords();
+        this.canvas.add(this.triggerDescription);
+        this.canvas.renderAll();
     }
 
-    getTopLeftForImage(angle: number) {
+    
+
+    getTopLeftForDescription(angle: number) {
         let top: number, left: number;
         let newTop: number, newLeft: number;
 
-        top = this.line.getTop();
-        left = this.line.getLeft();
+        left = this.line.getLeft() + (EDGE_ARROW_HEAD_SIZE / 2 * Math.cos(angle)) / 2;
+        top = this.line.getTop() + (EDGE_ARROW_HEAD_SIZE / 2 * Math.sin(angle)) / 2;
         let angleInDegree = (angle * (180 / Math.PI));
 
         if (Math.abs(angleInDegree) > 90)
@@ -1204,19 +1349,20 @@ class EdgeView {
         });
 
         let top, left, newAngle: number;
-        [left, top, newAngle] = this.getTopLeftForImage(angle);
+        [left, top, newAngle] = this.getTopLeftForDescription(angle);
 
         this.triggerDescription.set({
             left: left,
             top: top,
             angle: newAngle,
         });
-        //this.triggerDescription.setCoords();
 
         this.dotHead.set({ left: startX, top: startY });
         this.dotTail.set({ left: endX, top: endY });
 
-        //this.canvas.setActiveObject(this.triggerDescription);
+        for (let delBtn of this.triggerDeleteBtn) {
+            delBtn.set({ visible: false });
+        }
     }
 
     private deselectAllEdge() {
@@ -1354,30 +1500,23 @@ class EdgeView {
         let endY = this.edgeData.getEndY();
         let angle = Math.atan2((endY - startY), (endX - startX));
         let difX = Math.abs(startX - endX) / 2;
-        let difY = Math.abs(startY - endY) / 2; 
+        let difY = Math.abs(startY - endY) / 2;
 
-        let top = this.line.getTop();
-        let left = this.line.getLeft();
+        let top = this.triggerDescription.getTop();
+        let left = this.triggerDescription.getLeft();
         let angleInDegree = (angle * (180 / Math.PI));
         let offsetX, offsetY: number;
 
         if (Math.abs(angleInDegree) > 90) {
-            offsetX = left + (EDGE_IMAGE_DISTANCE * Math.sin(-angle)); 
-            offsetY = top + (EDGE_IMAGE_DISTANCE * Math.cos(-angle)), (angle * 180 / Math.PI) + 180;
+            offsetX = left + (EDGE_IMAGE_DISTANCE * Math.sin(angle));
+            offsetY = top - (EDGE_IMAGE_DISTANCE * Math.cos(angle));
+            return [offsetX, offsetY];
         } else {
-            offsetX = left - (EDGE_IMAGE_DISTANCE * Math.sin(-angle)), top - (EDGE_IMAGE_DISTANCE * Math.cos(-angle));
-            offsetY = top - (EDGE_IMAGE_DISTANCE * Math.cos(-angle)), (angle * 180 / Math.PI);
+            offsetX = left - (EDGE_IMAGE_DISTANCE * Math.sin(angle));
+            offsetY = top + (EDGE_IMAGE_DISTANCE * Math.cos(angle));
+            return [offsetX, offsetY];
         }
 
-        if ((startX < endX) && (startY >= endY)) {
-            return [currentOriginDesX - difX + offsetX, currentOriginDesY + difY + offsetY];
-        } else if ((startX <= endX) && (startY < endY)) {
-            return [currentOriginDesX - difX + offsetX, currentOriginDesY - difY + offsetY];
-        } else if ((startX > endX) && (startY >= endY)) {
-            return [currentOriginDesX + difX + offsetX, currentOriginDesY + difY + offsetY];
-        } else if ((startX >= endX) && (startY < endY)) {
-            return [currentOriginDesX + difX + offsetX, currentOriginDesY - difY + offsetY];
-        }
     }
 
     private calculateConnectionPoint(originX: number, originY: number, pointX: number, pointY: number): Coordinate {

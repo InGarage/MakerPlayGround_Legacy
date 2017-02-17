@@ -2,7 +2,10 @@
     <property [objectSelected]="objectSelected" (updateData)="updataPropData($event)" (updateDataFinish)="updataPropDataFinish($event)"></property>
 </div>
 
+<div [ngStyle]="setUndoBtnPosition()">
+    <button (click)="undo()">Und</button>
+</div>
+
+
 <canvas id="c" width="2000" height="2000">
 </canvas> 
-
-<button (click)="undo()">Undo</button>

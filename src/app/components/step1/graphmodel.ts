@@ -282,6 +282,7 @@ export class GraphData {
         for (let trigger of data.children) {
             for (let param of trigger.param) {
                 console.log('model (secound should be array)', param.name, param.value);
+                console.log(data.uid, trigger.id, param.name);
                 this.data = this.data.setIn(['edges', data.uid, 'trigger', trigger.id, 'params', param.name], Immutable.fromJS(param.value));
             }
         }
@@ -312,10 +313,14 @@ export class GraphData {
         this.undoStack.push(this.data);
     }
 
-    removeEdge(edgeId: string) {
-        this.data = this.data.deleteIn(['edges', edgeId]);
+    removeEdge(edgeIndex: number, edgeId: string) {
+        this.data = this.data.deleteIn(['edges', edgeId, 'trigger', edgeIndex]);
         this.undoStack.push(this.data);
     }
+
+    // //         this.data = this.data.deleteIn(['nodes', nodeId]);
+    //     this.undoStack.push(this.data);
+    // }
 
     /**
      * This method is called when the source edge is merging to the dest edge.
@@ -393,7 +398,6 @@ export class EdgeData {
 
     getTrigger() : TriggerData[] {
         let data = [];
-        console.log('here');
         (<Immutable.List<any>>this.data.get('trigger')).forEach((value, key) => {
             console.log(value.toJS(), key);
             data.push(new TriggerData(key, value));
