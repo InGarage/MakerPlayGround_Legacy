@@ -130,6 +130,7 @@ export class MiddleComponent implements OnInit {
 
     setUndoBtnPosition() {
         let styles = {
+            'position': 'absolute',
             'padding-left': '10px',
             'padding-top': '10px',
             //'background-color': 'green',
