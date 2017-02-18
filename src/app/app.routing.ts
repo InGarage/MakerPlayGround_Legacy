@@ -5,6 +5,7 @@ import {HomeComponent} from './components/home.component';
 import {TutorialComponent} from './components/tutorial.component';
 import {SampleProjectComponent} from './components/sample-project.component';
 import { Step1Component }  from './components/step1/step1.component';
+import { Step3Component }  from './components/step1/step3.component';
 
 const appRoutes: Routes = [
     {
@@ -22,6 +23,10 @@ const appRoutes: Routes = [
     {
         path: 'step1',
         component: Step1Component
+    },
+    {
+        path: 'step3',
+        component: Step3Component
     }
 ];
 

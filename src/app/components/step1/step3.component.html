@@ -21,20 +21,12 @@
   <div class="under-nav">
     <p class="under-nav-basic  under-nav-column1">Project name</p>
     <p class="under-nav-basic  under-nav-space1"></p>
-    <a class="under-nav-active under-nav-basic  under-nav-column" routerLink="/step1">Canvas</a>
+    <a class="under-nav-basic  under-nav-column" routerLink="/step1">Canvas</a>
     <a class="under-nav-basic  under-nav-column" routerLink="/">Devices</a>
-    <a class="under-nav-basic  under-nav-column" (click)="BlueprintSelcted()">Blueprint</a>
+    <a class="under-nav-active under-nav-basic  under-nav-column" routerLink="/step3">Blueprint</a>
     <p class="under-nav-basic  under-nav-space2"></p>
   </div>
 
-  <div class="row">
-    <div [ngStyle]="setComponentMenuStyles()">
-      <action #left (addNode)="middle.addNewNode($event)" (addEdge)="middle.addNewEdge($event)"></action>
-    </div>
 
-    <div [ngStyle]="setCanvasStyles()">
-      <middle #middle></middle>
-    </div>
-  </div>
 
 </div>

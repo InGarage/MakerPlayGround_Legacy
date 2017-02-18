@@ -99,8 +99,13 @@ export class MiddleComponent implements OnInit {
             this.typeOfObjectSelected = EdgeData;
         });
 
+        this.canvas.on('trigger:remove', (options) => {
+            this.model.removeTrigger(options.triggerIndex, options.target_id);
+            this.canvas.redraw();
+        })
+
         this.canvas.on('edge:remove', (options) => {
-            this.model.removeEdge(options.triggerIndex, options.target_id);
+            this.model.removeEdge(options.target_id)
             this.canvas.redraw();
         })
 

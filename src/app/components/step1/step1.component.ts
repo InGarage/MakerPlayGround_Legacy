@@ -1,4 +1,5 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, Output, EventEmitter, } from '@angular/core';
+import { RouterModule, Routes, Router } from '@angular/router';
 import * as $ from 'jquery';
 
 @Component({
@@ -6,7 +7,7 @@ import * as $ from 'jquery';
   templateUrl: `./step1.component.html`,
   styleUrls: ['./step1.component.css']
 })
-export class Step1Component  {
+export class Step1Component {
 
   windowWidth: number;
   componentMenuWidth: string;
@@ -14,12 +15,18 @@ export class Step1Component  {
   componentMenuHeight: string;
   minWidthMenu: string;
   minWidthCanvas: string;
+  // @Input() objectSelected: NodeData | EdgeData;
+  // @Output() updateData = new EventEmitter<>();
 
-  ngOnInit(){
+  constructor(
+    private router: Router,
+  ) { }
+
+  ngOnInit() {
     this.setElement();
     this.windowWidth = $(window).width();
-    this.minWidthMenu = this.windowWidth*0.2 + 'px';
-    this.minWidthCanvas = this.windowWidth*0.8 + 'px';
+    this.minWidthMenu = this.windowWidth * 0.2 + 'px';
+    this.minWidthCanvas = this.windowWidth * 0.8 + 'px';
 
     $(window).on("resize", () => {
       this.setElement();
@@ -29,7 +36,7 @@ export class Step1Component  {
   setElement() {
     this.windowWidth = $(window).width();
     this.windowHeight = $(window).height();
-    this.componentMenuHeight = (this.windowHeight-100) + 'px';
+    this.componentMenuHeight = (this.windowHeight - 100) + 'px';
     this.setComponentMenuStyles();
     this.setCanvasStyles();
   }
@@ -38,7 +45,7 @@ export class Step1Component  {
     let styles = {
       'float': 'left',
       'padding-left': '15px',
-      'width': this.windowWidth*0.2 + 'px',
+      'width': this.windowWidth * 0.2 + 'px',
       'height': this.componentMenuHeight,
       'background-color': '#f6f7f8',
       'border-right': '1px solid lightgray',
@@ -49,7 +56,7 @@ export class Step1Component  {
   setCanvasStyles() {
     let styles = {
       'float': 'left',
-      'width': this.windowWidth*0.8 + 20 + 'px',
+      'width': this.windowWidth * 0.8 + 20 + 'px',
       //'width': this.windowWidth*0.8 + 'px',
       'height': this.componentMenuHeight,
       'background-color': '#eff1f6',
@@ -57,6 +64,11 @@ export class Step1Component  {
     };
     return styles;
   }
-  
+
+  BlueprintSelcted() {
+    console.log('click Blueprint');
+    this.router.navigate(['/step3']);
+  }
+
 }
 

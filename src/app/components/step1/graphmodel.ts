@@ -265,6 +265,7 @@ export class GraphData {
         });
 
         this.undoStack.push(this.data);
+        console.log('json', this.data.toJS());
     }
 
     updateNodeProperty(data: PropertyValue) {
@@ -313,8 +314,13 @@ export class GraphData {
         this.undoStack.push(this.data);
     }
 
-    removeEdge(edgeIndex: number, edgeId: string) {
+    removeTrigger(edgeIndex: number, edgeId: string) {
         this.data = this.data.deleteIn(['edges', edgeId, 'trigger', edgeIndex]);
+        this.undoStack.push(this.data);
+    }
+
+    removeEdge(edgeId: string) {
+        this.data = this.data.deleteIn(['edges', edgeId]);
         this.undoStack.push(this.data);
     }
 
