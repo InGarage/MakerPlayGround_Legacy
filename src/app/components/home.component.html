@@ -1,40 +1,38 @@
-<!-- Fixed navbar -->
-<nav class="navbar navbar-inverse navbar-fixed-top">
-  <div class="container">
-    <div class="navbar-header">
-      <a class="navbar-brand" href="#">Project Graph</a>
+<div class="navv2">
+  <nav class="navbar navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header navbar-left">
+        <a class="navbar-brand navbar-maker" routerLink="/">Maker</a>
+        <a class="navbar-brand navbar-basic" routerLink="/">My Projects</a>
+        <a class="navbar-brand navbar-basic" routerLink="/">Explore</a>
+      </div>
+      <div class="navbar-collapse collapse">
+        <ul class="nav navbar-nav navbar-right">
+          <li><a class="navbar-basic" routerLink="/step1"><i class="fa fa-user-circle-o" aria-hidden="true"></i>USER</a></li>
+        </ul>
+      </div>
     </div>
-    <div id="navbar" class="navbar-collapse collapse">
-      <ul class="nav navbar-nav">
-        <li class="active"><a routerLink="/">Home</a></li>
-        <li><a routerLink="/tutorial">Tutorial</a></li>
-        <li><a routerLink="/sample-project">Sample Projects</a></li>
-      </ul>
-      <ul class="nav navbar-nav navbar-right">
-        <li><a routerLink="/step1">Getting Started</a></li>
-      </ul>
-    </div>
-    <!--/.nav-collapse -->
-  </div>
-</nav>
-
-<br>
-<br>
-<br>
-<br>
-
-<div>
-  All Projects
-  <tr>
-  <div *ngFor="let project of projects">
-    <div>
-    Id: {{project.project_id}}
-    <br>Name: {{project.project_name}}
-    <br>Modified: {{project.modified_date}}
-    <button (click)="getProject(project.project_id)">SELECT</button>
-    </div>
-  </div>
+  </nav>
 </div>
 
+<div class="makerPlayground">
+  <div class="loginCenter">
+    <h1>Maker Playground</h1>
+    <img class="img-robot" src="/assets/img/login-robot.svg">
+  </div>
 
-<button (click)="newProject()">NEW</button>
+  <div class="allProjectsTable">
+    All Projects
+      <div *ngFor="let project of projects">
+        <div>
+          Id: {{project.project_id}}
+          <br>Name: {{project.project_name}}
+          <br>Modified: {{project.modified_date}}
+          <button (click)="getProject(project.project_id)">SELECT</button>
+        </div>
+      </div>
+  </div>
+
+
+  <button (click)="newProject()">NEW</button>
+</div>

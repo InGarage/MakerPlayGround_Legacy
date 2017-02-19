@@ -5,6 +5,7 @@ import { Project } from './project';
 @Component({
   selector: 'home',
   templateUrl: `./home.component.html`,
+  styleUrls: ['../app.component.css','./step1/step1.component.css'],
   providers: [ProjectService],
 })
 export class HomeComponent {
@@ -25,7 +26,7 @@ export class HomeComponent {
 
   newProject() {
     const name = "New Project";
-    this.ProjectService.newProject({project_name: name}).subscribe(projects => {
+    this.ProjectService.newProject({ project_name: name }).subscribe(projects => {
       console.log(projects);
     });
   }
