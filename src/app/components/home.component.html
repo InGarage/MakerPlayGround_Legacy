@@ -31,6 +31,10 @@
     Id: {{project.project_id}}
     <br>Name: {{project.project_name}}
     <br>Modified: {{project.modified_date}}
+    <button (click)="getProject(project.project_id)">SELECT</button>
     </div>
   </div>
 </div>
+
+
+<button (click)="newProject()">NEW</button>

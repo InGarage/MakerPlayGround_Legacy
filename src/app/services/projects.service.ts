@@ -5,6 +5,9 @@ import 'rxjs/add/operator/toPromise';
 
 @Injectable()
 export class ProjectService{
+
+    url = 'https://makerplaygroundapi.azurewebsites.net/project/';
+
     constructor(private http: Http){
         
     }
@@ -22,10 +25,23 @@ export class ProjectService{
     }*/
 
 
-    getProjects(){
-        return this.http.get('https://makerplaygroundapi.azurewebsites.net/project/')
+    getAllProjects(){
+        return this.http.get(this.url)
             .map(res => res.json());
-        //return this.http.post
     }
+
+    // post is new project's name
+    newProject(post: string){
+        console.log('post = ', post);
+        return this.http.post(this.url, post)
+            .map(res => res.json());
+    }
+
+    getProject(id: string) {
+        let getProjectUrl = this.url + id;
+        return this.http.get(getProjectUrl)
+            .map(res => res.json());
+    }
+    
 }
 

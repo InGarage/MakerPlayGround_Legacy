@@ -14,17 +14,26 @@ export class HomeComponent {
   constructor(private ProjectService: ProjectService) { }
 
   ngOnInit() {
-    this.getProjects();
+    this.getAllProjects();
   }
 
-  getProjects() {
-    this.ProjectService.getProjects().subscribe(projects => {
+  getAllProjects() {
+    this.ProjectService.getAllProjects().subscribe(projects => {
       this.projects = projects.projects;
     });
   }
 
   newProject() {
-    // send new project's name as POST then get id back
+    const name = '{"project_name":"New Project"';
+    this.ProjectService.newProject(name).subscribe(projects => {
+      console.log(projects);
+    });
+  }
+
+  getProject(id: string) {
+    this.ProjectService.getProject(id).subscribe(project => {
+      console.log(project);
+    });
   }
 
 }
