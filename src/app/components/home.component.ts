@@ -24,8 +24,8 @@ export class HomeComponent {
   }
 
   newProject() {
-    const name = '{"project_name":"New Project"';
-    this.ProjectService.newProject(name).subscribe(projects => {
+    const name = "New Project";
+    this.ProjectService.newProject({project_name: name}).subscribe(projects => {
       console.log(projects);
     });
   }
