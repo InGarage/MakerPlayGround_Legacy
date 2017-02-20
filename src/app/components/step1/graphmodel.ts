@@ -67,6 +67,10 @@ export class GraphData {
         this.data = this.undoStack.undo();
     }
 
+    redo() {
+        this.data = this.undoStack.redo();
+    }
+
     getNodeById(nodeID: string): NodeData {
         let check = this.data.getIn(['nodes', nodeID]);
         if (check !== undefined) {

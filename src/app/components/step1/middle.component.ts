@@ -69,6 +69,13 @@ export class MiddleComponent implements OnInit {
         this.canvas.redraw();
     }
 
+    redo() {
+        this.objectSelected = undefined;
+        this.canvas.deselectAllNode();
+        this.model.redo();
+        this.canvas.redraw();      
+    }
+
     ngOnInit() {
         this.canvas = new GraphCanvas(this.model, 'c');
         this.canvas.redraw();
@@ -138,13 +145,25 @@ export class MiddleComponent implements OnInit {
             'position': 'absolute',
             'padding-left': '10px',
             'padding-top': '10px',
-            //'background-color': 'green',
             'width': '70px',
             'height': '40px',
             'z-index': '5',
         };
         return styles;
     }
+
+    setRedoBtnPosition() {
+        let styles = {
+            'position': 'absolute',
+            'margin-left': '50px',
+            'padding-top': '10px',
+            'width': '70px',
+            'height': '40px',
+            'z-index': '5',
+        };
+        return styles;
+    }
+
 
 
     // TODO: dummy data to be removed

@@ -9,8 +9,8 @@ import 'rxjs/add/operator/toPromise';
 @Injectable()
 export class ProjectService {
 
-    //url = 'https://makerplaygroundapi.azurewebsites.net/project/';
-    url = 'http://localhost:3001/api/project/';
+    url = 'https://makerplaygroundapi.azurewebsites.net/project/';
+    // url = 'http://localhost:3001/api/project/';
     private currentProject: Project;
 
     constructor(private auth: Auth, private http: Http, private authHttp: AuthHttp) {
