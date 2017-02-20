@@ -55,17 +55,12 @@ export class GraphData {
             var isIndexed = Immutable.Iterable.isIndexed(value);
             return isIndexed ? value.toList() : value.toOrderedMap();
         });
-        console.log(data);
         return new GraphData(data);
     }
 
     private constructor(public data: Immutable.Map<string, Immutable.Map<string, any>>) {
         this.undoStack = new UndoStack<Immutable.Map<string, any>>();
         this.undoStack.push(data);
-    }
-
-    toJSON(): any {
-        return this.data.toJS();
     }
 
     undo() {
@@ -270,7 +265,6 @@ export class GraphData {
         });
 
         this.undoStack.push(this.data);
-        console.log('json', this.data.toJS());
     }
 
     updateNodeProperty(data: PropertyValue) {
@@ -288,7 +282,6 @@ export class GraphData {
         for (let trigger of data.children) {
             for (let param of trigger.param) {
                 console.log('model (secound should be array)', param.name, param.value);
-                console.log(data.uid, trigger.id, param.name);
                 this.data = this.data.setIn(['edges', data.uid, 'trigger', trigger.id, 'params', param.name], Immutable.fromJS(param.value));
             }
         }
@@ -319,19 +312,10 @@ export class GraphData {
         this.undoStack.push(this.data);
     }
 
-    removeTrigger(edgeIndex: number, edgeId: string) {
-        this.data = this.data.deleteIn(['edges', edgeId, 'trigger', edgeIndex]);
-        this.undoStack.push(this.data);
-    }
-
     removeEdge(edgeId: string) {
         this.data = this.data.deleteIn(['edges', edgeId]);
         this.undoStack.push(this.data);
     }
-
-    // //         this.data = this.data.deleteIn(['nodes', nodeId]);
-    //     this.undoStack.push(this.data);
-    // }
 
     /**
      * This method is called when the source edge is merging to the dest edge.
@@ -409,6 +393,7 @@ export class EdgeData {
 
     getTrigger() : TriggerData[] {
         let data = [];
+        console.log('here');
         (<Immutable.List<any>>this.data.get('trigger')).forEach((value, key) => {
             console.log(value.toJS(), key);
             data.push(new TriggerData(key, value));

@@ -16,6 +16,7 @@ import { ActionComponent } from './components/step1/action.component';
 import { MiddleComponent } from './components/step1/middle.component';
 import { PropertyComponent } from './components/step1/property.component';
 
+import { Auth } from './auth.service';
 import { ProjectService } from './services/projects.service';
 import { routing } from './app.routing';
 
@@ -35,7 +36,9 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
       provide: AuthHttp,
       useFactory: authHttpServiceFactory,
       deps: [Http, RequestOptions]
-    }
+    },
+    ProjectService,
+    Auth
   ],
   bootstrap: [AppComponent]
 })

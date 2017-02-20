@@ -1,5 +1,6 @@
 import { Component, Input, Output, EventEmitter, } from '@angular/core';
 import { RouterModule, Routes, Router } from '@angular/router';
+import { ProjectService } from '../../services/projects.service';
 import * as $ from 'jquery';
 
 @Component({
@@ -18,9 +19,8 @@ export class Step1Component {
   // @Input() objectSelected: NodeData | EdgeData;
   // @Output() updateData = new EventEmitter<>();
 
-  constructor(
-    private router: Router,
-  ) { }
+  constructor(private router: Router, private projectService: ProjectService) 
+  { }
 
   ngOnInit() {
     this.setElement();
@@ -67,7 +67,10 @@ export class Step1Component {
 
   BlueprintSelcted() {
     console.log('click Blueprint');
-    this.router.navigate(['/step3']);
+    //this.router.navigate(['/step3']);
+    this.projectService.generateCode(this.projectService.getCurrentProject()).subscribe((res)=>{
+      console.log(res);
+    });
   }
 
 }

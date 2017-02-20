@@ -6,14 +6,12 @@ import { Action } from './action';
 import { Trigger, TriggerGroup, TriggerHelper } from './trigger';
 import { UndoStack } from './undostack';
 import { PropertyValue } from './propertyvalue';
-import { Auth } from '../../auth.service';
-import { ProjectService } from '../../services/projects.service';
+
 
 @Component({
     selector: 'middle',
     templateUrl: `./middle.component.html`,
-    styleUrls: ['./step1.component.css'],
-    //providers: [ProjectService, Auth]
+    styleUrls: ['./step1.component.css']
 })
 
 export class MiddleComponent implements OnInit {
@@ -23,23 +21,20 @@ export class MiddleComponent implements OnInit {
     private canvas: GraphCanvas;
     private model: GraphData;
 
-    constructor(private projectService: ProjectService) {
-        console.log('project', projectService.getCurrentProject());
-        //console.log('project', JSON.parse(projectService.getCurrentProject().project_data));
-        this.model = GraphData.createGraphDataFromJSON(projectService.getCurrentProject().project_data/*JSON.parse(projectService.getCurrentProject().project_data)*/);
+    constructor() {
+        this.model = GraphData.createGraphDataFromJSON(this.dummyGraph);
         // this.undoStack = new UndoStack<GraphData>();
         // this.undoStack.push(this.model);
 
-        // Autosave every 15 seconds
-        setInterval(() => {
-            let project = projectService.getCurrentProject();
-            project.project_data = this.model.toJSON();
-            projectService.saveProject(project).toPromise().then(() => {
-                console.log('save complete');
-            }, () => {
-                console.log('save reject');
-            });
-        }, 15000);
+        const test = '{0} is pressed {1} times';    
+        const args = ['test1', 'test2'];
+        const test2 = test.replace(/{(\d+)}/g, (match,number) => {
+            return typeof args[number] != 'undefined'
+                ? args[number]
+                : match
+            ;
+        });
+        console.log(test2);
     }
 
     addNewNode(newAction: Action) {
@@ -49,7 +44,7 @@ export class MiddleComponent implements OnInit {
 
     addNewEdge(newTrigger: Trigger) {
         this.model.addEdge(newTrigger);
-        this.canvas.redraw();
+        this.canvas.redraw();      
     }
 
     updataPropData(data: PropertyValue) {
@@ -90,7 +85,7 @@ export class MiddleComponent implements OnInit {
         });
 
         this.canvas.on('edge:move', (options) => {
-            this.model.moveEdge(options.target_id, options.start_x, options.end_x, options.start_y, options.end_y);
+            this.model.moveEdge(options.target_id, options.start_x, options.end_x, options.start_y, options.end_y); 
             this.canvas.redraw();
         });
 
@@ -99,20 +94,10 @@ export class MiddleComponent implements OnInit {
             this.typeOfObjectSelected = NodeData;
         });
 
-        this.canvas.on('edge:selected', (options) => {
+        this.canvas.on('edge:selected', (options) => { 
             this.objectSelected = this.model.getEdgeById(options.target_id);
             this.typeOfObjectSelected = EdgeData;
         });
-
-        this.canvas.on('trigger:remove', (options) => {
-            this.model.removeTrigger(options.triggerIndex, options.target_id);
-            this.canvas.redraw();
-        })
-
-        this.canvas.on('edge:remove', (options) => {
-            this.model.removeEdge(options.target_id)
-            this.canvas.redraw();
-        })
 
         this.canvas.on('object:deselected', (options) => {
             console.log('deselect');
@@ -122,33 +107,20 @@ export class MiddleComponent implements OnInit {
 
         this.canvas.on('edge:connectionDst', (options) => {
             this.model.connectionEdgeOfDstNode(options.dst_node_id
-                , options.target_id, options.start_x, options.end_x, options.start_y, options.end_y);
+            , options.target_id, options.start_x, options.end_x, options.start_y, options.end_y);
             this.canvas.redraw();
         });
 
         this.canvas.on('edge:connectionSrc', (options) => {
             this.model.connectionEdgeOfSrcNode(options.src_node_id
-                , options.target_id, options.start_x, options.end_x, options.start_y, options.end_y);
-            this.canvas.redraw();
+            , options.target_id, options.start_x, options.end_x, options.start_y, options.end_y);
+            this.canvas.redraw();      
         });
 
         this.canvas.on('edge:combine', (options) => {
             this.model.mergeEdge(options.toBeMissing.getEdgeId(), options.toBeCombined.getEdgeId());
-            this.canvas.redraw();
+            this.canvas.redraw();  
         });
-    }
-
-    setUndoBtnPosition() {
-        let styles = {
-            'position': 'absolute',
-            'padding-left': '10px',
-            'padding-top': '10px',
-            //'background-color': 'green',
-            'width': '70px',
-            'height': '40px',
-            'z-index': '5',
-        };
-        return styles;
     }
 
 
@@ -161,7 +133,7 @@ export class MiddleComponent implements OnInit {
                 'display_y': 300,
                 'params': {
                     'name': ['Dim 1'],
-                    'brightness': ["30", "%"]
+                    'brightness': ["30","%"]
                 }
             },
             '3a27eaa4-7971-49d8-9d74-2e79a49054ed': {
@@ -170,22 +142,34 @@ export class MiddleComponent implements OnInit {
                 'display_y': 300,
                 'params': {
                     'name': ['Blink 1'],
-                    'frequency': ["10", "Hz"]
+                    'frequency': ["10","Hz"]
                 }
             }
         },
         'edges': {
             '361cf758-db06-4c9d-9b31-2d88269554bb': {
+<<<<<<< HEAD
+                // 'trigger_id': ['Button_3','Button_3'],
+                // 'params': {
+                //     'Button_3': { 'name': ["xxx"], 'time': ["3","times"] },
+                //     'Button_3': { 'name': ["yyy"], 'time': ["4","times"]  },
+                // },
+                'trigger_id': ['Button_3'],
+                'params': {
+                    'Button_3': { 'name': ["xxx"], 'time': ["3","times"] },
+                },
+=======
                 'trigger': [
                     {
                         'id': 'Button_3',
-                        'params': { 'name': ['aaa'], 'time': ['3', 'times'] }
+                        'params': {'name': ['xxx'], 'time': ['3', 'times']}
                     },
                     {
                         'id': 'Button_3',
-                        'params': { 'name': ['bbb'], 'time': ['4', 'times'] }
+                        'params': {'name': ['yyy'], 'time': ['4', 'times']}
                     }
                 ],
+>>>>>>> new-canvas
                 'src_node_id': '',
                 'dst_node_id': '',
                 'start_x': 300,
@@ -197,11 +181,11 @@ export class MiddleComponent implements OnInit {
                 'trigger': [
                     {
                         'id': 'Button_3',
-                        'params': { 'name': ['xxx'], 'time': ['5', 'times'] }
+                        'params': {'name': ['zzz'], 'time': ['5', 'times']}
                     },
                     {
                         'id': 'Button_3',
-                        'params': { 'name': ['yyy'], 'time': ['6', 'times'] }
+                        'params': {'name': ['aaa'], 'time': ['6', 'times']}
                     }
                 ],
                 'src_node_id': '',
@@ -213,5 +197,5 @@ export class MiddleComponent implements OnInit {
             }
         }
     };
-
+   
 }

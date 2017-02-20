@@ -10,7 +10,7 @@ import 'rxjs/add/operator/toPromise';
 export class ProjectService {
 
     //url = 'https://makerplaygroundapi.azurewebsites.net/project/';
-    url = 'http://localhost:3001/api/project/';
+    url = 'http://localhost:3001/';
     private currentProject: Project;
 
     constructor(private auth: Auth, private http: Http, private authHttp: AuthHttp) {
@@ -19,28 +19,39 @@ export class ProjectService {
     getAllProjects() {
         /*return this.http.get(this.url)
             .map(res => res.json());*/
-        console.log('using authHttp');
-        console.log(localStorage.getItem('id_token'));
-        return this.authHttp.get(this.url)
+        //console.log('using authHttp');
+        //console.log(localStorage.getItem('id_token'));
+        return this.authHttp.get(this.url + 'api/project/')
             .map(res => res.json());
     }
 
     // post is new project's name
-    newProject(post) {
-        console.log('post = ', post);
-        return this.authHttp.post(this.url, JSON.stringify(post), {
+    newProject(project: Project) {
+        console.log('post = ', project);
+        return this.authHttp.post(this.url + 'api/project/', JSON.stringify(project), {
             headers: new Headers({ 'Content-Type': 'application/json' })
         }).map(res => res.json());
     }
 
     getProject(id: string) {
-        let getProjectUrl = this.url + id;
-        return this.authHttp.get(getProjectUrl)
+        return this.authHttp.get(this.url + 'api/project/' + id)
             .map(res => res.json());
     }
 
+    saveProject(project: Project) {
+        return this.authHttp.put(this.url + 'api/project', JSON.stringify(project), {
+            headers: new Headers({ 'Content-Type': 'application/json' })
+        }).map(res => res.json());
+    }
+
+    generateCode(project: Project) {
+        return this.authHttp.post(this.url + 'api/codegen/', JSON.stringify(project), {
+            headers: new Headers({ 'Content-Type': 'application/json' })
+        }).map(res => res.json());
+    }
+
     getCurrentProject(): Project {
-        return this.currentProject
+        return this.currentProject;
     }
 
     setCurrentProject(project: Project) {
