@@ -53,17 +53,6 @@ export namespace TriggerHelper {
           "display_text": "{name} {condition} {value} {unit}",
           "params": [
             {
-              "name": "Accelerate",
-              "control": "NumberExpression",
-              "default_value": [
-                "1"
-              ],
-              "args": [
-                "m/s^2"
-              ],
-              "regex": "^\\-?(\\d{1,}([.]\\d{1,})?)$"
-            },
-            {
               "name": "name",
               "control": "textbox",
               "default_value": [
@@ -73,6 +62,17 @@ export namespace TriggerHelper {
                 ""
               ],
               "regex": "^[\\S]+$"
+            },
+            {
+              "name": "Accelerate",
+              "control": "NumberExpression",
+              "default_value": [
+                "1"
+              ],
+              "args": [
+                "m/s^2"
+              ],
+              "regex": "^\\-?(\\d{1,}([.]\\d{1,})?)$"
             }
           ],
           "compatibility": {
@@ -87,17 +87,6 @@ export namespace TriggerHelper {
           "display_text": "{name}  {condition} {value} {unit}",
           "params": [
             {
-              "name": "Accelerate",
-              "control": "NumberExpression",
-              "default_value": [
-                "1"
-              ],
-              "args": [
-                "m/s^2"
-              ],
-              "regex": "^\\-?(\\d{1,}([.]\\d{1,})?)$"
-            },
-            {
               "name": "name",
               "control": "textbox",
               "default_value": [
@@ -107,6 +96,17 @@ export namespace TriggerHelper {
                 ""
               ],
               "regex": "^[\\S]+$"
+            },
+            {
+              "name": "Accelerate",
+              "control": "NumberExpression",
+              "default_value": [
+                "1"
+              ],
+              "args": [
+                "m/s^2"
+              ],
+              "regex": "^\\-?(\\d{1,}([.]\\d{1,})?)$"
             }
           ],
           "compatibility": {
@@ -121,17 +121,6 @@ export namespace TriggerHelper {
           "display_text": "{name}  {condition} {value} {unit}",
           "params": [
             {
-              "name": "Accelerate",
-              "control": "NumberExpression",
-              "default_value": [
-                "1"
-              ],
-              "args": [
-                "m/s^2"
-              ],
-              "regex": "^\\-?(\\d{1,}([.]\\d{1,})?)$"
-            },
-            {
               "name": "name",
               "control": "textbox",
               "default_value": [
@@ -141,6 +130,17 @@ export namespace TriggerHelper {
                 ""
               ],
               "regex": "^[\\S]+$"
+            },
+            {
+              "name": "Accelerate",
+              "control": "NumberExpression",
+              "default_value": [
+                "1"
+              ],
+              "args": [
+                "m/s^2"
+              ],
+              "regex": "^\\-?(\\d{1,}([.]\\d{1,})?)$"
             }
           ],
           "compatibility": {
@@ -155,17 +155,6 @@ export namespace TriggerHelper {
           "display_text": "{name}  {condition} {value} {unit}",
           "params": [
             {
-              "name": "Angle",
-              "control": "NumberExpression",
-              "default_value": [
-                "180"
-              ],
-              "args": [
-                "degree"
-              ],
-              "regex": "^(\\d([.]\\d{1,})?|[1-9]\\d([.]\\d{1,})?|[1-2]\\d\\d([.]\\d{1,})?|3[0-5]\\d([.]\\d{1,})?|360)$"
-            },
-            {
               "name": "name",
               "control": "textbox",
               "default_value": [
@@ -175,6 +164,17 @@ export namespace TriggerHelper {
                 ""
               ],
               "regex": "^[\\S]+$"
+            },
+            {
+              "name": "Angle",
+              "control": "NumberExpression",
+              "default_value": [
+                "180"
+              ],
+              "args": [
+                "degree"
+              ],
+              "regex": "^(\\d([.]\\d{1,})?|[1-9]\\d([.]\\d{1,})?|[1-2]\\d\\d([.]\\d{1,})?|3[0-5]\\d([.]\\d{1,})?|360)$"
             }
           ],
           "compatibility": {
@@ -189,17 +189,6 @@ export namespace TriggerHelper {
           "display_text": "{name}  {condition} {value} {unit}",
           "params": [
             {
-              "name": "Angle",
-              "control": "NumberExpression",
-              "default_value": [
-                "180"
-              ],
-              "args": [
-                "degree"
-              ],
-              "regex": "^(\\d([.]\\d{1,})?|[1-9]\\d([.]\\d{1,})?|[1-2]\\d\\d([.]\\d{1,})?|3[0-5]\\d([.]\\d{1,})?|360)$"
-            },
-            {
               "name": "name",
               "control": "textbox",
               "default_value": [
@@ -209,6 +198,17 @@ export namespace TriggerHelper {
                 ""
               ],
               "regex": "^[\\S]+$"
+            },
+            {
+              "name": "Angle",
+              "control": "NumberExpression",
+              "default_value": [
+                "180"
+              ],
+              "args": [
+                "degree"
+              ],
+              "regex": "^(\\d([.]\\d{1,})?|[1-9]\\d([.]\\d{1,})?|[1-2]\\d\\d([.]\\d{1,})?|3[0-5]\\d([.]\\d{1,})?|360)$"
             }
           ],
           "compatibility": {
@@ -223,17 +223,6 @@ export namespace TriggerHelper {
           "display_text": "{name}  {condition} {value} {unit}",
           "params": [
             {
-              "name": "Angle",
-              "control": "NumberExpression",
-              "default_value": [
-                "180"
-              ],
-              "args": [
-                "degree"
-              ],
-              "regex": "^(\\d([.]\\d{1,})?|[1-9]\\d([.]\\d{1,})?|[1-2]\\d\\d([.]\\d{1,})?|3[0-5]\\d([.]\\d{1,})?|360)$"
-            },
-            {
               "name": "name",
               "control": "textbox",
               "default_value": [
@@ -243,6 +232,17 @@ export namespace TriggerHelper {
                 ""
               ],
               "regex": "^[\\S]+$"
+            },
+            {
+              "name": "Angle",
+              "control": "NumberExpression",
+              "default_value": [
+                "180"
+              ],
+              "args": [
+                "degree"
+              ],
+              "regex": "^(\\d([.]\\d{1,})?|[1-9]\\d([.]\\d{1,})?|[1-2]\\d\\d([.]\\d{1,})?|3[0-5]\\d([.]\\d{1,})?|360)$"
             }
           ],
           "compatibility": {
@@ -331,17 +331,6 @@ export namespace TriggerHelper {
           "display_text": "{name}  {condition} {value} {unit}",
           "params": [
             {
-              "name": "Pressure",
-              "control": "NumberExpression",
-              "default_value": [
-                "1000"
-              ],
-              "args": [
-                "hPa"
-              ],
-              "regex": "^\\-?(\\d{1,}([.]\\d{1,})?)$"
-            },
-            {
               "name": "name",
               "control": "textbox",
               "default_value": [
@@ -351,6 +340,17 @@ export namespace TriggerHelper {
                 ""
               ],
               "regex": "^[\\S]+$"
+            },
+            {
+              "name": "Pressure",
+              "control": "NumberExpression",
+              "default_value": [
+                "1000"
+              ],
+              "args": [
+                "hPa"
+              ],
+              "regex": "^\\-?(\\d{1,}([.]\\d{1,})?)$"
             }
           ],
           "compatibility": {
@@ -365,17 +365,6 @@ export namespace TriggerHelper {
           "display_text": "{name}  {condition} {value} {unit}",
           "params": [
             {
-              "name": "Altitude",
-              "control": "NumberExpression",
-              "default_value": [
-                "10"
-              ],
-              "args": [
-                "cm"
-              ],
-              "regex": "^(\\d{1,}([.]\\d{1,})?)$"
-            },
-            {
               "name": "name",
               "control": "textbox",
               "default_value": [
@@ -385,6 +374,17 @@ export namespace TriggerHelper {
                 ""
               ],
               "regex": "^[\\S]+$"
+            },
+            {
+              "name": "Altitude",
+              "control": "NumberExpression",
+              "default_value": [
+                "10"
+              ],
+              "args": [
+                "cm"
+              ],
+              "regex": "^(\\d{1,}([.]\\d{1,})?)$"
             }
           ],
           "compatibility": {
@@ -404,17 +404,6 @@ export namespace TriggerHelper {
           "display_text": "{name}  {condition} {value} {unit}",
           "params": [
             {
-              "name": "Temperature",
-              "control": "NumberExpression",
-              "default_value": [
-                "25"
-              ],
-              "args": [
-                "C"
-              ],
-              "regex": "^(\\d{1,}([.]\\d{1,})?)$"
-            },
-            {
               "name": "name",
               "control": "textbox",
               "default_value": [
@@ -424,11 +413,22 @@ export namespace TriggerHelper {
                 ""
               ],
               "regex": "^[\\S]+$"
+            },
+            {
+              "name": "Temperature",
+              "control": "NumberExpression",
+              "default_value": [
+                "25"
+              ],
+              "args": [
+                "C"
+              ],
+              "regex": "^(\\d{1,}([.]\\d{1,})?)$"
             }
           ],
           "compatibility": {
             "interface": "MP_Temp",
-            "fn_name": "temp"
+            "fn_name": "checkTemp"
           }
         }
       ]
@@ -494,17 +494,6 @@ export namespace TriggerHelper {
           "display_text": "{name}  {condition} {value} {unit}",
           "params": [
             {
-              "name": "Rotation",
-              "control": "NumberExpression",
-              "default_value": [
-                "100"
-              ],
-              "args": [
-                "dps"
-              ],
-              "regex": "^(\\d{1,}([.]\\d{1,})?)$"
-            },
-            {
               "name": "name",
               "control": "textbox",
               "default_value": [
@@ -514,6 +503,17 @@ export namespace TriggerHelper {
                 ""
               ],
               "regex": "^[\\S]+$"
+            },
+            {
+              "name": "Rotation",
+              "control": "NumberExpression",
+              "default_value": [
+                "100"
+              ],
+              "args": [
+                "dps"
+              ],
+              "regex": "^(\\d{1,}([.]\\d{1,})?)$"
             }
           ],
           "compatibility": {
@@ -528,17 +528,6 @@ export namespace TriggerHelper {
           "display_text": "{name}  {condition} {value} {unit}",
           "params": [
             {
-              "name": "Rotation",
-              "control": "NumberExpression",
-              "default_value": [
-                "100"
-              ],
-              "args": [
-                "dps"
-              ],
-              "regex": "^(\\d{1,}([.]\\d{1,})?)$"
-            },
-            {
               "name": "name",
               "control": "textbox",
               "default_value": [
@@ -548,6 +537,17 @@ export namespace TriggerHelper {
                 ""
               ],
               "regex": "^[\\S]+$"
+            },
+            {
+              "name": "Rotation",
+              "control": "NumberExpression",
+              "default_value": [
+                "100"
+              ],
+              "args": [
+                "dps"
+              ],
+              "regex": "^(\\d{1,}([.]\\d{1,})?)$"
             }
           ],
           "compatibility": {
@@ -562,17 +562,6 @@ export namespace TriggerHelper {
           "display_text": "{name}  {condition} {value} {unit}",
           "params": [
             {
-              "name": "Rotation",
-              "control": "NumberExpression",
-              "default_value": [
-                "100"
-              ],
-              "args": [
-                "dps"
-              ],
-              "regex": "^(\\d{1,}([.]\\d{1,})?)$"
-            },
-            {
               "name": "name",
               "control": "textbox",
               "default_value": [
@@ -582,6 +571,17 @@ export namespace TriggerHelper {
                 ""
               ],
               "regex": "^[\\S]+$"
+            },
+            {
+              "name": "Rotation",
+              "control": "NumberExpression",
+              "default_value": [
+                "100"
+              ],
+              "args": [
+                "dps"
+              ],
+              "regex": "^(\\d{1,}([.]\\d{1,})?)$"
             }
           ],
           "compatibility": {
@@ -601,17 +601,6 @@ export namespace TriggerHelper {
           "display_text": "{name}  {condition} {value} {unit}",
           "params": [
             {
-              "name": "Humidity",
-              "control": "Slider",
-              "default_value": [
-                "30"
-              ],
-              "args": [
-                "%"
-              ],
-              "regex": "^(\\d([.]\\d{1,})?|[1-9]\\d([.]\\d{1,})?|100)$"
-            },
-            {
               "name": "name",
               "control": "textbox",
               "default_value": [
@@ -621,6 +610,17 @@ export namespace TriggerHelper {
                 ""
               ],
               "regex": "^[\\S]+$"
+            },
+            {
+              "name": "Humidity",
+              "control": "Slider",
+              "default_value": [
+                "30"
+              ],
+              "args": [
+                "%"
+              ],
+              "regex": "^(\\d([.]\\d{1,})?|[1-9]\\d([.]\\d{1,})?|100)$"
             }
           ],
           "compatibility": {
@@ -640,17 +640,6 @@ export namespace TriggerHelper {
           "display_text": "{name} {condition} {value} {unit}",
           "params": [
             {
-              "name": "Volume",
-              "control": "Slider",
-              "default_value": [
-                "30"
-              ],
-              "args": [
-                "%"
-              ],
-              "regex": "^(\\d([.]\\d{1,})?|[1-9]\\d([.]\\d{1,})?|100)$"
-            },
-            {
               "name": "name",
               "control": "textbox",
               "default_value": [
@@ -660,11 +649,22 @@ export namespace TriggerHelper {
                 ""
               ],
               "regex": "^[\\S]+$"
+            },
+            {
+              "name": "Volume",
+              "control": "Slider",
+              "default_value": [
+                "30"
+              ],
+              "args": [
+                "%"
+              ],
+              "regex": "^(\\d([.]\\d{1,})?|[1-9]\\d([.]\\d{1,})?|100)$"
             }
           ],
           "compatibility": {
             "interface": "MP_Sound",
-            "fn_name": "vol"
+            "fn_name": "checkVol"
           }
         }
       ]
@@ -678,6 +678,17 @@ export namespace TriggerHelper {
           "short_description": "Delay time",
           "display_text": "Delay {value} {unit}",
           "params": [
+            {
+              "name": "name",
+              "control": "textbox",
+              "default_value": [
+                ""
+              ],
+              "args": [
+                ""
+              ],
+              "regex": "^[\\S]+$"
+            },
             {
               "name": "Time",
               "control": "NumberExpression",
@@ -707,6 +718,17 @@ export namespace TriggerHelper {
           "display_text": "{name} {condition} {value}",
           "params": [
             {
+              "name": "name",
+              "control": "textbox",
+              "default_value": [
+                ""
+              ],
+              "args": [
+                ""
+              ],
+              "regex": "^[\\S]+$"
+            },
+            {
               "name": "Direction",
               "control": "Dropdown",
               "default_value": [
@@ -723,17 +745,6 @@ export namespace TriggerHelper {
                 "SE"
               ],
               "regex": ""
-            },
-            {
-              "name": "name",
-              "control": "textbox",
-              "default_value": [
-                ""
-              ],
-              "args": [
-                ""
-              ],
-              "regex": "^[\\S]+$"
             }
           ],
           "compatibility": {
@@ -748,17 +759,6 @@ export namespace TriggerHelper {
           "display_text": "{name} {condition} {value} {unit}",
           "params": [
             {
-              "name": "Magnetic",
-              "control": "NumberExpression",
-              "default_value": [
-                "300"
-              ],
-              "args": [
-                "ut"
-              ],
-              "regex": "^(\\d{1,}([.]\\d{1,})?)$"
-            },
-            {
               "name": "name",
               "control": "textbox",
               "default_value": [
@@ -768,6 +768,17 @@ export namespace TriggerHelper {
                 ""
               ],
               "regex": "^[\\S]+$"
+            },
+            {
+              "name": "Magnetic",
+              "control": "NumberExpression",
+              "default_value": [
+                "300"
+              ],
+              "args": [
+                "ut"
+              ],
+              "regex": "^(\\d{1,}([.]\\d{1,})?)$"
             }
           ],
           "compatibility": {
@@ -782,17 +793,6 @@ export namespace TriggerHelper {
           "display_text": "{name} {condition} {value} {unit}",
           "params": [
             {
-              "name": "Magnetic",
-              "control": "NumberExpression",
-              "default_value": [
-                "300"
-              ],
-              "args": [
-                "ut"
-              ],
-              "regex": "^(\\d{1,}([.]\\d{1,})?)$"
-            },
-            {
               "name": "name",
               "control": "textbox",
               "default_value": [
@@ -802,6 +802,17 @@ export namespace TriggerHelper {
                 ""
               ],
               "regex": "^[\\S]+$"
+            },
+            {
+              "name": "Magnetic",
+              "control": "NumberExpression",
+              "default_value": [
+                "300"
+              ],
+              "args": [
+                "ut"
+              ],
+              "regex": "^(\\d{1,}([.]\\d{1,})?)$"
             }
           ],
           "compatibility": {
@@ -816,17 +827,6 @@ export namespace TriggerHelper {
           "display_text": "{name}  {condition} {value} {unit}",
           "params": [
             {
-              "name": "Magnetic",
-              "control": "NumberExpression",
-              "default_value": [
-                "300"
-              ],
-              "args": [
-                "ut"
-              ],
-              "regex": "^(\\d{1,}([.]\\d{1,})?)$"
-            },
-            {
               "name": "name",
               "control": "textbox",
               "default_value": [
@@ -836,6 +836,17 @@ export namespace TriggerHelper {
                 ""
               ],
               "regex": "^[\\S]+$"
+            },
+            {
+              "name": "Magnetic",
+              "control": "NumberExpression",
+              "default_value": [
+                "300"
+              ],
+              "args": [
+                "ut"
+              ],
+              "regex": "^(\\d{1,}([.]\\d{1,})?)$"
             }
           ],
           "compatibility": {
