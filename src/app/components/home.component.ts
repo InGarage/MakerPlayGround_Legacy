@@ -1,4 +1,5 @@
 import { Component, AfterViewInit, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Auth } from '../auth.service';
 import { ProjectService } from '../services/projects.service';
 import { Project } from './project';
@@ -6,13 +7,14 @@ import { Project } from './project';
 @Component({
   selector: 'home',
   templateUrl: `./home.component.html`,
-  providers: [ProjectService, Auth],
+  styleUrls: ['../app.component.css','./step1/step1.component.css'],
+  providers: [ProjectService, Auth]
 })
 
 export class HomeComponent {
   projects: Project[];
 
-  constructor(private auth: Auth, private ProjectService: ProjectService) { }
+  constructor(private auth: Auth, private ProjectService: ProjectService, private router: Router) { }
 
   ngOnInit() {
     this.getAllProjects();
@@ -26,8 +28,9 @@ export class HomeComponent {
 
   newProject() {
     const name = "New Project";
-    this.ProjectService.newProject({project_name: name}).subscribe(projects => {
+    this.ProjectService.newProject({ project_name: name }).subscribe(projects => {
       console.log(projects);
+      this.router.navigate(['/step1']);
     });
   }
 

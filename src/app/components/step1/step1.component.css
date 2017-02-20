@@ -18,6 +18,8 @@
 .navv {
     height: 50px;
     position: static;
+    /*position: fixed;
+    width: 100%;*/
     background-color: #444a62;
 }
 

@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Http, Headers } from '@angular/http';
 import { Auth } from '../auth.service';
 import { AuthHttp } from 'angular2-jwt';
+import { Project } from '../components/project';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/toPromise';
 
@@ -10,6 +11,7 @@ export class ProjectService {
 
     //url = 'https://makerplaygroundapi.azurewebsites.net/project/';
     url = 'http://localhost:3001/api/project/';
+    private currentProject: Project;
 
     constructor(private auth: Auth, private http: Http, private authHttp: AuthHttp) {
     }
@@ -35,6 +37,14 @@ export class ProjectService {
         let getProjectUrl = this.url + id;
         return this.authHttp.get(getProjectUrl)
             .map(res => res.json());
+    }
+
+    getCurrentProject(): Project {
+        return this.currentProject
+    }
+
+    setCurrentProject(project: Project) {
+        this.currentProject = project;
     }
 
 }

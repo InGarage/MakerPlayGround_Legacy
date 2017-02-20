@@ -1,13 +1,36 @@
-<div *ngIf="auth.authenticated()">
-  All Projects
-
-  <div *ngFor="let project of projects">
-    <div>
-      Id: {{project.project_id}}
-      <br>Name: {{project.project_name}}
-      <br>Modified: {{project.modified_date}}
-      <button (click)="getProject(project.project_id)">SELECT</button>
+<div class="navv2">
+  <nav class="navbar navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header navbar-left">
+        <a class="navbar-brand navbar-maker" routerLink="/">Maker</a>
+        <a class="navbar-brand navbar-basic" routerLink="/">My Projects</a>
+        <a class="navbar-brand navbar-basic" routerLink="/">Explore</a>
+      </div>
+      <div class="navbar-collapse collapse">
+        <ul class="nav navbar-nav navbar-right">
+          <li><a class="navbar-basic" routerLink="/step1"><i class="fa fa-user-circle-o" aria-hidden="true"></i>USER</a></li>
+        </ul>
+      </div>
     </div>
+  </nav>
+</div>
+
+<div class="makerPlayground">
+  <div class="loginCenter">
+    <h1>Maker Playground</h1>
+    <img class="img-robot" src="/assets/img/login-robot.svg">
+  </div>
+
+  <div class="allProjectsTable">
+    All Projects
+      <div *ngFor="let project of projects">
+        <div>
+          Id: {{project.project_id}}
+          <br>Name: {{project.project_name}}
+          <br>Modified: {{project.modified_date}}
+          <button (click)="getProject(project.project_id)">SELECT</button>
+        </div>
+      </div>
   </div>
 
   <button (click)="newProject()">NEW</button>
