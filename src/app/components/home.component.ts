@@ -53,15 +53,18 @@ export class HomeComponent {
   }
 
   newProject() {
+    const uuid = UUID.v4();
+
     let newProject: Project = {
       project_name: "new project",
       project_data: {
         nodes: {},
-        edges: {}
+        edges: {},
+        entry_edge: uuid
       }
     };
     // add 1 initial trigger
-    newProject.project_data.edges[UUID.v4()] = {
+    newProject.project_data.edges[uuid] = {
       trigger: [],
       src_node_id: '',
       dst_node_id: '',
