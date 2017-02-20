@@ -1,46 +1,4 @@
-
-export interface ActionGroup {
-  name: string;
-  children: Action[];
-}
-
-export interface Action {
-  id: string;
-  name: string;
-  short_description: string;
-  params: ActionParameter[];
-  compatibility: any;
-}
-
-export interface ActionParameter {
-  name: string;
-  control: string;
-  default_value: string[];
-  args: string[];
-  regex: string;  // regex use to validate the property value 
-}
-
-export namespace ActionHelper {
-
-  export function findActionById(id: string): Action {
-    for (const category of actionData) {
-      for (const action of category.children) {
-        if (action.id === id)
-          return action;
-      }
-    }
-  }
-
-  export function getActionTypeById(id: string): string {
-    for (const category of actionData) {
-      for (const action of category.children) {
-        if (action.id === id)
-          return category.name;
-      }
-    }
-  }
-
-  export const actionData: ActionGroup[] = [
+[
   {
     "name": "LED",
     "children": [
@@ -447,6 +405,4 @@ export namespace ActionHelper {
       }
     ]
   }
-];
-
-}
+]
