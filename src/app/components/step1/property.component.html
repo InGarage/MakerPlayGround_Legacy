@@ -24,8 +24,17 @@
                             <input #box type="radio" [(ngModel)]="param.value[0]" name="{{param.name}}" (keyup)="onKey(objProperties)" (blur)="onOutOfFocus()">
                         </div>
 
+                        <div *ngIf="param.control==='Dropdown'">
+                            <form [ngStyle]="setInputStyles()">
+                                <select [(ngModel)]="param.value[0]" name="{{param.name}}" (change)="onOutOfFocus()"> 
+                                    <option *ngFor="let arg of param.args" [ngValue]="arg">{{arg}}</option>
+                                </select>
+                            </form>
+                        </div>
+
                         <div *ngIf="param.control==='spinbox'">
-                            <input [ngStyle]="setInputStyles()" #box type="number" [(ngModel)]="param.value[0]" name="{{param.name}}" (keyup)="onKey(objProperties)" (change)="onKey(objProperties)" (blur)="onOutOfFocus()">
+                            <input [ngStyle]="setInputStyles()" #box type="number" [(ngModel)]="param.value[0]" name="{{param.name}}" (keyup)="onKey(objProperties)"
+                                (change)="onKey(objProperties)" (blur)="onOutOfFocus()">
                             <form [ngStyle]="setInputStyles()">
                                 <select [(ngModel)]="param.value[1]" name="{{param.name}}" (change)="onOutOfFocus()"> 
                                     <option *ngFor="let arg of param.args" [ngValue]="arg">{{arg}}</option>
@@ -48,7 +57,8 @@
                                 </select>
                             </form>
 
-                            <input [ngStyle]="setInputStylesNumberExpression()" #box type="text" [(ngModel)]="param.value[1]" name="{{param.name}}" (keyup)="onKey(objProperties)" (blur)="onOutOfFocus()">
+                            <input [ngStyle]="setInputStylesNumberExpression()" #box type="text" [(ngModel)]="param.value[1]" name="{{param.name}}" (keyup)="onKey(objProperties)"
+                                (blur)="onOutOfFocus()">
 
                             <form [ngStyle]="setInputStyles()">
                                 <select [(ngModel)]="param.value[2]" name="{{param.name}}" (change)="onOutOfFocus()"> 

@@ -2,15 +2,22 @@
   <nav class="navbar navbar-fixed-top">
     <div class="container">
       <div class="navbar-header navbar-left">
-        <a class="navbar-brand navbar-maker" routerLink="/">Maker</a>
-        <a class="navbar-brand navbar-basic" routerLink="/">My Projects</a>
-        <a class="navbar-brand navbar-basic" routerLink="/">Explore</a>
+        <a class="navbar-brand navbar-maker" routerLink="/">
+          <div>
+            <img class="imgLogo" src="/assets/img/nav-logo.svg" />
+          </div>
+        </a>
+        <a class="navbar-brand navbar-basic" routerLink="/">
+          <div>
+            <img class="imgProject" src="/assets/img/icon-project.svg" /><span class="textProject">My Projects</span>
+          </div>
+        </a>
       </div>
-      <div class="navbar-collapse collapse">
+      <!--<div class="navbar-collapse collapse">
         <ul class="nav navbar-nav navbar-right">
           <li><a class="navbar-basic" routerLink="/step1"><i class="fa fa-user-circle-o" aria-hidden="true"></i>USER</a></li>
         </ul>
-      </div>
+      </div>-->
     </div>
   </nav>
 </div>
@@ -19,7 +26,12 @@
 <div class="customContainer">
 
   <div class="btnRow">
-    <button class="btn btn-primary btn-margin" id="newProjectBtn" (click)="newProject()">+Create New Project</button>
+    <div id="inline">
+      <input #box type="text" name="project_name" (blur)="onOutOfFocus()">
+    </div>
+    <div id="inline">
+      <button class="btn btn-primary btn-margin" (click)="newProject(box.value)">+Create New Project</button>
+    </div>
   </div>
 
 
@@ -28,7 +40,7 @@
 
 
       <div class="peekImageProject" (click)="getProject(project.id0)" *ngIf="project.project0 !== undefined">
-        <img class="imgPeek" src="/assets/img/Maker-logo-login.svg">
+        <img class="imgPeek" src="/assets/img/redd-charactor.svg">
 
         <div class="projectName">
           <div class="fontProjectName">
@@ -38,7 +50,7 @@
       </div>
 
       <div class="peekImageProject" (click)="getProject(project.id1)" *ngIf="project.project1 !== undefined">
-        <img class="imgPeek" src="/assets/img/Maker-logo-login.svg">
+        <img class="imgPeek" src="/assets/img/purple-charactor.svg">
 
         <div class="projectName">
           <div class="fontProjectName">
@@ -48,7 +60,7 @@
       </div>
 
       <div class="peekImageProject" (click)="getProject(project.id2)" *ngIf="project.project2 !== undefined">
-        <img class="imgPeek" src="/assets/img/Maker-logo-login.svg">
+        <img class="imgPeek" src="/assets/img/creator-charactor.svg">
 
         <div class="projectName">
           <div class="fontProjectName">
@@ -58,7 +70,7 @@
       </div>
 
       <div class="peekImageProject" (click)="getProject(project.id3)" *ngIf="project.project3 !== undefined">
-        <img class="imgPeek" src="/assets/img/Maker-logo-login.svg">
+        <img class="imgPeek" src="/assets/img/yellow-charactor.svg">
 
         <div class="projectName">
           <div class="fontProjectName">
@@ -72,28 +84,3 @@
   </div>
 
 </div>
-
-
-
-
-
-<!--
-<div class="makerPlayground">
-  <div class="loginCenter">
-    <h1>Maker Playground</h1>
-    <img class="img-robot" src="/assets/img/login-robot.svg">
-  </div>
-
-  <div class="allProjectsTable">
-    All Projects
-      <div *ngFor="let project of projects">
-        <div>
-          Id: {{project.project_id}}
-          <br>Name: {{project.project_name}}
-          <br>Modified: {{project.modified_date}}
-          <button (click)="getProject(project.project_id)">SELECT</button>
-        </div>
-      </div>
-  </div>
-
-</div>-->

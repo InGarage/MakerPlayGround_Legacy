@@ -16,11 +16,13 @@ export class Step1Component {
   componentMenuHeight: string;
   minWidthMenu: string;
   minWidthCanvas: string;
+  projectName: string;
   // @Input() objectSelected: NodeData | EdgeData;
   // @Output() updateData = new EventEmitter<>();
 
-  constructor(private router: Router, private projectService: ProjectService) 
-  { }
+  constructor(private router: Router, private projectService: ProjectService) { 
+    this.projectName = projectService.getCurrentProject().project_name;
+  }
 
   ngOnInit() {
     this.setElement();
@@ -65,12 +67,9 @@ export class Step1Component {
     return styles;
   }
 
-  BlueprintSelcted() {
+  BlueprintSelected() {
     console.log('click Blueprint');
-    //this.router.navigate(['/step3']);
-    this.projectService.generateCode(this.projectService.getCurrentProject()).subscribe((res)=>{
-      console.log(res);
-    });
+    this.router.navigate(['/step3']);
   }
 
 }

@@ -52,11 +52,13 @@ export class HomeComponent {
     });
   }
 
-  newProject() {
+  newProject(project_name: string) {
+    console.log('xxx', project_name);
+
     const uuid = UUID.v4();
 
     let newProject: Project = {
-      project_name: "new project",
+      project_name: project_name,
       project_data: {
         nodes: {},
         edges: {},

@@ -1,16 +1,17 @@
-
 <div class="navv">
   <nav class="navbar navbar-fixed-top">
     <div class="container">
       <div class="navbar-header navbar-left">
-        <a class="navbar-brand navbar-maker" routerLink="/">Maker</a>
-        <a class="navbar-brand navbar-basic" routerLink="/">My Projects</a>
-        <a class="navbar-brand navbar-basic" routerLink="/">Explore</a>
-      </div>
-      <div class="navbar-collapse collapse">
-        <ul class="nav navbar-nav navbar-right">
-          <li><a class="navbar-basic" routerLink="/step1"><i class="fa fa-user-circle-o" aria-hidden="true"></i>USER</a></li>
-        </ul>
+        <a class="navbar-brand navbar-maker" routerLink="/">
+          <div>
+            <img class="imgLogo" src="/assets/img/nav-logo.svg" />
+          </div>
+        </a>
+        <a class="navbar-brand navbar-basic" routerLink="/">
+          <div>
+            <img class="imgProject" src="/assets/img/icon-project.svg" /><span class="textProject">My Projects</span>
+          </div>
+        </a>
       </div>
     </div>
   </nav>
@@ -22,11 +23,48 @@
     <p class="under-nav-basic  under-nav-column1">Project name</p>
     <p class="under-nav-basic  under-nav-space1"></p>
     <a class="under-nav-basic  under-nav-column" routerLink="/step1">Canvas</a>
-    <a class="under-nav-basic  under-nav-column" routerLink="/">Devices</a>
+    <p class="under-nav-inactive  under-nav-column">Devices</p>
     <a class="under-nav-active under-nav-basic  under-nav-column" routerLink="/step3">Blueprint</a>
     <p class="under-nav-basic  under-nav-space2"></p>
   </div>
+</div>
 
+<div class="container">
 
+  <div class="customRow">
+    <div>
+      <div class="col-xs-6">
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Name</th>
+              <th>Device</th>
+              <th>Pin</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <tr *ngFor="let o of devices.devices; let i = index">
+              <td>{{i+1}}</td>
+              <td>{{o.name}}</td>
+              <td>{{o.mfr_name}}</td>
+              <td>{{o.pin}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="col-xs-6">
+      <div>
+        <pre>
+        {{devices.sourcecode}}
+        </pre>
+      </div>
+    </div>
+
+  </div>
+  <!-- End of row -->
 
 </div>
