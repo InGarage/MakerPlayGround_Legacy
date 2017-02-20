@@ -1,17 +1,18 @@
 import { Component, AfterViewInit, OnInit } from '@angular/core';
+import { Auth } from '../auth.service';
 import { ProjectService } from '../services/projects.service';
 import { Project } from './project';
 
 @Component({
   selector: 'home',
   templateUrl: `./home.component.html`,
-  providers: [ProjectService],
+  providers: [ProjectService, Auth],
 })
-export class HomeComponent {
 
+export class HomeComponent {
   projects: Project[];
 
-  constructor(private ProjectService: ProjectService) { }
+  constructor(private auth: Auth, private ProjectService: ProjectService) { }
 
   ngOnInit() {
     this.getAllProjects();

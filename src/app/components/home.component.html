@@ -1,40 +1,14 @@
-<!-- Fixed navbar -->
-<nav class="navbar navbar-inverse navbar-fixed-top">
-  <div class="container">
-    <div class="navbar-header">
-      <a class="navbar-brand" href="#">Project Graph</a>
-    </div>
-    <div id="navbar" class="navbar-collapse collapse">
-      <ul class="nav navbar-nav">
-        <li class="active"><a routerLink="/">Home</a></li>
-        <li><a routerLink="/tutorial">Tutorial</a></li>
-        <li><a routerLink="/sample-project">Sample Projects</a></li>
-      </ul>
-      <ul class="nav navbar-nav navbar-right">
-        <li><a routerLink="/step1">Getting Started</a></li>
-      </ul>
-    </div>
-    <!--/.nav-collapse -->
-  </div>
-</nav>
-
-<br>
-<br>
-<br>
-<br>
-
-<div>
+<div *ngIf="auth.authenticated()">
   All Projects
-  <tr>
+
   <div *ngFor="let project of projects">
     <div>
-    Id: {{project.project_id}}
-    <br>Name: {{project.project_name}}
-    <br>Modified: {{project.modified_date}}
-    <button (click)="getProject(project.project_id)">SELECT</button>
+      Id: {{project.project_id}}
+      <br>Name: {{project.project_name}}
+      <br>Modified: {{project.modified_date}}
+      <button (click)="getProject(project.project_id)">SELECT</button>
     </div>
   </div>
+
+  <button (click)="newProject()">NEW</button>
 </div>
-
-
-<button (click)="newProject()">NEW</button>

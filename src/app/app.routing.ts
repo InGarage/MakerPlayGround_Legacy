@@ -1,6 +1,7 @@
 import {ModuleWithProviders} from '@angular/core';
 import {Routes, RouterModule} from '@angular/router';
 
+import { LoginComponent } from './login.component';
 import {HomeComponent} from './components/home.component';
 import {TutorialComponent} from './components/tutorial.component';
 import {SampleProjectComponent} from './components/sample-project.component';
@@ -10,6 +11,10 @@ import { Step3Component }  from './components/step1/step3.component';
 const appRoutes: Routes = [
     {
         path: '',
+        component: LoginComponent
+    },
+    {
+        path: 'home',
         component: HomeComponent
     },
     {
