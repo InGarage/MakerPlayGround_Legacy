@@ -11,6 +11,7 @@ export class ProjectService {
 
     //url = 'https://makerplaygroundapi.azurewebsites.net/project/';
     url = 'http://localhost:3001/';
+
     private currentProject: Project;
 
     constructor(private auth: Auth, private http: Http, private authHttp: AuthHttp) {

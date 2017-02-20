@@ -8,14 +8,20 @@ import * as UUID from 'uuid';
 @Component({
   selector: 'home',
   templateUrl: `./home.component.html`,
-  styleUrls: ['../app.component.css', './step1/step1.component.css'],
-  //providers: [ProjectService, Auth]
+  styleUrls: ['../app.component.css', './step1/step1.component.css']
 })
 
 export class HomeComponent {
+
   projects: Project[];
+  displayProjectsTemplate;
 
   constructor(private auth: Auth, private ProjectService: ProjectService, private router: Router) { }
+
+
+  // Id: {{project.project_id}}
+  // <br>Name: {{project.project_name}}
+  // <br>Modified: {{project.modified_date}}
 
   ngOnInit() {
     this.getAllProjects();
@@ -24,6 +30,25 @@ export class HomeComponent {
   getAllProjects() {
     this.ProjectService.getAllProjects().subscribe(projects => {
       this.projects = projects.projects;
+
+      this.displayProjectsTemplate = [];
+      let projectInRow = {};
+      let i, j = 0;
+      for (i = 0; i < this.projects.length; i++) {
+        console.log('Here');
+        projectInRow['project' + j] = this.projects[i].project_name;
+        projectInRow['id' + j] = this.projects[i].project_id;
+        j++;
+        if (((i+1) % 4 === 0) && (i !== 0)) {
+          this.displayProjectsTemplate.push(projectInRow);
+          projectInRow = {};
+          j = 0;
+        }
+      }
+      if ((i % 4) !== 0) {
+        this.displayProjectsTemplate.push(projectInRow);
+      }
+      console.log(this.displayProjectsTemplate);
     });
   }
 
@@ -54,6 +79,7 @@ export class HomeComponent {
   }
 
   getProject(id: string) {
+    console.log(id);
     this.ProjectService.getProject(id).subscribe(project => {
       console.log('get project id ', project);
       (<Project>project).project_data = JSON.parse((<Project>project).project_data).project_data;

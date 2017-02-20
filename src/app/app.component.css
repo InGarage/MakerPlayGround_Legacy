@@ -1,3 +1,8 @@
+@font-face {
+    font-family: Roboto;
+    src: url('Roboto-Regular.ttf');
+}
+
 .img-robot {
     width: 500px;
     height: 500px;
@@ -15,12 +20,92 @@
     background-color: #444a62;
 }
 
-.makerPlayground {
-    background-color: #eff1f6;
-    padding-top: 51px;
+.allProjectsTable {
+    position: absolute;
+    padding-top: 60px;
+    left: 50%;
+    width: 70%;
+  -ms-transform: translateX(-50%);
+  -webkit-transform: translate(-50%,0%);
+  transform: translate(-50%,0%);
 }
 
-.allProjectsTable {
-    margin: 0 auto;
+.BG-login {
+    background-image: url("/assets/img/BG-login.png");
+    background-repeat: repeat;
+    background-size: 200px 200px;
+    /*height: 500px;*/
+}
+
+.test {
+    position: absolute;
+    top: 50%;
+    left: 50%;
     text-align: center;
+    background-color: white;
+    width: 700px;
+    height: 480px;
+  -ms-transform: translateX(-50%) translateY(-50%);
+  -webkit-transform: translate(-50%,-50%);
+  transform: translate(-50%,-50%);
+}
+
+.logoLogin {
+    width: 400px;
+    height: 280px;
+}
+
+#loginBtn {
+    margin-top: 20px;
+    width: 400px;
+    font-size: 24px;
+    height: 50px;
+    font-family: Roboto;
+    border-radius: 10px;
+}
+
+.btnRow {
+    position: absolute;
+    margin-top: 20px;
+    left: 85%;
+}
+
+.customContainer {
+    padding-top: 51px;
+    background-color: #edeef2;
+}
+
+.peekImageProject {
+    position: relative;
+    display: inline-block;
+    background-color: #f4f4f5;
+    width: 20%;
+    height: 180px;
+    margin-top: 30px;
+    margin-right: 2%;
+    margin-left: 2%;
+}
+
+.projectName {
+    background-color: rgba(0, 0, 0, 0.5);
+    /*background-color: #454a62;
+    fill-opacity: 50%;*/
+    height: 40px;
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+    padding-left: 10px;
+}
+
+.fontProjectName {
+    padding-top: 5px;
+    font-family: Roboto;
+    font-size: 14px;
+    color: #f4f4f5;
+}
+
+.imgPeek {
+    position: absolute;
+    width: 100%;
+    height: 100%;
 }
