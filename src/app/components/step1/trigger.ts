@@ -702,7 +702,7 @@ export namespace TriggerHelper {
             }
           ],
           "compatibility": {
-            "interface": "MP_Delay",
+            "interface": "MP_General",
             "fn_name": "delay"
           }
         }
