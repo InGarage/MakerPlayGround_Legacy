@@ -341,7 +341,7 @@ export namespace ActionHelper {
           },
           {
             "name": "direction",
-            "control": "radio",
+            "control": "Dropdown",
             "default_value": [
               ""
             ],
