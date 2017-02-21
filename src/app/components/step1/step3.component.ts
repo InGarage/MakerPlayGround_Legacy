@@ -12,8 +12,11 @@ import * as $ from 'jquery';
 export class Step3Component {
 
   devices = {devices:[],sourcecode: ''};
+  projectName: string;
 
   constructor(private router: Router, private projectService: ProjectService) {
+    this.projectName = projectService.getCurrentProject().project_name;
+    
     this.projectService.generateCode(this.projectService.getCurrentProject()).subscribe((res) => {
       console.log(res);
       this.devices.sourcecode = this.devices.sourcecode.replace('\n', '<br>');
