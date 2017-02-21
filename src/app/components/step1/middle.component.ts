@@ -1,5 +1,5 @@
 
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, OnDestroy,Output, EventEmitter } from '@angular/core';
 import { GraphData, NodeData, EdgeData } from './graphmodel';
 import { GraphCanvas, CanvasEventOptions, CanvasEventTypes } from './newgraphcanvas';
 import { Action } from './action';
@@ -16,12 +16,13 @@ import { ProjectService } from '../../services/projects.service';
     //providers: [ProjectService, Auth]
 })
 
-export class MiddleComponent implements OnInit {
+export class MiddleComponent implements OnInit, OnDestroy {
 
     objectSelected: NodeData | EdgeData;
     typeOfObjectSelected: typeof NodeData | typeof EdgeData;
     private canvas: GraphCanvas;
     private model: GraphData;
+    interval: any;
 
     constructor(private projectService: ProjectService) {
         console.log('project', projectService.getCurrentProject());
@@ -31,7 +32,7 @@ export class MiddleComponent implements OnInit {
         // this.undoStack.push(this.model);
 
         // Autosave every 15 seconds
-        setInterval(() => {
+        this.interval = setInterval(() => {
             let project = projectService.getCurrentProject();
             project.project_data = this.model.toJSON();
             projectService.saveProject(project).toPromise().then(() => {
@@ -40,6 +41,11 @@ export class MiddleComponent implements OnInit {
                 console.log('save reject');
             });
         }, 15000);
+    }
+
+    ngOnDestroy() {
+        console.log('clear interval');
+        clearInterval(this.interval);
     }
 
     addNewNode(newAction: Action) {
