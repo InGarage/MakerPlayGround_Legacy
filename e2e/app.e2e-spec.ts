@@ -1,10 +1,10 @@
-import { MpWebpackPage } from './app.po';
+import { TestangularPage } from './app.po';
 
-describe('mp-webpack App', function() {
-  let page: MpWebpackPage;
+describe('testangular App', () => {
+  let page: TestangularPage;
 
   beforeEach(() => {
-    page = new MpWebpackPage();
+    page = new TestangularPage();
   });
 
   it('should display message saying app works', () => {

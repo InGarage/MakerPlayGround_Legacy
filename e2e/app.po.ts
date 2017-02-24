@@ -1,6 +1,6 @@
 import { browser, element, by } from 'protractor';
 
-export class MpWebpackPage {
+export class TestangularPage {
   navigateTo() {
     return browser.get('/');
   }
