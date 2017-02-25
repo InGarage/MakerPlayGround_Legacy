@@ -36,3 +36,22 @@ devices to satisfied user's need.
 
 5. clone this repository
 6. `npm install`
+
+## Notes
+
+To develop the frontend using the cloud development server use
+
+        `ng serve --environment=dev --targer=development`
+
+or just
+
+        `ng serve`
+
+To develop using the local server as a backend use
+
+        `ng serve --environment=dev-local --target=development`
+
+To build for production (using the cloud production server) use 
+
+        `ng serve --environment=prod --target=production`
+
