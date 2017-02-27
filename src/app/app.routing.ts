@@ -11,6 +11,11 @@ import { Step3Component }  from './components/step1/step3.component';
 const appRoutes: Routes = [
     {
         path: '',
+        redirectTo: '/login',
+        pathMatch: 'full'
+    },
+    {
+        path: 'login',
         component: LoginComponent
     },
     {

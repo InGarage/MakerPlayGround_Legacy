@@ -1,6 +1,6 @@
 import { browser, element, by } from 'protractor';
 
-export class TestangularPage {
+export class MakerPlayGroundPage {
   navigateTo() {
     return browser.get('/');
   }

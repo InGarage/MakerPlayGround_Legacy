@@ -51,7 +51,7 @@ To develop using the local server as a backend use
 
         `ng serve --environment=dev-local --target=development`
 
-To build for production (using the cloud production server) use 
+<!--To build for production (using the cloud production server) use 
 
-        `ng serve --environment=prod --target=production`
+        `ng build --environment=prod --target=production --base-href /app/`-->
 

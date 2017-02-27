@@ -1,10 +1,10 @@
-import { TestangularPage } from './app.po';
+import { MakerPlayGroundPage } from './app.po';
 
-describe('testangular App', () => {
-  let page: TestangularPage;
+describe('upgrade-project App', () => {
+  let page: MakerPlayGroundPage;
 
   beforeEach(() => {
-    page = new TestangularPage();
+    page = new MakerPlayGroundPage();
   });
 
   it('should display message saying app works', () => {

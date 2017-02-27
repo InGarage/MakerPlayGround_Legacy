@@ -24,7 +24,7 @@ export class LoginComponent {
     const height = $(window).height();
 
     let styles = {
-      'background-image': 'url("/assets/img/BG-login.png")',
+      'background-image': 'url("assets/img/BG-login.png")',
       'background-repeat': 'repeat',
       'height': height + 'px',
       'width': width + 'px',
