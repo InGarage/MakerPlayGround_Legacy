@@ -5,5 +5,5 @@
 
 export const environment = {
   production: false,
-  api_url: "https://makerplayground-dev.azurewebsites.net/"
+  api_url: "https://makerplayground-api-staging.azurewebsites.net/"
 };
