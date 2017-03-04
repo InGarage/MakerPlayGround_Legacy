@@ -298,3 +298,8 @@ ul.kas-icon-aero li a:before{font-family: 'Glyphicons Halflings'; font-size:9px;
 #inline {
     display: inline-block;
 }
+
+#overflow {
+    height: 500px;
+    overflow-y: scroll;
+}
