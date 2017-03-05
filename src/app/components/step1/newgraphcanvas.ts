@@ -8,19 +8,24 @@ import { GraphData, NodeData, EdgeData, TriggerData } from './graphmodel';
 import { PropertyValue } from './propertyvalue';
 
 /* display constants */
-const NODE_SIZE: number = 75;
-const NODE_NAME_YPOS: number = 60;
-const NODE_NAME_FONTSIZE: number = 16;
+const NODE_SIZE: number = 50;
+const NODE_SVG_POS: number = 30;
+const NODE_NAME_YPOS: number = 40;
+const NODE_NAME_FONTSIZE: number = 14;
+const NODE_SVG_SCALE: number = 0.7;
 const NODE_ACTION_NAME_FONTSIZE: number = 14;
 const NODE_REMOVEBTN_POSX: number = (NODE_SIZE / 2);
 const NODE_REMOVEBTN_POSY: number = (NODE_SIZE / 2);
 const NODE_REMOVEBTN_SIZE: number = 10;
-const EDGE_ARROW_HEAD_SIZE: number = 15;
-const EDGE_ARROW_WIDTH: number = 2;
+const EDGE_ARROW_HEAD_SIZE: number = 10;
+const EDGE_ARROW_WIDTH: number = 1;
+const EDGE_SVG_SCALE: number = 0.5;
 const EDGE_IMAGE_SIZE: number = 50;
 const EDGE_IMAGE_DISTANCE: number = 30;
-const EDGE_DOT_RADIUS: number = 5;
+const EDGE_DOT_RADIUS: number = 3;
 const EDGE_DELBTN_DISTANCE: number = 15;
+const TRIGGER_DESCRIP: number = 12;
+const CROSS_WIDTH: number = 2;
 
 export interface CanvasEventOptions {
     target_id?: string,
@@ -38,7 +43,8 @@ export interface CanvasEventOptions {
 }
 
 export type CanvasEventTypes = 'node:selected' | 'node:move' | 'node:remove' | 'edge:move' | 'object:deselected'
-    | 'edge:connectionDst' | 'edge:connectionSrc' | 'edge:selected' | 'edge:combine' | 'trigger:remove' | 'edge:remove';
+    | 'edge:connectionDst' | 'edge:connectionSrc' | 'edge:selected' | 'edge:combine' | 'trigger:remove' | 'edge:remove'
+    | 'mouse:up' | 'mouse:down' | 'mouse:move';
 
 type Coordinate = {
     x: number,
@@ -56,6 +62,7 @@ export class GraphCanvas {
     private edgeFabricObject: Collections.Dictionary<string, EdgeView>;
     private callback: Collections.Dictionary<CanvasEventTypes, (options: CanvasEventOptions) => void>;
     private selectingObject: NodeView | EdgeView;
+    panning = false;
 
     constructor(private graph: GraphData, element: HTMLCanvasElement | string, options?: fabric.ICanvasOptions) {
         this.canvas = new fabric.Canvas(element, options);
@@ -69,6 +76,15 @@ export class GraphCanvas {
             this.deselectAllNode();
             this.deselectAllEdge();
             this.callback.getValue('object:deselected')({});
+
+
+            // this.canvas.on('mouse:move', (e) => {
+            //     if (this.panning && e && e.e) {
+            //         var units = 10;
+            //         var delta = new fabric.Point(e.e.movementX, e.e.movementY);
+            //         this.canvas.relativePan(delta);
+            //     }
+            // });
         });
 
         this.canvas.on('object:selected', (e) => {
@@ -340,12 +356,22 @@ export class GraphCanvas {
                 obj.left = Math.min(obj.left, this.canvas.getWidth() - obj.getBoundingRect().width + obj.left - obj.getBoundingRect().left);
             }
         });
+
+        this.canvas.on('mouse:up', (e) => {
+            this.panning = false;
+        });
+
+        this.canvas.on('mouse:down', (e) => {
+            this.panning = true;
+        });
     }
 }
 
 class NodeView {
     //nodeActionImage: fabric.IImage;  // TODO: should be readonly if posible
     nodeActionImage: fabric.IGroup;
+    nodeBorder: fabric.IRect;
+    nodeToggle: fabric.ITriangle;
     readonly nodeConnectingIndicator: fabric.ICircle;
     readonly nodeSelectingIndicator: fabric.ICircle;
     readonly nodeNameText: fabric.IText;
@@ -371,41 +397,43 @@ class NodeView {
                 originY: 'center',
                 hasControls: false,
                 hasBorders: false,
+                scaleX: NODE_SVG_SCALE,
+                scaleY: NODE_SVG_SCALE,
             });
 
-            let nodeSvgBorder = new fabric.Circle();
-            nodeSvgBorder.set({
-                originX: 'center',
-                originY: 'center',
-                fill: 'gray',
-                radius: NODE_SIZE / 2,
-                opacity: 0.15,
-            });
+            // let nodeSvgBorder = new fabric.Circle();
+            // nodeSvgBorder.set({
+            // originX: 'center',
+            // originY: 'center',
+            // fill: 'gray',
+            // radius: NODE_SIZE / 2,
+            // opacity: 0.15,
+            // });
 
-            let nodeDisplayTag = new fabric.Circle({
-                radius: NODE_SIZE / 2,
-                originX: 'center',
-                originY: 'center',
-                startAngle: 120,
-                endAngle: Math.PI,
-                angle: -17.5,
-                fill: 'black',
-                opacity: 0.5,
-            });
+            // let nodeDisplayTag = new fabric.Circle({
+            //     radius: NODE_SIZE / 2,
+            //     originX: 'center',
+            //     originY: 'center',
+            //     startAngle: 120,
+            //     endAngle: Math.PI,
+            //     angle: -17.5,
+            //     fill: 'black',
+            //     opacity: 0.5,
+            // });
 
-            let nodeDisplayText = new fabric.Text(action.name);
-            nodeDisplayText.set({
-                fontFamily: "Roboto",
-                fontSize: NODE_ACTION_NAME_FONTSIZE,
-                fill: 'white',
-                originX: 'center',
-                originY: 'center',
-            });
+            // let nodeDisplayText = new fabric.Text(action.name);
+            // nodeDisplayText.set({
+            //     fontFamily: "Roboto",
+            //     fontSize: NODE_ACTION_NAME_FONTSIZE,
+            //     fill: 'white',
+            //     originX: 'center',
+            //     originY: 'center',
+            // });
 
             this.nodeActionImage.addWithUpdate(nodeSvg);
-            this.nodeActionImage.addWithUpdate(nodeSvgBorder);
-            this.nodeActionImage.addWithUpdate(nodeDisplayTag);
-            this.nodeActionImage.addWithUpdate(nodeDisplayText);
+            // this.nodeActionImage.addWithUpdate(nodeSvgBorder);
+            // this.nodeActionImage.addWithUpdate(nodeDisplayTag);
+            // this.nodeActionImage.addWithUpdate(nodeDisplayText);
 
             this.initNodeEvent();
             this.nodeActionImage.set('uid', this.id);
@@ -414,8 +442,13 @@ class NodeView {
             this.nodeNameText.set('uid', this.id);
             this.nodeRemoveButton.set('uid', this.id);
             this.reinitializeFromModel(nodeData);
-            this.canvas.add(this.nodeConnectingIndicator, this.nodeSelectingIndicator, this.nodeNameText, this.nodeActionImage, this.nodeRemoveButton);
+            //this.canvas.add(this.nodeBorder, this.nodeConnectingIndicator, this.nodeSelectingIndicator, this.nodeNameText, this.nodeActionImage, this.nodeRemoveButton);
+            this.canvas.add(this.nodeBorder, this.nodeNameText, this.nodeActionImage, this.nodeRemoveButton, this.nodeToggle);
         });
+
+        this.nodeBorder = new fabric.Rect();
+
+        this.nodeToggle = new fabric.Triangle();
 
         this.nodeConnectingIndicator = new fabric.Circle();
         this.nodeConnectingIndicator.set({ visible: false });
@@ -423,7 +456,7 @@ class NodeView {
         this.nodeSelectingIndicator = new fabric.Circle();
         this.nodeSelectingIndicator.set({ visible: false });
 
-        this.nodeNameText = new fabric.Text('');
+        this.nodeNameText = new fabric.IText('');
 
         let cross_1 = new fabric.Line([
             nodeData.getX() + (NODE_SIZE / 2) - NODE_REMOVEBTN_SIZE,
@@ -433,7 +466,7 @@ class NodeView {
         ], {
                 originX: 'center',
                 originY: 'center',
-                strokeWidth: 5,
+                strokeWidth: CROSS_WIDTH,
                 stroke: 'red'
             });
 
@@ -445,22 +478,43 @@ class NodeView {
         ], {
                 originX: 'center',
                 originY: 'center',
-                strokeWidth: 5,
+                strokeWidth: CROSS_WIDTH,
                 stroke: 'red'
             });
 
         this.nodeRemoveButton = new fabric.Group([cross_1, cross_2]);
 
-        this.nodeRemoveButton.set({visible: false});
+        this.nodeRemoveButton.set({ visible: false });
     }
 
     reinitializeFromModel(nodeData: NodeData) {
         this.nodeData = nodeData;
 
+        this.nodeBorder.set({
+            width: NODE_SIZE * 2,
+            height: NODE_SIZE,
+            left: nodeData.getX(),
+            top: nodeData.getY(),
+            originX: 'center',
+            originY: 'center',
+            hasControls: false,
+            hasBorders: false,
+            fill: 'white',
+            rx: 5,
+            ry: 5,
+        });
+
+        // Consider this to be our selecting indicator or connector
+        // this.nodeBorder.setShadow({
+        //     color: 'black',
+        //     blur: 5,
+        //     });
+        // this.nodeBorder.setCoords();
+
         this.nodeActionImage.set({
             width: NODE_SIZE,
             height: NODE_SIZE,
-            left: nodeData.getX(),
+            left: nodeData.getX() - NODE_SVG_POS,
             top: nodeData.getY(),
             originX: 'center',
             originY: 'center',
@@ -471,45 +525,59 @@ class NodeView {
         });
         this.nodeActionImage.setCoords();
 
+        this.nodeToggle.set({
+            left: nodeData.getX() + NODE_SVG_POS,
+            top: nodeData.getY(),
+            width: EDGE_ARROW_HEAD_SIZE,
+            height: EDGE_ARROW_HEAD_SIZE / 2,
+            originX: 'center',  // rotate using center point of the triangle as the origin
+            originY: 'center',
+            angle: 180,
+            fill: '#444a62',
+            hasControls: false,
+            hasBorders: false
+        });
+        this.nodeToggle.setCoords();
+
         // set text position and remove stroke
-        this.nodeActionImage.item(3).set({
-            fontFamily: "Roboto",
-            top: 20,
-            stroke: 'rgba(0,0,0,0)',
-        });
-        this.nodeActionImage.item(3).setCoords();
+        // this.nodeActionImage.item(3).set({
+        //     fontFamily: "Roboto",
+        //     top: 20,
+        //     stroke: 'rgba(0,0,0,0)',
+        // });
+        // this.nodeActionImage.item(3).setCoords();
 
-        this.nodeConnectingIndicator.set({
-            left: nodeData.getX(),
-            top: nodeData.getY(),
-            radius: (NODE_SIZE / 2) + 5,
-            stroke: 'yellow',
-            strokeWidth: 15,
-            opacity: 0.5,
-            fill: 'rgba(0,0,0,0)',
-            originX: 'center',
-            originY: 'center',
-            hasControls: false,
-            hasBorders: false,
-            selectable: false
-        });
-        this.nodeConnectingIndicator.setCoords();
+        // this.nodeConnectingIndicator.set({
+        //     left: nodeData.getX(),
+        //     top: nodeData.getY(),
+        //     radius: (NODE_SIZE / 2) + 5,
+        //     stroke: 'yellow',
+        //     strokeWidth: 15,
+        //     opacity: 0.5,
+        //     fill: 'rgba(0,0,0,0)',
+        //     originX: 'center',
+        //     originY: 'center',
+        //     hasControls: false,
+        //     hasBorders: false,
+        //     selectable: false
+        // });
+        // this.nodeConnectingIndicator.setCoords();
 
-        this.nodeSelectingIndicator.set({
-            left: nodeData.getX(),
-            top: nodeData.getY(),
-            radius: (NODE_SIZE / 2) + 5,
-            stroke: '#66afe9',
-            strokeWidth: 10,
-            opacity: 0.2,
-            fill: 'rgba(0,0,0,0)',
-            originX: 'center',
-            originY: 'center',
-            hasControls: false,
-            hasBorders: false,
-            selectable: false
-        });
-        this.nodeSelectingIndicator.setCoords();
+        // this.nodeSelectingIndicator.set({
+        //     left: nodeData.getX(),
+        //     top: nodeData.getY(),
+        //     radius: (NODE_SIZE / 2) + 5,
+        //     stroke: '#66afe9',
+        //     strokeWidth: 10,
+        //     opacity: 0.2,
+        //     fill: 'rgba(0,0,0,0)',
+        //     originX: 'center',
+        //     originY: 'center',
+        //     hasControls: false,
+        //     hasBorders: false,
+        //     selectable: false
+        // });
+        // this.nodeSelectingIndicator.setCoords();
 
         this.nodeNameText.set({
             left: nodeData.getX(),
@@ -538,8 +606,10 @@ class NodeView {
     }
 
     getAllFabricElement(): fabric.IObject[] {
-        return [this.nodeActionImage, this.nodeConnectingIndicator, this.nodeSelectingIndicator
-            , this.nodeNameText, this.nodeRemoveButton];
+        // return [this.nodeBorder, this.nodeActionImage, this.nodeConnectingIndicator, this.nodeSelectingIndicator
+        //     , this.nodeNameText, this.nodeRemoveButton];
+        return [this.nodeBorder, this.nodeActionImage,
+            , this.nodeNameText, this.nodeRemoveButton, this.nodeToggle];
     }
 
     private initNodeEvent() {
@@ -863,14 +933,14 @@ class EdgeView {
         let cross_1 = new fabric.Line([5, 0, 5, 10], {
             originX: 'center',
             originY: 'center',
-            strokeWidth: 3,
+            strokeWidth: CROSS_WIDTH,
             stroke: 'red'
         });
 
         let cross_2 = new fabric.Line([0, 5, 10, 5], {
             originX: 'center',
             originY: 'center',
-            strokeWidth: 3,
+            strokeWidth: CROSS_WIDTH,
             stroke: 'red'
         });
 
@@ -905,7 +975,7 @@ class EdgeView {
             this.edgeDeleteBtn.visible = false;
             for (let del of this.triggerDeleteBtn)
                 del.visible = false;
-                
+
             let [startX, startY, endX, endY, angle] = this.getCurrentPointAfterReinitialize();
             let currentOriginLineX = this.line.getLeft() + (EDGE_ARROW_HEAD_SIZE / 2 * Math.cos(angle)) / 2;
             let currentOriginLineY = this.line.getTop() + (EDGE_ARROW_HEAD_SIZE / 2 * Math.sin(angle)) / 2;
@@ -1113,7 +1183,7 @@ class EdgeView {
             originX: 'center',
             originY: 'center',
             strokeWidth: EDGE_ARROW_WIDTH,
-            stroke: '#000',
+            stroke: '#444a62',
             hasControls: false,
             hasBorders: false
         });
@@ -1127,7 +1197,7 @@ class EdgeView {
             originX: 'center',  // rotate using center point of the triangle as the origin
             originY: 'center',
             angle: 90 + (angle * 180 / Math.PI),
-            fill: 'black',
+            fill: '#444a62',
             hasControls: false,
             hasBorders: false
         });
@@ -1159,7 +1229,7 @@ class EdgeView {
             left: startX,
             top: startY,
             radius: EDGE_DOT_RADIUS,
-            fill: 'black',
+            fill: '#444a62',
             originX: 'center',
             originY: 'center',
             hasControls: false,
@@ -1172,7 +1242,7 @@ class EdgeView {
             left: endX,
             top: endY,
             radius: EDGE_DOT_RADIUS,
-            fill: 'black',
+            fill: '#444a62',
             originX: 'center',
             originY: 'center',
             hasControls: false,
@@ -1207,14 +1277,14 @@ class EdgeView {
             triggerSvg.set({
                 originX: 'center',
                 originY: 'center',
-                scaleX: 0.7,
-                scaleY: 0.7,
+                scaleX: EDGE_SVG_SCALE,
+                scaleY: EDGE_SVG_SCALE,
             });
 
             let triggerText = new fabric.Text('');
             triggerText.set({
                 fontFamily: "Roboto",
-                fontSize: NODE_NAME_FONTSIZE,
+                fontSize: TRIGGER_DESCRIP,
                 originX: 'center',
                 originY: 'center',
             });
@@ -1222,14 +1292,14 @@ class EdgeView {
             let cross_1 = new fabric.Line([5, 0, 5, 10], {
                 originX: 'center',
                 originY: 'center',
-                strokeWidth: 3,
+                strokeWidth: CROSS_WIDTH,
                 stroke: 'red'
             });
 
             let cross_2 = new fabric.Line([0, 5, 10, 5], {
                 originX: 'center',
                 originY: 'center',
-                strokeWidth: 3,
+                strokeWidth: CROSS_WIDTH,
                 stroke: 'red'
             });
 

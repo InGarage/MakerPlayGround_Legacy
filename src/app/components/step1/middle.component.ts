@@ -1,5 +1,5 @@
 
-import { Component, OnInit, OnDestroy,Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, OnDestroy, Output, EventEmitter } from '@angular/core';
 import { GraphData, NodeData, EdgeData } from './graphmodel';
 import { GraphCanvas, CanvasEventOptions, CanvasEventTypes } from './newgraphcanvas';
 import { Action } from './action';
@@ -23,6 +23,7 @@ export class MiddleComponent implements OnInit, OnDestroy {
     private canvas: GraphCanvas;
     private model: GraphData;
     interval: any;
+    panning = false;
 
     constructor(private projectService: ProjectService) {
         console.log('project', projectService.getCurrentProject());
@@ -84,7 +85,7 @@ export class MiddleComponent implements OnInit, OnDestroy {
         this.objectSelected = undefined;
         this.canvas.deselectAllNode();
         this.model.redo();
-        this.canvas.redraw();      
+        this.canvas.redraw();
     }
 
     ngOnInit() {

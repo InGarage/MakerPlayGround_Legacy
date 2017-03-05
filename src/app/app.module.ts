@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { HttpModule, Http, RequestOptions, JsonpModule } from '@angular/http';
 import { AuthHttp, AuthConfig } from 'angular2-jwt';
 import { TreeModule } from 'angular2-tree-component';
+import {MdGridListModule} from '@angular/material';
 
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login.component';
@@ -27,7 +28,7 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
 }
 
 @NgModule({
-  imports: [BrowserModule, FormsModule, HttpModule, JsonpModule, routing, TreeModule],
+  imports: [BrowserModule, FormsModule, HttpModule, JsonpModule, routing, TreeModule, MdGridListModule],
   declarations: [AppComponent, LoginComponent, HomeComponent, TutorialComponent,
     SampleProjectComponent, Step1Component, ActionComponent,
     MiddleComponent, PropertyComponent, Step3Component],

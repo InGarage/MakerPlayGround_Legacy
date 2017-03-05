@@ -1,3 +1,75 @@
+/*********************************************
+ * Using in home.component.html
+*/
+
+.navv2 {
+    height: 50px;
+    position: fixed;
+    width: 100%;
+    background-color: #444a62;
+}
+
+.imgLogo {
+    position: absolute;
+    left: 18px;
+    top: 0;
+    width: 70px;
+    height: 50px;
+}
+
+.imgProject {
+    width: 20px;
+    height: 20px;
+}
+
+.textProject {
+    margin-left: 5px;
+}
+
+.customContainer {
+    padding-top: 51px;
+    background-color: #edeef2;
+}
+
+.btnRow {
+    position: absolute;
+    margin-top: 20px;
+    left: 70%;
+}
+
+#inline {
+    display: inline-block;
+}
+
+.allProjectsTable {
+    position: absolute;
+    margin-top: 80px;
+    left: 50%;
+    width: 70%;
+  -ms-transform: translateX(-50%);
+  -webkit-transform: translate(-50%,0%);
+  transform: translate(-50%,0%);
+}
+
+.projectName {
+    background-color: rgba(0, 0, 0, 0.5);
+    /*background-color: #454a62;
+    fill-opacity: 50%;*/
+    height: 40px;
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+    padding-left: 10px;
+}
+
+.fontProjectName {
+    padding-top: 5px;
+    font-family: Roboto;
+    font-size: 14px;
+    color: #f4f4f5;
+}
+
+/*******************************/
 
 .img-robot {
     width: 500px;
@@ -7,23 +79,6 @@
 .loginCenter {
     margin: 0 auto;
     text-align: center;
-}
-
-.navv2 {
-    height: 50px;
-    position: fixed;
-    width: 100%;
-    background-color: #444a62;
-}
-
-.allProjectsTable {
-    position: absolute;
-    padding-top: 60px;
-    left: 50%;
-    width: 70%;
-  -ms-transform: translateX(-50%);
-  -webkit-transform: translate(-50%,0%);
-  transform: translate(-50%,0%);
 }
 
 .BG-login {
@@ -60,13 +115,6 @@
     border-radius: 10px;
 }
 
-
-
-.customContainer {
-    padding-top: 51px;
-    background-color: #edeef2;
-}
-
 .peekImageProject {
     position: relative;
     display: inline-block;
@@ -79,32 +127,9 @@
 
 }
 
-.projectName {
-    background-color: rgba(0, 0, 0, 0.5);
-    /*background-color: #454a62;
-    fill-opacity: 50%;*/
-    height: 40px;
-    width: 100%;
-    position: absolute;
-    bottom: 0;
-    padding-left: 10px;
-}
-
-.fontProjectName {
-    padding-top: 5px;
-    font-family: Roboto;
-    font-size: 14px;
-    color: #f4f4f5;
-}
 
 .imgPeek {
     position: absolute;
     width: 100%;
     height: 100%;
-}
-
-.btnRow {
-    position: absolute;
-    margin-top: 20px;
-    left: 70%;
 }

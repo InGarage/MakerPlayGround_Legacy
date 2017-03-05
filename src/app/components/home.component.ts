@@ -30,27 +30,33 @@ export class HomeComponent {
   getAllProjects() {
     this.ProjectService.getAllProjects().subscribe(projects => {
       this.projects = projects.projects;
-
-      this.displayProjectsTemplate = [];
-      let projectInRow = {};
-      let i, j = 0;
-      for (i = 0; i < this.projects.length; i++) {
-        console.log('Here');
-        projectInRow['project' + j] = this.projects[i].project_name;
-        projectInRow['id' + j] = this.projects[i].project_id;
-        j++;
-        if (((i+1) % 4 === 0) && (i !== 0)) {
-          this.displayProjectsTemplate.push(projectInRow);
-          projectInRow = {};
-          j = 0;
-        }
-      }
-      if ((i % 4) !== 0) {
-        this.displayProjectsTemplate.push(projectInRow);
-      }
-      console.log(this.displayProjectsTemplate);
     });
   }
+
+  // getAllProjects() {
+  //   this.ProjectService.getAllProjects().subscribe(projects => {
+  //     this.projects = projects.projects;
+
+  //     this.displayProjectsTemplate = [];
+  //     let projectInRow = {};
+  //     let i, j = 0;
+  //     for (i = 0; i < this.projects.length; i++) {
+  //       console.log('Here');
+  //       projectInRow['project' + j] = this.projects[i].project_name;
+  //       projectInRow['id' + j] = this.projects[i].project_id;
+  //       j++;
+  //       if (((i+1) % 4 === 0) && (i !== 0)) {
+  //         this.displayProjectsTemplate.push(projectInRow);
+  //         projectInRow = {};
+  //         j = 0;
+  //       }
+  //     }
+  //     if ((i % 4) !== 0) {
+  //       this.displayProjectsTemplate.push(projectInRow);
+  //     }
+  //     console.log(this.displayProjectsTemplate);
+  //   });
+  // }
 
   newProject(project_name: string) {
     console.log('xxx', project_name);

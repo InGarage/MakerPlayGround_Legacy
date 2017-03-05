@@ -34,53 +34,18 @@
     </div>
   </div>
 
-
   <div class="allProjectsTable">
-    <div *ngFor="let project of displayProjectsTemplate; let i = index">
-
-
-      <div class="peekImageProject" (click)="getProject(project.id0)" *ngIf="project.project0 !== undefined">
-        <img class="imgPeek" src="/assets/img/redd-charactor.svg">
+    <md-grid-list cols="4" rowHeight="4:3" gutterSize="20px">
+      <md-grid-tile *ngFor="let project of projects" [colspan]="1" [rowspan]="1"
+      [style.background]="'lightblue'" (click)="getProject(project.project_id)">
 
         <div class="projectName">
           <div class="fontProjectName">
-            {{project.project0}}
+            {{project.project_name}}
           </div>
         </div>
-      </div>
-
-      <div class="peekImageProject" (click)="getProject(project.id1)" *ngIf="project.project1 !== undefined">
-        <img class="imgPeek" src="/assets/img/purple-charactor.svg">
-
-        <div class="projectName">
-          <div class="fontProjectName">
-            {{project.project1}}
-          </div>
-        </div>
-      </div>
-
-      <div class="peekImageProject" (click)="getProject(project.id2)" *ngIf="project.project2 !== undefined">
-        <img class="imgPeek" src="/assets/img/creator-charactor.svg">
-
-        <div class="projectName">
-          <div class="fontProjectName">
-            {{project.project2}}
-          </div>
-        </div>
-      </div>
-
-      <div class="peekImageProject" (click)="getProject(project.id3)" *ngIf="project.project3 !== undefined">
-        <img class="imgPeek" src="/assets/img/yellow-charactor.svg">
-
-        <div class="projectName">
-          <div class="fontProjectName">
-            {{project.project3}}
-          </div>
-        </div>
-      </div>
-
-
-    </div>
+      </md-grid-tile>
+    </md-grid-list>
   </div>
-
+  
 </div>
