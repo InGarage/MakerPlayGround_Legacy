@@ -72,11 +72,12 @@ export class GraphCanvas {
         this.initCanvas();
         this.handleGroupSelection();
 
+        this.canvas.preserveObjectStacking = true;
+
         this.canvas.on('selection:cleared', (e) => {
             this.deselectAllNode();
             this.deselectAllEdge();
             this.callback.getValue('object:deselected')({});
-
 
             // this.canvas.on('mouse:move', (e) => {
             //     if (this.panning && e && e.e) {
@@ -377,6 +378,7 @@ class NodeView {
     readonly nodeNameText: fabric.IText;
     readonly nodeRemoveButton: fabric.IGroup;
     //actionGroup: ActionGroup[] = require("./action.json"); // TODO: refactor into the action class / service
+    toggle: boolean;
 
     constructor(public graph: GraphData, readonly canvas: fabric.ICanvas,
         readonly nodeFabricObject: Collections.Dictionary<string, NodeView>,
@@ -399,16 +401,27 @@ class NodeView {
                 hasBorders: false,
                 scaleX: NODE_SVG_SCALE,
                 scaleY: NODE_SVG_SCALE,
+                left: nodeData.getX()  - NODE_SVG_POS,
+                top: nodeData.getY()
             });
 
-            // let nodeSvgBorder = new fabric.Circle();
-            // nodeSvgBorder.set({
-            // originX: 'center',
-            // originY: 'center',
-            // fill: 'gray',
-            // radius: NODE_SIZE / 2,
-            // opacity: 0.15,
-            // });
+
+            let nodeSvgBorder = new fabric.Rect();
+            nodeSvgBorder.set({
+                width: NODE_SIZE * 2,
+                height: NODE_SIZE,
+                left: nodeData.getX(),
+                top: nodeData.getY(),
+                originX: 'center',
+                originY: 'center',
+                hasControls: false,
+                hasBorders: false,
+                stroke: 'black',
+                fill: 'white',
+                rx: 5,
+                ry: 5,
+                // opacity: 0.3,
+            });
 
             // let nodeDisplayTag = new fabric.Circle({
             //     radius: NODE_SIZE / 2,
@@ -430,6 +443,7 @@ class NodeView {
             //     originY: 'center',
             // });
 
+            this.nodeActionImage.addWithUpdate(nodeSvgBorder);
             this.nodeActionImage.addWithUpdate(nodeSvg);
             // this.nodeActionImage.addWithUpdate(nodeSvgBorder);
             // this.nodeActionImage.addWithUpdate(nodeDisplayTag);
@@ -443,7 +457,7 @@ class NodeView {
             this.nodeRemoveButton.set('uid', this.id);
             this.reinitializeFromModel(nodeData);
             //this.canvas.add(this.nodeBorder, this.nodeConnectingIndicator, this.nodeSelectingIndicator, this.nodeNameText, this.nodeActionImage, this.nodeRemoveButton);
-            this.canvas.add(this.nodeBorder, this.nodeNameText, this.nodeActionImage, this.nodeRemoveButton, this.nodeToggle);
+            this.canvas.add(this.nodeNameText, this.nodeActionImage, this.nodeRemoveButton, this.nodeToggle);
         });
 
         this.nodeBorder = new fabric.Rect();
@@ -490,7 +504,7 @@ class NodeView {
     reinitializeFromModel(nodeData: NodeData) {
         this.nodeData = nodeData;
 
-        this.nodeBorder.set({
+        this.nodeActionImage.set({
             width: NODE_SIZE * 2,
             height: NODE_SIZE,
             left: nodeData.getX(),
@@ -499,29 +513,6 @@ class NodeView {
             originY: 'center',
             hasControls: false,
             hasBorders: false,
-            fill: 'white',
-            rx: 5,
-            ry: 5,
-        });
-
-        // Consider this to be our selecting indicator or connector
-        // this.nodeBorder.setShadow({
-        //     color: 'black',
-        //     blur: 5,
-        //     });
-        // this.nodeBorder.setCoords();
-
-        this.nodeActionImage.set({
-            width: NODE_SIZE,
-            height: NODE_SIZE,
-            left: nodeData.getX() - NODE_SVG_POS,
-            top: nodeData.getY(),
-            originX: 'center',
-            originY: 'center',
-            hasControls: false,
-            hasBorders: false,
-            stroke: 'black',
-            strokeWidth: 1,
         });
         this.nodeActionImage.setCoords();
 
@@ -624,12 +615,25 @@ class NodeView {
         });
 
         this.nodeActionImage.on('selected', (e) => {
-            this.nodeSelectingIndicator.visible = true;
-            this.nodeRemoveButton.visible = true;
+            // this.nodeSelectingIndicator.visible = true;
+            // this.nodeRemoveButton.visible = true;
+
+            this.nodeActionImage.setShadow({
+                color: '#66afe9',
+                blur: 10,
+            });
 
             this.callback.getValue('node:selected')({
                 target_id: this.nodeData.getNodeId(),
             });
+        });
+
+        this.nodeToggle.on('selected', (options) => {
+            console.log("Toggle!");
+        })
+
+        this.nodeToggle.on('modified', (options) => {
+            console.log("Modified!");
         });
 
         this.nodeNameText.on('moving', (options) => {
