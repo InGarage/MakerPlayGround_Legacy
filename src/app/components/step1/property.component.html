@@ -14,9 +14,11 @@
 
                     <form [ngStyle]="setInnerFormStyles()">
 
-                        <label>{{param.name}}</label><br/>
+                        <div *ngIf="param.name !== 'name'">
+                            <label>{{param.name}}</label><br/>
+                        </div>
 
-                        <div *ngIf="param.control=== 'textbox'">
+                        <div *ngIf="param.control==='textbox' && param.name!=='name'">
                             <input #box type="text" [(ngModel)]="param.value[0]" name="{{param.name}}" (keyup)="onKey(objProperties)" (blur)="onOutOfFocus()">
                         </div>
 

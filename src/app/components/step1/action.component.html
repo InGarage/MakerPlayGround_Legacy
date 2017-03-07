@@ -1,53 +1,32 @@
+
 <div [ngStyle]="setFlexMenuStyles()">
-  <div class="actionBox" id="action">
-    <div class="well-edit">
-      <ul class="nav nav-list nav-menu-list-style">
-        <li><label (click)="showTreeAction()" class="tree-toggle nav-header glyphicon-icon-rpad"><span class="glyphicon glyphicon-folder-close m5"></span>Action
-              <span class="menu-collapsible-icon glyphicon glyphicon-chevron-down"></span></label>
-          <!-- Search -->
-          <div *ngIf="showActionMenu">
-            <form class="search-action">
-              <input class="form-control step1_search" #filter (keyup)="filterNodes(filter.value, tree)" placeholder="Search" />
-            </form>
 
-            <ul [ngStyle]="setActionStyles()" (click)="toggleTreeview()">
-              <Tree #tree [nodes]="actions" [focused]="true" (onActivate)="selectedAction($event)">
-                <template #treeNodeTemplate let-node>
-                  <b>{{ node.data.name }}</b><br>{{ node.data.description }}
-                </template>
-              </Tree>
-            </ul>
-          </div>
-          <!-- search div -->
-        </li>
-      </ul>
-    </div>
+  <!--Action-->
+  <div [ngStyle]="setActionStyles()" id="action">
+    <accordion>
+      <accordion-group panelClass="customClass" heading="Action" style="font-family:verdana;" (click)="showTreeAction()">
+        <accordion-group *ngFor="let action of actions" heading="{{action.name}}" style="font-family:verdana;">
+          <md-grid-list cols="4" rowHeight="4:3" gutterSize="5px">
+            <md-grid-tile *ngFor="let key of action.children | keys" [colspan]="1" [rowspan]="1" [style.background]="'lightblue'" (click)="selectedAction(key.value)">
+            </md-grid-tile>
+          </md-grid-list>
+        </accordion-group>
+      </accordion-group>
+    </accordion>
   </div>
-  <!-- actionBox -->
 
-  <div class="triggerBox" id="trigger">
-    <div class="well-edit">
-      <ul class="nav nav-list nav-menu-list-style">
-        <li><label (click)="showTreeTrigger()" class="tree-toggle nav-header glyphicon-icon-rpad"><span class="glyphicon glyphicon-folder-close m5"></span>Trigger
-              <span class="menu-collapsible-icon glyphicon glyphicon-chevron-down"></span></label>
-          <!-- Search -->
-          <div *ngIf="showTriggerMenu">
-            <form class="search-action">
-              <input class="form-control step1_search" #filter (keyup)="filterEdges(filter.value, tree)" placeholder="Search" />
-            </form>
-
-            <ul [ngStyle]="setTriggerStyles()" (click)="toggleTreeview()">
-              <Tree #tree [nodes]="triggers" [focused]="true" (onActivate)="selectedTrigger($event)">
-                <template #treeNodeTemplate let-node>
-                  <b>{{ node.data.name }}</b><br>{{ node.data.description }}
-                </template>
-              </Tree>
-            </ul>
-          </div>
-          <!-- search div -->
-        </li>
-      </ul>
-    </div>
+  <!--Trigger-->
+  <div [ngStyle]="setTriggerStyles()" id="trigger">
+    <accordion>
+      <accordion-group panelClass="customClass" heading="Trigger" style="font-family:verdana;" (click)="showTreeTrigger()">
+        <accordion-group *ngFor="let trigger of triggers" heading="{{trigger.name}}" style="font-family:verdana;">
+          <md-grid-list cols="4" rowHeight="4:3" gutterSize="5px">
+            <md-grid-tile *ngFor="let key of trigger.children | keys" [colspan]="1" [rowspan]="1" [style.background]="'lightblue'" (click)="selectedTrigger(key.value)">
+            </md-grid-tile>
+          </md-grid-list>
+        </accordion-group>
+      </accordion-group>
+    </accordion>
   </div>
-  <!-- triggerBox -->
+
 </div>

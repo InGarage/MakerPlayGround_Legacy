@@ -15,6 +15,7 @@ export class HomeComponent {
 
   projects: Project[];
   displayProjectsTemplate;
+  displayDel: boolean = false;
 
   constructor(private auth: Auth, private ProjectService: ProjectService, private router: Router) { }
 
@@ -97,6 +98,14 @@ export class HomeComponent {
       this.ProjectService.setCurrentProject(project);
       this.router.navigate(['/step1']);
     });
+  }
+
+  displayDelBtn() {
+    this.displayDel = true;
+  }
+
+  fadeDelBtn() {
+    this.displayDel = false;
   }
 
 }

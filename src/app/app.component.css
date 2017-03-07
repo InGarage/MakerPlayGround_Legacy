@@ -1,3 +1,4 @@
+
 /*********************************************
  * Using in home.component.html
 */
@@ -67,6 +68,12 @@
     font-family: Roboto;
     font-size: 14px;
     color: #f4f4f5;
+}
+
+.deleteProjectBtn {
+    position: relative;
+    left: 45%;
+    top: -40%;
 }
 
 /*******************************/

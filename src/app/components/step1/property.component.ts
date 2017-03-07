@@ -50,7 +50,6 @@ export class PropertyComponent {
         }
         this.dirty = false;
         this.previousObjDataNode = objData;
-        this.showProperties = true;
 
         let action = ActionHelper.findActionById(objData.getActionId());
         let paramObj: Parameter;
@@ -78,6 +77,12 @@ export class PropertyComponent {
             uid: objData.getNodeId(),
             children: listEachAction
         }
+        
+        // If this object has only name property, property window must not be shown
+        if (listParamObj.length === 1)
+            this.showProperties = false;
+        else
+            this.showProperties = true;
     }
 
     populatePropertyWindowEdge(objData: EdgeData) {
