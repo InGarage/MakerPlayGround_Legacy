@@ -6,6 +6,7 @@ import { Action, ActionGroup, ActionHelper } from './action';
 import { Trigger, TriggerGroup, TriggerHelper } from './trigger';
 import { GraphData, NodeData, EdgeData, TriggerData } from './graphmodel';
 import { PropertyValue } from './propertyvalue';
+import { BezierCurve } from './curvehelper';
 
 /* display constants */
 const NODE_SIZE: number = 50;
@@ -18,7 +19,7 @@ const NODE_REMOVEBTN_POSX: number = (NODE_SIZE / 2);
 const NODE_REMOVEBTN_POSY: number = (NODE_SIZE / 2);
 const NODE_REMOVEBTN_SIZE: number = 10;
 const EDGE_ARROW_HEAD_SIZE: number = 10;
-const EDGE_ARROW_WIDTH: number = 1;
+const EDGE_ARROW_WIDTH: number = 2;
 const EDGE_SVG_SCALE: number = 0.5;
 const EDGE_IMAGE_SIZE: number = 50;
 const EDGE_IMAGE_DISTANCE: number = 30;
@@ -890,13 +891,16 @@ class TriggerImageLoader {
 
 class EdgeView {
 
-    readonly line: fabric.ILine;
+    readonly line: fabric.IPath;
+    readonly curveControlPoint: fabric.ICircle;
     readonly triangle: fabric.ITriangle;
     readonly dotHead: fabric.ICircle;
     readonly dotTail: fabric.ICircle;
     readonly triggerDescription: fabric.IGroup;
     triggerDeleteBtn: Array<any> = [];
     edgeDeleteBtn: fabric.IGroup;
+
+    private curve: BezierCurve;
 
     constructor(public graph: GraphData, readonly canvas: fabric.ICanvas,
         readonly nodeFabricObject: Collections.Dictionary<string, NodeView>,
@@ -912,11 +916,17 @@ class EdgeView {
         let difX = Math.abs(startX - endX) / 2;
         let difY = Math.abs(startY - endY) / 2;
 
-        this.line = new fabric.Line([], {
-            originX: 'center',
-            originY: 'center',
+        this.line = new fabric.Path([
+            ['M', 0, 0],
+            ['C', 0, 0, 0, 0, 0, 0],
+            ['C', 0, 0, 0, 0, 0, 0]
+        ]);
+        this.line.set({
+            objectCaching: false,
             perPixelTargetFind: true
         });
+
+        this.curveControlPoint = new fabric.Circle();
 
         this.triangle = new fabric.Triangle();
 
@@ -958,16 +968,17 @@ class EdgeView {
             this.initEdgeEvent();
             this.triggerDescription.set('uid', this.id);
             this.line.set('uid', this.id);
+            this.curveControlPoint.set('uid', this.id);
             this.triangle.set('uid', this.id);
             this.dotHead.set('uid', this.id);
             this.dotTail.set('uid', this.id);
             this.reinitializeFromModel(edgeData);
-            this.canvas.add(this.edgeDeleteBtn, this.triggerDescription, this.line, this.triangle, this.dotTail, this.dotHead);
+            this.canvas.add(this.edgeDeleteBtn, this.triggerDescription, this.line, this.curveControlPoint, this.triangle, this.dotTail, this.dotHead);
         });
     }
 
     getAllFabricElement(): fabric.IObject[] {
-        return [this.edgeDeleteBtn, this.triggerDescription, this.line, this.triangle, this.dotHead, this.dotTail].concat(this.triggerDeleteBtn);
+        return [this.edgeDeleteBtn, this.triggerDescription, this.line, this.curveControlPoint, this.triangle, this.dotHead, this.dotTail].concat(this.triggerDeleteBtn);
     }
 
     private initEdgeEvent() {
@@ -1014,6 +1025,16 @@ class EdgeView {
             this.callback.getValue('edge:selected')({
                 target_id: this.edgeData.getEdgeId(),
             });
+        });
+
+        this.curveControlPoint.on('moving', (options) => {
+            this.curve.moveCenterPoint(this.curveControlPoint.getLeft(), this.curveControlPoint.getTop());
+            this.line.path = this.curve.getSVGArray();
+            this.updatePathDimension(this.line);
+            this.line.setCoords();
+        });
+        this.curveControlPoint.on('modified', (options) => {
+            
         });
 
         this.triggerDescription.on('moving', (options) => {
@@ -1175,19 +1196,36 @@ class EdgeView {
         let difX = Math.abs(startX - endX) / 2;
         let difY = Math.abs(startY - endY) / 2;
 
+        this.curve = new BezierCurve(startX, startY, 'r', endX, endY, 'l');
+        this.line.path = this.curve.getSVGArray();
         this.line.set({
-            x1: startX,
+            /*x1: startX,
             y1: startY,
             x2: endX - EDGE_ARROW_HEAD_SIZE / 2 * Math.cos(angle),
             y2: endY - EDGE_ARROW_HEAD_SIZE / 2 * Math.sin(angle),
             originX: 'center',
-            originY: 'center',
+            originY: 'center',*/
+            fill: '',
             strokeWidth: EDGE_ARROW_WIDTH,
             stroke: '#444a62',
             hasControls: false,
             hasBorders: false
         });
+        this.updatePathDimension(this.line);
         this.line.setCoords();
+
+        this.curveControlPoint.set({
+            left: this.curve.getCenterPoint()[0],
+            top: this.curve.getCenterPoint()[1],
+            radius: 5,
+            fill: '#444a62',
+            originX: 'center',
+            originY: 'center',
+            hasControls: false,
+            hasBorders: false/*,
+            visible: false*/
+        });
+        this.curveControlPoint.setCoords();
 
         this.triangle.set({
             left: endX - EDGE_ARROW_HEAD_SIZE / 2 * Math.cos(angle),
@@ -1429,6 +1467,15 @@ class EdgeView {
         this.canvas.renderAll();
     }
 
+    updatePathDimension(line) {
+        var dims = line._parseDimensions();
+        line.setWidth(dims.width);
+        line.setHeight(dims.height);
+        line.pathOffset.x = line.width / 2;
+        line.pathOffset.y = line.height / 2;
+        line.setCoords();
+    }
+
     setObjectPositionWithinDescriptionGroup() {
         let startX = this.edgeData.getStartX();
         let startY = this.edgeData.getStartY();
@@ -1653,6 +1700,10 @@ class EdgeView {
         for (let delBtn of this.triggerDeleteBtn) {
             delBtn.set({ visible: false });
         }
+    }
+
+    updateEdgeShape() {
+
     }
 
     private deselectAllEdge() {
