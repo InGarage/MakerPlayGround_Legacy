@@ -4,7 +4,7 @@
         <div *ngFor="let listObj of objProperties.children; let i=index;">
             <form [ngStyle]="setOutmostFormStyles()">
 
-                <p class="labelPropertiesMultiple"><label>{{listObj.name}}</label>
+                <p *ngIf="listObj.param.length !== 1" class="labelPropertiesMultiple"><label>{{listObj.name}}</label>
                     <button class="butttonHideProperties" (click)="hideProperties()">
                             <span class="glyphicon-fix glyphicon-remove" aria-hidden="true"></span>
                         </button>
@@ -19,7 +19,7 @@
                         </div>
 
                         <div *ngIf="param.control==='textbox' && param.name!=='name'">
-                            <input #box type="text" [(ngModel)]="param.value[0]" name="{{param.name}}" (keyup)="onKey(objProperties)" (blur)="onOutOfFocus()">
+                            <input #box type="text" class="dropdown" [(ngModel)]="param.value[0]" name="{{param.name}}" (keyup)="onKey(objProperties)" (blur)="onOutOfFocus()">
                         </div>
 
                         <div *ngIf="param.control==='radio'">
@@ -27,21 +27,28 @@
                         </div>
 
                         <div *ngIf="param.control==='Dropdown'">
-                            <form [ngStyle]="setInputStyles()">
-                                <select [(ngModel)]="param.value[0]" name="{{param.name}}" (change)="onOutOfFocus()"> 
-                                    <option *ngFor="let arg of param.args" [ngValue]="arg">{{arg}}</option>
+                            <form>
+                                <select class="dropdown" [(ngModel)]="param.value[0]" name="{{param.name}}" (change)="onOutOfFocus()"> 
+                                    <option class="dropdown" *ngFor="let arg of param.args" [ngValue]="arg">{{arg}}</option>
                                 </select>
                             </form>
                         </div>
 
-                        <div *ngIf="param.control==='spinbox'">
-                            <input [ngStyle]="setInputStyles()" #box type="number" [(ngModel)]="param.value[0]" name="{{param.name}}" (keyup)="onKey(objProperties)"
-                                (change)="onKey(objProperties)" (blur)="onOutOfFocus()">
-                            <form [ngStyle]="setInputStyles()">
-                                <select [(ngModel)]="param.value[1]" name="{{param.name}}" (change)="onOutOfFocus()"> 
-                                    <option *ngFor="let arg of param.args" [ngValue]="arg">{{arg}}</option>
-                                </select>
-                            </form>
+                        <div *ngIf="param.control==='spinbox'" class="propertyRow">
+                            <md-grid-list cols="5" gutterSize="3px">
+                                <md-grid-tile [colspan]="3" [rowspan]="1">
+                                    <input class="dropdown" #box type="number" [(ngModel)]="param.value[0]" name="{{param.name}}" (keyup)="onKey(objProperties)"
+                                        (change)="onKey(objProperties)" (blur)="onOutOfFocus()">
+                                </md-grid-tile>
+
+                                <md-grid-tile [colspan]="2" [rowspan]="1">
+                                    <form>
+                                        <select [(ngModel)]="param.value[1]" name="{{param.name}}" (change)="onOutOfFocus()" class="dropdown"> 
+                                            <option class="dropdown" *ngFor="let arg of param.args" [ngValue]="arg">{{arg}}</option>
+                                        </select>
+                                    </form>
+                                </md-grid-tile>
+                            </md-grid-list>
                         </div>
 
                         <div *ngIf="param.control==='color'">
@@ -57,7 +64,6 @@
                             <md-grid-list cols="7" gutterSize="3px">
 
                                 <md-grid-tile [colspan]="2" [rowspan]="1">
-
                                     <form>
                                         <select [(ngModel)]="param.value[0]" name="{{param.name}}" (change)="onOutOfFocus()" class="dropdown"> 
                                             <option class="dropdown" *ngFor="let operat of operators" [ngValue]="operat.value">{{operat.text}}</option>
@@ -80,21 +86,6 @@
 
 
                             </md-grid-list>
-
-                            <!--<form [ngStyle]="setInputStyles()">
-                                <select [(ngModel)]="param.value[0]" name="{{param.name}}" (change)="onOutOfFocus()"> 
-                                    <option *ngFor="let operat of operators" [ngValue]="operat.value">{{operat.text}}</option>
-                                </select>
-                            </form>
-
-                            <input [ngStyle]="setInputStylesNumberExpression()" #box type="text" [(ngModel)]="param.value[1]" name="{{param.name}}" (keyup)="onKey(objProperties)"
-                                (blur)="onOutOfFocus()">
-
-                            <form [ngStyle]="setInputStyles()">
-                                <select [(ngModel)]="param.value[2]" name="{{param.name}}" (change)="onOutOfFocus()"> 
-                                    <option *ngFor="let arg of param.args" [ngValue]="arg">{{arg}}</option>
-                                </select>
-                            </form>-->
                         </div>
 
                     </form>

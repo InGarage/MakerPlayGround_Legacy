@@ -48,7 +48,7 @@ export namespace TriggerHelper {
       "children": [
         {
           "id": "Accel_1",
-          "name": "Accelerate X",
+          "name": "Accelerate\n\nX",
           "short_description": "Accelerate on x axis",
           "display_text": "{name} {condition} {value} {unit}",
           "params": [

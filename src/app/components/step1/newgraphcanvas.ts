@@ -1317,10 +1317,14 @@ class EdgeView {
             // const text = triggerInfo.display_text.replace(/{(\d+)}/g, (match, number) => {
             //     return typeof args[number] !== 'undefined' ? args[number] : match;
             // });
+            const text = triggerName[0].replace(/\n/g, (match, number) => {
+                return typeof args[number] !== 'undefined' ? args[number] : match;
+            });
 
             // group contains fabric.image follow by fabric.text so the index of fabric.text elements
             // in a group are (trigger's index * 2) +1
-            (<fabric.IText><any>this.triggerDescription.item(trigger.getTriggerIndex() * 2 + 1)).setText(triggerName[0]);
+            //(<fabric.IText><any>this.triggerDescription.item(trigger.getTriggerIndex() * 2 + 1)).setText(triggerName[0]);
+            (<fabric.IText><any>this.triggerDescription.item(trigger.getTriggerIndex() * 2 + 1)).setText(text);
         }
 
         let widthGroup: number = 0;
