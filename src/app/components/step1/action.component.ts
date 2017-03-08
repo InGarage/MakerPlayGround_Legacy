@@ -3,6 +3,7 @@ import { TreeModule } from 'angular2-tree-component';
 import { Action, ActionGroup, ActionHelper } from './action';
 import { Trigger, TriggerGroup, TriggerHelper } from './trigger';
 import * as $ from 'jquery';
+import { KeysPipe } from './pipe';
 
 @Component({
   selector: 'action',
@@ -73,13 +74,13 @@ export class ActionComponent {
  ************************************************/ 
   setElementHeight() {
     this.windowHeight = $(window).height();
-    this.maxHeight = (this.windowHeight*8.5)/10;
+    this.maxHeight = this.windowHeight;
     this.setFlexMenuStyles();
   }
 
   setActionStyles() {
     this.styles = {
-      'overflow-y': 'scroll',
+      'overflow-y': 'auto',
       'width': '100%',
       'max-height': this.maxActionHeight + 'px',
     };
@@ -90,7 +91,7 @@ export class ActionComponent {
   setTriggerStyles() {
 
     this.styles = {
-      'overflow-y': 'scroll',
+      'overflow-y': 'auto',
       'width': '100%',
       'max-height': this.maxTriggerHeight + 'px',
     };
@@ -107,18 +108,17 @@ export class ActionComponent {
     this.manageFlexBox();
   }
 
-
   manageFlexBox() {
     setTimeout(() => {
       let getTrigger = document.getElementById("trigger");
       this.triggerCurrentHeight = getTrigger.offsetHeight;
 
-      this.maxActionHeight = this.maxHeight - (this.triggerCurrentHeight) - 100;
+      this.maxActionHeight = this.maxHeight - (this.triggerCurrentHeight) - 100 - 150;
 
       let getAction = document.getElementById("action");
       this.actionCurrentHeight = getAction.offsetHeight;
 
-      this.maxTriggerHeight = this.maxHeight - (this.actionCurrentHeight) - 100;
+      this.maxTriggerHeight = this.maxHeight - (this.actionCurrentHeight) - 100 - 150;
     }, 50);
 
     this.setActionStyles();
@@ -164,20 +164,22 @@ export class ActionComponent {
   //   this.myEvent.emit($event);
   // }
 
-  selectedAction($event: any) {
+  selectedAction(action: any) {
+
+    this.addNode.emit(action);
     // Only emit event when the selected tree node isn't a header node
-    if ($event.node.isLeaf) {
-      this.addNode.emit($event.node.data);
-    }
+    // if ($event.node.isLeaf) {
+    //   this.addNode.emit($event.node.data);
+    // }
   }
 
-  selectedTrigger($event: any) {
-    if ($event.node.isLeaf) {
-      this.addEdge.emit($event.node.data);
-    }
+  selectedTrigger(trigger: any) {
+    this.addEdge.emit(trigger);
+  //   console.log($event.node.data);
+  //   if ($event.node.isLeaf) {
+  //     this.addEdge.emit($event.node.data);
+  //   }
   }
-
-
 }
 
 

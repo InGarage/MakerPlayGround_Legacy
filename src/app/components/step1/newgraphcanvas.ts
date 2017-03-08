@@ -9,15 +9,17 @@ import { PropertyValue } from './propertyvalue';
 import { BezierCurve } from './curvehelper';
 
 /* display constants */
+const NODE_SIZE_WIDTH: number = 120;
+const NODE_SIZE_HEIGHT: number = 50;
 const NODE_SIZE: number = 50;
-const NODE_SVG_POS: number = 30;
+const NODE_SVG_POS: number = 40;
 const NODE_NAME_YPOS: number = 40;
 const NODE_NAME_FONTSIZE: number = 14;
 const NODE_SVG_SCALE: number = 0.7;
 const NODE_ACTION_NAME_FONTSIZE: number = 14;
-const NODE_REMOVEBTN_POSX: number = (NODE_SIZE / 2);
-const NODE_REMOVEBTN_POSY: number = (NODE_SIZE / 2);
-const NODE_REMOVEBTN_SIZE: number = 10;
+const NODE_REMOVEBTN_POSX: number = (NODE_SIZE_WIDTH / 2) - 8;
+const NODE_REMOVEBTN_POSY: number = (NODE_SIZE_HEIGHT / 2) - 8;
+const NODE_REMOVEBTN_SIZE: number = 5;
 const EDGE_ARROW_HEAD_SIZE: number = 10;
 const EDGE_ARROW_WIDTH: number = 2;
 const EDGE_SVG_SCALE: number = 0.5;
@@ -36,6 +38,7 @@ export interface CanvasEventOptions {
     start_y?: number,
     center_x?: number,
     center_y?: number,
+    param?: string,
     end_x?: number,
     end_y?: number,
     toBeMissing?: EdgeData,     // EdgeData of edge that is going to disappear from canvas
@@ -43,7 +46,7 @@ export interface CanvasEventOptions {
     triggerIndex?: number
 }
 
-export type CanvasEventTypes = 'node:selected' | 'node:move' | 'node:remove' | 'edge:move' | 'object:deselected'
+export type CanvasEventTypes = 'node:selected' | 'node:move' | 'node:remove' | 'node:update' | 'edge:move' | 'object:deselected'
     | 'edge:connectionDst' | 'edge:connectionSrc' | 'edge:selected' | 'edge:combine' | 'trigger:remove' | 'edge:remove'
     | 'mouse:up' | 'mouse:down' | 'mouse:move';
 
@@ -73,11 +76,12 @@ export class GraphCanvas {
         this.initCanvas();
         this.handleGroupSelection();
 
+        this.canvas.preserveObjectStacking = true;
+
         this.canvas.on('selection:cleared', (e) => {
             this.deselectAllNode();
             this.deselectAllEdge();
             this.callback.getValue('object:deselected')({});
-
 
             // this.canvas.on('mouse:move', (e) => {
             //     if (this.panning && e && e.e) {
@@ -102,6 +106,25 @@ export class GraphCanvas {
                     console.log("We are in great danger!!!");
                 }
             }
+        });
+
+        this.canvas.on('object:modified', (e) => {
+            if (this.nodeFabricObject.containsKey(this.selectingObject.id)) {
+                this.nodeFabricObject.forEach((nodeId, nodeView) => {
+                    let nodeInfo = this.graph.getNodeById(this.selectingObject.id);
+                    if (nodeId === this.selectingObject.id) {
+                        let val = nodeView.nodeNameText.getText();
+                        if (nodeView.nodeNameText.getText() !== nodeInfo.getActionParams('name')[0]) {
+                            this.callback.getValue('node:update')({
+                                target_id: nodeView.id,
+                                param: nodeView.nodeNameText.getText()
+                            });
+                        }
+
+                    }
+                });
+            }
+
         });
     }
 
@@ -196,8 +219,10 @@ export class GraphCanvas {
     deselectAllNode() {
         this.canvas.deactivateAll().renderAll();
         this.nodeFabricObject.forEach((nodeId, nodeView) => {
-            nodeView.nodeSelectingIndicator.visible = false;
             nodeView.nodeRemoveButton.visible = false;
+            nodeView.nodeActionImage.setShadow({
+                color: '#fff',
+            });
         });
     }
 
@@ -265,8 +290,6 @@ export class GraphCanvas {
         let nodeView = this.nodeFabricObject.remove(nodeData.getNodeId());
         for (const obj of nodeView.getAllFabricElement())
             this.canvas.remove(obj);
-        // this.canvas.remove(nodeView.nodeActionImage, nodeView.nodeNameText
-        //     , nodeView.nodeSelectingIndicator, nodeView.nodeConnectingIndicator, nodeView.nodeRemoveButton);
     }
 
     removeEdge(edgeData: EdgeData) {
@@ -373,11 +396,10 @@ class NodeView {
     nodeActionImage: fabric.IGroup;
     nodeBorder: fabric.IRect;
     nodeToggle: fabric.ITriangle;
-    readonly nodeConnectingIndicator: fabric.ICircle;
-    readonly nodeSelectingIndicator: fabric.ICircle;
     readonly nodeNameText: fabric.IText;
     readonly nodeRemoveButton: fabric.IGroup;
     //actionGroup: ActionGroup[] = require("./action.json"); // TODO: refactor into the action class / service
+    toggle: boolean;
 
     constructor(public graph: GraphData, readonly canvas: fabric.ICanvas,
         readonly nodeFabricObject: Collections.Dictionary<string, NodeView>,
@@ -400,70 +422,59 @@ class NodeView {
                 hasBorders: false,
                 scaleX: NODE_SVG_SCALE,
                 scaleY: NODE_SVG_SCALE,
+                left: nodeData.getX() - NODE_SVG_POS,
+                top: nodeData.getY()
             });
 
-            // let nodeSvgBorder = new fabric.Circle();
-            // nodeSvgBorder.set({
-            // originX: 'center',
-            // originY: 'center',
-            // fill: 'gray',
-            // radius: NODE_SIZE / 2,
-            // opacity: 0.15,
-            // });
 
-            // let nodeDisplayTag = new fabric.Circle({
-            //     radius: NODE_SIZE / 2,
-            //     originX: 'center',
-            //     originY: 'center',
-            //     startAngle: 120,
-            //     endAngle: Math.PI,
-            //     angle: -17.5,
-            //     fill: 'black',
-            //     opacity: 0.5,
-            // });
+            let nodeSvgBorder = new fabric.Rect();
+            nodeSvgBorder.set({
+                width: NODE_SIZE_WIDTH,
+                height: NODE_SIZE_HEIGHT,
+                left: nodeData.getX(),
+                top: nodeData.getY(),
+                originX: 'center',
+                originY: 'center',
+                hasControls: false,
+                hasBorders: false,
+                stroke: '#85858f',
+                fill: '#f4f4f5',
+                rx: 5,
+                ry: 5,
+            });
 
-            // let nodeDisplayText = new fabric.Text(action.name);
-            // nodeDisplayText.set({
-            //     fontFamily: "Roboto",
-            //     fontSize: NODE_ACTION_NAME_FONTSIZE,
-            //     fill: 'white',
-            //     originX: 'center',
-            //     originY: 'center',
-            // });
+            let nodeDisplayText = new fabric.Text(action.name);
+            nodeDisplayText.set({
+                fontFamily: "Roboto",
+                fontSize: NODE_ACTION_NAME_FONTSIZE,
+                originX: 'center',
+                originY: 'center',
+                left: nodeData.getX() + (NODE_SVG_POS / 2),
+                top: nodeData.getY(),
+            });
 
+            this.nodeActionImage.addWithUpdate(nodeSvgBorder);
             this.nodeActionImage.addWithUpdate(nodeSvg);
             // this.nodeActionImage.addWithUpdate(nodeSvgBorder);
             // this.nodeActionImage.addWithUpdate(nodeDisplayTag);
-            // this.nodeActionImage.addWithUpdate(nodeDisplayText);
+            this.nodeActionImage.addWithUpdate(nodeDisplayText);
 
             this.initNodeEvent();
             this.nodeActionImage.set('uid', this.id);
-            this.nodeConnectingIndicator.set('uid', this.id);
-            this.nodeSelectingIndicator.set('uid', this.id);
             this.nodeNameText.set('uid', this.id);
             this.nodeRemoveButton.set('uid', this.id);
             this.reinitializeFromModel(nodeData);
-            //this.canvas.add(this.nodeBorder, this.nodeConnectingIndicator, this.nodeSelectingIndicator, this.nodeNameText, this.nodeActionImage, this.nodeRemoveButton);
-            this.canvas.add(this.nodeBorder, this.nodeNameText, this.nodeActionImage, this.nodeRemoveButton, this.nodeToggle);
+            this.canvas.add(this.nodeNameText, this.nodeActionImage, this.nodeRemoveButton);
         });
 
         this.nodeBorder = new fabric.Rect();
 
         this.nodeToggle = new fabric.Triangle();
 
-        this.nodeConnectingIndicator = new fabric.Circle();
-        this.nodeConnectingIndicator.set({ visible: false });
-
-        this.nodeSelectingIndicator = new fabric.Circle();
-        this.nodeSelectingIndicator.set({ visible: false });
-
         this.nodeNameText = new fabric.IText('');
 
         let cross_1 = new fabric.Line([
-            nodeData.getX() + (NODE_SIZE / 2) - NODE_REMOVEBTN_SIZE,
-            nodeData.getY() - (NODE_SIZE / 2),
-            nodeData.getX() + (NODE_SIZE / 2),
-            nodeData.getY() - (NODE_SIZE / 2) + NODE_REMOVEBTN_SIZE,
+            0, 0, 8, 8
         ], {
                 originX: 'center',
                 originY: 'center',
@@ -472,10 +483,7 @@ class NodeView {
             });
 
         let cross_2 = new fabric.Line([
-            nodeData.getX() + (NODE_SIZE / 2),
-            nodeData.getY() - (NODE_SIZE / 2),
-            nodeData.getX() + (NODE_SIZE / 2) - NODE_REMOVEBTN_SIZE,
-            nodeData.getY() - (NODE_SIZE / 2) + NODE_REMOVEBTN_SIZE,
+            0, 8, 8, 0
         ], {
                 originX: 'center',
                 originY: 'center',
@@ -491,38 +499,15 @@ class NodeView {
     reinitializeFromModel(nodeData: NodeData) {
         this.nodeData = nodeData;
 
-        this.nodeBorder.set({
-            width: NODE_SIZE * 2,
-            height: NODE_SIZE,
+        this.nodeActionImage.set({
+            width: NODE_SIZE_WIDTH,
+            height: NODE_SIZE_HEIGHT,
             left: nodeData.getX(),
             top: nodeData.getY(),
             originX: 'center',
             originY: 'center',
             hasControls: false,
             hasBorders: false,
-            fill: 'white',
-            rx: 5,
-            ry: 5,
-        });
-
-        // Consider this to be our selecting indicator or connector
-        // this.nodeBorder.setShadow({
-        //     color: 'black',
-        //     blur: 5,
-        //     });
-        // this.nodeBorder.setCoords();
-
-        this.nodeActionImage.set({
-            width: NODE_SIZE,
-            height: NODE_SIZE,
-            left: nodeData.getX() - NODE_SVG_POS,
-            top: nodeData.getY(),
-            originX: 'center',
-            originY: 'center',
-            hasControls: false,
-            hasBorders: false,
-            stroke: 'black',
-            strokeWidth: 1,
         });
         this.nodeActionImage.setCoords();
 
@@ -539,46 +524,6 @@ class NodeView {
             hasBorders: false
         });
         this.nodeToggle.setCoords();
-
-        // set text position and remove stroke
-        // this.nodeActionImage.item(3).set({
-        //     fontFamily: "Roboto",
-        //     top: 20,
-        //     stroke: 'rgba(0,0,0,0)',
-        // });
-        // this.nodeActionImage.item(3).setCoords();
-
-        // this.nodeConnectingIndicator.set({
-        //     left: nodeData.getX(),
-        //     top: nodeData.getY(),
-        //     radius: (NODE_SIZE / 2) + 5,
-        //     stroke: 'yellow',
-        //     strokeWidth: 15,
-        //     opacity: 0.5,
-        //     fill: 'rgba(0,0,0,0)',
-        //     originX: 'center',
-        //     originY: 'center',
-        //     hasControls: false,
-        //     hasBorders: false,
-        //     selectable: false
-        // });
-        // this.nodeConnectingIndicator.setCoords();
-
-        // this.nodeSelectingIndicator.set({
-        //     left: nodeData.getX(),
-        //     top: nodeData.getY(),
-        //     radius: (NODE_SIZE / 2) + 5,
-        //     stroke: '#66afe9',
-        //     strokeWidth: 10,
-        //     opacity: 0.2,
-        //     fill: 'rgba(0,0,0,0)',
-        //     originX: 'center',
-        //     originY: 'center',
-        //     hasControls: false,
-        //     hasBorders: false,
-        //     selectable: false
-        // });
-        // this.nodeSelectingIndicator.setCoords();
 
         this.nodeNameText.set({
             left: nodeData.getX(),
@@ -607,10 +552,8 @@ class NodeView {
     }
 
     getAllFabricElement(): fabric.IObject[] {
-        // return [this.nodeBorder, this.nodeActionImage, this.nodeConnectingIndicator, this.nodeSelectingIndicator
-        //     , this.nodeNameText, this.nodeRemoveButton];
         return [this.nodeBorder, this.nodeActionImage,
-            , this.nodeNameText, this.nodeRemoveButton, this.nodeToggle];
+            , this.nodeNameText, this.nodeRemoveButton];
     }
 
     private initNodeEvent() {
@@ -625,12 +568,19 @@ class NodeView {
         });
 
         this.nodeActionImage.on('selected', (e) => {
-            this.nodeSelectingIndicator.visible = true;
             this.nodeRemoveButton.visible = true;
+            this.nodeActionImage.setShadow({
+                color: '#66afe9',
+                blur: 10,
+            });
 
             this.callback.getValue('node:selected')({
                 target_id: this.nodeData.getNodeId(),
             });
+        });
+
+        this.nodeToggle.on('selected', (options) => {
+            console.log("Toggle!");
         });
 
         this.nodeNameText.on('moving', (options) => {
@@ -644,12 +594,15 @@ class NodeView {
         });
 
         this.nodeNameText.on('selected', (options) => {
-            this.nodeSelectingIndicator.visible = true;
             this.nodeRemoveButton.visible = true;
 
             this.callback.getValue('node:selected')({
                 target_id: this.nodeData.getNodeId(),
             });
+        });
+
+        this.nodeNameText.on('changed', (options) => {
+            console.log('changed', options);
         });
 
         this.nodeRemoveButton.on('selected', (options) => {
@@ -658,11 +611,13 @@ class NodeView {
     }
 
     moveNode(originX: number, originY: number, shouldEmittedEvent: boolean = false) {
+        this.nodeActionImage.setShadow({
+            color: '#66afe9',
+            blur: 10,
+        });
         // move every components to the new location
         this.nodeActionImage.set({ left: originX, top: originY });
         this.nodeNameText.set({ left: originX, top: originY + NODE_NAME_YPOS });
-        this.nodeConnectingIndicator.set({ left: originX, top: originY });
-        this.nodeSelectingIndicator.set({ left: originX, top: originY });
         this.nodeRemoveButton.set({ left: originX + NODE_REMOVEBTN_POSX, top: originY - NODE_REMOVEBTN_POSY });
 
         // any edge that is already connected to this node, will be moved depends on this node new location
@@ -704,8 +659,6 @@ class NodeView {
         // show connecting indicator when this node is moving into the boundary of edge(s) that
         // this node hasn't connected to yet. The connecting indicator is shown only when we aren't
         // emitted an event (moving event) otherwise we won't have chance to clear the indicator.
-        this.nodeConnectingIndicator.visible = false;
-        //this.nodeRemoveButton.visible = false;
         let edge = this.getEdgeInRange(originX, originY);
         for (let e of edge.src) {
             if (e.getSourceNodeId() !== this.nodeData.getNodeId()) {
@@ -720,7 +673,10 @@ class NodeView {
                         src_node_id: this.nodeData.getNodeId(),
                     });
                 } else {
-                    this.nodeConnectingIndicator.visible = true;
+                    this.nodeActionImage.setShadow({
+                        color: 'yellow',
+                        blur: 10,
+                    });
                 }
             }
         }
@@ -737,7 +693,10 @@ class NodeView {
                         dst_node_id: this.nodeData.getNodeId(),
                     });
                 } else {
-                    this.nodeConnectingIndicator.visible = true;
+                    this.nodeActionImage.setShadow({
+                        color: 'yellow',
+                        blur: 10,
+                    });
                 }
             }
         }
@@ -753,8 +712,9 @@ class NodeView {
 
     private deselectAllNode() {
         this.nodeFabricObject.forEach((nodeId, nodeView) => {
-            nodeView.nodeSelectingIndicator.visible = false;
-            nodeView.nodeRemoveButton.visible = false;
+            nodeView.nodeActionImage.setShadow({
+                color: '#fff',
+            });
         });
     }
 
@@ -763,6 +723,8 @@ class NodeView {
             edgeView.dotHead.visible = false;
             edgeView.dotTail.visible = false;
             edgeView.edgeDeleteBtn.visible = false;
+            for (let delBtn of edgeView.triggerDeleteBtn)
+                delBtn.visible = false;
         });
     }
 
@@ -806,36 +768,51 @@ class NodeView {
     // helper functions
 
     private calculateNewEdgePoint(oldEdgeX: number, oldEdgeY: number): [number, number] {
+        let additionX: number, additionY: number;
+
         // original position of node
         let originX = this.nodeData.getX();
         let originY = this.nodeData.getY();
 
         // calculate diff from original position
-        let difX = Math.abs(originX - oldEdgeX);
-        let difY = Math.abs(originY - oldEdgeY);
+        let difX = originX - oldEdgeX;
+        let difY = originY - oldEdgeY;;
 
         // Apply diffX/diffY to currentX/currentY to find new edge start point 
         // (diff is unchanged because node and egde are moved by the same amount)
         let currentX = this.nodeActionImage.getLeft();
         let currentY = this.nodeActionImage.getTop();
-        if ((oldEdgeX < originX) && (oldEdgeY > originY)) {
-            return [currentX - difX, currentY + difY];
+        if (difX < 0 && difY === 0) {
+            return [currentX - difX, currentY];
         }
-        if ((oldEdgeX < originX) && (oldEdgeY < originY)) {
-            return [currentX - difX, currentY - difY];
+        if (difX === 0 && difY > 0) {
+            return [currentX, currentY - difY];
         }
-        if ((oldEdgeX > originX) && (oldEdgeY < originY)) {
-            return [currentX + difX, currentY - difY];
+        if (difX > 0 && difY === 0) {
+            return [currentX - difX, currentY];
         }
-        if ((oldEdgeX > originX) && (oldEdgeY > originY)) {
-            return [currentX + difX, currentY + difY];
+        if (difX === 0 && difY < 0) {
+            return [currentX, currentY - difY];
         }
     }
 
     private calculateConnectionPoint(originX: number, originY: number, pointX: number, pointY: number): Coordinate {
-        let angle = Math.atan2((pointY - originY), (pointX - originX));
-        let x = originX + (NODE_SIZE / 2 - 2) * Math.cos(angle);
-        let y = originY + (NODE_SIZE / 2 - 2) * Math.sin(angle);
+        let x: number, y: number;
+
+        let angle = Math.atan2((pointY - originY), (pointX - originX)) * 180 / Math.PI;
+        if (angle >= -25 && angle <= 15) {
+            x = originX + 60;
+            y = originY;
+        } else if (angle > 15 && angle < 160) {
+            x = originX;
+            y = originY + 25;
+        } else if ((angle > 160 && angle < 180) || (angle < -160 && angle > -180)) {
+            x = originX - 60;
+            y = originY;
+        } else if (angle < -25 && angle >= -160) {
+            x = originX;
+            y = originY - 25;
+        }
         return { x: x, y: y };
     }
 
@@ -846,8 +823,10 @@ class NodeView {
     }
 
     public deselect() {
-        this.nodeSelectingIndicator.visible = false;
         this.nodeRemoveButton.visible = false;
+        this.nodeActionImage.setShadow({
+            color: '#fff',
+        });
     }
 
 }
@@ -1710,13 +1689,18 @@ class EdgeView {
         this.edgeFabricObject.forEach((edgeId, edgeView) => {
             edgeView.dotHead.visible = false;
             edgeView.dotTail.visible = false;
+            edgeView.edgeDeleteBtn.visible = false;
+            for (let delBtn of edgeView.triggerDeleteBtn)
+                delBtn.visible = false;
         });
     }
 
     private deselectAllNode() {
         this.nodeFabricObject.forEach((nodeId, nodeView) => {
-            nodeView.nodeSelectingIndicator.visible = false;
             nodeView.nodeRemoveButton.visible = false;
+            nodeView.nodeActionImage.setShadow({
+                color: '#fff',
+            });
         });
     }
 
@@ -1743,7 +1727,10 @@ class EdgeView {
                 // we only show the connecting indicator when we will not emit event (moving) otherwise
                 // we won't have a chance to clear it
             } else {
-                this.nodeFabricObject.getValue(nodeAtHead.getNodeId()).nodeConnectingIndicator.visible = true;
+                this.nodeFabricObject.getValue(nodeAtHead.getNodeId()).nodeActionImage.setShadow({
+                    color: 'yellow',
+                    blur: 10,
+                });
             }
         }
         let nodeAtTail = this.graph.getNodeInRange(endX, endY);
@@ -1759,7 +1746,10 @@ class EdgeView {
                     dst_node_id: nodeAtTail.getNodeId(),
                 });
             } else {
-                this.nodeFabricObject.getValue(nodeAtTail.getNodeId()).nodeConnectingIndicator.visible = true;
+                this.nodeFabricObject.getValue(nodeAtTail.getNodeId()).nodeActionImage.setShadow({
+                    color: 'yellow',
+                    blur: 10,
+                });
             }
         }
 
@@ -1861,21 +1851,39 @@ class EdgeView {
     }
 
     private calculateConnectionPoint(originX: number, originY: number, pointX: number, pointY: number): Coordinate {
-        let angle = Math.atan2((pointY - originY), (pointX - originX));
-        let x = originX + (NODE_SIZE / 2 - 2) * Math.cos(angle);
-        let y = originY + (NODE_SIZE / 2 - 2) * Math.sin(angle);
+        let x: number, y: number;
+
+        let angle = Math.atan2((pointY - originY), (pointX - originX)) * 180 / Math.PI;
+        if (angle >= -25 && angle <= 15) {
+            x = originX + 60;
+            y = originY;
+        } else if (angle > 15 && angle < 160) {
+            x = originX;
+            y = originY + 25;
+        } else if ((angle > 160 && angle < 180) || (angle < -160 && angle > -180)) {
+            x = originX - 60;
+            y = originY;
+        } else if (angle < -25 && angle >= -160) {
+            x = originX;
+            y = originY - 25;
+        }
         return { x: x, y: y };
     }
 
     private clearNodeConnectingIndicator() {
         this.nodeFabricObject.forEach((nodeId, nodeView) => {
-            nodeView.nodeConnectingIndicator.visible = false;
+            nodeView.nodeActionImage.setShadow({
+                color: '#fff',
+            });
         })
     }
 
     public deselect() {
         this.dotHead.visible = false;
         this.dotTail.visible = false;
+        this.edgeDeleteBtn.visible = false;
+        for (let delBtn of this.triggerDeleteBtn)
+                delBtn.visible = false;
     }
 }
 

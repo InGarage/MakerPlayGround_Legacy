@@ -128,7 +128,7 @@ export class GraphData {
 
         for (let prop of action.params) {
             if (prop.name === 'name')
-                allParams[prop.name] = [default_name + ' 1'];
+                allParams[prop.name] = [default_name + ' ?'];
             else
                 allParams[prop.name] = prop.default_value;
         }
@@ -143,17 +143,18 @@ export class GraphData {
         this.undoStack.push(this.data);
     }
 
-    getNodeInRange(endX: number, endY: number, range: number = 70): NodeData {
-        //const NODE_SIZE: number = 100
+    getNodeInRange(endX: number, endY: number, range: number = 15): NodeData {
         let result: NodeData;
+        let difX = 60  + range;  // NODE_SIZE_WIDTH/2
+        let difY = 25 + range;   // NODE_SIZE_HEIGHT/2
+
         this.data.get('nodes').forEach((value, key) => {
             let display_x = parseFloat(value.get('display_x'));
             let display_y = parseFloat(value.get('display_y'));
 
-            // 60 is radius of circle
-            if (Math.sqrt((endX - display_x) * (endX - display_x) + (endY - display_y) * (endY - display_y)) < range) {
+            if (display_x-difX < endX && endX < display_x+difX && display_y-difY < endY && endY < display_y+difY) {
                 result = new NodeData(key, value);
-                return false;
+                return false;   
             }
         });
 
@@ -291,11 +292,16 @@ export class GraphData {
         this.data = this.data.asMutable();
         for (let trigger of data.children) {
             for (let param of trigger.param) {
-                console.log('model (secound should be array)', param.name, param.value);
-                console.log(data.uid, trigger.id, param.name);
                 this.data = this.data.setIn(['edges', data.uid, 'trigger', trigger.id, 'params', param.name], Immutable.fromJS(param.value));
             }
         }
+        this.data = this.data.asImmutable();
+        this.undoStack.push(this.data);
+    }
+
+    updateProp(id: string, param: string) {
+        this.data = this.data.asMutable();
+        this.data = this.data.setIn(['nodes', id, 'params', 'name'], Immutable.fromJS([param]));
         this.data = this.data.asImmutable();
         this.undoStack.push(this.data);
     }
@@ -304,7 +310,7 @@ export class GraphData {
         let param = {};
         for (let prop of trigger.params) {
             if (prop.name === 'name')
-                param[prop.name] = [trigger.name + ' 1'];
+                param[prop.name] = [trigger.name];
             else
                 param[prop.name] = prop.default_value;
         }

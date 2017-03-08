@@ -27,25 +27,30 @@
 
   <div class="btnRow">
     <div id="inline">
-      <input #box type="text" name="project_name" (blur)="onOutOfFocus()">
+      <input #box type="text" name="project_name">
     </div>
     <div id="inline">
       <button class="btn btn-primary btn-margin" (click)="newProject(box.value)">+Create New Project</button>
     </div>
   </div>
 
-  <div class="allProjectsTable">
-    <md-grid-list cols="4" rowHeight="4:3" gutterSize="20px">
-      <md-grid-tile *ngFor="let project of projects" [colspan]="1" [rowspan]="1"
-      [style.background]="'lightblue'" (click)="getProject(project.project_id)">
+</div>
 
-        <div class="projectName">
-          <div class="fontProjectName">
-            {{project.project_name}}
-          </div>
+<div class="allProjectsTable">
+  <md-grid-list cols="4" rowHeight="4:3" gutterSize="20px">
+    <md-grid-tile id="eachProject" *ngFor="let project of projects; let i = index" [colspan]="1" [rowspan]="1" [style.background]="'lightblue'"
+      (click)="getProject(project.project_id)" (mouseover)='displayDelBtn(i)' (mouseout)="fadeDelBtn(i)">
+
+      <div class="deleteProjectBtn" *ngIf="displayDel[i].delBtn === true" (click)="deleteProject(project.project_id)">
+        <span class="glyphicon-fix glyphicon-remove" aria-hidden="true"></span>
+      </div>
+
+      <div class="projectName">
+        <div class="fontProjectName">
+          {{project.project_name}}
         </div>
-      </md-grid-tile>
-    </md-grid-list>
-  </div>
-  
+      </div>
+
+    </md-grid-tile>
+  </md-grid-list>
 </div>

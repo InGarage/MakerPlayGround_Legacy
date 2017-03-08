@@ -1,3 +1,4 @@
+
 /*********************************************
  * Using in home.component.html
 */
@@ -7,6 +8,7 @@
     position: fixed;
     width: 100%;
     background-color: #444a62;
+    z-index: 1;
 }
 
 .imgLogo {
@@ -29,6 +31,7 @@
 .customContainer {
     padding-top: 51px;
     background-color: #edeef2;
+    
 }
 
 .btnRow {
@@ -46,6 +49,7 @@
     margin-top: 80px;
     left: 50%;
     width: 70%;
+    z-index: -1;
   -ms-transform: translateX(-50%);
   -webkit-transform: translate(-50%,0%);
   transform: translate(-50%,0%);
@@ -67,6 +71,13 @@
     font-family: Roboto;
     font-size: 14px;
     color: #f4f4f5;
+}
+
+.deleteProjectBtn {
+    position: relative;
+    left: 45%;
+    top: -40%;
+    background-color: yellow;
 }
 
 /*******************************/
@@ -127,9 +138,8 @@
 
 }
 
-
 .imgPeek {
-    position: absolute;
     width: 100%;
     height: 100%;
+    background-color: lightblue;
 }
