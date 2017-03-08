@@ -5,7 +5,10 @@ import { HttpModule, Http, RequestOptions, JsonpModule } from '@angular/http';
 import { AuthHttp, AuthConfig } from 'angular2-jwt';
 import { TreeModule } from 'angular2-tree-component';
 import {MdGridListModule} from '@angular/material';
-import { AccordionModule } from 'ng2-bootstrap/accordion';
+// import { AccordionModule } from 'ng2-bootstrap/accordion';
+import { AccordionModule } from './custom-bootstrap/accordion';
+import {DropdownModule} from 'ng2-bootstrap/dropdown';
+
 
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login.component';
@@ -31,7 +34,7 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
 
 @NgModule({
   imports: [BrowserModule, FormsModule, HttpModule, JsonpModule, routing, TreeModule, 
-            MdGridListModule, AccordionModule.forRoot()],
+            MdGridListModule, AccordionModule.forRoot(), DropdownModule.forRoot()],
   declarations: [AppComponent, LoginComponent, HomeComponent, TutorialComponent,
     SampleProjectComponent, Step1Component, ActionComponent,
     MiddleComponent, PropertyComponent, Step3Component, KeysPipe],

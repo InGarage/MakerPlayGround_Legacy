@@ -24,5 +24,21 @@ export class Step3Component {
     });
   }
 
+  ngOnInit() {
+    $(window).on("resize", () => {
+      this.setHeight();
+    }).resize();
+  }
+
+  setHeight() { 
+    let windowHeight = $(window).height();
+    let styles = {
+      'height': (windowHeight-200) + 'px',
+      'overflow-y': 'scroll',
+    };
+    return styles;
+  }
+
+
 
 }

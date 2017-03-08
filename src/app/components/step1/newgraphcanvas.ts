@@ -37,6 +37,7 @@ export interface CanvasEventOptions {
     start_y?: number,
     center_x?: number,
     center_y?: number,
+    param?: string,
     end_x?: number,
     end_y?: number,
     toBeMissing?: EdgeData,     // EdgeData of edge that is going to disappear from canvas
@@ -44,7 +45,7 @@ export interface CanvasEventOptions {
     triggerIndex?: number
 }
 
-export type CanvasEventTypes = 'node:selected' | 'node:move' | 'node:remove' | 'edge:move' | 'object:deselected'
+export type CanvasEventTypes = 'node:selected' | 'node:move' | 'node:remove' | 'node:update' | 'edge:move' | 'object:deselected'
     | 'edge:connectionDst' | 'edge:connectionSrc' | 'edge:selected' | 'edge:combine' | 'trigger:remove' | 'edge:remove'
     | 'mouse:up' | 'mouse:down' | 'mouse:move';
 
@@ -104,6 +105,25 @@ export class GraphCanvas {
                     console.log("We are in great danger!!!");
                 }
             }
+        });
+
+        this.canvas.on('object:modified', (e) => {
+            if (this.nodeFabricObject.containsKey(this.selectingObject.id)) {
+                this.nodeFabricObject.forEach((nodeId, nodeView) => {
+                    let nodeInfo = this.graph.getNodeById(this.selectingObject.id);
+                    if (nodeId === this.selectingObject.id) {
+                        let val = nodeView.nodeNameText.getText();
+                        if (nodeView.nodeNameText.getText() !== nodeInfo.getActionParams('name')[0]) {
+                            this.callback.getValue('node:update')({
+                                target_id: nodeView.id,
+                                param: nodeView.nodeNameText.getText()
+                            });
+                        }
+
+                    }
+                });
+            }
+
         });
     }
 
@@ -580,12 +600,20 @@ class NodeView {
             });
         });
 
+        this.nodeNameText.on('changed', (options) => {
+            console.log('changed', options);
+        });
+
         this.nodeRemoveButton.on('selected', (options) => {
             this.deleteNode(this.nodeActionImage.getLeft(), this.nodeActionImage.getTop());
         });
     }
 
     moveNode(originX: number, originY: number, shouldEmittedEvent: boolean = false) {
+        this.nodeActionImage.setShadow({
+            color: '#66afe9',
+            blur: 10,
+        });
         // move every components to the new location
         this.nodeActionImage.set({ left: originX, top: originY });
         this.nodeNameText.set({ left: originX, top: originY + NODE_NAME_YPOS });
@@ -770,19 +798,19 @@ class NodeView {
     private calculateConnectionPoint(originX: number, originY: number, pointX: number, pointY: number): Coordinate {
         let x: number, y: number;
 
-        let angle = Math.atan2((pointY - originY), (pointX - originX))*180/Math.PI;
+        let angle = Math.atan2((pointY - originY), (pointX - originX)) * 180 / Math.PI;
         if (angle >= -25 && angle <= 15) {
-            x = originX+60;
+            x = originX + 60;
             y = originY;
         } else if (angle > 15 && angle < 160) {
             x = originX;
-            y = originY+25;
+            y = originY + 25;
         } else if ((angle > 160 && angle < 180) || (angle < -160 && angle > -180)) {
-            x = originX-60;
-            y = originY;    
+            x = originX - 60;
+            y = originY;
         } else if (angle < -25 && angle >= -160) {
             x = originX;
-            y = originY-25;
+            y = originY - 25;
         }
         return { x: x, y: y };
     }
@@ -1774,19 +1802,19 @@ class EdgeView {
     private calculateConnectionPoint(originX: number, originY: number, pointX: number, pointY: number): Coordinate {
         let x: number, y: number;
 
-        let angle = Math.atan2((pointY - originY), (pointX - originX))*180/Math.PI;
+        let angle = Math.atan2((pointY - originY), (pointX - originX)) * 180 / Math.PI;
         if (angle >= -25 && angle <= 15) {
-            x = originX+60;
+            x = originX + 60;
             y = originY;
         } else if (angle > 15 && angle < 160) {
             x = originX;
-            y = originY+25;
+            y = originY + 25;
         } else if ((angle > 160 && angle < 180) || (angle < -160 && angle > -180)) {
-            x = originX-60;
-            y = originY;    
+            x = originX - 60;
+            y = originY;
         } else if (angle < -25 && angle >= -160) {
             x = originX;
-            y = originY-25;
+            y = originY - 25;
         }
         return { x: x, y: y };
     }
@@ -1803,6 +1831,8 @@ class EdgeView {
         this.dotHead.visible = false;
         this.dotTail.visible = false;
         this.edgeDeleteBtn.visible = false;
+        for (let delBtn of this.triggerDeleteBtn)
+                delBtn.visible = false;
     }
 }
 

@@ -67,7 +67,7 @@ export namespace TriggerHelper {
               "name": "Accelerate",
               "control": "NumberExpression",
               "default_value": [
-                "1"
+                '>','3'
               ],
               "args": [
                 "m/s^2"

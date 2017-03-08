@@ -74,13 +74,13 @@ export class ActionComponent {
  ************************************************/ 
   setElementHeight() {
     this.windowHeight = $(window).height();
-    this.maxHeight = (this.windowHeight*8.5)/10;
+    this.maxHeight = this.windowHeight;
     this.setFlexMenuStyles();
   }
 
   setActionStyles() {
     this.styles = {
-      'overflow-y': 'scroll',
+      'overflow-y': 'auto',
       'width': '100%',
       'max-height': this.maxActionHeight + 'px',
     };
@@ -91,7 +91,7 @@ export class ActionComponent {
   setTriggerStyles() {
 
     this.styles = {
-      'overflow-y': 'scroll',
+      'overflow-y': 'auto',
       'width': '100%',
       'max-height': this.maxTriggerHeight + 'px',
     };
@@ -108,18 +108,17 @@ export class ActionComponent {
     this.manageFlexBox();
   }
 
-
   manageFlexBox() {
     setTimeout(() => {
       let getTrigger = document.getElementById("trigger");
       this.triggerCurrentHeight = getTrigger.offsetHeight;
 
-      this.maxActionHeight = this.maxHeight - (this.triggerCurrentHeight) - 100;
+      this.maxActionHeight = this.maxHeight - (this.triggerCurrentHeight) - 100 - 150;
 
       let getAction = document.getElementById("action");
       this.actionCurrentHeight = getAction.offsetHeight;
 
-      this.maxTriggerHeight = this.maxHeight - (this.actionCurrentHeight) - 100;
+      this.maxTriggerHeight = this.maxHeight - (this.actionCurrentHeight) - 100 - 150;
     }, 50);
 
     this.setActionStyles();

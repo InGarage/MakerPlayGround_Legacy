@@ -292,11 +292,16 @@ export class GraphData {
         this.data = this.data.asMutable();
         for (let trigger of data.children) {
             for (let param of trigger.param) {
-                console.log('model (secound should be array)', param.name, param.value);
-                console.log(data.uid, trigger.id, param.name);
                 this.data = this.data.setIn(['edges', data.uid, 'trigger', trigger.id, 'params', param.name], Immutable.fromJS(param.value));
             }
         }
+        this.data = this.data.asImmutable();
+        this.undoStack.push(this.data);
+    }
+
+    updateProp(id: string, param: string) {
+        this.data = this.data.asMutable();
+        this.data = this.data.setIn(['nodes', id, 'params', 'name'], Immutable.fromJS([param]));
         this.data = this.data.asImmutable();
         this.undoStack.push(this.data);
     }

@@ -23,8 +23,8 @@ export class PropertyComponent {
     previousObjDataEdge: EdgeData;
     dirty: boolean;
 
-    operators = [ {value: '>', text: '>'}, {value: '<', text: '<'}, {value: '>=', text: '>='}, 
-            {value: '<=', text: '<='}, {value: '==', text: '='}, {value: '!=', text: '!='}];
+    operators = [{ value: '>', text: '>' }, { value: '<', text: '<' }, { value: '>=', text: '>=' },
+    { value: '<=', text: '<=' }, { value: '==', text: '=' }, { value: '!=', text: '!=' }];
 
     ngOnChanges(changes: SimpleChange) {
         if (this.objectSelected instanceof NodeData) {
@@ -77,7 +77,7 @@ export class PropertyComponent {
             uid: objData.getNodeId(),
             children: listEachAction
         }
-        
+
         // If this object has only name property, property window must not be shown
         if (listParamObj.length === 1)
             this.showProperties = false;
@@ -102,7 +102,7 @@ export class PropertyComponent {
         //for (const id of triggleId) {
         const triggers = objData.getTrigger();
         for (const trigger of triggers) {
-        //for (let i=0; i<objData.getNumberOfTrigger(); i++) {
+            //for (let i=0; i<objData.getNumberOfTrigger(); i++) {
             let triggerInfo = TriggerHelper.findTriggerById(trigger.getTriggerId()); // Get this trigger from json
             let paramObj: Parameter;
             let listParamObj: Parameter[] = [];
@@ -123,7 +123,20 @@ export class PropertyComponent {
                 param: listParamObj,
             }
             listEachTrigger.push(eachTrigger);
+        }
 
+        // if (listEachTrigger.length === 1) {
+        //     if (listEachTrigger[0].param.length === 1)
+        //         this.showProperties = false;
+        //     else
+        //         this.showProperties = true;
+        // }
+
+        for (let t of listEachTrigger) {
+            if (t.param.length === 1)
+                this.showProperties = false;
+            else
+                this.showProperties = true;
         }
 
         this.objProperties = {
@@ -134,7 +147,7 @@ export class PropertyComponent {
 
     setInnerFormStyles() {
         let styles = {
-            'margin-bottom': '15px',
+            'margin-bottom': '10px',
         };
         return styles;
     }
@@ -155,12 +168,21 @@ export class PropertyComponent {
         return styles;
     }
 
+    setDropdown() {
+        let styles = {
+            'height': '20px',
+            'width': '100%',
+            'display': 'inline',
+        };
+        return styles;
+    }
+
 
     setOutmostFormStyles() {
         let styles = {
             'padding-left': '30px',
             'padding-right': '30px',
-            'padding-bottom': '15px',
+            'padding-bottom': '10px',
         };
         return styles;
     }

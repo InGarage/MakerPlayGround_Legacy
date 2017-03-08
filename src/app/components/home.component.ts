@@ -4,6 +4,7 @@ import { Auth } from '../auth.service';
 import { ProjectService } from '../services/projects.service';
 import { Project } from './project';
 import * as UUID from 'uuid';
+import * as $ from 'jquery';
 
 @Component({
   selector: 'home',
@@ -15,7 +16,9 @@ export class HomeComponent {
 
   projects: Project[];
   displayProjectsTemplate;
-  displayDel: boolean = false;
+  displayDel = [];
+  dirty: boolean;
+  myButton;
 
   constructor(private auth: Auth, private ProjectService: ProjectService, private router: Router) { }
 
@@ -25,12 +28,19 @@ export class HomeComponent {
   // <br>Modified: {{project.modified_date}}
 
   ngOnInit() {
+    console.log('refresh page');
+    this.dirty = true;
     this.getAllProjects();
   }
 
   getAllProjects() {
     this.ProjectService.getAllProjects().subscribe(projects => {
       this.projects = projects.projects;
+
+      // for displaying the delete project button
+      for (let project of this.projects) {
+        this.displayDel.push({ delBtn: false });
+      }
     });
   }
 
@@ -84,28 +94,39 @@ export class HomeComponent {
     };
 
     this.ProjectService.newProject(newProject).subscribe(projects => {
-      console.log('new project', projects);
       this.ProjectService.setCurrentProject(projects);
       this.router.navigate(['/step1']);
     });
   }
 
   getProject(id: string) {
-    console.log(id);
-    this.ProjectService.getProject(id).subscribe(project => {
-      console.log('get project id ', project);
-      (<Project>project).project_data = JSON.parse((<Project>project).project_data).project_data;
-      this.ProjectService.setCurrentProject(project);
-      this.router.navigate(['/step1']);
-    });
+    if (this.dirty === true) {
+      this.ProjectService.getProject(id).subscribe(project => {
+        console.log('get project id ', project);
+        (<Project>project).project_data = JSON.parse((<Project>project).project_data).project_data;
+        this.ProjectService.setCurrentProject(project);
+        this.router.navigate(['/step1']);
+      });
+    }
   }
 
-  displayDelBtn() {
-    this.displayDel = true;
+  deleteProject(id: string) {
+    console.log('delete', id);
+    this.dirty = false;
+    // delete project
+
+    // re-populate all projects table
+    window.location.reload();
   }
 
-  fadeDelBtn() {
-    this.displayDel = false;
+  displayDelBtn(index) {
+    console.log('mouseover');
+    this.displayDel[index].delBtn = true;
+  }
+
+  fadeDelBtn(index) {
+    console.log('mouseout');
+    this.displayDel[index].delBtn = false;
   }
 
 }

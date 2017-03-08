@@ -92,6 +92,11 @@ export class MiddleComponent implements OnInit, OnDestroy {
         this.canvas = new GraphCanvas(this.model, 'c');
         this.canvas.redraw();
 
+        this.canvas.on('node:update', (options) => {
+            this.model.updateProp(options.target_id, options.param);
+            this.canvas.redraw();
+        });
+
         this.canvas.on('node:move', (options) => {
             this.model.moveNode(options.target_id, options.center_x, options.center_y);
             this.canvas.redraw();
