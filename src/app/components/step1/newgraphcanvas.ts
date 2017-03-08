@@ -21,10 +21,10 @@ const NODE_REMOVEBTN_POSX: number = (NODE_SIZE_WIDTH / 2) - 8;
 const NODE_REMOVEBTN_POSY: number = (NODE_SIZE_HEIGHT / 2) - 8;
 const NODE_REMOVEBTN_SIZE: number = 5;
 const EDGE_ARROW_HEAD_SIZE: number = 10;
-const EDGE_ARROW_WIDTH: number = 2;
+const EDGE_ARROW_WIDTH: number = 1;
 const EDGE_SVG_SCALE: number = 0.5;
 const EDGE_IMAGE_SIZE: number = 50;
-const EDGE_IMAGE_DISTANCE: number = 30;
+const EDGE_IMAGE_DISTANCE: number = 20;
 const EDGE_DOT_RADIUS: number = 3;
 const EDGE_DELBTN_DISTANCE: number = 15;
 const TRIGGER_DESCRIP: number = 12;
@@ -1013,7 +1013,7 @@ class EdgeView {
             this.line.setCoords();
         });
         this.curveControlPoint.on('modified', (options) => {
-            
+
         });
 
         this.triggerDescription.on('moving', (options) => {
@@ -1196,7 +1196,7 @@ class EdgeView {
         this.curveControlPoint.set({
             left: this.curve.getCenterPoint()[0],
             top: this.curve.getCenterPoint()[1],
-            radius: 5,
+            radius: EDGE_DOT_RADIUS,
             fill: '#444a62',
             originX: 'center',
             originY: 'center',
@@ -1303,7 +1303,7 @@ class EdgeView {
                 fontFamily: "Roboto",
                 fontSize: TRIGGER_DESCRIP,
                 originX: 'center',
-                originY: 'center',
+                originY: 'center'
             });
 
             let cross_1 = new fabric.Line([5, 0, 5, 10], {
@@ -1544,8 +1544,28 @@ class EdgeView {
         this.triggerDescription.setCoords();
     }
 
-    getTopLeftForDescription(angle: number) {
-        let top: number, left: number;
+    getTopLeftForDescription(angle_unused: number) {
+        const centerPoint = this.curve.getCenterPoint();
+        const tangent = this.curve.getTangentVector(0.5);
+        let normal = this.curve.getNormalVector(0.5);
+        let angle = Math.atan2(tangent[1], tangent[0]) * 180 / Math.PI;
+        if (angle > 90) {
+            angle = angle - 180;
+            normal = [-normal[0], -normal[1]];
+        } else if (angle < -90) {
+            angle = angle + 180;
+            normal = [-normal[0], -normal[1]];
+        }
+
+        // const tangentLineLenght = 50;
+        // var tangentLine = new fabric.Line([centerPoint[0] - tangent[0] * tangentLineLenght, centerPoint[1] - tangent[1] * tangentLineLenght, centerPoint[0] + tangent[0] * tangentLineLenght, centerPoint[1] + tangent[1] * tangentLineLenght], {
+        // stroke: 'blue',
+        // });
+        // this.canvas.add(tangentLine);
+
+        return [centerPoint[0] - EDGE_IMAGE_DISTANCE * normal[0], centerPoint[1] - EDGE_IMAGE_DISTANCE * normal[1], angle];
+        //return [centerPoint[0], centerPoint[1] - 30, 0];
+        /*let top: number, left: number;
         let newTop: number, newLeft: number;
 
         left = this.line.getLeft() + (EDGE_ARROW_HEAD_SIZE / 2 * Math.cos(angle)) / 2;
@@ -1555,7 +1575,7 @@ class EdgeView {
         if (Math.abs(angleInDegree) > 90)
             return [left + (EDGE_IMAGE_DISTANCE * Math.sin(-angle)), top + (EDGE_IMAGE_DISTANCE * Math.cos(-angle)), (angle * 180 / Math.PI) + 180];
         else
-            return [left - (EDGE_IMAGE_DISTANCE * Math.sin(-angle)), top - (EDGE_IMAGE_DISTANCE * Math.cos(-angle)), (angle * 180 / Math.PI)];
+            return [left - (EDGE_IMAGE_DISTANCE * Math.sin(-angle)), top - (EDGE_IMAGE_DISTANCE * Math.cos(-angle)), (angle * 180 / Math.PI)];*/
     }
 
     findIntersectionPoint(x1: number, y1: number, x2: number, y2: number, shouldEmittedEvent: boolean): combineEdge {
@@ -1883,7 +1903,7 @@ class EdgeView {
         this.dotTail.visible = false;
         this.edgeDeleteBtn.visible = false;
         for (let delBtn of this.triggerDeleteBtn)
-                delBtn.visible = false;
+            delBtn.visible = false;
     }
 }
 
