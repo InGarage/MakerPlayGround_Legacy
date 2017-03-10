@@ -172,7 +172,7 @@ export namespace ActionHelper {
     "children": [
       {
         "id": "AN_LCD_1",
-        "name": "Backlight On",
+        "name": "Backlight\nOn",
         "short_description": "Turn the LCD backlight on",
         "params": [
           {
@@ -194,7 +194,7 @@ export namespace ActionHelper {
       },
       {
         "id": "AN_LCD_2",
-        "name": "Backlight Off",
+        "name": "Backlight\nOff",
         "short_description": "Turn the LCD backlight off",
         "params": [
           {
@@ -249,7 +249,7 @@ export namespace ActionHelper {
       },
       {
         "id": "AN_LCD_4",
-        "name": "Clear screen",
+        "name": "Clear\nscreen",
         "short_description": "Erase all content in the screen",
         "params": [
           {
@@ -321,11 +321,11 @@ export namespace ActionHelper {
     ]
   },
   {
-    "name": "DC Motor",
+    "name": "DCMotor",
     "children": [
       {
         "id": "DCMotor_1",
-        "name": "on",
+        "name": "On",
         "short_description": "Turn a motor on",
         "params": [
           {
@@ -392,7 +392,7 @@ export namespace ActionHelper {
       },
       {
         "id": "DCMotor_3",
-        "name": "set_speed",
+        "name": "set speed",
         "short_description": "Change motor speed",
         "params": [
           {

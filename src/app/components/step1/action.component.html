@@ -20,29 +20,11 @@
       <div [ngStyle]="setTriggerStyles()" id="trigger">
         <accordion-group *ngFor="let trigger of triggers" heading="{{trigger.name}}" style="font-family:verdana;">
 
-          <!--<div id="grid">
-              <div id="gridtop1">
-              <div [style.background]="'lightblue'" class="imgComponent"></div>
-              <p>Text here</p>
-              </div>
-              <div id="gridtop2">
-              <div [style.background]="'lightblue'" class="imgComponent"></div>
-              <p>Text here</p>
-              </div>
-              <div id="gridtop3">
-              <div [style.background]="'lightblue'" class="imgComponent"></div>
-              <p>Text here</p>
-              </div>
-              <div id="gridbottom1">
-               <div [style.background]="'lightblue'" class="imgComponent"></div>
-              <p>Text here</p>
-              </div>
-          </div>-->
 
           <div id="grid">
             <div *ngFor="let key of trigger.children | keys">
               <div [style.background]="'lightblue'" class="imgComponent" (click)="selectedTrigger(key.value)"></div>
-              <p>{{key.value.name}}</p>
+              <p class="textDescrip">{{key.value.name}}</p>
             </div>
           </div>
           <!--<md-grid-list cols="4" row="2" gutterSize="5px">

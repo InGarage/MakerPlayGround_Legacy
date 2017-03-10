@@ -37,15 +37,15 @@ export class ActionComponent {
     this.actions = ActionHelper.actionData;
     this.triggers = TriggerHelper.triggerData;
 
-    for (let i of this.triggers) {
-      for (let j of i.children) {
-        const args = [];
-        const text = j.name.replace(/\n/g, (match, number) => {
-          return typeof args[number] !== 'undefined' ? args[number] : match;
-        });
-        j.name = text;
-      }
-    }
+    // for (let i of this.triggers) {
+    //   for (let j of i.children) {
+    //     const args = [];
+    //     const text = j.name.replace(/\n/g, (match, number) => {
+    //       return typeof args[number] !== 'undefined' ? args[number] : match;
+    //     });
+    //     j.name = text;
+    //   }
+    // }
 
   }
 
