@@ -125,15 +125,8 @@ export class PropertyComponent {
             listEachTrigger.push(eachTrigger);
         }
 
-        // if (listEachTrigger.length === 1) {
-        //     if (listEachTrigger[0].param.length === 1)
-        //         this.showProperties = false;
-        //     else
-        //         this.showProperties = true;
-        // }
-
-        for (let t of listEachTrigger) {
-            if (t.param.length === 1)
+        if (listEachTrigger.length === 1) {
+            if (listEachTrigger[0].param.length === 1)
                 this.showProperties = false;
             else
                 this.showProperties = true;
@@ -151,15 +144,6 @@ export class PropertyComponent {
         };
         return styles;
     }
-
-    setInputStylesNumberExpression() {
-        let styles = {
-            'width': '30%',
-            'display': 'inline',
-        };
-        return styles;
-    }
-
     setInputStyles() {
         let styles = {
             'width': '60%',
@@ -167,16 +151,6 @@ export class PropertyComponent {
         };
         return styles;
     }
-
-    setDropdown() {
-        let styles = {
-            'height': '20px',
-            'width': '100%',
-            'display': 'inline',
-        };
-        return styles;
-    }
-
 
     setOutmostFormStyles() {
         let styles = {

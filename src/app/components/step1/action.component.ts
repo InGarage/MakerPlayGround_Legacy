@@ -18,7 +18,7 @@ export class ActionComponent {
   @Output() addEdge = new EventEmitter<Trigger>();
 
   actions: ActionGroup[];
-  triggers: any[];
+  triggers: TriggerGroup[];
   showActionMenu: boolean = false;
   showTriggerMenu: boolean = false;
   windowHeight: number;
@@ -26,7 +26,7 @@ export class ActionComponent {
 
   windowWidth: number;
   componentMenuWidth: string;
-  componentMenuHeight: string;  
+  componentMenuHeight: string;
   maxActionHeight: number;
   maxTriggerHeight: number;
   actionCurrentHeight: number;
@@ -36,6 +36,16 @@ export class ActionComponent {
   constructor() {
     this.actions = ActionHelper.actionData;
     this.triggers = TriggerHelper.triggerData;
+
+    // for (let i of this.triggers) {
+    //   for (let j of i.children) {
+    //     const args = [];
+    //     const text = j.name.replace(/\n/g, (match, number) => {
+    //       return typeof args[number] !== 'undefined' ? args[number] : match;
+    //     });
+    //     j.name = text;
+    //   }
+    // }
 
   }
 
@@ -52,7 +62,7 @@ export class ActionComponent {
   setElementWidth() {
     this.windowWidth = $(window).width();
     // componentMenuWidth equal to 20 percent of windowWidth
-    this.componentMenuWidth = (this.windowWidth/5) + 'px';
+    this.componentMenuWidth = (this.windowWidth / 5) + 'px';
     this.setFlexMenuStyles();
   }
 
@@ -67,11 +77,11 @@ export class ActionComponent {
   }
 
 
-/************************************************
- *    Deal with height of left-side menu        *
- *    depends on user's window                  *
- *    (execute on resizing and zooming)         *
- ************************************************/ 
+  /************************************************
+   *    Deal with height of left-side menu        *
+   *    depends on user's window                  *
+   *    (execute on resizing and zooming)         *
+   ************************************************/
   setElementHeight() {
     this.windowHeight = $(window).height();
     this.maxHeight = this.windowHeight;
@@ -100,9 +110,9 @@ export class ActionComponent {
   }
 
 
-/**********************************************************
- *    Deal with tree component in Action/Trigger menu     *
- *********************************************************/ 
+  /**********************************************************
+   *    Deal with tree component in Action/Trigger menu     *
+   *********************************************************/
 
   toggleTreeview() {
     this.manageFlexBox();
@@ -156,9 +166,9 @@ export class ActionComponent {
   }
 
 
-/*******************************
- *  Output event handle        *
- *******************************/ 
+  /*******************************
+   *  Output event handle        *
+   *******************************/
 
   // deleteState($event: any) {
   //   this.myEvent.emit($event);
@@ -175,10 +185,10 @@ export class ActionComponent {
 
   selectedTrigger(trigger: any) {
     this.addEdge.emit(trigger);
-  //   console.log($event.node.data);
-  //   if ($event.node.isLeaf) {
-  //     this.addEdge.emit($event.node.data);
-  //   }
+    //   console.log($event.node.data);
+    //   if ($event.node.isLeaf) {
+    //     this.addEdge.emit($event.node.data);
+    //   }
   }
 }
 

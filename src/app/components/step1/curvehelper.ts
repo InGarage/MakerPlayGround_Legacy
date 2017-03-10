@@ -22,8 +22,35 @@ export class BezierCurve {
         return this.calculateBezierCurveTangent(this.controlPoints[0], 1);
     }
 
+    getCompensatedTangentVector(t) {
+        let tangent = this.getTangentVector(0.5);
+        let angle = Math.atan2(tangent[1], tangent[0]) * 180 / Math.PI;
+        if (angle > 90) {
+            angle = angle - 180;
+            tangent = [-tangent[0], -tangent[1]];
+        } else if (angle < -90) {
+            angle = angle + 180;
+            tangent = [-tangent[0], -tangent[1]];
+        }
+        return tangent;
+    }
+
     getNormalVector(t) {
         return this.findPerpendicularVector(this.controlPoints[0], 1);
+    }
+
+    getCompensatedNormalVector(t) {
+        const tangent = this.getTangentVector(0.5);
+        let normal = this.getNormalVector(0.5);
+        let angle = Math.atan2(tangent[1], tangent[0]) * 180 / Math.PI;
+        if (angle > 90) {
+            angle = angle - 180;
+            normal = [-normal[0], -normal[1]];
+        } else if (angle < -90) {
+            angle = angle + 180;
+            normal = [-normal[0], -normal[1]];
+        }
+        return normal;
     }
 
     moveCenterPoint(newX, newY) {
@@ -52,23 +79,28 @@ export class BezierCurve {
         var points = [];
         points.push([startX, startY]);
 
+        let diffX = Math.abs((endX - startX) * 0.75);
+        if (diffX < 20) {
+            diffX = 20;
+        }
+
         if (startDirection === 'r')
-            points.push([startX + Math.abs((endX - startX) * 0.75), startY]);
+            points.push([startX + diffX, startY]);
         else if (startDirection === 't')
             points.push([startX, startY - Math.abs((startY - endY) * 0.75)]);
         else if (startDirection === 'b')
             points.push([startX, startY + Math.abs((startY - endY) * 0.75)]);
         else if (startDirection === 'l') // shouldn't happen
-            points.push([startX - Math.abs((endX - startX) * 0.75), startY]);
+            points.push([startX - diffX, startY]);
 
         if (endDirection === 'l')
-            points.push([endX - Math.abs((endX - startX) * 0.75), endY]);
+            points.push([endX - diffX, endY]);
         else if (endDirection === 't')
             points.push([endX, endY - Math.abs((startY - endY) * 0.75)]);
         else if (endDirection === 'b')
             points.push([endX, endY + Math.abs((startY - endY) * 0.75)]);
         else if (endDirection === 'r') // shouldn't happen
-            points.push([endX + Math.abs((endX - startX) * 0.75), endY]);
+            points.push([endX + diffX, endY]);
 
         points.push([endX, endY]);
         return points;

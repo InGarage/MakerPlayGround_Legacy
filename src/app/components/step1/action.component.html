@@ -5,7 +5,7 @@
 
       <div [ngStyle]="setActionStyles()" id="action">
         <accordion-group *ngFor="let action of actions" heading="{{action.name}}" style="font-family:verdana;">
-          <md-grid-list cols="4" rowHeight="4:3" gutterSize="5px">
+          <md-grid-list cols="4" gutterSize="5px">
             <md-grid-tile *ngFor="let key of action.children | keys" [colspan]="1" [rowspan]="1" [style.background]="'lightblue'" (click)="selectedAction(key.value)">
             </md-grid-tile>
           </md-grid-list>
@@ -19,10 +19,24 @@
 
       <div [ngStyle]="setTriggerStyles()" id="trigger">
         <accordion-group *ngFor="let trigger of triggers" heading="{{trigger.name}}" style="font-family:verdana;">
-          <md-grid-list cols="4" rowHeight="4:3" gutterSize="5px">
+
+
+          <div id="grid">
+            <div *ngFor="let key of trigger.children | keys">
+              <div [style.background]="'lightblue'" class="imgComponent" (click)="selectedTrigger(key.value)"></div>
+              <p class="textDescrip">{{key.value.name}}</p>
+            </div>
+          </div>
+          <!--<md-grid-list cols="4" row="2" gutterSize="5px">
+
             <md-grid-tile *ngFor="let key of trigger.children | keys" [colspan]="1" [rowspan]="1" [style.background]="'lightblue'" (click)="selectedTrigger(key.value)">
+              <md-grid-tile-footer class="customGrid">
+                <p>{{key.value.name}}</p>
+              </md-grid-tile-footer>
             </md-grid-tile>
-          </md-grid-list>
+    
+
+          </md-grid-list>-->
         </accordion-group>
       </div>
     </accordion-group>
