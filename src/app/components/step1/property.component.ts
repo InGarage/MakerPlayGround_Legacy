@@ -119,7 +119,7 @@ export class PropertyComponent {
             });
             eachTrigger = {
                 name: triggerInfo.name,
-                id: <any>trigger.getTriggerIndex(),
+                index: trigger.getTriggerIndex(),
                 param: listParamObj,
             }
             listEachTrigger.push(eachTrigger);

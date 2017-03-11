@@ -11,13 +11,13 @@ export interface Trigger {
   //display_text_param?: display_text_param[];
   display_text_param?: string[];
   params?: TriggerParameter[];
-  compatibility: any;
+  require: require;
 }
 
-// export interface display_text_param {
-//   name: string,
-//   element: string
-// }
+export interface require {
+  type: string,
+  fn_name: string
+}
 
 export interface TriggerParameter {
   name: string;
@@ -76,7 +76,9 @@ export namespace TriggerHelper {
             "name": "Acceleration",
             "control": "NumberExpression",
             "default_value": [
-              "1"
+              ">",
+              "1",
+              "m/s^2"
             ],
             "args": [
               "m/s^2"
@@ -84,8 +86,8 @@ export namespace TriggerHelper {
             "regex": "^\\-?(\\d{1,}([.]\\d{1,})?)$"
           }
         ],
-        "compatibility": {
-          "interface": "MP_Accel",
+        "require": {
+          "type": "Accelerometer",
           "fn_name": "accel_x"
         }
       },
@@ -113,7 +115,9 @@ export namespace TriggerHelper {
             "name": "Acceleration",
             "control": "NumberExpression",
             "default_value": [
-              "1"
+              ">",
+              "1",
+              "m/s^2"
             ],
             "args": [
               "m/s^2"
@@ -121,8 +125,8 @@ export namespace TriggerHelper {
             "regex": "^\\-?(\\d{1,}([.]\\d{1,})?)$"
           }
         ],
-        "compatibility": {
-          "interface": "MP_Accel",
+        "require": {
+          "type": "Accelerometer",
           "fn_name": "accel_y"
         }
       },
@@ -150,7 +154,9 @@ export namespace TriggerHelper {
             "name": "Acceleration",
             "control": "NumberExpression",
             "default_value": [
-              "1"
+              ">",
+              "1",
+              "m/s^2"
             ],
             "args": [
               "m/s^2"
@@ -158,8 +164,8 @@ export namespace TriggerHelper {
             "regex": "^\\-?(\\d{1,}([.]\\d{1,})?)$"
           }
         ],
-        "compatibility": {
-          "interface": "MP_Accel",
+        "require": {
+          "type": "Accelerometer",
           "fn_name": "accel_z"
         }
       },
@@ -182,8 +188,8 @@ export namespace TriggerHelper {
             "regex": "^[\\S]+$"
           }
         ],
-        "compatibility": {
-          "interface": "MP_Accel",
+        "require": {
+          "type": "Accelerometer",
           "fn_name": "tap"
         }
       },
@@ -206,8 +212,8 @@ export namespace TriggerHelper {
             "regex": "^[\\S]+$"
           }
         ],
-        "compatibility": {
-          "interface": "MP_Accel",
+        "require": {
+          "type": "Accelerometer",
           "fn_name": "doubletap"
         }
       },
@@ -230,8 +236,8 @@ export namespace TriggerHelper {
             "regex": "^[\\S]+$"
           }
         ],
-        "compatibility": {
-          "interface": "MP_Accel",
+        "require": {
+          "type": "Accelerometer",
           "fn_name": "freefall"
         }
       }
@@ -264,7 +270,9 @@ export namespace TriggerHelper {
             "name": "Pressure",
             "control": "NumberExpression",
             "default_value": [
-              "1000"
+              ">",
+              "1000",
+              "hPa"
             ],
             "args": [
               "hPa"
@@ -272,8 +280,8 @@ export namespace TriggerHelper {
             "regex": "^\\-?(\\d{1,}([.]\\d{1,})?)$"
           }
         ],
-        "compatibility": {
-          "interface": "MP_Baro",
+        "require": {
+          "type": "Pressure",
           "fn_name": "pressure"
         }
       },
@@ -301,7 +309,9 @@ export namespace TriggerHelper {
             "name": "Altitude",
             "control": "NumberExpression",
             "default_value": [
-              "10"
+              ">",
+              "10",
+              "cm"
             ],
             "args": [
               "cm"
@@ -309,8 +319,8 @@ export namespace TriggerHelper {
             "regex": "^(\\d{1,}([.]\\d{1,})?)$"
           }
         ],
-        "compatibility": {
-          "interface": "MP_Baro",
+        "require": {
+          "type": "Pressure",
           "fn_name": "attitude"
         }
       }
@@ -343,7 +353,9 @@ export namespace TriggerHelper {
             "name": "Temperature",
             "control": "NumberExpression",
             "default_value": [
-              ">","25","C"
+              ">",
+              "25",
+              "C"
             ],
             "args": [
               "C"
@@ -351,8 +363,8 @@ export namespace TriggerHelper {
             "regex": "^(\\d{1,}([.]\\d{1,})?)$"
           }
         ],
-        "compatibility": {
-          "interface": "MP_Temp",
+        "require": {
+          "type": "Temperature",
           "fn_name": "checkTemp"
         }
       }
@@ -380,8 +392,8 @@ export namespace TriggerHelper {
             "regex": "^[\\S]+$"
           }
         ],
-        "compatibility": {
-          "interface": "MP_Button",
+        "require": {
+          "type": "Button",
           "fn_name": "release"
         }
       },
@@ -404,8 +416,8 @@ export namespace TriggerHelper {
             "regex": "^[\\S]+$"
           }
         ],
-        "compatibility": {
-          "interface": "MP_Button",
+        "require": {
+          "type": "Button",
           "fn_name": "doubleRelease"
         }
       }
@@ -438,7 +450,9 @@ export namespace TriggerHelper {
             "name": "Rotation",
             "control": "NumberExpression",
             "default_value": [
-              "100"
+              ">",
+              "100",
+              "dps"
             ],
             "args": [
               "dps"
@@ -446,8 +460,8 @@ export namespace TriggerHelper {
             "regex": "^(\\d{1,}([.]\\d{1,})?)$"
           }
         ],
-        "compatibility": {
-          "interface": "MP_Gyro",
+        "require": {
+          "type": "Gyroscope",
           "fn_name": "rotate_x"
         }
       },
@@ -475,7 +489,9 @@ export namespace TriggerHelper {
             "name": "Rotation",
             "control": "NumberExpression",
             "default_value": [
-              "100"
+              ">",
+              "100",
+              "dps"
             ],
             "args": [
               "dps"
@@ -483,8 +499,8 @@ export namespace TriggerHelper {
             "regex": "^(\\d{1,}([.]\\d{1,})?)$"
           }
         ],
-        "compatibility": {
-          "interface": "MP_Gyro",
+        "require": {
+          "type": "Gyroscope",
           "fn_name": "rotate_y"
         }
       },
@@ -512,7 +528,9 @@ export namespace TriggerHelper {
             "name": "Rotation",
             "control": "NumberExpression",
             "default_value": [
-              "100"
+              ">",
+              "100",
+              "dps"
             ],
             "args": [
               "dps"
@@ -520,8 +538,8 @@ export namespace TriggerHelper {
             "regex": "^(\\d{1,}([.]\\d{1,})?)$"
           }
         ],
-        "compatibility": {
-          "interface": "MP_Gyro",
+        "require": {
+          "type": "Gyroscope",
           "fn_name": "rotate_z"
         }
       }
@@ -552,9 +570,11 @@ export namespace TriggerHelper {
           },
           {
             "name": "Humidity",
-            "control": "Slider",
+            "control": "NumberExpression",
             "default_value": [
-              "30"
+              ">",
+              "30",
+              "%"
             ],
             "args": [
               "%"
@@ -562,8 +582,8 @@ export namespace TriggerHelper {
             "regex": "^(\\d([.]\\d{1,})?|[1-9]\\d([.]\\d{1,})?|100)$"
           }
         ],
-        "compatibility": {
-          "interface": "MP_Humidity",
+        "require": {
+          "type": "Humidity",
           "fn_name": "humidity"
         }
       }
@@ -596,7 +616,8 @@ export namespace TriggerHelper {
             "name": "Volume",
             "control": "Slider",
             "default_value": [
-              "30"
+              "50",
+              "%"
             ],
             "args": [
               "%"
@@ -604,8 +625,8 @@ export namespace TriggerHelper {
             "regex": "^(\\d([.]\\d{1,})?|[1-9]\\d([.]\\d{1,})?|100)$"
           }
         ],
-        "compatibility": {
-          "interface": "MP_Sound",
+        "require": {
+          "type": "Sound",
           "fn_name": "checkVol"
         }
       }
@@ -638,7 +659,8 @@ export namespace TriggerHelper {
             "name": "Time",
             "control": "NumberExpression",
             "default_value": [
-              "1000"
+              "1000",
+              "ms"
             ],
             "args": [
               "milliseconds"
@@ -646,8 +668,8 @@ export namespace TriggerHelper {
             "regex": "^(\\d{1,})$"
           }
         ],
-        "compatibility": {
-          "interface": "MP_Delay",
+        "require": {
+          "type": "General",
           "fn_name": "delay"
         }
       }
@@ -680,7 +702,7 @@ export namespace TriggerHelper {
             "name": "Direction",
             "control": "Dropdown",
             "default_value": [
-              ""
+              "NE"
             ],
             "args": [
               "NE",
@@ -695,8 +717,8 @@ export namespace TriggerHelper {
             "regex": ""
           }
         ],
-        "compatibility": {
-          "interface": "MP_Mag",
+        "require": {
+          "type": "Magnetometer",
           "fn_name": "compass"
         }
       },
@@ -724,7 +746,9 @@ export namespace TriggerHelper {
             "name": "Magnetic",
             "control": "NumberExpression",
             "default_value": [
-              "300"
+              ">",
+              "300",
+              "ut"
             ],
             "args": [
               "ut"
@@ -732,8 +756,8 @@ export namespace TriggerHelper {
             "regex": "^(\\d{1,}([.]\\d{1,})?)$"
           }
         ],
-        "compatibility": {
-          "interface": "MP_Mag",
+        "require": {
+          "type": "Magnetometer",
           "fn_name": "mag_x"
         }
       },
@@ -761,7 +785,9 @@ export namespace TriggerHelper {
             "name": "Magnetic",
             "control": "NumberExpression",
             "default_value": [
-              "300"
+              ">",
+              "300",
+              "ut"
             ],
             "args": [
               "ut"
@@ -769,8 +795,8 @@ export namespace TriggerHelper {
             "regex": "^(\\d{1,}([.]\\d{1,})?)$"
           }
         ],
-        "compatibility": {
-          "interface": "MP_Mag",
+        "require": {
+          "type": "Magnetometer",
           "fn_name": "mag_y"
         }
       },
@@ -798,7 +824,9 @@ export namespace TriggerHelper {
             "name": "Magnetic",
             "control": "NumberExpression",
             "default_value": [
-              "300"
+              ">",
+              "300",
+              "ut"
             ],
             "args": [
               "ut"
@@ -806,13 +834,12 @@ export namespace TriggerHelper {
             "regex": "^(\\d{1,}([.]\\d{1,})?)$"
           }
         ],
-        "compatibility": {
-          "interface": "MP_Mag",
+        "require": {
+          "type": "Magnetometer",
           "fn_name": "mag_z"
         }
       }
     ]
   }
 ];
-
 }

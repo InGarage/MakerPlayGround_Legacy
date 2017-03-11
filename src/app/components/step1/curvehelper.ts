@@ -1,5 +1,8 @@
 import { Bezier } from 'bezier-js';
 
+const MINIMUM_DIFF_X = 125;
+const MINIMUM_DIFF_Y = 125;
+
 export class BezierCurve {
 
     private origControlPoints;
@@ -19,11 +22,14 @@ export class BezierCurve {
     }
 
     getTangentVector(t) {
-        return this.calculateBezierCurveTangent(this.controlPoints[0], 1);
+        if (t > 0.5)
+            return this.calculateBezierCurveTangent(this.controlPoints[1], (t - 0.5) * 2);
+        else
+            return this.calculateBezierCurveTangent(this.controlPoints[0], t * 2);
     }
 
     getCompensatedTangentVector(t) {
-        let tangent = this.getTangentVector(0.5);
+        let tangent = this.getTangentVector(t);
         let angle = Math.atan2(tangent[1], tangent[0]) * 180 / Math.PI;
         if (angle > 90) {
             angle = angle - 180;
@@ -36,12 +42,32 @@ export class BezierCurve {
     }
 
     getNormalVector(t) {
-        return this.findPerpendicularVector(this.controlPoints[0], 1);
+        if (t > 0.5)
+            return this.findPerpendicularVector(this.controlPoints[1], (t - 0.5) * 2);
+        else
+            return this.findPerpendicularVector(this.controlPoints[0], t * 2);
+    }
+
+    getAngle(t) {
+        let tangent = this.getTangentVector(t);
+        let angle = Math.atan2(tangent[1], tangent[0]) * 180 / Math.PI;
+        return angle;
+    }
+
+    getCompensatedAngle(t) {
+        let tangent = this.getTangentVector(t);
+        let angle = Math.atan2(tangent[1], tangent[0]) * 180 / Math.PI;
+        if (angle > 90) {
+            angle = angle - 180;
+        } else if (angle < -90) {
+            angle = angle + 180;
+        }
+        return angle;
     }
 
     getCompensatedNormalVector(t) {
-        const tangent = this.getTangentVector(0.5);
-        let normal = this.getNormalVector(0.5);
+        const tangent = this.getTangentVector(t);
+        let normal = this.getNormalVector(t);
         let angle = Math.atan2(tangent[1], tangent[0]) * 180 / Math.PI;
         if (angle > 90) {
             angle = angle - 180;
@@ -66,8 +92,18 @@ export class BezierCurve {
         this.controlPoints[1][1][1] += dy;
     }
 
+    shiftCurve(dx, dy) {
+        for (var row of this.controlPoints) {
+            for (var point of row) {
+                point[0] += dx;
+                point[1] += dy;
+            }
+        }
+    }
+
     getSVGArray() {
         const points = this.controlPoints;
+        console.log(this.controlPoints);
         return [
             ['M', points[0][0][0], points[0][0][1]],
             ['C', points[0][1][0], points[0][1][1], points[0][2][0], points[0][2][1], points[0][3][0], points[0][3][1]],
@@ -75,32 +111,79 @@ export class BezierCurve {
         ];
     }
 
+    getStartPoint() {
+        return this.controlPoints[0][0];
+    }
+
+    setStartPoint(x, y) {
+        let dx = x - this.controlPoints[0][0][0];
+        let dy = y - this.controlPoints[0][0][1];
+
+        this.controlPoints[0][0][0] += dx;
+        this.controlPoints[0][0][1] += dy;
+        this.controlPoints[0][1][0] += dx;
+        this.controlPoints[0][1][1] += dy;
+    }
+
+    getEndPoint() {
+        return this.controlPoints[1][3];
+    }
+
+    setEndPoint(x, y) {
+        let dx = x - this.controlPoints[1][3][0];
+        let dy = y - this.controlPoints[1][3][1];
+
+        this.controlPoints[1][2][0] += dx;
+        this.controlPoints[1][2][1] += dy;
+        this.controlPoints[1][3][0] += dx;
+        this.controlPoints[1][3][1] += dy;
+    }
+
+    recalculateCurve(startX, startY, startDirection, endX, endY, endDirection) {
+        // calculate the four control point based on the start and end point
+        this.origControlPoints = this.calculateBezierCurve(startX, startY, startDirection, endX, endY, endDirection);
+        // find the center point and split the curve
+        const t = this.getTOfBezierCurvebyDistance(this.origControlPoints, 0.5);
+        this.controlPoints = this.splitCurve(this.origControlPoints, t);
+    }
+
     private calculateBezierCurve(startX, startY, startDirection, endX, endY, endDirection) {
         var points = [];
         points.push([startX, startY]);
 
         let diffX = Math.abs((endX - startX) * 0.75);
-        if (diffX < 20) {
-            diffX = 20;
+        console.log('diffX', (endX - startX));
+        if ((endX - startX) > -(MINIMUM_DIFF_X * 1.33) && (endX - startX) < 0) {
+            diffX = MINIMUM_DIFF_X;
+        }
+
+        let diffY = Math.abs((endY - startY) * 0.75);
+        console.log('diffY', (endY - startY));
+        if ((endY - startY) > -(MINIMUM_DIFF_Y * 1.33) && (endY - startY) < (MINIMUM_DIFF_Y * 1.33)) {
+            diffY = MINIMUM_DIFF_Y;
         }
 
         if (startDirection === 'r')
             points.push([startX + diffX, startY]);
         else if (startDirection === 't')
-            points.push([startX, startY - Math.abs((startY - endY) * 0.75)]);
+            points.push([startX, startY - diffY]);
         else if (startDirection === 'b')
-            points.push([startX, startY + Math.abs((startY - endY) * 0.75)]);
+            points.push([startX, startY + diffY]);
         else if (startDirection === 'l') // shouldn't happen
             points.push([startX - diffX, startY]);
+        else
+            points.push([startX + diffX, startY]);
 
         if (endDirection === 'l')
             points.push([endX - diffX, endY]);
         else if (endDirection === 't')
-            points.push([endX, endY - Math.abs((startY - endY) * 0.75)]);
+            points.push([endX, endY - diffY]);
         else if (endDirection === 'b')
-            points.push([endX, endY + Math.abs((startY - endY) * 0.75)]);
+            points.push([endX, endY + diffY]);
         else if (endDirection === 'r') // shouldn't happen
             points.push([endX + diffX, endY]);
+        else
+            points.push([endX - diffX, endY]);
 
         points.push([endX, endY]);
         return points;
@@ -182,7 +265,7 @@ export class BezierCurve {
         // generate output array
         return [
             [points[0], left[0], left[1], tmp[0]],
-            [tmp[0], right[1], right[0], points[points.length - 1]]
+            [[tmp[0][0], tmp[0][1]], right[1], right[0], points[points.length - 1]]
         ];
     }
 
@@ -211,6 +294,34 @@ export class BezierCurve {
         // rotate the tangent by PI/2 to get the normal vector
         // see: http://pomax.github.io/bezierinfo/#pointvectors
         return [-tangent[1], tangent[0]];
+    }
+
+    isIntersect(startX, startY, startDirection, centerX, centerY, endX, endY, endDirection) {
+        let coord = []
+        for (const row of this.controlPoints) {
+            for (const point of row) {
+                coord.push(point[0], point[1]);
+            }
+        }
+
+        console.log('coord', coord);
+
+        let bezier = new Bezier(150,40 , 80,30 , 105,150);
+
+        // calculate the four control point based on the start and end point
+        const origControlPoints = this.calculateBezierCurve(startX, startY, startDirection, endX, endY, endDirection);
+        // find the center point and split the curve
+        const t = this.getTOfBezierCurvebyDistance(origControlPoints, 0.5);
+        const controlPoints = this.splitCurve(origControlPoints, t);
+        let coord2 = []
+        for (const row of controlPoints) {
+            for (const point of row) {
+                coord2.push(point[0], point[1]);
+            }
+        }
+        //let bezier2 = new Bezier(coord2);
+
+        //return bezier.intersects(bezier2).length !== 0;
     }
 
 }

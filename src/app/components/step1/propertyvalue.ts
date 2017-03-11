@@ -5,7 +5,8 @@ export interface PropertyValue {
 
 export interface ParameterList {
     name: string,
-    id?: string,
+    id?: string,        // For using with action
+    index?: number,     // For using with trigger
     param: Parameter[]
 }
 

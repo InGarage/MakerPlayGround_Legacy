@@ -14,7 +14,7 @@ export class GraphData {
      * ``` 
      * { 
      *   "nodes": {
-     *     1 : {                // Node's unique id
+     *     node_uid : {                // Node's unique id
      *       "action_id": 1,    // Action's unique id based on action.json
      *       "display_x": 100,  // Center position of the node on the screen 
      *       "display_y": 100,
@@ -28,18 +28,27 @@ export class GraphData {
      *     }
      *   },
      *   "edges": {
-     *     1 : {
-     *       "trigger_id": [],   // Trigger's unique id based on trigger.json 
-     *       "params: {         // Trigger's parameters based on each trigger requirement
-     *         "trigger_id1": {"key": ["value"], "key": ["value"] },
-     *         "trigger_id2": {"key": ["value"], },
-     *       },
+     *     edge_uid : {
+     *       "trigger": [
+     *          {
+                  'id': 'trigger_id',
+                  'params': { 'name': ['xxx'], 'time': ['5', 'times'] }
+                },
+                {
+                  'id': 'trigger_id',
+                  'params': { 'name': ['yyy'], 'time': ['6', 'times'] }
+                }
+     *       ],
      *       "src_node_id": number, // Unique id of the source node    
      *       "dst_node_id": number, // Unique id of the destination node
      *       "start_x": number,     // Parameters needed to display the edge on the screen
      *       "start_y": number,
+     *       "center_x": number,
+     *       "center_y": number,
      *       "end_x": number,
-     *       "end_y": number
+     *       "end_y": number,
+     *       "connect_direction_src": string,
+     *       "connect_direction_dst": string
      *     },
      *     2 : {
      *       // other edges
@@ -145,16 +154,16 @@ export class GraphData {
 
     getNodeInRange(endX: number, endY: number, range: number = 15): NodeData {
         let result: NodeData;
-        let difX = 60  + range;  // NODE_SIZE_WIDTH/2
+        let difX = 60 + range;  // NODE_SIZE_WIDTH/2
         let difY = 25 + range;   // NODE_SIZE_HEIGHT/2
 
         this.data.get('nodes').forEach((value, key) => {
             let display_x = parseFloat(value.get('display_x'));
             let display_y = parseFloat(value.get('display_y'));
 
-            if (display_x-difX < endX && endX < display_x+difX && display_y-difY < endY && endY < display_y+difY) {
+            if (display_x - difX < endX && endX < display_x + difX && display_y - difY < endY && endY < display_y + difY) {
                 result = new NodeData(key, value);
-                return false;   
+                return false;
             }
         });
 
@@ -227,25 +236,32 @@ export class GraphData {
         return allEdgesDst;
     }
 
-    connectionEdgeOfDstNode(nodeId, edgeId, x1, x2, y1, y2) {
+    connectionEdgeOfDstNode(nodeId, edgeId, x1, y1, x2, y2, x3, y3, direction) {
         this.data = this.data.withMutations(map => {
             map.setIn(['edges', edgeId, 'start_x'], x1)
                 .setIn(['edges', edgeId, 'start_y'], y1)
-                .setIn(['edges', edgeId, 'end_x'], x2)
-                .setIn(['edges', edgeId, 'end_y'], y2)
+                .setIn(['edges', edgeId, 'center_x'], x2)
+                .setIn(['edges', edgeId, 'center_y'], y2)
+                .setIn(['edges', edgeId, 'end_x'], x3)
+                .setIn(['edges', edgeId, 'end_y'], y3)
                 .setIn(['edges', edgeId, 'dst_node_id'], nodeId)
+                .setIn(['edges', edgeId, 'connect_direction_dst'], direction)
         });
 
         this.undoStack.push(this.data);
     }
 
-    connectionEdgeOfSrcNode(nodeId, edgeId, x1, x2, y1, y2) {
+    connectionEdgeOfSrcNode(nodeId, edgeId, x1, y1, x2, y2, x3, y3, direction) {
         this.data = this.data.withMutations(map => {
             map.setIn(['edges', edgeId, 'start_x'], x1)
                 .setIn(['edges', edgeId, 'start_y'], y1)
-                .setIn(['edges', edgeId, 'end_x'], x2)
-                .setIn(['edges', edgeId, 'end_y'], y2)
+                .setIn(['edges', edgeId, 'center_x'], x2)
+                .setIn(['edges', edgeId, 'center_y'], y2)
+                .setIn(['edges', edgeId, 'end_x'], x3)
+                .setIn(['edges', edgeId, 'end_y'], y3)
                 .setIn(['edges', edgeId, 'src_node_id'], nodeId)
+                .setIn(['edges', edgeId, 'connect_direction_src'], direction)
+
         });
 
         this.undoStack.push(this.data);
@@ -264,12 +280,14 @@ export class GraphData {
     /**
      * Update location of edge, also remove any src/dst connection
      */
-    moveEdge(id, x1, x2, y1, y2) {
+    moveEdge(id, x1, y1, x2, y2, x3, y3) {
         this.data = this.data.withMutations(map => {
             map.setIn(['edges', id, 'start_x'], x1)
                 .setIn(['edges', id, 'start_y'], y1)
-                .setIn(['edges', id, 'end_x'], x2)
-                .setIn(['edges', id, 'end_y'], y2)
+                .setIn(['edges', id, 'center_x'], x2)
+                .setIn(['edges', id, 'center_y'], y2)
+                .setIn(['edges', id, 'end_x'], x3)
+                .setIn(['edges', id, 'end_y'], y3)
                 .setIn(['edges', id, 'dst_node_id'], '')
                 .setIn(['edges', id, 'src_node_id'], '')
         });
@@ -292,16 +310,26 @@ export class GraphData {
         this.data = this.data.asMutable();
         for (let trigger of data.children) {
             for (let param of trigger.param) {
-                this.data = this.data.setIn(['edges', data.uid, 'trigger', trigger.id, 'params', param.name], Immutable.fromJS(param.value));
+                this.data = this.data.setIn(['edges', data.uid, 'trigger', trigger.index, 'params', param.name], Immutable.fromJS(param.value));
             }
         }
         this.data = this.data.asImmutable();
         this.undoStack.push(this.data);
     }
 
-    updateProp(id: string, param: string) {
+    updateActionName(nodeId: string, param: string) {
         this.data = this.data.asMutable();
-        this.data = this.data.setIn(['nodes', id, 'params', 'name'], Immutable.fromJS([param]));
+        this.data = this.data.setIn(['nodes', nodeId, 'params', 'name'], Immutable.fromJS([param]));
+        this.data = this.data.asImmutable();
+        this.undoStack.push(this.data);
+    }
+
+
+    updateTriggerName(edgeId: string, triggerIndex: number, param: string) {
+        console.log('updateTriggerName', param);
+        this.data = this.data.asMutable();
+        console.log('2', ['edges', edgeId, 'trigger', triggerIndex, 'params', 'name'], Immutable.fromJS([param]));
+        this.data = this.data.setIn(['edges', edgeId, 'trigger', triggerIndex, 'params', 'name'], Immutable.fromJS([param]));
         this.data = this.data.asImmutable();
         this.undoStack.push(this.data);
     }
@@ -316,11 +344,13 @@ export class GraphData {
         }
 
         const newEdge = {
-            "trigger": [{'id': trigger.id, 'params': param}],
+            "trigger": [{ 'id': trigger.id, 'params': param }],
             "src_node_id": '',
             "dst_node_id": '',
             "start_x": '100',
             "start_y": '100',
+            "center_x": '200',
+            "center_y": '100',
             "end_x": '300',
             "end_y": '100',
         };
@@ -404,7 +434,7 @@ export class EdgeData {
         return this.uid;
     }
 
-    getNumberOfTrigger() : number {
+    getNumberOfTrigger(): number {
         return this.data.get('trigger').count();
     }
 
@@ -417,7 +447,7 @@ export class EdgeData {
     //     return this.data.getIn(['trigger', triggerIndex, 'params', name]).toJS();
     // }
 
-    getTrigger() : TriggerData[] {
+    getTrigger(): TriggerData[] {
         let data = [];
         (<Immutable.List<any>>this.data.get('trigger')).forEach((value, key) => {
             console.log(value.toJS(), key);
@@ -442,6 +472,14 @@ export class EdgeData {
         return parseFloat(this.data.get('start_y'));
     }
 
+    getCenterX(): number {
+        return parseFloat(this.data.get('center_x'));
+    }
+
+    getCenterY(): number {
+        return parseFloat(this.data.get('center_y'));
+    }
+
     getEndX(): number {
         return parseFloat(this.data.get('end_x'));
     }
@@ -449,6 +487,14 @@ export class EdgeData {
     getEndY(): number {
         return parseFloat(this.data.get('end_y'));
     }
+
+    getConnectDirection_Src(): string {
+        return this.data.get('connect_direction_src');
+    }
+
+    getConnectDirection_Dst(): string {
+        return this.data.get('connect_direction_dst');
+    } 
 
     isEqual(other: EdgeData): boolean {
         return Immutable.is(other.data, this.data);
@@ -460,7 +506,7 @@ export class TriggerData {
         //console.log('number', index);
     }
 
-    getTriggerIndex() : number {
+    getTriggerIndex(): number {
         return this.index;
     }
 

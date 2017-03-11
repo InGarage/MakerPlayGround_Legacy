@@ -9,7 +9,12 @@ export interface Action {
   name: string;
   short_description: string;
   params: ActionParameter[];
-  compatibility: any;
+  require: require;
+}
+
+export interface require {
+  type: string;
+  fn_name: string;
 }
 
 export interface ActionParameter {
@@ -64,7 +69,8 @@ export namespace ActionHelper {
             "name": "brightness",
             "control": "slider",
             "default_value": [
-              "50"
+              "50",
+              "%"
             ],
             "args": [
               "%"
@@ -72,8 +78,8 @@ export namespace ActionHelper {
             "regex": "^(\\d([.]\\d{1,})?|[1-9]\\d([.]\\d{1,})?|100)$"
           }
         ],
-        "compatibility": {
-          "interface": "MP_LED",
+        "require": {
+          "type": "Led",
           "fn_name": "dim"
         }
       },
@@ -97,7 +103,8 @@ export namespace ActionHelper {
             "name": "frequency",
             "control": "spinbox",
             "default_value": [
-              "2"
+              "2",
+              "Hz"
             ],
             "args": [
               "Hz"
@@ -105,8 +112,8 @@ export namespace ActionHelper {
             "regex": "^(\\d{1,})$"
           }
         ],
-        "compatibility": {
-          "interface": "MP_LED",
+        "require": {
+          "type": "Led",
           "fn_name": "blink"
         }
       },
@@ -130,7 +137,8 @@ export namespace ActionHelper {
             "name": "brightness",
             "control": "slider",
             "default_value": [
-              "100"
+              "100",
+              "%"
             ],
             "args": [
               "%"
@@ -138,8 +146,8 @@ export namespace ActionHelper {
             "regex": "^(\\d([.]\\d{1,})?|[1-9]\\d([.]\\d{1,})?|100)$"
           }
         ],
-        "compatibility": {
-          "interface": "MP_LED",
+        "require": {
+          "type": "Led",
           "fn_name": "on"
         }
       },
@@ -160,8 +168,8 @@ export namespace ActionHelper {
             "regex": "^[\\S]+$"
           }
         ],
-        "compatibility": {
-          "interface": "MP_LED",
+        "require": {
+          "type": "Led",
           "fn_name": "off"
         }
       }
@@ -172,7 +180,7 @@ export namespace ActionHelper {
     "children": [
       {
         "id": "AN_LCD_1",
-        "name": "Backlight\nOn",
+        "name": "Backlight On",
         "short_description": "Turn the LCD backlight on",
         "params": [
           {
@@ -187,14 +195,14 @@ export namespace ActionHelper {
             "regex": "^[\\S]+$"
           }
         ],
-        "compatibility": {
-          "interface": "MP_LCD",
+        "require": {
+          "type": "Lcd",
           "fn_name": "backlight_on"
         }
       },
       {
         "id": "AN_LCD_2",
-        "name": "Backlight\nOff",
+        "name": "Backlight Off",
         "short_description": "Turn the LCD backlight off",
         "params": [
           {
@@ -209,8 +217,8 @@ export namespace ActionHelper {
             "regex": "^[\\S]+$"
           }
         ],
-        "compatibility": {
-          "interface": "MP_LCD",
+        "require": {
+          "type": "Lcd",
           "fn_name": "backlight_off"
         }
       },
@@ -242,14 +250,14 @@ export namespace ActionHelper {
             "regex": "^[\\S ]{0,16}+\\n+[\\S ]{0,16}$"
           }
         ],
-        "compatibility": {
-          "interface": "MP_LCD",
+        "require": {
+          "type": "Lcd",
           "fn_name": "show"
         }
       },
       {
         "id": "AN_LCD_4",
-        "name": "Clear\nscreen",
+        "name": "Clear screen",
         "short_description": "Erase all content in the screen",
         "params": [
           {
@@ -264,8 +272,8 @@ export namespace ActionHelper {
             "regex": "^[\\S]+$"
           }
         ],
-        "compatibility": {
-          "interface": "MP_LCD",
+        "require": {
+          "type": "Lcd",
           "fn_name": "clear"
         }
       }
@@ -294,7 +302,8 @@ export namespace ActionHelper {
             "name": "frequency",
             "control": "spinbox",
             "default_value": [
-              "1000"
+              "1000",
+              "Hz"
             ],
             "args": [
               "Hz"
@@ -305,7 +314,8 @@ export namespace ActionHelper {
             "name": "duration",
             "control": "spinbox",
             "default_value": [
-              "100"
+              "100",
+              "ms"
             ],
             "args": [
               "ms"
@@ -313,19 +323,19 @@ export namespace ActionHelper {
             "regex": "^(\\d{1,})$"
           }
         ],
-        "compatibility": {
-          "interface": "MP_Amplifier",
+        "require": {
+          "type": "Audio",
           "fn_name": "beep"
         }
       }
     ]
   },
   {
-    "name": "DCMotor",
+    "name": "DC Motor",
     "children": [
       {
         "id": "DCMotor_1",
-        "name": "On",
+        "name": "on",
         "short_description": "Turn a motor on",
         "params": [
           {
@@ -341,9 +351,9 @@ export namespace ActionHelper {
           },
           {
             "name": "direction",
-            "control": "Dropdown",
+            "control": "radio",
             "default_value": [
-              ""
+              "CW"
             ],
             "args": [
               "CW",
@@ -355,7 +365,8 @@ export namespace ActionHelper {
             "name": "speed",
             "control": "slider",
             "default_value": [
-              "50"
+              "50",
+              "%"
             ],
             "args": [
               "%"
@@ -363,8 +374,8 @@ export namespace ActionHelper {
             "regex": "^(\\d([.]\\d{1,})?|[1-9]\\d([.]\\d{1,})?|100)$"
           }
         ],
-        "compatibility": {
-          "interface": "MP_DCMotor",
+        "require": {
+          "type": "Motor",
           "fn_name": "on"
         }
       },
@@ -385,14 +396,14 @@ export namespace ActionHelper {
             "regex": "^[\\S]+$"
           }
         ],
-        "compatibility": {
-          "interface": "MP_DCMotor",
+        "require": {
+          "type": "Motor",
           "fn_name": "reverse"
         }
       },
       {
         "id": "DCMotor_3",
-        "name": "set speed",
+        "name": "set_speed",
         "short_description": "Change motor speed",
         "params": [
           {
@@ -410,7 +421,8 @@ export namespace ActionHelper {
             "name": "speed",
             "control": "slider",
             "default_value": [
-              "50"
+              "50",
+              "%"
             ],
             "args": [
               "%"
@@ -418,8 +430,8 @@ export namespace ActionHelper {
             "regex": "^(\\d([.]\\d{1,})?|[1-9]\\d([.]\\d{1,})?|100)$"
           }
         ],
-        "compatibility": {
-          "interface": "MP_DCMotor",
+        "require": {
+          "type": "Motor",
           "fn_name": "set_speed"
         }
       },
@@ -440,13 +452,12 @@ export namespace ActionHelper {
             "regex": "^[\\S]+$"
           }
         ],
-        "compatibility": {
-          "interface": "MP_DCMotor",
+        "require": {
+          "type": "Motor",
           "fn_name": "stop"
         }
       }
     ]
   }
 ];
-
 }

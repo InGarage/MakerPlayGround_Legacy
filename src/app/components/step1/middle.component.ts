@@ -92,8 +92,13 @@ export class MiddleComponent implements OnInit, OnDestroy {
         this.canvas = new GraphCanvas(this.model, 'c');
         this.canvas.redraw();
 
-        this.canvas.on('node:update', (options) => {
-            this.model.updateProp(options.target_id, options.param);
+        this.canvas.on('action:update', (options) => {
+            this.model.updateActionName(options.target_id, options.param);
+            this.canvas.redraw();
+        });
+
+        this.canvas.on('trigger:update', (options) => {
+            this.model.updateTriggerName(options.target_id, options.triggerIndex, options.param);
             this.canvas.redraw();
         });
 
@@ -109,7 +114,7 @@ export class MiddleComponent implements OnInit, OnDestroy {
         });
 
         this.canvas.on('edge:move', (options) => {
-            this.model.moveEdge(options.target_id, options.start_x, options.end_x, options.start_y, options.end_y);
+            this.model.moveEdge(options.target_id, options.start_x, options.start_y, options.center_x, options.center_y, options.end_x, options.end_y);
             this.canvas.redraw();
         });
 
@@ -141,13 +146,13 @@ export class MiddleComponent implements OnInit, OnDestroy {
 
         this.canvas.on('edge:connectionDst', (options) => {
             this.model.connectionEdgeOfDstNode(options.dst_node_id
-                , options.target_id, options.start_x, options.end_x, options.start_y, options.end_y);
+                , options.target_id, options.start_x, options.start_y, options.center_x, options.center_y, options.end_x, options.end_y, options.connect_direction_dst);
             this.canvas.redraw();
         });
 
         this.canvas.on('edge:connectionSrc', (options) => {
             this.model.connectionEdgeOfSrcNode(options.src_node_id
-                , options.target_id, options.start_x, options.end_x, options.start_y, options.end_y);
+                , options.target_id, options.start_x, options.start_y, options.center_x, options.center_y, options.end_x, options.end_y, options.connect_direction_src);
             this.canvas.redraw();
         });
 

@@ -70,7 +70,6 @@ export class HomeComponent {
   // }
 
   newProject(project_name: string) {
-    console.log('xxx', project_name);
 
     const uuid = UUID.v4();
 
@@ -89,6 +88,8 @@ export class HomeComponent {
       dst_node_id: '',
       start_x: 200,
       start_y: 400,
+      center_x: 250,
+      center_y: 400,
       end_x: 300,
       end_y: 400
     };
@@ -102,7 +103,6 @@ export class HomeComponent {
   getProject(id: string) {
     if (this.dirty === true) {
       this.ProjectService.getProject(id).subscribe(project => {
-        console.log('get project id ', project);
         (<Project>project).project_data = JSON.parse((<Project>project).project_data).project_data;
         this.ProjectService.setCurrentProject(project);
         this.router.navigate(['/step1']);
