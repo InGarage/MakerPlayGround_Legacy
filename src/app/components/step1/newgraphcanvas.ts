@@ -86,6 +86,7 @@ export class GraphCanvas {
         this.canvas.on('selection:cleared', (e) => {
             this.deselectAllNode();
             this.deselectAllEdge();
+            console.log('selection:cleared');
             this.callback.getValue('object:deselected')({});
 
             // this.canvas.on('mouse:move', (e) => {
@@ -101,7 +102,7 @@ export class GraphCanvas {
             if (e.target !== null) {
                 if (this.selectingObject !== undefined) {
                     this.selectingObject.deselect();
-                    this.callback.getValue('object:deselected')({});
+                    //this.callback.getValue('object:deselected')({});
                 }
                 const uid = e.target.get('uid');
                 const object = this.nodeFabricObject.getValue(uid) || this.edgeFabricObject.getValue(uid);
@@ -238,13 +239,10 @@ export class GraphCanvas {
                             let value = param.value[1];
                             let arg = param.value[2];
                             (<fabric.IText><any>this.edgeFabricObject.getValue(data.uid).triggerDescription.item(i)).setText(operat + ' ' + value + ' ' + arg);
+                            let edge = this.edgeFabricObject.getValue(data.uid);
+                            edge.setObjectPositionWithinDescriptionGroup();
                         }
-
                     }
-                    // (<fabric.IText><any>this.edgeFabricObject.getValue(data.uid).triggerDescription.item(i)).setText('');
-                    // let edge = this.edgeFabricObject.getValue(data.uid);
-                    // edge.setObjectPositionWithinDescriptionGroup();
-                    // item++;
                 }
             }
             this.canvas.renderAll();
@@ -822,30 +820,22 @@ class NodeView {
             x = originX + 60;
             y = originY;
             d = 'r';
-            console.log('rrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr');
         } else if (angle > 15 && angle <= 160) {
             //Connect at bottom side
             x = originX;
             y = originY + 25;
             d = 'b';
-            console.log('bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb');
         } else if ((angle > 160 && angle <= 180) || (angle < -160 && angle >= -180)) {
             //Connect at left side 
             x = originX - 60;
             y = originY;
             d = 'l';
-            console.log('lllllllllllllllllllllllllllllllllllllllllllllllllllllll');
         } else if (angle < -25 && angle >= -160) {
             //Connect at top side 
             x = originX;
             y = originY - 25;
             d = 't';
-            console.log('ttttttttttttttttttttttttttttttttttttttttttttttttttttttt');
-        } else {
-            console.log('not here!!!!!');
         }
-
-        console.log('pull', x, y, pointX, pointY, originX, originY, angle);
 
         return { x: x, y: y, d: d };
     }
@@ -930,6 +920,7 @@ class EdgeView {
         let angle = Math.atan2((endY - startY), (endX - startX));   // in radian
         let difX = Math.abs(startX - endX) / 2;
         let difY = Math.abs(startY - endY) / 2;
+        let oldLeft, oldTop;
 
         this.line = new fabric.Path([
             ['M', 0, 0],
@@ -973,6 +964,62 @@ class EdgeView {
 
         this.edgeDeleteBtn = new fabric.Group([cross_1, cross_2]);
 
+        //remove trigger's name for each trigger from canvas
+        if (this.triggerName.length !== 0) {
+            for (let i = 0; i < this.triggerName.length; i++) {
+                this.triggerName[i].setCoords();
+                this.canvas.remove(this.triggerName[i]);
+            }
+        }
+
+        this.triggerName = [];
+
+        // Create each trigger's name and add its event
+        for (let t of edgeData.getTrigger()) {
+            let eachTrigger = new fabric.IText('');
+            eachTrigger.set('uid', this.id);
+            eachTrigger.on('editing:exited', (options) => {
+                this.callback.getValue('trigger:update')({
+                    target_id: this.edgeData.getEdgeId(),
+                    triggerIndex: t.getTriggerIndex(),
+                    param: eachTrigger.getText()
+                });
+            });
+            eachTrigger.on('selected', (options) => {
+                this.selectEdge();
+
+                oldLeft = eachTrigger.getLeft();
+                oldTop = eachTrigger.getTop();
+
+                this.callback.getValue('edge:selected')({
+                    target_id: this.edgeData.getEdgeId(),
+                });
+            });
+            eachTrigger.on('moving', (options) => {
+                this.deselectEdge();
+                let dx = eachTrigger.getLeft() - oldLeft;
+                let dy = eachTrigger.getTop() - oldTop;
+
+                oldLeft = eachTrigger.getLeft();
+                oldTop = eachTrigger.getTop();
+
+                this.shiftEdge(dx, dy);
+
+                // let edge: combineEdge = this.findIntersectionPoint(false);
+                let edge = this.findIntersectionPoint(false);
+                this.processEdgeEvent();
+            });
+            eachTrigger.on('modified', (options) => {
+                let dx = eachTrigger.getLeft() - oldLeft;
+                let dy = eachTrigger.getTop() - oldTop;
+
+                this.shiftEdge(dx, dy);
+                this.processEdgeEvent(true);
+                this.selectEdge();
+            });
+            this.triggerName.push(eachTrigger);
+        }
+
         let promises: Promise<void>[] = [];
         for (const trigger of this.edgeData.getTrigger()) {
             promises.push(new Promise<void>((resolve, reject) => {
@@ -992,6 +1039,12 @@ class EdgeView {
             this.dotTail.set('uid', this.id);
             this.reinitializeFromModel(edgeData);
             this.canvas.add(this.edgeDeleteBtn, this.triggerDescription, this.line, this.curveControlPoint, this.triangle, this.dotTail, this.dotHead);
+
+            // Set uid to all element in triggerName then add each one to canvas
+            for (let i = 0; i < edgeData.getTrigger().length; i++) {
+                this.canvas.add(this.triggerName[i]);
+            }
+
         });
     }
 
@@ -1002,72 +1055,66 @@ class EdgeView {
     private initEdgeEvent() {
         let oldLeft, oldTop;
 
-        // this.line.on('moving', (options) => {
-        //     this.edgeDeleteBtn.visible = false;
-        //     for (let del of this.triggerDeleteBtn)
-        //         del.visible = false;
+        this.line.on('moving', (options) => {
+            this.deselectEdge();
+            let dx = this.line.getLeft() - oldLeft;
+            let dy = this.line.getTop() - oldTop;
+            oldLeft = this.line.getLeft();
+            oldTop = this.line.getTop();
+            this.shiftEdge(dx, dy);
+            // let edge: combineEdge = this.findIntersectionPoint(false);
+            let edge = this.findIntersectionPoint(false);
+            this.processEdgeEvent();
+            // this.edgeDeleteBtn.visible = false;
+            // for (let del of this.triggerDeleteBtn)
+            //     del.visible = false;
 
-        //     let [startX, startY, endX, endY, angle] = this.getCurrentPointAfterReinitialize();
-        //     let currentOriginLineX = this.line.getLeft() + (EDGE_ARROW_HEAD_SIZE / 2 * Math.cos(angle)) / 2;
-        //     let currentOriginLineY = this.line.getTop() + (EDGE_ARROW_HEAD_SIZE / 2 * Math.sin(angle)) / 2;
-        //     let [nStartX, nEndX, nStartY, nEndY] = this.getLineCoordinateFromOrigin(currentOriginLineX, currentOriginLineY);
-        //     let edge: combineEdge = this.findIntersectionPoint(nStartX, nStartY, nEndX, nEndY, false);
-        //     this.moveEdge(nStartX, nStartY, nEndX, nEndY, angle);
-        //     this.processEdgeEvent(nStartX, nStartY, nEndX, nEndY, angle);
-        // });
-        // this.line.on('modified', (options) => {
-        //     let [startX, startY, endX, endY, angle] = this.getCurrentPointAfterReinitialize();
-        //     let currentOriginLineX = this.line.getLeft() + (EDGE_ARROW_HEAD_SIZE / 2 * Math.cos(angle)) / 2;
-        //     let currentOriginLineY = this.line.getTop() + (EDGE_ARROW_HEAD_SIZE / 2 * Math.sin(angle)) / 2;
-        //     let [nStartX, nEndX, nStartY, nEndY] = this.getLineCoordinateFromOrigin(currentOriginLineX, currentOriginLineY);
-        //     let edge: combineEdge = this.findIntersectionPoint(nStartX, nStartY, nEndX, nEndY, true);
-
-        //     if (edge !== undefined) {
-        //         this.combineEdge(edge);
-        //         return;
-        //     }
-
-        //     this.moveEdge(nStartX, nStartY, nEndX, nEndY, angle);
-        //     this.processEdgeEvent(nStartX, nStartY, nEndX, nEndY, angle, true);
-        //     this.dotHead.visible = true;
-        //     this.dotTail.visible = true;
-        //     this.edgeDeleteBtn.visible = true;
-        //     for (let del of this.triggerDeleteBtn)
-        //         del.visible = true;
-        // });
-        // this.line.on('selected', (options) => {
-        //     this.dotHead.visible = true;
-        //     this.dotTail.visible = true;
-        //     this.edgeDeleteBtn.visible = true;
-        //     for (let del of this.triggerDeleteBtn)
-        //         del.visible = true;
-
-        //     this.callback.getValue('edge:selected')({
-        //         target_id: this.edgeData.getEdgeId(),
-        //     });
-        // });
+            // let [startX, startY, endX, endY, angle] = this.getCurrentPointAfterReinitialize();
+            // let currentOriginLineX = this.line.getLeft() + (EDGE_ARROW_HEAD_SIZE / 2 * Math.cos(angle)) / 2;
+            // let currentOriginLineY = this.line.getTop() + (EDGE_ARROW_HEAD_SIZE / 2 * Math.sin(angle)) / 2;
+            // let [nStartX, nEndX, nStartY, nEndY] = this.getLineCoordinateFromOrigin(currentOriginLineX, currentOriginLineY);
+            // let edge: combineEdge = this.findIntersectionPoint(nStartX, nStartY, nEndX, nEndY, false);
+            // this.moveEdge(nStartX, nStartY, nEndX, nEndY, angle);
+            // this.processEdgeEvent(nStartX, nStartY, nEndX, nEndY, angle);
+        });
+        this.line.on('modified', (options) => {
+            let dx = this.line.getLeft() - oldLeft;
+            let dy = this.line.getTop() - oldTop;
+            this.shiftEdge(dx, dy);
+            this.processEdgeEvent(true);
+            this.selectEdge();
+        });
+        this.line.on('selected', (options) => {
+            this.selectEdge();
+            oldLeft = this.line.getLeft();
+            oldTop = this.line.getTop();
+            this.callback.getValue('edge:selected')({
+                target_id: this.edgeData.getEdgeId(),
+            });
+        });
 
         this.triggerDescription.on('moving', (options) => {
             this.deselectEdge();
-            let currentOriginDesX = this.triggerDescription.getLeft();
-            let currentOriginDesY = this.triggerDescription.getTop();
-            let [currentOriginLineX, currentOriginLineY] = this.getLineOriginFromDesOrigin(currentOriginDesX, currentOriginDesY);
-            let [nStartX, nEndX, nStartY, nEndY] = this.getLineCoordinateFromOrigin(currentOriginLineX, currentOriginLineY);
-            this.moveEdge(nStartX, nStartY, nEndX, nEndY);
+            let dx = this.triggerDescription.getLeft() - oldLeft;
+            let dy = this.triggerDescription.getTop() - oldTop;
+            oldLeft = this.triggerDescription.getLeft();
+            oldTop = this.triggerDescription.getTop();
+            this.shiftEdge(dx, dy);
+            // let edge: combineEdge = this.findIntersectionPoint(false);
+            let edge = this.findIntersectionPoint(false);
             this.processEdgeEvent();
         });
         this.triggerDescription.on('modified', (options) => {
-            let currentOriginDesX = this.triggerDescription.getLeft();
-            let currentOriginDesY = this.triggerDescription.getTop();
-            let [currentOriginLineX, currentOriginLineY] = this.getLineOriginFromDesOrigin(currentOriginDesX, currentOriginDesY);
-            let [nStartX, nEndX, nStartY, nEndY] = this.getLineCoordinateFromOrigin(currentOriginLineX, currentOriginLineY);
-            this.moveEdge(nStartX, nStartY, nEndX, nEndY);
+            let dx = this.triggerDescription.getLeft() - oldLeft;
+            let dy = this.triggerDescription.getTop() - oldTop;
+            this.shiftEdge(dx, dy);
             this.processEdgeEvent(true);
             this.selectEdge();
         });
         this.triggerDescription.on('selected', (options) => {
             this.selectEdge();
-
+            oldLeft = this.triggerDescription.getLeft();
+            oldTop = this.triggerDescription.getTop();
             this.callback.getValue('edge:selected')({
                 target_id: this.edgeData.getEdgeId(),
             });
@@ -1077,36 +1124,24 @@ class EdgeView {
             this.deselectEdge();
             let dx = this.triangle.getLeft() - oldLeft;
             let dy = this.triangle.getTop() - oldTop;
-
             oldLeft = this.triangle.getLeft();
             oldTop = this.triangle.getTop();
-
             this.shiftEdge(dx, dy);
-
-
             // let edge: combineEdge = this.findIntersectionPoint(false);
             let edge = this.findIntersectionPoint(false);
-
             this.processEdgeEvent();
-
-
         });
         this.triangle.on('modified', (options) => {
             let dx = this.triangle.getLeft() - oldLeft;
             let dy = this.triangle.getTop() - oldTop;
-
             this.shiftEdge(dx, dy);
             this.processEdgeEvent(true);
-
             this.selectEdge();
         });
         this.triangle.on('selected', (options) => {
             this.selectEdge();
-
             oldLeft = this.triangle.getLeft();
             oldTop = this.triangle.getTop();
-
-            // this.callback.getValue('object:deselected')({});
             this.callback.getValue('edge:selected')({
                 target_id: this.edgeData.getEdgeId(),
             });
@@ -1163,7 +1198,7 @@ class EdgeView {
         });
 
         this.edgeDeleteBtn.on('selected', (options) => {
-            this.callback.getValue('trigger:remove')({
+            this.callback.getValue('edge:remove')({
                 target_id: this.edgeData.getEdgeId(),
             });
         });
@@ -1179,6 +1214,7 @@ class EdgeView {
         let angle = Math.atan2((endY - startY), (endX - startX));   // in radian
         let difX = Math.abs(startX - endX) / 2;
         let difY = Math.abs(startY - endY) / 2;
+        let oldLeft, oldTop;
 
         this.curve = BezierCurve.fromStartEndPoint(startX, startY, edgeData.getConnectDirection_Src(), endX, endY, edgeData.getConnectDirection_Dst());
         this.curve.moveCenterPoint(edgeData.getCenterX(), edgeData.getCenterY());
@@ -1288,40 +1324,12 @@ class EdgeView {
             }
         }
 
-        // remove trigger's name for each trigger from canvas
-        for (let i = 0; i < this.triggerName.length; i++) {
-            this.canvas.remove(this.triggerName[i]);
-        }
-
-        this.triggerName = [];
-
-        // Create each trigger's name and add its event
-        for (let t of edgeData.getTrigger()) {
-            let eachTrigger = new fabric.IText('');
-            eachTrigger.on('editing:exited', (options) => {
-                console.log(this.edgeData.getEdgeId(), t.getTriggerId(), eachTrigger.getText());
-                this.callback.getValue('trigger:update')({
-                    target_id: this.edgeData.getEdgeId(),
-                    triggerIndex: t.getTriggerIndex(),
-                    param: eachTrigger.getText()
-                });
-            });
-            eachTrigger.on('selected', (options) => {
-                
-            })
-            this.triggerName.push(eachTrigger);
-        }
-
-        // Set uid to all element in triggerName then add each one to canvas
-        for (let i = 0; i < edgeData.getTrigger().length; i++) {
-            this.triggerName[i].set('uid', this.id);
-            this.canvas.add(this.triggerName[i]);
-        }
-
         this.triggerDeleteBtn = [];
         let svgAddSequence = [];
         const triggers: TriggerData[] = edgeData.getTrigger();
 
+        // Create elements in triggerDescription (SVG and param display text)
+        // also the delete button for each trigger of this edge
         for (let trigger of triggers) {
             let triggerType = TriggerHelper.getTriggerTypeById(trigger.getTriggerId());
             let triggerInfo = TriggerHelper.findTriggerById(trigger.getTriggerId());
@@ -1362,6 +1370,7 @@ class EdgeView {
             });
 
             let deleteBtn = new fabric.Group([cross_1, cross_2]);
+            deleteBtn.set('uid', this.id);
             this.triggerDeleteBtn.push(deleteBtn)
             svgAddSequence.push(triggerIndex);
 
@@ -1387,7 +1396,6 @@ class EdgeView {
         //Set trigger's name
         for (let i = 0; i < triggers.length; i++) {
             const triggerName = triggers[i].getTriggerParams('name')
-            console.log('set trigger Name', triggerName);
             this.triggerName[i].setText(triggerName[0]);
             this.triggerName[i].set({
                 fontFamily: "Roboto",
@@ -1414,7 +1422,6 @@ class EdgeView {
             // in a group are (trigger's index * 2) +1
             (<fabric.IText><any>this.triggerDescription.item(trigger.getTriggerIndex() * 2 + 1)).setText(text);
         }
-
 
         this.setObjectPositionWithinDescriptionGroup();
 
@@ -1549,21 +1556,6 @@ class EdgeView {
         return [centerPoint[0] - EDGE_IMAGE_DISTANCE * normal[0], centerPoint[1] - EDGE_IMAGE_DISTANCE * normal[1], angle];
     }
 
-
-    getTopLeftForDescription2(angle: number) {
-        let top: number, left: number;
-        let newTop: number, newLeft: number;
-
-        left = this.line.getLeft() + (EDGE_ARROW_HEAD_SIZE / 2 * Math.cos(angle)) / 2;
-        top = this.line.getTop() + (EDGE_ARROW_HEAD_SIZE / 2 * Math.sin(angle)) / 2;
-        let angleInDegree = (angle * (180 / Math.PI));
-
-        if (Math.abs(angleInDegree) > 90)
-            return [left + (EDGE_IMAGE_DISTANCE * Math.sin(-angle)), top + (EDGE_IMAGE_DISTANCE * Math.cos(-angle)), (angle * 180 / Math.PI) + 180];
-        else
-            return [left - (EDGE_IMAGE_DISTANCE * Math.sin(-angle)), top - (EDGE_IMAGE_DISTANCE * Math.cos(-angle)), (angle * 180 / Math.PI)];
-    }
-
     findIntersectionPoint(shouldEmittedEvent: boolean) {
         let allEdge: EdgeData[] = this.graph.getEdges();
         let movingEdge: EdgeData;
@@ -1674,7 +1666,6 @@ class EdgeView {
     }
 
     moveEdge(startX, startY, endX, endY) {
-        console.log('move edge', startX, startY, endX, endY)
         this.curve = BezierCurve.fromStartEndPoint(startX, startY, this.edgeData.getConnectDirection_Src(), endX, endY, this.edgeData.getConnectDirection_Dst());
 
         // move every components to the new location
@@ -1749,7 +1740,6 @@ class EdgeView {
     processEdgeEvent(shouldEmittedEvent: boolean = false) {
         let [startX, startY] = this.curve.getStartPoint();
         let [endX, endY] = this.curve.getEndPoint();
-        console.log('curve', startX, startY, endX, endY);
 
         // clear connecting indicator of every node
         this.clearNodeConnectingIndicator();
@@ -1809,6 +1799,7 @@ class EdgeView {
         // emitted edge:move when there wasn't any connection made otherwise the edge:connection_ 
         // callback is used and edge:move is not needed
         if (shouldEmittedEvent && (nodeAtHead === undefined) && (nodeAtTail === undefined)) {
+            console.log(this.curve.getCenterPoint()[0], this.curve.getCenterPoint()[1]);
             this.callback.getValue('edge:move')({
                 target_id: this.edgeData.getEdgeId(),
                 start_x: startX,
@@ -1914,27 +1905,21 @@ class EdgeView {
             x = originX + 60;
             y = originY;
             d = 'r';
-            console.log('rrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr');
         } else if (angle > 15 && angle <= 160) {
             //Connect at bottom side
             x = originX;
             y = originY + 25;
             d = 'b';
-            console.log('bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb');
         } else if ((angle > 160 && angle <= 180) || (angle < -160 && angle >= -180)) {
             //Connect at left side 
             x = originX - 60;
             y = originY;
             d = 'l';
-            console.log('lllllllllllllllllllllllllllllllllllllllllllllllllllllll');
         } else if (angle < -25 && angle >= -160) {
             //Connect at top side 
             x = originX;
             y = originY - 25;
             d = 't';
-            console.log('ttttttttttttttttttttttttttttttttttttttttttttttttttttttt');
-        } else {
-            console.log('not here!!!!!');
         }
 
         return { x: x, y: y, d: d };
@@ -1967,6 +1952,7 @@ class EdgeView {
     }
 
     public selectEdge() {
+        console.log('select edge');
         this.dotHead.visible = true;
         this.dotTail.visible = true;
         this.curveControlPoint.visible = true;

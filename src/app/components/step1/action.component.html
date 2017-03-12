@@ -5,10 +5,17 @@
 
       <div [ngStyle]="setActionStyles()" id="action">
         <accordion-group *ngFor="let action of actions" heading="{{action.name}}" style="font-family:verdana;">
-          <md-grid-list cols="4" gutterSize="5px">
+
+          <div id="grid">
+            <div *ngFor="let key of action.children | keys">
+              <div [style.background]="'lightblue'" class="imgComponent" (click)="selectedAction(key.value)"></div>
+              <p class="textDescrip">{{key.value.name}}</p>
+            </div>
+          </div>
+          <!--<md-grid-list cols="4" gutterSize="5px">
             <md-grid-tile *ngFor="let key of action.children | keys" [colspan]="1" [rowspan]="1" [style.background]="'lightblue'" (click)="selectedAction(key.value)">
             </md-grid-tile>
-          </md-grid-list>
+          </md-grid-list>-->
         </accordion-group>
       </div>
 
