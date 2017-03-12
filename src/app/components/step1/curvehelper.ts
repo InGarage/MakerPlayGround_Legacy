@@ -306,7 +306,7 @@ export class BezierCurve {
 
         console.log('coord', coord);
 
-        let bezier = new Bezier(150,40 , 80,30 , 105,150);
+        //let bezier = new Bezier(150,40 , 80,30 , 105,150);
 
         // calculate the four control point based on the start and end point
         const origControlPoints = this.calculateBezierCurve(startX, startY, startDirection, endX, endY, endDirection);

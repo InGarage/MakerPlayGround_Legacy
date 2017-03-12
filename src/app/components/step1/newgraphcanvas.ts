@@ -224,23 +224,27 @@ export class GraphCanvas {
     }
 
     updateDataBinding(data: PropertyValue) {
-        console.log('test');
 
         if (this.edgeFabricObject.containsKey(data.uid)) {
-            console.log('BINDING EDGE DATA', data);
-
-
-            let item = 0;
             const triggerDesSize = this.edgeFabricObject.getValue(data.uid).triggerDescription.size();
-            let paramNameValue = [];
-
             for (let i = 0; i < triggerDesSize; i++) {
+                // change only text, odd index
                 if (i % 2 === 1) {
-                    console.log('eiei', paramNameValue[item]);
-                    (<fabric.IText><any>this.edgeFabricObject.getValue(data.uid).triggerDescription.item(i)).setText(paramNameValue[item]);
-                    let edge = this.edgeFabricObject.getValue(data.uid);
-                    edge.setObjectPositionWithinDescriptionGroup();
-                    item++;
+                    for (let param of data.children[Math.floor(i / 2)].param) {
+                        if (param.name === 'name')
+                            continue;
+                        else {
+                            let operat = param.value[0];
+                            let value = param.value[1];
+                            let arg = param.value[2];
+                            (<fabric.IText><any>this.edgeFabricObject.getValue(data.uid).triggerDescription.item(i)).setText(operat + ' ' + value + ' ' + arg);
+                        }
+
+                    }
+                    // (<fabric.IText><any>this.edgeFabricObject.getValue(data.uid).triggerDescription.item(i)).setText('');
+                    // let edge = this.edgeFabricObject.getValue(data.uid);
+                    // edge.setObjectPositionWithinDescriptionGroup();
+                    // item++;
                 }
             }
             this.canvas.renderAll();
@@ -1302,6 +1306,9 @@ class EdgeView {
                     param: eachTrigger.getText()
                 });
             });
+            eachTrigger.on('selected', (options) => {
+                
+            })
             this.triggerName.push(eachTrigger);
         }
 
