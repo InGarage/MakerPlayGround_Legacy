@@ -26,7 +26,6 @@
     "angular2-jwt": "^0.1.28",
     "angular2-tree-component": "^2.8.2",
     "auth0-lock": "^10.11.0",
-    "bezier-js": "^2.2.2",
     "bootstrap": "^3.3.7",
     "core-js": "^2.4.1",
     "fabric": "^1.7.6",
@@ -42,7 +41,6 @@
   "devDependencies": {
     "@angular/cli": "^1.0.0-rc.0",
     "@angular/compiler-cli": "^2.4.0",
-    "@types/bezier-js": "0.0.6",
     "@types/fabric": "1.5.19",
     "@types/jasmine": "2.5.38",
     "@types/jquery": "^2.0.40",

@@ -1176,7 +1176,7 @@ class EdgeView {
         let difX = Math.abs(startX - endX) / 2;
         let difY = Math.abs(startY - endY) / 2;
 
-        this.curve = new BezierCurve(startX, startY, edgeData.getConnectDirection_Src(), endX, endY, edgeData.getConnectDirection_Dst());
+        this.curve = BezierCurve.fromStartEndPoint(startX, startY, edgeData.getConnectDirection_Src(), endX, endY, edgeData.getConnectDirection_Dst());
         this.curve.moveCenterPoint(edgeData.getCenterX(), edgeData.getCenterY());
         this.line.path[0] = this.curve.getSVGArray()[0];
         this.line.path[1] = this.curve.getSVGArray()[1];
@@ -1562,6 +1562,10 @@ class EdgeView {
         let movingEdge: EdgeData;
 
         for (let edge of allEdge) {
+            // We must not compare to ourself!!!
+            if (this.edgeData.getEdgeId() === edge.getEdgeId())
+                continue;
+
             let startX = edge.getStartX();
             let startY = edge.getStartY();
             let startDirection = edge.getConnectDirection_Src();
@@ -1664,7 +1668,7 @@ class EdgeView {
 
     moveEdge(startX, startY, endX, endY) {
         console.log('move edge', startX, startY, endX, endY)
-        this.curve.recalculateCurve(startX, startY, this.edgeData.getConnectDirection_Src(), endX, endY, this.edgeData.getConnectDirection_Dst());
+        this.curve = BezierCurve.fromStartEndPoint(startX, startY, this.edgeData.getConnectDirection_Src(), endX, endY, this.edgeData.getConnectDirection_Dst());
 
         // move every components to the new location
         this.line.path = this.curve.getSVGArray();
