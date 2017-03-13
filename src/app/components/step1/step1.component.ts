@@ -72,5 +72,10 @@ export class Step1Component {
     this.router.navigate(['/step3']);
   }
 
+  DeviceSelected() {
+    console.log('click devices');
+    this.router.navigate(['/step2']);
+  }
+ 
 }
 

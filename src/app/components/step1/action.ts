@@ -8,6 +8,7 @@ export interface Action {
   id: string;
   name: string;
   short_description: string;
+  img_path: string;
   params: ActionParameter[];
   require: require;
 }
@@ -53,12 +54,13 @@ export namespace ActionHelper {
         "id": "LED_1",
         "name": "Dim",
         "short_description": "Adjust an LED brightness",
+        "img_path": "/assets/img-action/LED_Dim.svg",
         "params": [
           {
             "name": "name",
             "control": "textbox",
             "default_value": [
-              ""
+              "LED ?"
             ],
             "args": [
               ""
@@ -87,12 +89,13 @@ export namespace ActionHelper {
         "id": "LED_2",
         "name": "Blink",
         "short_description": "Blink an LED",
+        "img_path": "/assets/img-action/LED_Blink.svg",
         "params": [
           {
             "name": "name",
             "control": "textbox",
             "default_value": [
-              ""
+              "LED ?"
             ],
             "args": [
               ""
@@ -121,12 +124,13 @@ export namespace ActionHelper {
         "id": "LED_3",
         "name": "On",
         "short_description": "Turn an LED on",
+        "img_path": "/assets/img-action/LED_ON.svg",
         "params": [
           {
             "name": "name",
             "control": "textbox",
             "default_value": [
-              ""
+              "LED ?"
             ],
             "args": [
               ""
@@ -155,12 +159,13 @@ export namespace ActionHelper {
         "id": "LED_4",
         "name": "Off",
         "short_description": "Turn an LED off",
+        "img_path": "/assets/img-action/LED_OFF.svg",
         "params": [
           {
             "name": "name",
             "control": "textbox",
             "default_value": [
-              ""
+              "LED ?"
             ],
             "args": [
               ""
@@ -182,12 +187,13 @@ export namespace ActionHelper {
         "id": "AN_LCD_1",
         "name": "Backlight On",
         "short_description": "Turn the LCD backlight on",
+        "img_path": "/assets/img-action/LCD_Backlight_ON.svg",
         "params": [
           {
             "name": "name",
             "control": "textbox",
             "default_value": [
-              ""
+              "LCD ?"
             ],
             "args": [
               ""
@@ -204,12 +210,13 @@ export namespace ActionHelper {
         "id": "AN_LCD_2",
         "name": "Backlight Off",
         "short_description": "Turn the LCD backlight off",
+        "img_path": "/assets/img-action/LCD_Backlight_OFF.svg",
         "params": [
           {
             "name": "name",
             "control": "textbox",
             "default_value": [
-              ""
+              "LCD ?"
             ],
             "args": [
               ""
@@ -226,12 +233,13 @@ export namespace ActionHelper {
         "id": "AN_LCD_3",
         "name": "Show Text",
         "short_description": "Show text",
+        "img_path": "/assets/img-action/LCD_ShowText.svg",
         "params": [
           {
             "name": "name",
             "control": "textbox",
             "default_value": [
-              ""
+              "LCD ?"
             ],
             "args": [
               ""
@@ -259,12 +267,13 @@ export namespace ActionHelper {
         "id": "AN_LCD_4",
         "name": "Clear screen",
         "short_description": "Erase all content in the screen",
+        "img_path": "/assets/img-action/LCD_Clear.svg",
         "params": [
           {
             "name": "name",
             "control": "textbox",
             "default_value": [
-              ""
+              "LCD ?"
             ],
             "args": [
               ""
@@ -276,6 +285,40 @@ export namespace ActionHelper {
           "type": "Lcd",
           "fn_name": "clear"
         }
+      },
+      {
+        "id": "AN_LCD_5",
+        "name": "Backlight Color",
+        "short_description": "Set Backlight Color",
+        "img_path": "",
+        "params": [
+          {
+            "name": "name",
+            "control": "textbox",
+            "default_value": [
+              ""
+            ],
+            "args": [
+              ""
+            ],
+            "regex": "^[\\S]+$"
+          },
+          {
+            "name": "color",
+            "control": "textbox",
+            "default_value": [
+              "#FFFFFF"
+            ],
+            "args": [
+              ""
+            ],
+            "regex": "^#(\\d|[A-F]){6,6}$"
+          }
+        ],
+        "require": {
+          "type": "Lcd",
+          "fn_name": "backlight_color"
+        }
       }
     ]
   },
@@ -286,12 +329,65 @@ export namespace ActionHelper {
         "id": "Audio_1",
         "name": "beep",
         "short_description": "Play a beep sound",
+        "img_path": "/assets/img-action/Audio_playSound.svg",
         "params": [
           {
             "name": "name",
             "control": "textbox",
             "default_value": [
+              "Speaker ?"
+            ],
+            "args": [
               ""
+            ],
+            "regex": "^[\\S]+$"
+          },
+          {
+            "name": "volume",
+            "control": "percentage",
+            "default_value": [
+              "50",
+              "%"
+            ],
+            "args": [
+              "%"
+            ],
+            "regex": "^(\\d([.]\\d{1,})?|[1-9]\\d([.]\\d{1,})?|100)$"
+          },
+          {
+            "name": "duration",
+            "control": "spinbox",
+            "default_value": [
+              "100",
+              "ms"
+            ],
+            "args": [
+              "ms"
+            ],
+            "regex": "^(\\d{1,})$"
+          }
+        ],
+        "require": {
+          "type": "Audio",
+          "fn_name": "beep"
+        }
+      }
+    ]
+  },
+  {
+    "name": "Audio",
+    "children": [
+      {
+        "id": "Audio_2",
+        "name": "tone",
+        "short_description": "Play a tone sound",
+        "img_path": "/assets/img-action/Audio_playTone.svg",
+        "params": [
+          {
+            "name": "name",
+            "control": "textbox",
+            "default_value": [
+              "Speaker ?"
             ],
             "args": [
               ""
@@ -325,7 +421,7 @@ export namespace ActionHelper {
         ],
         "require": {
           "type": "Audio",
-          "fn_name": "beep"
+          "fn_name": "tone"
         }
       }
     ]
@@ -337,12 +433,13 @@ export namespace ActionHelper {
         "id": "DCMotor_1",
         "name": "on",
         "short_description": "Turn a motor on",
+        "img_path": "/assets/img-action/DC_ON.svg",
         "params": [
           {
             "name": "name",
             "control": "textbox",
             "default_value": [
-              ""
+              "Motor ?"
             ],
             "args": [
               ""
@@ -383,12 +480,13 @@ export namespace ActionHelper {
         "id": "DCMotor_2",
         "name": "reverse",
         "short_description": "Change motor direction",
+        "img_path": "/assets/img-action/DC_reverse.svg",
         "params": [
           {
             "name": "name",
             "control": "textbox",
             "default_value": [
-              ""
+              "Motor ?"
             ],
             "args": [
               ""
@@ -405,12 +503,13 @@ export namespace ActionHelper {
         "id": "DCMotor_3",
         "name": "set_speed",
         "short_description": "Change motor speed",
+        "img_path": "/assets/img-action/DC_setSpeed.svg",
         "params": [
           {
             "name": "name",
             "control": "textbox",
             "default_value": [
-              ""
+              "Motor ?"
             ],
             "args": [
               ""
@@ -432,19 +531,20 @@ export namespace ActionHelper {
         ],
         "require": {
           "type": "Motor",
-          "fn_name": "set_speed"
+          "fn_name": "set speed"
         }
       },
       {
         "id": "DCMotor_4",
         "name": "stop",
         "short_description": "Turn a motor off",
+        "img_path": "/assets/img-action/DC_stop.svg",
         "params": [
           {
             "name": "name",
             "control": "textbox",
             "default_value": [
-              ""
+              "Motor ?"
             ],
             "args": [
               ""
@@ -455,6 +555,259 @@ export namespace ActionHelper {
         "require": {
           "type": "Motor",
           "fn_name": "stop"
+        }
+      }
+    ]
+  },
+  {
+    "name": "7Seg",
+    "children": [
+      {
+        "id": "7Seg_1",
+        "name": "show",
+        "short_description": "show",
+        "img_path": "/assets/img-action/7-seg-showDigit.svg",
+        "params": [
+          {
+            "name": "name",
+            "control": "textbox",
+            "default_value": [
+              "7Seg ?"
+            ],
+            "args": [
+              ""
+            ],
+            "regex": "^[\\S]+$"
+          },
+          {
+            "name": "number1",
+            "control": "textbox",
+            "default_value": [
+              "1"
+            ],
+            "args": [
+              ""
+            ],
+            "regex": "^(\\d|A|B|C|D|F|a|b|c|d|e|f)?$"
+          },
+          {
+            "name": "number2",
+            "control": "textbox",
+            "default_value": [
+              "A"
+            ],
+            "args": [
+              ""
+            ],
+            "regex": "^(\\d|A|B|C|D|F|a|b|c|d|e|f)?$"
+          },
+          {
+            "name": "number3",
+            "control": "textbox",
+            "default_value": [
+              "B"
+            ],
+            "args": [
+              ""
+            ],
+            "regex": "^(\\d|A|B|C|D|F|a|b|c|d|e|f)?$"
+          },
+          {
+            "name": "number4",
+            "control": "textbox",
+            "default_value": [
+              "F"
+            ],
+            "args": [
+              ""
+            ],
+            "regex": "^(\\d|A|B|C|D|F|a|b|c|d|e|f)?$"
+          },
+          {
+            "name": "colon",
+            "control": "checkbox",
+            "default_value": [
+              ""
+            ],
+            "args": [
+              ""
+            ],
+            "regex": ""
+          }
+        ],
+        "require": {
+          "type": "7Seg",
+          "fn_name": "show"
+        }
+      },
+      {
+        "id": "7Seg_2",
+        "name": "off",
+        "short_description": "off",
+        "img_path": "/assets/img-action/7-seg-noShowDigit.svg",
+        "params": [
+          {
+            "name": "name",
+            "control": "textbox",
+            "default_value": [
+              "7Seg ?"
+            ],
+            "args": [
+              ""
+            ],
+            "regex": "^[\\S]+$"
+          }
+        ],
+        "require": {
+          "type": "7Seg",
+          "fn_name": "off"
+        }
+      }
+    ]
+  },
+  {
+    "name": "Cloud",
+    "children": [
+      {
+        "id": "Cloud_1",
+        "name": "Tweeter",
+        "short_description": "Tweet some text on tweeter",
+        "img_path": "",
+        "params": [
+          {
+            "name": "name",
+            "control": "textbox",
+            "default_value": [
+              "Tweet ?"
+            ],
+            "args": [
+              ""
+            ],
+            "regex": "^[\\S]+$"
+          },
+          {
+            "name": "text",
+            "control": "textbox",
+            "default_value": [
+              "hello world"
+            ],
+            "args": [
+              ""
+            ],
+            "regex": "^[\\S]+$"
+          }
+        ],
+        "require": {
+          "type": "Cloud",
+          "fn_name": "tweet"
+        }
+      },
+      {
+        "id": "Cloud_2",
+        "name": "AzureUpload",
+        "short_description": "AzureUpload",
+        "img_path": "",
+        "params": [
+          {
+            "name": "name",
+            "control": "textbox",
+            "default_value": [
+              "Azure ?"
+            ],
+            "args": [
+              ""
+            ],
+            "regex": "^[\\S]+$"
+          },
+          {
+            "name": "text",
+            "control": "textbox",
+            "default_value": [
+              "hello world"
+            ],
+            "args": [
+              ""
+            ],
+            "regex": "^[\\S]+$"
+          }
+        ],
+        "require": {
+          "type": "Cloud",
+          "fn_name": "azureUp"
+        }
+      },
+      {
+        "id": "Cloud_3",
+        "name": "AzureDown",
+        "short_description": "AzureDown",
+        "img_path": "",
+        "params": [
+          {
+            "name": "name",
+            "control": "textbox",
+            "default_value": [
+              "Azure ?"
+            ],
+            "args": [
+              ""
+            ],
+            "regex": "^[\\S]+$"
+          }
+        ],
+        "require": {
+          "type": "Cloud",
+          "fn_name": "azureDown"
+        }
+      }
+    ]
+  },
+  {
+    "name": "Relay",
+    "children": [
+      {
+        "id": "Relay_1",
+        "name": "on",
+        "short_description": "on",
+        "img_path": "",
+        "params": [
+          {
+            "name": "name",
+            "control": "textbox",
+            "default_value": [
+              "Relay ?"
+            ],
+            "args": [
+              ""
+            ],
+            "regex": "^[\\S]+$"
+          }
+        ],
+        "require": {
+          "type": "Relay",
+          "fn_name": "on"
+        }
+      },
+      {
+        "id": "Relay_2",
+        "name": "off",
+        "short_description": "off",
+        "img_path": "",
+        "params": [
+          {
+            "name": "name",
+            "control": "textbox",
+            "default_value": [
+              "Relay ?"
+            ],
+            "args": [
+              ""
+            ],
+            "regex": "^[\\S]+$"
+          }
+        ],
+        "require": {
+          "type": "Relay",
+          "fn_name": "off"
         }
       }
     ]

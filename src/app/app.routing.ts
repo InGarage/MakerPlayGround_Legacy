@@ -8,6 +8,7 @@ import { HomeComponent } from './components/home.component';
 // import { TutorialComponent } from './components/tutorial.component';
 // import { SampleProjectComponent } from './components/sample-project.component';
 import { Step1Component } from './components/step1/step1.component';
+import { Step2Component } from './components/step1/step2.component';
 import { Step3Component } from './components/step1/step3.component';
 
 const appRoutes: Routes = [
@@ -28,6 +29,11 @@ const appRoutes: Routes = [
     {
         path: 'step1',
         component: Step1Component,
+        canActivate: [AuthGuard]
+    },
+    {
+        path: 'step2',
+        component: Step2Component,
         canActivate: [AuthGuard]
     },
     {

@@ -39,6 +39,9 @@ export class Step3Component {
     return styles;
   }
 
-
+  DeviceSelected() {
+    console.log('click devices');
+    this.router.navigate(['/step2']);
+  }
 
 }

@@ -157,6 +157,7 @@ export class MiddleComponent implements OnInit, OnDestroy {
         });
 
         this.canvas.on('edge:combine', (options) => {
+            console.log('combine these two', options.toBeMissing.getEdgeId(), options.toBeCombined.getEdgeId());
             this.model.mergeEdge(options.toBeMissing.getEdgeId(), options.toBeCombined.getEdgeId());
             this.canvas.redraw();
         });

@@ -16,6 +16,7 @@ import { HomeComponent } from './components/home.component';
 import { TutorialComponent } from './components/tutorial.component';
 import { SampleProjectComponent } from './components/sample-project.component';
 import { Step1Component } from './components/step1/step1.component';
+import { Step2Component } from './components/step1/step2.component';
 import { Step3Component } from './components/step1/step3.component';
 import { ActionComponent } from './components/step1/action.component';
 import { MiddleComponent } from './components/step1/middle.component';
@@ -38,7 +39,8 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
         MdGridListModule, AccordionModule.forRoot(), DropdownModule.forRoot(), AppRoutingModule],
     declarations: [AppComponent, LoginComponent, HomeComponent, TutorialComponent,
         SampleProjectComponent, Step1Component, ActionComponent,
-        MiddleComponent, PropertyComponent, Step3Component, KeysPipe, PageNotFoundComponent],
+        MiddleComponent, PropertyComponent, Step2Component, Step3Component, KeysPipe, 
+        PageNotFoundComponent],
     providers: [
         {
             provide: AuthHttp,

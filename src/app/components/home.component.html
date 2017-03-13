@@ -22,7 +22,6 @@
   </nav>
 </div>
 
-
 <div class="customContainer">
 
   <div class="btnRow">
@@ -34,23 +33,22 @@
     </div>
   </div>
 
-</div>
+  <div class="allProjectsTable">
+    <md-grid-list cols="4" rowHeight="4:3" gutterSize="20px">
+      <div id="parent">
+        <md-grid-tile  *ngFor="let project of projects; let i = index" [colspan]="1" [rowspan]="1" [style.background]="'lightblue'"
+          (click)="getProject(project.project_id)" (mouseover)='displayDelBtn(i)' (mouseleave)="fadeDelBtn($event, i)">
+          <div class="deleteProjectBtn" *ngIf="displayDel[i].delBtn === true" (click)="deleteProject(project.project_id)">
+            <span class="glyphicon-fix glyphicon-remove" aria-hidden="true"></span>
+          </div>
 
-<div class="allProjectsTable">
-  <md-grid-list cols="4" rowHeight="4:3" gutterSize="20px">
-    <md-grid-tile id="eachProject" *ngFor="let project of projects; let i = index" [colspan]="1" [rowspan]="1" [style.background]="'lightblue'"
-      (click)="getProject(project.project_id)" (mouseover)='displayDelBtn(i)' (mouseout)="fadeDelBtn(i)">
-
-      <div class="deleteProjectBtn" *ngIf="displayDel[i].delBtn === true" (click)="deleteProject(project.project_id)">
-        <span class="glyphicon-fix glyphicon-remove" aria-hidden="true"></span>
+          <div class="projectName">
+            <div class="fontProjectName">
+              {{project.project_name}}
+            </div>
+          </div>
+        </md-grid-tile>
       </div>
-
-      <div class="projectName">
-        <div class="fontProjectName">
-          {{project.project_name}}
-        </div>
-      </div>
-
-    </md-grid-tile>
-  </md-grid-list>
+    </md-grid-list>
+  </div>
 </div>

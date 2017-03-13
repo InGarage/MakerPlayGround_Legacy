@@ -1,0 +1,31 @@
+<div class="navv">
+  <nav class="navbar navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header navbar-left">
+        <a class="navbar-brand navbar-maker" routerLink="/">
+          <div>
+            <img class="imgLogo" src="/assets/img/nav-logo.svg" />
+          </div>
+        </a>
+        <a class="navbar-brand navbar-basic" routerLink="/home">
+          <div>
+            <img class="imgProject" src="/assets/img/icon-project.svg" /><span class="textProject">My Projects</span>
+          </div>
+        </a>
+      </div>
+    </div>
+  </nav>
+</div>
+
+<div class="step1">
+  <div class="under-nav">
+    <p class="under-nav-basic  under-nav-column1">{{projectName}}</p>
+    <p class="under-nav-basic  under-nav-space1"></p>
+    <a class="under-nav-basic under-nav-basic  under-nav-column" routerLink="/step1"><img class="imgProject" src="/assets/img-icon/canvas-inactive.svg" /> Canvas</a>
+    <a class="under-nav-active  under-nav-column" routerLink="/step2"><img class="imgProject" src="/assets/img-icon/device-active.svg" /> Devices</a>
+    <a class="under-nav-basic  under-nav-column" (click)="BlueprintSelected()"><img class="imgProject" src="/assets/img-icon/blueprint-inactive.svg" /> Blueprint</a>
+    <p class="under-nav-basic  under-nav-space2"></p>
+  </div>
+
+
+</div>

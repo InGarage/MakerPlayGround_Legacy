@@ -382,7 +382,6 @@ export class GraphData {
         this.data = this.data.setIn(['edges', destEdgeId, 'trigger'], this.data.getIn(['edges', destEdgeId, 'trigger'])
             .concat(this.data.getIn(['edges', srcEdgeId, 'trigger'])));
         this.data = this.data.deleteIn(['edges', srcEdgeId]);
-        console.log(this.data.toJS());
         this.undoStack.push(this.data);
     }
 }
