@@ -12,7 +12,7 @@ import { BezierCurve } from './curvehelper';
 const NODE_SIZE_WIDTH: number = 120;
 const NODE_SIZE_HEIGHT: number = 50;
 const NODE_SIZE: number = 50;
-const NODE_SVG_POS: number = 40;
+const NODE_SVG_POS: number = 35;
 const NODE_NAME_YPOS: number = 40;
 const NODE_NAME_FONTSIZE: number = 14;
 const NODE_SVG_SCALE: number = 0.7;
@@ -22,7 +22,7 @@ const NODE_REMOVEBTN_POSY: number = (NODE_SIZE_HEIGHT / 2) - 8;
 const NODE_REMOVEBTN_SIZE: number = 5;
 const EDGE_ARROW_HEAD_SIZE: number = 10;
 const EDGE_ARROW_WIDTH: number = 2;
-const EDGE_SVG_SCALE: number = 0.5;
+const EDGE_SVG_SCALE: number = 0.6;
 const EDGE_IMAGE_SIZE: number = 50;
 const EDGE_IMAGE_DISTANCE: number = 40;
 const EDGE_DOT_RADIUS: number = 3;
@@ -119,6 +119,11 @@ export class GraphCanvas {
         let selectedGroup: fabric.IGroup;
         let selectedNode = new Collections.Set<NodeView>((item) => { return item.id });
         let selectedEdge = new Collections.Set<EdgeView>((item) => { return item.id });
+        // keep track of one edge that is selected in the group selection
+        // so that we can calculate dx and dy and apply to other edge
+        let edgeSelected: EdgeView;
+        let oldLeft = 0;
+        let oldTop = 0;
 
         this.canvas.on('selection:created', (e) => {
             this.selectingObject.deselect();
@@ -146,61 +151,88 @@ export class GraphCanvas {
                     if (selectedGroup.getObjects().indexOf(obj) === -1)
                         selectedGroup.addWithUpdate(obj);
             });
+
+            // keep track of current left/top to calculate dx/dy in selection clear
+            if (selectedEdge.size() !== 0) {
+                edgeSelected = selectedEdge.toArray()[selectedEdge.toArray().length - 1];
+                oldLeft = edgeSelected.triangle.getLeft();
+                oldTop = edgeSelected.triangle.getTop();
+                console.log('keep old', oldLeft, oldTop);
+            }
+
             this.canvas.setActiveGroup(selectedGroup);
         });
 
-        // this.canvas.on('selection:cleared', (e) => {
-        //     // Proceed only if user clear a group selection because selection:cleared is also emitted when we clear single object selection
-        //     if (selectedGroup !== undefined) {
-        //         // We move the edge first otherwise moveNode will override edge.line position and we won't know
-        //         selectedEdge.forEach((edge) => {
-        //             let startX = edge.edgeData.getStartX();
-        //             let startY = edge.edgeData.getStartY();
-        //             let endX = edge.edgeData.getEndX();
-        //             let endY = edge.edgeData.getEndY();
-        //             let angle = Math.atan2((endY - startY), (endX - startX));
-        //             [startX, endX, startY, endY] = edge.getLineCoordinateFromOrigin(edge.line.getLeft() + (EDGE_ARROW_HEAD_SIZE / 2 * Math.cos(angle)) / 2
-        //                 , edge.line.getTop() + (EDGE_ARROW_HEAD_SIZE / 2 * Math.sin(angle)) / 2);
-        //             edge.moveEdge(startX, startY, endX, endY, angle);
-        //             edge.processEdgeEvent(startX, startY, endX, endY, angle, true);
-        //         });
-        //         // Deselect every node from the edge manually because the moveNode function doesn't handle deselect. Thus, when we move node by group select nodes,
-        //         // node remains connect to the edge it has been connected to previously even that edges aren't a part of a group selection. After deselecting all nodes, 
-        //         // the node will be reconnected when it is moved to the new position in the last step
-        //         selectedNode.forEach((node) => {
-        //             for (const edgeData of this.graph.getEdgesBySrcNode(node.id)) {
-        //                 this.callback.getValue('edge:connectionSrc')({
-        //                     target_id: edgeData.getEdgeId(),
-        //                     start_x: edgeData.getStartX(),
-        //                     start_y: edgeData.getStartY(),
-        //                     end_x: edgeData.getEndX(),
-        //                     end_y: edgeData.getEndY(),
-        //                     src_node_id: '',
-        //                 });
-        //             }
-        //             for (const edgeData of this.graph.getEdgesByDstNode(node.id)) {
-        //                 this.callback.getValue('edge:connectionDst')({
-        //                     target_id: edgeData.getEdgeId(),
-        //                     start_x: edgeData.getStartX(),
-        //                     start_y: edgeData.getStartY(),
-        //                     end_x: edgeData.getEndX(),
-        //                     end_y: edgeData.getEndY(),
-        //                     dst_node_id: '',
-        //                 });
-        //             }
-        //         });
-        //         // We can then move the node. Here the connection will be made again since edges has already moved to their new position.
-        //         // Thus, by moving node to the new location, node will know that it is nearing some edge(s) and will connect to those edges
-        //         selectedNode.forEach((node) => {
-        //             let image = node.nodeActionImage;
-        //             node.moveNode(image.getLeft(), image.getTop(), true);
-        //         });
-        //         // Clear all temporary variable needed 
-        //         selectedGroup = undefined;
-        //         selectedNode.clear();
-        //         selectedEdge.clear();
-        //     }
-        // });
+        this.canvas.on('selection:cleared', (e) => {
+            // Proceed only if user clear a group selection because selection:cleared is also emitted when we clear single object selection
+            if (selectedGroup !== undefined) {
+
+                let dx, dy;
+                if (selectedEdge.size() !== 0) {
+                    dx = edgeSelected.triangle.getLeft() - oldLeft;
+                    dy = edgeSelected.triangle.getTop() - oldTop;
+                    console.log('new', edgeSelected.triangle.getLeft(), edgeSelected.triangle.getTop());
+                    console.log('diff', dx, dy);
+                }
+
+                // We move the edge first otherwise moveNode will override edge.line position and we won't know
+                selectedEdge.forEach((edge) => {
+
+                    edge.shiftEdge(dx, dy);
+                    edge.processEdgeEvent(true);
+
+
+                    // let startX = edge.edgeData.getStartX();
+                    // let startY = edge.edgeData.getStartY();
+                    // let endX = edge.edgeData.getEndX();
+                    // let endY = edge.edgeData.getEndY();
+                    // let angle = Math.atan2((endY - startY), (endX - startX));
+                    // [startX, endX, startY, endY] = edge.getLineCoordinateFromOrigin(edge.line.getLeft() + (EDGE_ARROW_HEAD_SIZE / 2 * Math.cos(angle)) / 2
+                    //     , edge.line.getTop() + (EDGE_ARROW_HEAD_SIZE / 2 * Math.sin(angle)) / 2);
+                    // edge.moveEdge(startX, startY, endX, endY, angle);
+                    // edge.processEdgeEvent(startX, startY, endX, endY, angle, true);
+                });
+                // Deselect every node from the edge manually because the moveNode function doesn't handle deselect. Thus, when we move node by group select nodes,
+                // node remains connect to the edge it has been connected to previously even that edges aren't a part of a group selection. After deselecting all nodes, 
+                // the node will be reconnected when it is moved to the new position in the last step
+                selectedNode.forEach((node) => {
+                    for (const edgeData of this.graph.getEdgesBySrcNode(node.id)) {
+                        this.callback.getValue('edge:connectionSrc')({
+                            target_id: edgeData.getEdgeId(),
+                            start_x: edgeData.getStartX(),
+                            start_y: edgeData.getStartY(),
+                            center_x: edgeData.getCenterX(),
+                            center_y: edgeData.getCenterY(),
+                            end_x: edgeData.getEndX(),
+                            end_y: edgeData.getEndY(),
+                            src_node_id: '',
+                        });
+                    }
+                    for (const edgeData of this.graph.getEdgesByDstNode(node.id)) {
+                        this.callback.getValue('edge:connectionDst')({
+                            target_id: edgeData.getEdgeId(),
+                            start_x: edgeData.getStartX(),
+                            start_y: edgeData.getStartY(),
+                            center_x: edgeData.getCenterX(),
+                            center_y: edgeData.getCenterY(),
+                            end_x: edgeData.getEndX(),
+                            end_y: edgeData.getEndY(),
+                            dst_node_id: '',
+                        });
+                    }
+                });
+                // We can then move the node. Here the connection will be made again since edges has already moved to their new position.
+                // Thus, by moving node to the new location, node will know that it is nearing some edge(s) and will connect to those edges
+                selectedNode.forEach((node) => {
+                    let image = node.nodeActionImage;
+                    node.moveNode(image.getLeft(), image.getTop(), true);
+                });
+                // Clear all temporary variable needed 
+                selectedGroup = undefined;
+                selectedNode.clear();
+                selectedEdge.clear();
+            }
+        });
     }
 
     deselectAllNode() {
@@ -270,7 +302,6 @@ export class GraphCanvas {
     removeEdge(edgeData: EdgeData) {
         let edgeView = this.edgeFabricObject.remove(edgeData.getEdgeId());
         for (const obj of edgeView.getAllFabricElement()) {
-            console.log('x', obj);
             this.canvas.remove(obj);
         }
     }
@@ -392,7 +423,7 @@ class NodeView {
         this.nodeActionImage = new fabric.Group();
 
         const actionType = ActionHelper.getActionTypeById(action.id);
-        fabric.loadSVGFromURL('/assets/img/' + actionType + '.svg', (objects, options) => {
+        fabric.loadSVGFromURL(action.img_path, (objects, options) => {
             let nodeSvg = fabric.util.groupSVGElements(objects, options);
             nodeSvg.set({
                 originX: 'center',
@@ -422,7 +453,9 @@ class NodeView {
                 ry: 5,
             });
 
-            let nodeDisplayText = new fabric.Text(action.name);
+            const text = action.name.replace(/ /g, "\n");
+
+            let nodeDisplayText = new fabric.Text(text);
             nodeDisplayText.set({
                 fontFamily: "Roboto",
                 fontSize: NODE_ACTION_NAME_FONTSIZE,
@@ -434,8 +467,6 @@ class NodeView {
 
             this.nodeActionImage.addWithUpdate(nodeSvgBorder);
             this.nodeActionImage.addWithUpdate(nodeSvg);
-            // this.nodeActionImage.addWithUpdate(nodeSvgBorder);
-            // this.nodeActionImage.addWithUpdate(nodeDisplayTag);
             this.nodeActionImage.addWithUpdate(nodeDisplayText);
 
             this.initNodeEvent();
@@ -522,8 +553,6 @@ class NodeView {
         });
 
         this.nodeNameText.setText(text);
-        //(<fabric.IText><any>this.triggerDescription.item(trigger.getTriggerIndex() * 2 + 1)).setText(text);
-
         this.nodeNameText.setCoords();
 
         this.nodeRemoveButton.set({
@@ -875,9 +904,9 @@ class TriggerImageLoader {
     }
 
     loadImageAsync(id: string, callback: (img: fabric.IPathGroup) => void) {
-        const triggerType = TriggerHelper.getTriggerTypeById(id);
+        const trigger = TriggerHelper.findTriggerById(id);
         if (!this.image.has(id)) {
-            fabric.loadSVGFromURL('/assets/img/' + triggerType + '.svg', (objects, options) => {
+            fabric.loadSVGFromURL(trigger.img_path, (objects, options) => {
                 const triggerSvg = fabric.util.groupSVGElements(objects, options);
                 this.image.set(id, triggerSvg);
                 callback(fabric.util.object.clone(triggerSvg));
@@ -1020,6 +1049,8 @@ class EdgeView {
             this.triggerName.push(eachTrigger);
         }
 
+
+
         let promises: Promise<void>[] = [];
         for (const trigger of this.edgeData.getTrigger()) {
             promises.push(new Promise<void>((resolve, reject) => {
@@ -1037,14 +1068,14 @@ class EdgeView {
             this.triangle.set('uid', this.id);
             this.dotHead.set('uid', this.id);
             this.dotTail.set('uid', this.id);
-            this.reinitializeFromModel(edgeData);
-            this.canvas.add(this.edgeDeleteBtn, this.triggerDescription, this.line, this.curveControlPoint, this.triangle, this.dotTail, this.dotHead);
 
             // Set uid to all element in triggerName then add each one to canvas
             for (let i = 0; i < edgeData.getTrigger().length; i++) {
                 this.canvas.add(this.triggerName[i]);
             }
 
+            this.reinitializeFromModel(edgeData);
+            this.canvas.add(this.edgeDeleteBtn, this.triggerDescription, this.line, this.curveControlPoint, this.triangle, this.dotTail, this.dotHead);
         });
     }
 
@@ -1063,24 +1094,18 @@ class EdgeView {
             oldTop = this.line.getTop();
             this.shiftEdge(dx, dy);
             // let edge: combineEdge = this.findIntersectionPoint(false);
-            let edge = this.findIntersectionPoint(false);
+            let edge: combineEdge = this.findIntersectionPoint(false);
             this.processEdgeEvent();
-            // this.edgeDeleteBtn.visible = false;
-            // for (let del of this.triggerDeleteBtn)
-            //     del.visible = false;
-
-            // let [startX, startY, endX, endY, angle] = this.getCurrentPointAfterReinitialize();
-            // let currentOriginLineX = this.line.getLeft() + (EDGE_ARROW_HEAD_SIZE / 2 * Math.cos(angle)) / 2;
-            // let currentOriginLineY = this.line.getTop() + (EDGE_ARROW_HEAD_SIZE / 2 * Math.sin(angle)) / 2;
-            // let [nStartX, nEndX, nStartY, nEndY] = this.getLineCoordinateFromOrigin(currentOriginLineX, currentOriginLineY);
-            // let edge: combineEdge = this.findIntersectionPoint(nStartX, nStartY, nEndX, nEndY, false);
-            // this.moveEdge(nStartX, nStartY, nEndX, nEndY, angle);
-            // this.processEdgeEvent(nStartX, nStartY, nEndX, nEndY, angle);
         });
         this.line.on('modified', (options) => {
             let dx = this.line.getLeft() - oldLeft;
             let dy = this.line.getTop() - oldTop;
             this.shiftEdge(dx, dy);
+            let edge: combineEdge = this.findIntersectionPoint(true);
+            if (edge !== undefined) {
+                this.combineEdge(edge);
+                return;
+            }
             this.processEdgeEvent(true);
             this.selectEdge();
         });
@@ -1101,13 +1126,18 @@ class EdgeView {
             oldTop = this.triggerDescription.getTop();
             this.shiftEdge(dx, dy);
             // let edge: combineEdge = this.findIntersectionPoint(false);
-            let edge = this.findIntersectionPoint(false);
+            let edge: combineEdge = this.findIntersectionPoint(false);
             this.processEdgeEvent();
         });
         this.triggerDescription.on('modified', (options) => {
             let dx = this.triggerDescription.getLeft() - oldLeft;
             let dy = this.triggerDescription.getTop() - oldTop;
             this.shiftEdge(dx, dy);
+            let edge: combineEdge = this.findIntersectionPoint(true);
+            if (edge !== undefined) {
+                this.combineEdge(edge);
+                return;
+            }
             this.processEdgeEvent(true);
             this.selectEdge();
         });
@@ -1128,13 +1158,18 @@ class EdgeView {
             oldTop = this.triangle.getTop();
             this.shiftEdge(dx, dy);
             // let edge: combineEdge = this.findIntersectionPoint(false);
-            let edge = this.findIntersectionPoint(false);
+            let edge: combineEdge = this.findIntersectionPoint(false);
             this.processEdgeEvent();
         });
         this.triangle.on('modified', (options) => {
             let dx = this.triangle.getLeft() - oldLeft;
             let dy = this.triangle.getTop() - oldTop;
             this.shiftEdge(dx, dy);
+            let edge: combineEdge = this.findIntersectionPoint(true);
+            if (edge !== undefined) {
+                this.combineEdge(edge);
+                return;
+            }
             this.processEdgeEvent(true);
             this.selectEdge();
         });
@@ -1309,6 +1344,68 @@ class EdgeView {
             visible: false
         })
         this.dotTail.setCoords();
+
+        //remove trigger's name for each trigger from canvas
+        if (this.triggerName.length !== 0) {
+            for (let i = 0; i < this.triggerName.length; i++) {
+                this.triggerName[i].setCoords();
+                this.canvas.remove(this.triggerName[i]);
+            }
+            this.triggerName = [];
+        }
+
+        if (this.triggerName.length === 0) {
+            // Create each trigger's name and add its event
+            for (let t of edgeData.getTrigger()) {
+                let eachTrigger = new fabric.IText('');
+                eachTrigger.set('uid', this.id);
+                eachTrigger.on('editing:exited', (options) => {
+                    this.callback.getValue('trigger:update')({
+                        target_id: this.edgeData.getEdgeId(),
+                        triggerIndex: t.getTriggerIndex(),
+                        param: eachTrigger.getText()
+                    });
+                });
+                eachTrigger.on('selected', (options) => {
+                    this.selectEdge();
+
+                    oldLeft = eachTrigger.getLeft();
+                    oldTop = eachTrigger.getTop();
+
+                    this.callback.getValue('edge:selected')({
+                        target_id: this.edgeData.getEdgeId(),
+                    });
+                });
+                eachTrigger.on('moving', (options) => {
+                    this.deselectEdge();
+                    let dx = eachTrigger.getLeft() - oldLeft;
+                    let dy = eachTrigger.getTop() - oldTop;
+
+                    oldLeft = eachTrigger.getLeft();
+                    oldTop = eachTrigger.getTop();
+
+                    this.shiftEdge(dx, dy);
+
+                    // let edge: combineEdge = this.findIntersectionPoint(false);
+                    let edge = this.findIntersectionPoint(false);
+                    this.processEdgeEvent();
+                });
+                eachTrigger.on('modified', (options) => {
+                    let dx = eachTrigger.getLeft() - oldLeft;
+                    let dy = eachTrigger.getTop() - oldTop;
+
+                    this.shiftEdge(dx, dy);
+                    this.processEdgeEvent(true);
+                    this.selectEdge();
+                });
+                this.triggerName.push(eachTrigger);
+            }
+
+            // Set uid to all element in triggerName then add each one to canvas
+            for (let i = 0; i < edgeData.getTrigger().length; i++) {
+                this.canvas.add(this.triggerName[i]);
+            }
+        }
 
         // remove each element in trigger description group from canvas
         for (const obj of this.triggerDescription.getObjects().concat()) {
@@ -1556,7 +1653,7 @@ class EdgeView {
         return [centerPoint[0] - EDGE_IMAGE_DISTANCE * normal[0], centerPoint[1] - EDGE_IMAGE_DISTANCE * normal[1], angle];
     }
 
-    findIntersectionPoint(shouldEmittedEvent: boolean) {
+    findIntersectionPoint(shouldEmittedEvent: boolean): combineEdge {
         let allEdge: EdgeData[] = this.graph.getEdges();
         let movingEdge: EdgeData;
 
@@ -1574,79 +1671,21 @@ class EdgeView {
             let endY = edge.getEndY();
             let endDirection = edge.getConnectDirection_Dst();
             let intersect = this.curve.isIntersect(startX, startY, startDirection, centerX, centerY, endX, endY, endDirection);
-            console.log("intersect result", intersect);
+            if (intersect === true) {
+                let edgeView = this.edgeFabricObject.getValue(edge.getEdgeId());
+                if (!shouldEmittedEvent) {
+                    edgeView.line.set('stroke', 'red');
+                    edgeView.triangle.set('fill', 'red');
+                }
+                return { toBeMissing: this.edgeData, toBeCombined: edge };
+            } else if (intersect === false) {
+                let edgeView = this.edgeFabricObject.getValue(edge.getEdgeId());
+                if (!shouldEmittedEvent) {
+                    edgeView.line.set('stroke', 'black');
+                    edgeView.triangle.set('fill', 'black');
+                }
+            }
         }
-
-        // for (let edge of allEdge) {
-        //     x3 = edge.getStartX(); y3 = edge.getStartY();
-        //     x4 = edge.getEndX(); y4 = edge.getEndY();
-
-        //     let a_dx = x2 - x1;
-        //     let a_dy = y2 - y1;
-        //     let b_dx = x4 - x3;
-        //     let b_dy = y4 - y3;
-
-        //     // This is the moving edge, must not compare with itself!
-        //     // Otherwise it will paint itself to be red too.
-        //     if (this.edgeData.getEdgeId() === edge.getEdgeId())
-        //         continue;
-
-        //     if (this.edgeData.getEdgeId() !== edge.getEdgeId()) {
-        //         // For the case where two lines are parallel to each other
-        //         if ((y1 === y2) && (y3 === y4) && ((x3 > x1 && x3 < x2) || (x4 > x1 && x4 < x2))) {
-        //             if (y1 - y3 >= -10 && y1 - y3 <= 10) {
-        //                 let edgeView = this.edgeFabricObject.getValue(edge.getEdgeId());
-        //                 if (!shouldEmittedEvent) {
-        //                     edgeView.line.set('stroke', 'red');
-        //                     edgeView.triangle.set('fill', 'red');
-        //                 }
-        //                 return { toBeMissing: this.edgeData, toBeCombined: edge };
-        //             } else {
-        //                 // No intersection point, paint arrow's color back to black
-        //                 let edgeView = this.edgeFabricObject.getValue(edge.getEdgeId());
-        //                 if (!shouldEmittedEvent) {
-        //                     edgeView.line.set('stroke', 'black');
-        //                     edgeView.triangle.set('fill', 'black');
-        //                 }
-        //             }
-        //         } else if (x1 === x2 && x3 === x4 && ((y3 > y1 && y3 < y2) || (y4 > y1 && y4 < y2))) {
-        //             if (x1 - x3 >= -10 && x1 - x3 <= 10) {
-        //                 let edgeView = this.edgeFabricObject.getValue(edge.getEdgeId());
-        //                 if (!shouldEmittedEvent) {
-        //                     edgeView.line.set('stroke', 'red');
-        //                     edgeView.triangle.set('fill', 'red');
-        //                 }
-        //                 return { toBeMissing: this.edgeData, toBeCombined: edge };
-        //             } else {
-        //                 // No intersection point, paint arrow's color back to black
-        //                 let edgeView = this.edgeFabricObject.getValue(edge.getEdgeId());
-        //                 if (!shouldEmittedEvent) {
-        //                     edgeView.line.set('stroke', 'black');
-        //                     edgeView.triangle.set('fill', 'black');
-        //                 }
-        //             }
-        //         } else if (y1 !== y2 || y3 !== y4 || x1 !== x2 || x3 !== x4) {
-        //             let s = (-a_dy * (x1 - x3) + a_dx * (y1 - y3)) / (-b_dx * a_dy + a_dx * b_dy);
-        //             let t = (+b_dx * (y1 - y3) - b_dy * (x1 - x3)) / (-b_dx * a_dy + a_dx * b_dy);
-        //             let a = (s >= 0 && s <= 1 && t >= 0 && t <= 1);
-        //             if (a === true) {
-        //                 let edgeView = this.edgeFabricObject.getValue(edge.getEdgeId());
-        //                 if (!shouldEmittedEvent) {
-        //                     edgeView.line.set('stroke', 'red');
-        //                     edgeView.triangle.set('fill', 'red');
-        //                 }
-        //                 return { toBeMissing: this.edgeData, toBeCombined: edge };
-        //             } else {
-        //                 // No intersection point, paint arrow's color back to black
-        //                 let edgeView = this.edgeFabricObject.getValue(edge.getEdgeId());
-        //                 if (!shouldEmittedEvent) {
-        //                     edgeView.line.set('stroke', 'black');
-        //                     edgeView.triangle.set('fill', 'black');
-        //                 }
-        //             }
-        //         }
-        //   }
-        //}
     }
 
     combineEdge(edge: combineEdge) {
@@ -1952,7 +1991,6 @@ class EdgeView {
     }
 
     public selectEdge() {
-        console.log('select edge');
         this.dotHead.visible = true;
         this.dotTail.visible = true;
         this.curveControlPoint.visible = true;

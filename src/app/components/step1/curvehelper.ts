@@ -174,9 +174,9 @@ export class BezierCurve {
 
             let x, y;
             if (t <= 0.5)
-                [x, y] = BezierCurve.calculatePointInBezierCurve(this.controlPoints[0], t);
+                [x, y] = BezierCurve.calculatePointInBezierCurve(this.controlPoints[0], t * 2);
             else
-                [x, y] = BezierCurve.calculatePointInBezierCurve(this.controlPoints[1], t - 0.5);
+                [x, y] = BezierCurve.calculatePointInBezierCurve(this.controlPoints[1], (t - 0.5) * 2);
 
             if (i === 0) {
                 minX = x; minY = y;

@@ -77,10 +77,15 @@
     position: relative;
     left: 45%;
     top: -40%;
-    background-color: yellow;
+    /*background-color: yellow;*/
 }
 
 /*******************************/
+
+#eachProject {
+    cursor: pointer; 
+    cursor: hand;
+}
 
 .img-robot {
     width: 500px;

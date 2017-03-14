@@ -37,6 +37,12 @@ export class ProjectService {
         }).map(res => res.json());
     }
 
+    getDeviceList() {
+        return this.authHttp.post(environment.api_url + 'api/deviceselector', JSON.stringify(this.currentProject), {
+            headers: new Headers({ 'Content-Type': 'application/json' })
+        }).map(res => res.json()); 
+    }
+
     generateCode(project: Project) {
         return this.authHttp.post(environment.api_url + 'api/codegen/', JSON.stringify(project), {
             headers: new Headers({ 'Content-Type': 'application/json' })

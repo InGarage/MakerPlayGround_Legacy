@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter, } from '@angular/core';
+import { Component, Input, Output, EventEmitter, HostListener } from '@angular/core';
 import { RouterModule, Routes, Router } from '@angular/router';
 import { ProjectService } from '../../services/projects.service';
 import * as $ from 'jquery';
@@ -17,10 +17,19 @@ export class Step1Component {
   minWidthMenu: string;
   minWidthCanvas: string;
   projectName: string;
-  // @Input() objectSelected: NodeData | EdgeData;
-  // @Output() updateData = new EventEmitter<>();
+  saving_status: string;
 
-  constructor(private router: Router, private projectService: ProjectService) { 
+  @HostListener('window:unload', ['$event'])
+  unloadHandler(event) {
+    alert('unload');
+  }
+
+  @HostListener('window:beforeunload', ['$event'])
+  beforeUnloadHander(event) {
+    alert('before unload');
+  }
+
+  constructor(private router: Router, private projectService: ProjectService) {
     this.projectName = projectService.getCurrentProject().project_name;
   }
 
@@ -59,7 +68,6 @@ export class Step1Component {
     let styles = {
       'float': 'left',
       'width': this.windowWidth * 0.8 + 20 + 'px',
-      //'width': this.windowWidth*0.8 + 'px',
       'height': this.componentMenuHeight,
       'background-color': '#eff1f6',
       'overflow': 'scroll',
@@ -70,6 +78,16 @@ export class Step1Component {
   BlueprintSelected() {
     console.log('click Blueprint');
     this.router.navigate(['/step3']);
+  }
+
+  DeviceSelected() {
+    console.log('click devices');
+    this.router.navigate(['/step2']);
+  }
+
+
+  setSavingText(text: string) {
+    this.saving_status = text;
   }
 
 }

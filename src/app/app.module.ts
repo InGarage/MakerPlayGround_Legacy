@@ -1,12 +1,15 @@
-import { NgModule } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { HttpModule, Http, RequestOptions, JsonpModule } from '@angular/http';
 import { AuthHttp, AuthConfig } from 'angular2-jwt';
 import { TreeModule } from 'angular2-tree-component';
 import { MdGridListModule } from '@angular/material';
+import { MdSelectModule } from '@angular/material';
+import { MdCardModule } from '@angular/material';
 import { AccordionModule } from './custom-bootstrap/accordion';
 import { DropdownModule } from 'ng2-bootstrap/dropdown';
+import { MaterialModule } from '@angular/material';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app.routing';
@@ -16,6 +19,7 @@ import { HomeComponent } from './components/home.component';
 import { TutorialComponent } from './components/tutorial.component';
 import { SampleProjectComponent } from './components/sample-project.component';
 import { Step1Component } from './components/step1/step1.component';
+import { Step2Component } from './components/step1/step2.component';
 import { Step3Component } from './components/step1/step3.component';
 import { ActionComponent } from './components/step1/action.component';
 import { MiddleComponent } from './components/step1/middle.component';
@@ -35,10 +39,12 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
 
 @NgModule({
     imports: [BrowserModule, FormsModule, HttpModule, JsonpModule, TreeModule,
-        MdGridListModule, AccordionModule.forRoot(), DropdownModule.forRoot(), AppRoutingModule],
+        MdGridListModule, MdSelectModule, MdCardModule.forRoot(), MaterialModule.forRoot(), 
+        AccordionModule.forRoot(), DropdownModule.forRoot(), AppRoutingModule],
     declarations: [AppComponent, LoginComponent, HomeComponent, TutorialComponent,
         SampleProjectComponent, Step1Component, ActionComponent,
-        MiddleComponent, PropertyComponent, Step3Component, KeysPipe, PageNotFoundComponent],
+        MiddleComponent, PropertyComponent, Step2Component, Step3Component, KeysPipe, 
+        PageNotFoundComponent],
     providers: [
         {
             provide: AuthHttp,
@@ -49,7 +55,8 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
         Auth,
         AuthGuard
     ],
-    bootstrap: [AppComponent]
+    bootstrap: [AppComponent],
+    schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 
 export class AppModule { }

@@ -22,9 +22,9 @@
   <div class="under-nav">
     <p class="under-nav-basic  under-nav-column1">{{projectName}}</p>
     <p class="under-nav-basic  under-nav-space1"></p>
-    <a class="under-nav-basic  under-nav-column" routerLink="/step1">Canvas</a>
-    <p class="under-nav-inactive  under-nav-column">Devices</p>
-    <a class="under-nav-active under-nav-basic  under-nav-column" routerLink="/step3">Blueprint</a>
+    <a class="under-nav-basic  under-nav-column" routerLink="/step1"><img class="imgProject" src="/assets/img-icon/canvas-inactive.svg" /> Canvas</a>
+    <a class="under-nav-basic  under-nav-column" (click)="DeviceSelected()"><img class="imgProject" src="/assets/img-icon/device-inactive.svg" /> Devices</a>
+    <a class="under-nav-active under-nav-basic  under-nav-column" routerLink="/step3"><img class="imgProject" src="/assets/img-icon/blueprint-active.svg" /> Blueprint</a>
     <p class="under-nav-basic  under-nav-space2"></p>
   </div>
 </div>

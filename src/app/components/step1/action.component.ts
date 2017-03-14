@@ -36,17 +36,6 @@ export class ActionComponent {
   constructor() {
     this.actions = ActionHelper.actionData;
     this.triggers = TriggerHelper.triggerData;
-
-    // for (let i of this.triggers) {
-    //   for (let j of i.children) {
-    //     const args = [];
-    //     const text = j.name.replace(/\n/g, (match, number) => {
-    //       return typeof args[number] !== 'undefined' ? args[number] : match;
-    //     });
-    //     j.name = text;
-    //   }
-    // }
-
   }
 
   ngOnInit() {
@@ -170,25 +159,12 @@ export class ActionComponent {
    *  Output event handle        *
    *******************************/
 
-  // deleteState($event: any) {
-  //   this.myEvent.emit($event);
-  // }
-
   selectedAction(action: any) {
-
     this.addNode.emit(action);
-    // Only emit event when the selected tree node isn't a header node
-    // if ($event.node.isLeaf) {
-    //   this.addNode.emit($event.node.data);
-    // }
   }
 
   selectedTrigger(trigger: any) {
     this.addEdge.emit(trigger);
-    //   console.log($event.node.data);
-    //   if ($event.node.isLeaf) {
-    //     this.addEdge.emit($event.node.data);
-    //   }
   }
 }
 

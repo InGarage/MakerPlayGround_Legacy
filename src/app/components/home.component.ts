@@ -41,33 +41,9 @@ export class HomeComponent {
       for (let project of this.projects) {
         this.displayDel.push({ delBtn: false });
       }
+
     });
   }
-
-  // getAllProjects() {
-  //   this.ProjectService.getAllProjects().subscribe(projects => {
-  //     this.projects = projects.projects;
-
-  //     this.displayProjectsTemplate = [];
-  //     let projectInRow = {};
-  //     let i, j = 0;
-  //     for (i = 0; i < this.projects.length; i++) {
-  //       console.log('Here');
-  //       projectInRow['project' + j] = this.projects[i].project_name;
-  //       projectInRow['id' + j] = this.projects[i].project_id;
-  //       j++;
-  //       if (((i+1) % 4 === 0) && (i !== 0)) {
-  //         this.displayProjectsTemplate.push(projectInRow);
-  //         projectInRow = {};
-  //         j = 0;
-  //       }
-  //     }
-  //     if ((i % 4) !== 0) {
-  //       this.displayProjectsTemplate.push(projectInRow);
-  //     }
-  //     console.log(this.displayProjectsTemplate);
-  //   });
-  // }
 
   newProject(project_name: string) {
 
@@ -124,7 +100,13 @@ export class HomeComponent {
     this.displayDel[index].delBtn = true;
   }
 
-  fadeDelBtn(index) {
+  fadeDelBtn(event, index) {
+      console.log('event', event);
+        // let e = event.toElement || event.relatedTarget;
+        // if (e.parentNode == this || e == this) {
+        //     return;
+        // }
+
     console.log('mouseout');
     this.displayDel[index].delBtn = false;
   }

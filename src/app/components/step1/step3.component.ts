@@ -20,6 +20,11 @@ export class Step3Component implements OnInit, AfterViewInit {
         this.projectName = projectService.getCurrentProject().project_name;
     }
 
+    DeviceSelected() {
+        console.log('click devices');
+        this.router.navigate(['/step2']);
+    }
+    
     ngOnInit() {
         $(window).on("resize", () => {
             this.setHeight();

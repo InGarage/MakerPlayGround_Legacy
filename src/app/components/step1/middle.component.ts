@@ -24,6 +24,9 @@ export class MiddleComponent implements OnInit, OnDestroy {
     private model: GraphData;
     interval: any;
     panning = false;
+    dirty;
+
+    @Output() saving = new EventEmitter<string>();
 
     constructor(private projectService: ProjectService) {
         console.log('project', projectService.getCurrentProject());
@@ -36,26 +39,48 @@ export class MiddleComponent implements OnInit, OnDestroy {
         this.interval = setInterval(() => {
             let project = projectService.getCurrentProject();
             project.project_data = this.model.toJSON();
-            projectService.saveProject(project).toPromise().then(() => {
-                console.log('save complete');
-            }, () => {
-                console.log('save reject');
-            });
+            if (this.dirty === true) {
+                console.log('this.dirty = true');
+                this.saving.emit('Saving...');
+                projectService.saveProject(project).toPromise().then(() => {
+                    console.log('save complete');
+                    this.saving.emit('Save Rejected');
+                }, () => {
+                    console.log('save reject');
+                    this.saving.emit('Save Completed');
+                });
+                this.dirty = false;
+            }
         }, 15000);
     }
 
+    save() {
+        let project = this.projectService.getCurrentProject();
+        project.project_data = this.model.toJSON();
+        this.projectService.saveProject(project).toPromise().then(() => {
+            console.log('save complete');
+            this.saving.emit('Save Completed');
+        }, () => {
+            console.log('save reject');
+            this.saving.emit('Save Rejected');
+        });
+        this.dirty = false;
+    }
+
     ngOnDestroy() {
-        console.log('clear interval');
+        this.dirty = true;
         clearInterval(this.interval);
     }
 
     addNewNode(newAction: Action) {
         this.model.addNode(newAction);
+        this.dirty = true;
         this.canvas.redraw();
     }
 
     addNewEdge(newTrigger: Trigger) {
         this.model.addEdge(newTrigger);
+        this.dirty = true;
         this.canvas.redraw();
     }
 
@@ -71,6 +96,7 @@ export class MiddleComponent implements OnInit, OnDestroy {
         else {
             this.model.updateEdgeProperty(data);
         }
+        this.dirty = true;
         this.canvas.redraw();
     }
 
@@ -94,27 +120,31 @@ export class MiddleComponent implements OnInit, OnDestroy {
 
         this.canvas.on('action:update', (options) => {
             this.model.updateActionName(options.target_id, options.param);
+            this.dirty = true;
             this.canvas.redraw();
         });
 
         this.canvas.on('trigger:update', (options) => {
             this.model.updateTriggerName(options.target_id, options.triggerIndex, options.param);
+            this.dirty = true;
             this.canvas.redraw();
         });
 
         this.canvas.on('node:move', (options) => {
             this.model.moveNode(options.target_id, options.center_x, options.center_y);
+            this.dirty = true;
             this.canvas.redraw();
         });
 
         this.canvas.on('node:remove', (options) => {
-            console.log('remove');
             this.model.removeNode(options.target_id);
+            this.dirty = true;
             this.canvas.redraw();
         });
 
         this.canvas.on('edge:move', (options) => {
             this.model.moveEdge(options.target_id, options.start_x, options.start_y, options.center_x, options.center_y, options.end_x, options.end_y);
+            this.dirty = true;
             this.canvas.redraw();
         });
 
@@ -130,11 +160,13 @@ export class MiddleComponent implements OnInit, OnDestroy {
 
         this.canvas.on('trigger:remove', (options) => {
             this.model.removeTrigger(options.triggerIndex, options.target_id);
+            this.dirty = true;
             this.canvas.redraw();
         })
 
         this.canvas.on('edge:remove', (options) => {
-            this.model.removeEdge(options.target_id)
+            this.model.removeEdge(options.target_id);
+            this.dirty = true;
             this.canvas.redraw();
         })
 
@@ -147,46 +179,24 @@ export class MiddleComponent implements OnInit, OnDestroy {
         this.canvas.on('edge:connectionDst', (options) => {
             this.model.connectionEdgeOfDstNode(options.dst_node_id
                 , options.target_id, options.start_x, options.start_y, options.center_x, options.center_y, options.end_x, options.end_y, options.connect_direction_dst);
+            this.dirty = true;
             this.canvas.redraw();
         });
 
         this.canvas.on('edge:connectionSrc', (options) => {
             this.model.connectionEdgeOfSrcNode(options.src_node_id
                 , options.target_id, options.start_x, options.start_y, options.center_x, options.center_y, options.end_x, options.end_y, options.connect_direction_src);
+            this.dirty = true;
             this.canvas.redraw();
         });
 
         this.canvas.on('edge:combine', (options) => {
+            console.log('combine these two', options.toBeMissing.getEdgeId(), options.toBeCombined.getEdgeId());
             this.model.mergeEdge(options.toBeMissing.getEdgeId(), options.toBeCombined.getEdgeId());
+            this.dirty = true;
             this.canvas.redraw();
         });
     }
-
-    setUndoBtnPosition() {
-        let styles = {
-            'position': 'absolute',
-            'padding-left': '10px',
-            'padding-top': '10px',
-            'width': '70px',
-            'height': '40px',
-            'z-index': '5',
-        };
-        return styles;
-    }
-
-    setRedoBtnPosition() {
-        let styles = {
-            'position': 'absolute',
-            'margin-left': '50px',
-            'padding-top': '10px',
-            'width': '70px',
-            'height': '40px',
-            'z-index': '5',
-        };
-        return styles;
-    }
-
-
 
     // TODO: dummy data to be removed
     dummyGraph: any = {
