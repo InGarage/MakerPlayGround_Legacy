@@ -36,7 +36,7 @@
   <div class="allProjectsTable">
     <md-grid-list cols="4" rowHeight="4:3" gutterSize="20px">
       <div id="parent">
-        <md-grid-tile  *ngFor="let project of projects; let i = index" [colspan]="1" [rowspan]="1" [style.background]="'lightblue'"
+        <md-grid-tile  id="eachProject" *ngFor="let project of projects; let i = index" [colspan]="1" [rowspan]="1" [style.background]="'lightblue'"
           (click)="getProject(project.project_id)" (mouseover)='displayDelBtn(i)' (mouseleave)="fadeDelBtn($event, i)">
           <div class="deleteProjectBtn" *ngIf="displayDel[i].delBtn === true" (click)="deleteProject(project.project_id)">
             <span class="glyphicon-fix glyphicon-remove" aria-hidden="true"></span>

@@ -695,7 +695,7 @@ export namespace TriggerHelper {
         "id": "Gen_2",
         "name": "Read analog",
         "short_description": "Read analog",
-        "img_path": "",
+        "img_path": "/assets/img-trigger/ReadAnalog.svg",
         "display_text": "{0}",
         "display_text_param": [
           "Value"
@@ -779,126 +779,6 @@ export namespace TriggerHelper {
           "type": "Magnetometer",
           "fn_name": "compass"
         }
-      },
-      {
-        "id": "Mag_2",
-        "name": "Magnetic X",
-        "short_description": "Detect Magnetic on x axis",
-        "img_path": "",
-        "display_text": "{0}",
-        "display_text_param": [
-          "Magnetic"
-        ],
-        "params": [
-          {
-            "name": "name",
-            "control": "textbox",
-            "default_value": [
-              "Mag ?"
-            ],
-            "args": [
-              ""
-            ],
-            "regex": "^[\\S]+$"
-          },
-          {
-            "name": "Magnetic",
-            "control": "NumberExpression",
-            "default_value": [
-              ">",
-              "300",
-              "ut"
-            ],
-            "args": [
-              "ut"
-            ],
-            "regex": "^(\\d{1,}([.]\\d{1,})?)$"
-          }
-        ],
-        "require": {
-          "type": "Magnetometer",
-          "fn_name": "mag_x"
-        }
-      },
-      {
-        "id": "Mag_3",
-        "name": "Magnetic Y",
-        "short_description": "Detect Magnetic on y axis",
-        "img_path": "",
-        "display_text": "{0}",
-        "display_text_param": [
-          "Magnetic"
-        ],
-        "params": [
-          {
-            "name": "name",
-            "control": "textbox",
-            "default_value": [
-              "Mag ?"
-            ],
-            "args": [
-              ""
-            ],
-            "regex": "^[\\S]+$"
-          },
-          {
-            "name": "Magnetic",
-            "control": "NumberExpression",
-            "default_value": [
-              ">",
-              "300",
-              "ut"
-            ],
-            "args": [
-              "ut"
-            ],
-            "regex": "^(\\d{1,}([.]\\d{1,})?)$"
-          }
-        ],
-        "require": {
-          "type": "Magnetometer",
-          "fn_name": "mag_y"
-        }
-      },
-      {
-        "id": "Mag_4",
-        "name": "Magnetic Z",
-        "short_description": "Detect Magnetic on z axis",
-        "img_path": "",
-        "display_text": "{0}",
-        "display_text_param": [
-          "Magnetic"
-        ],
-        "params": [
-          {
-            "name": "name",
-            "control": "textbox",
-            "default_value": [
-              "Mag ?"
-            ],
-            "args": [
-              ""
-            ],
-            "regex": "^[\\S]+$"
-          },
-          {
-            "name": "Magnetic",
-            "control": "NumberExpression",
-            "default_value": [
-              ">",
-              "300",
-              "ut"
-            ],
-            "args": [
-              "ut"
-            ],
-            "regex": "^(\\d{1,}([.]\\d{1,})?)$"
-          }
-        ],
-        "require": {
-          "type": "Magnetometer",
-          "fn_name": "mag_z"
-        }
       }
     ]
   },
@@ -909,7 +789,7 @@ export namespace TriggerHelper {
         "id": "Dis_1",
         "name": "Distance",
         "short_description": "Measure distance",
-        "img_path": "",
+        "img_path": "/assets/img-trigger/Distance.svg",
         "display_text": "{0}",
         "display_text_param": [
           "Distance"
@@ -953,7 +833,7 @@ export namespace TriggerHelper {
         "id": "Lig_1",
         "name": "Light",
         "short_description": "Measure light",
-        "img_path": "",
+        "img_path": "/assets/img-trigger/Light.svg",
         "display_text": "{0}",
         "display_text_param": [
           "Value"
@@ -997,7 +877,7 @@ export namespace TriggerHelper {
         "id": "Mot_1",
         "name": "Motion",
         "short_description": "Measure motion",
-        "img_path": "",
+        "img_path": "/assets/img-trigger/Motion.svg",
         "display_text": "{0}",
         "display_text_param": [
           "Sensitivity"
@@ -1013,9 +893,102 @@ export namespace TriggerHelper {
               ""
             ],
             "regex": "^[\\S]+$"
+          }
+        ],
+        "require": {
+          "type": "PIR",
+          "fn_name": "motion"
+        }
+      }
+    ]
+  },
+  {
+    "name": "Cloud",
+    "children": [
+      {
+        "id": "Cloud_1",
+        "name": "State",
+        "short_description": "check state",
+        "img_path": "",
+        "display_text": "{0}",
+        "display_text_param": [
+          "Stage"
+        ],
+        "params": [
+          {
+            "name": "name",
+            "control": "textbox",
+            "default_value": [
+              "Compass ?"
+            ],
+            "args": [
+              ""
+            ],
+            "regex": "^[\\S]+$"
           },
           {
-            "name": "Sensitivity",
+            "name": "feed",
+            "control": "textbox",
+            "default_value": [
+              "feed name(lable of cloud panel)"
+            ],
+            "args": [
+              ""
+            ],
+            "regex": "^[\\S]+$"
+          },
+          {
+            "name": "Direction",
+            "control": "Dropdown",
+            "default_value": [
+              "ON"
+            ],
+            "args": [
+              "ON",
+              "OFF"
+            ],
+            "regex": ""
+          }
+        ],
+        "require": {
+          "type": "Clond",
+          "fn_name": "checkState"
+        }
+      },
+      {
+        "id": "Cloud_2",
+        "name": "Percentage",
+        "short_description": "check percentage",
+        "img_path": "",
+        "display_text": "{0}",
+        "display_text_param": [
+          "Percentage"
+        ],
+        "params": [
+          {
+            "name": "name",
+            "control": "textbox",
+            "default_value": [
+              "Analog ?"
+            ],
+            "args": [
+              ""
+            ],
+            "regex": "^[\\S]+$"
+          },
+          {
+            "name": "feed",
+            "control": "textbox",
+            "default_value": [
+              "feed name(lable of cloud panel)"
+            ],
+            "args": [
+              ""
+            ],
+            "regex": "^[\\S]+$"
+          },
+          {
+            "name": "Value",
             "control": "Slider",
             "default_value": [
               "50",
@@ -1028,11 +1001,11 @@ export namespace TriggerHelper {
           }
         ],
         "require": {
-          "type": "PIR",
-          "fn_name": "motion"
+          "type": "Clond",
+          "fn_name": "checkPercentage"
         }
       }
     ]
   }
-]
+];
 }

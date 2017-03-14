@@ -250,7 +250,7 @@ export namespace ActionHelper {
             "name": "text",
             "control": "textbox",
             "default_value": [
-              ""
+              "Text here"
             ],
             "args": [
               ""
@@ -290,13 +290,13 @@ export namespace ActionHelper {
         "id": "AN_LCD_5",
         "name": "Backlight Color",
         "short_description": "Set Backlight Color",
-        "img_path": "",
+        "img_path": "/assets/img-action/backlight_color.svg",
         "params": [
           {
             "name": "name",
             "control": "textbox",
             "default_value": [
-              ""
+              "LCD ?"
             ],
             "args": [
               ""
@@ -318,6 +318,771 @@ export namespace ActionHelper {
         "require": {
           "type": "Lcd",
           "fn_name": "backlight_color"
+        }
+      },
+      {
+        "id": "AN_LCD_6",
+        "name": "Display Accel_x",
+        "short_description": "Display Accel_x",
+        "img_path": "",
+        "params": [
+          {
+            "name": "name",
+            "control": "textbox",
+            "default_value": [
+              "LCD ?"
+            ],
+            "args": [
+              ""
+            ],
+            "regex": "^[\\S]+$"
+          },
+          {
+            "name": "text",
+            "control": "textbox",
+            "default_value": [
+              "your text"
+            ],
+            "args": [
+              ""
+            ],
+            "regex": "^[\\S ]{0,16}$"
+          },
+          {
+            "name": "device",
+            "control": "textbox",
+            "default_value": [
+              ""
+            ],
+            "args": [
+              ""
+            ],
+            "regex": ""
+          }
+        ],
+        "require": {
+          "type": "Lcd",
+          "fn_name": "showAccel_x"
+        }
+      },
+      {
+        "id": "AN_LCD_7",
+        "name": "Display Accel_y",
+        "short_description": "Display Accel_y",
+        "img_path": "",
+        "params": [
+          {
+            "name": "name",
+            "control": "textbox",
+            "default_value": [
+              "LCD ?"
+            ],
+            "args": [
+              ""
+            ],
+            "regex": "^[\\S]+$"
+          },
+          {
+            "name": "text",
+            "control": "textbox",
+            "default_value": [
+              "your text"
+            ],
+            "args": [
+              ""
+            ],
+            "regex": "^[\\S ]{0,16}$"
+          },
+          {
+            "name": "device",
+            "control": "textbox",
+            "default_value": [
+              ""
+            ],
+            "args": [
+              ""
+            ],
+            "regex": ""
+          }
+        ],
+        "require": {
+          "type": "Lcd",
+          "fn_name": "showAccel_y"
+        }
+      },
+      {
+        "id": "AN_LCD_8",
+        "name": "Display Accel_z",
+        "short_description": "Display Accel_z",
+        "img_path": "",
+        "params": [
+          {
+            "name": "name",
+            "control": "textbox",
+            "default_value": [
+              "LCD ?"
+            ],
+            "args": [
+              ""
+            ],
+            "regex": "^[\\S]+$"
+          },
+          {
+            "name": "text",
+            "control": "textbox",
+            "default_value": [
+              "your text"
+            ],
+            "args": [
+              ""
+            ],
+            "regex": "^[\\S ]{0,16}$"
+          },
+          {
+            "name": "device",
+            "control": "textbox",
+            "default_value": [
+              ""
+            ],
+            "args": [
+              ""
+            ],
+            "regex": ""
+          }
+        ],
+        "require": {
+          "type": "Lcd",
+          "fn_name": "showAccel_z"
+        }
+      },
+      {
+        "id": "AN_LCD_9",
+        "name": "Display Attitude",
+        "short_description": "Display Attitude",
+        "img_path": "",
+        "params": [
+          {
+            "name": "name",
+            "control": "textbox",
+            "default_value": [
+              "LCD ?"
+            ],
+            "args": [
+              ""
+            ],
+            "regex": "^[\\S]+$"
+          },
+          {
+            "name": "text",
+            "control": "textbox",
+            "default_value": [
+              "your text"
+            ],
+            "args": [
+              ""
+            ],
+            "regex": "^[\\S ]{0,16}$"
+          },
+          {
+            "name": "device",
+            "control": "textbox",
+            "default_value": [
+              ""
+            ],
+            "args": [
+              ""
+            ],
+            "regex": ""
+          }
+        ],
+        "require": {
+          "type": "Lcd",
+          "fn_name": "showAttitude"
+        }
+      },
+      {
+        "id": "AN_LCD_10",
+        "name": "Display Compass",
+        "short_description": "Display Compass",
+        "img_path": "",
+        "params": [
+          {
+            "name": "name",
+            "control": "textbox",
+            "default_value": [
+              "LCD ?"
+            ],
+            "args": [
+              ""
+            ],
+            "regex": "^[\\S]+$"
+          },
+          {
+            "name": "text",
+            "control": "textbox",
+            "default_value": [
+              "your text"
+            ],
+            "args": [
+              ""
+            ],
+            "regex": "^[\\S ]{0,16}$"
+          },
+          {
+            "name": "device",
+            "control": "textbox",
+            "default_value": [
+              ""
+            ],
+            "args": [
+              ""
+            ],
+            "regex": ""
+          }
+        ],
+        "require": {
+          "type": "Lcd",
+          "fn_name": "showCompass"
+        }
+      },
+      {
+        "id": "AN_LCD_11",
+        "name": "Display DoubleRelease",
+        "short_description": "Display DoubleRelease",
+        "img_path": "",
+        "params": [
+          {
+            "name": "name",
+            "control": "textbox",
+            "default_value": [
+              "LCD ?"
+            ],
+            "args": [
+              ""
+            ],
+            "regex": "^[\\S]+$"
+          },
+          {
+            "name": "text",
+            "control": "textbox",
+            "default_value": [
+              "your text"
+            ],
+            "args": [
+              ""
+            ],
+            "regex": "^[\\S ]{0,16}$"
+          },
+          {
+            "name": "device",
+            "control": "textbox",
+            "default_value": [
+              ""
+            ],
+            "args": [
+              ""
+            ],
+            "regex": ""
+          }
+        ],
+        "require": {
+          "type": "Lcd",
+          "fn_name": "showDoubleRelease"
+        }
+      },
+      {
+        "id": "AN_LCD_12",
+        "name": "Display Humidity",
+        "short_description": "Display Humidity",
+        "img_path": "",
+        "params": [
+          {
+            "name": "name",
+            "control": "textbox",
+            "default_value": [
+              "LCD ?"
+            ],
+            "args": [
+              ""
+            ],
+            "regex": "^[\\S]+$"
+          },
+          {
+            "name": "text",
+            "control": "textbox",
+            "default_value": [
+              "your text"
+            ],
+            "args": [
+              ""
+            ],
+            "regex": "^[\\S ]{0,16}$"
+          },
+          {
+            "name": "device",
+            "control": "textbox",
+            "default_value": [
+              ""
+            ],
+            "args": [
+              ""
+            ],
+            "regex": ""
+          }
+        ],
+        "require": {
+          "type": "Lcd",
+          "fn_name": "showHumidity"
+        }
+      },
+      {
+        "id": "AN_LCD_13",
+        "name": "Display Mag_x",
+        "short_description": "Display Mag_x",
+        "img_path": "",
+        "params": [
+          {
+            "name": "name",
+            "control": "textbox",
+            "default_value": [
+              "LCD ?"
+            ],
+            "args": [
+              ""
+            ],
+            "regex": "^[\\S]+$"
+          },
+          {
+            "name": "text",
+            "control": "textbox",
+            "default_value": [
+              "your text"
+            ],
+            "args": [
+              ""
+            ],
+            "regex": "^[\\S ]{0,16}$"
+          },
+          {
+            "name": "device",
+            "control": "textbox",
+            "default_value": [
+              ""
+            ],
+            "args": [
+              ""
+            ],
+            "regex": ""
+          }
+        ],
+        "require": {
+          "type": "Lcd",
+          "fn_name": "showMag_x"
+        }
+      },
+      {
+        "id": "AN_LCD_14",
+        "name": "Display Mag_y",
+        "short_description": "Display Mag_y",
+        "img_path": "",
+        "params": [
+          {
+            "name": "name",
+            "control": "textbox",
+            "default_value": [
+              "LCD ?"
+            ],
+            "args": [
+              ""
+            ],
+            "regex": "^[\\S]+$"
+          },
+          {
+            "name": "text",
+            "control": "textbox",
+            "default_value": [
+              "your text"
+            ],
+            "args": [
+              ""
+            ],
+            "regex": "^[\\S ]{0,16}$"
+          },
+          {
+            "name": "device",
+            "control": "textbox",
+            "default_value": [
+              ""
+            ],
+            "args": [
+              ""
+            ],
+            "regex": ""
+          }
+        ],
+        "require": {
+          "type": "Lcd",
+          "fn_name": "showMag_y"
+        }
+      },
+      {
+        "id": "AN_LCD_15",
+        "name": "Display Mag_z",
+        "short_description": "Display Mag_z",
+        "img_path": "",
+        "params": [
+          {
+            "name": "name",
+            "control": "textbox",
+            "default_value": [
+              "LCD ?"
+            ],
+            "args": [
+              ""
+            ],
+            "regex": "^[\\S]+$"
+          },
+          {
+            "name": "text",
+            "control": "textbox",
+            "default_value": [
+              "your text"
+            ],
+            "args": [
+              ""
+            ],
+            "regex": "^[\\S ]{0,16}$"
+          },
+          {
+            "name": "device",
+            "control": "textbox",
+            "default_value": [
+              ""
+            ],
+            "args": [
+              ""
+            ],
+            "regex": ""
+          }
+        ],
+        "require": {
+          "type": "Lcd",
+          "fn_name": "showMag_z"
+        }
+      },
+      {
+        "id": "AN_LCD_16",
+        "name": "Display Pressure",
+        "short_description": "Display Pressure",
+        "img_path": "",
+        "params": [
+          {
+            "name": "name",
+            "control": "textbox",
+            "default_value": [
+              "LCD ?"
+            ],
+            "args": [
+              ""
+            ],
+            "regex": "^[\\S]+$"
+          },
+          {
+            "name": "text",
+            "control": "textbox",
+            "default_value": [
+              "your text"
+            ],
+            "args": [
+              ""
+            ],
+            "regex": "^[\\S ]{0,16}$"
+          },
+          {
+            "name": "device",
+            "control": "textbox",
+            "default_value": [
+              ""
+            ],
+            "args": [
+              ""
+            ],
+            "regex": ""
+          }
+        ],
+        "require": {
+          "type": "Lcd",
+          "fn_name": "showPressure"
+        }
+      },
+      {
+        "id": "AN_LCD_17",
+        "name": "Display Release",
+        "short_description": "Display Release",
+        "img_path": "",
+        "params": [
+          {
+            "name": "name",
+            "control": "textbox",
+            "default_value": [
+              "LCD ?"
+            ],
+            "args": [
+              ""
+            ],
+            "regex": "^[\\S]+$"
+          },
+          {
+            "name": "text",
+            "control": "textbox",
+            "default_value": [
+              "your text"
+            ],
+            "args": [
+              ""
+            ],
+            "regex": "^[\\S ]{0,16}$"
+          },
+          {
+            "name": "device",
+            "control": "textbox",
+            "default_value": [
+              ""
+            ],
+            "args": [
+              ""
+            ],
+            "regex": ""
+          }
+        ],
+        "require": {
+          "type": "Lcd",
+          "fn_name": "showRelease"
+        }
+      },
+      {
+        "id": "AN_LCD_18",
+        "name": "Display Rotate_x",
+        "short_description": "Display Rotate_x",
+        "img_path": "",
+        "params": [
+          {
+            "name": "name",
+            "control": "textbox",
+            "default_value": [
+              "LCD ?"
+            ],
+            "args": [
+              ""
+            ],
+            "regex": "^[\\S]+$"
+          },
+          {
+            "name": "text",
+            "control": "textbox",
+            "default_value": [
+              "your text"
+            ],
+            "args": [
+              ""
+            ],
+            "regex": "^[\\S ]{0,16}$"
+          },
+          {
+            "name": "device",
+            "control": "textbox",
+            "default_value": [
+              ""
+            ],
+            "args": [
+              ""
+            ],
+            "regex": ""
+          }
+        ],
+        "require": {
+          "type": "Lcd",
+          "fn_name": "showRotate_x"
+        }
+      },
+      {
+        "id": "AN_LCD_19",
+        "name": "Display Rotate_y",
+        "short_description": "Display Rotate_y",
+        "img_path": "",
+        "params": [
+          {
+            "name": "name",
+            "control": "textbox",
+            "default_value": [
+              "LCD ?"
+            ],
+            "args": [
+              ""
+            ],
+            "regex": "^[\\S]+$"
+          },
+          {
+            "name": "text",
+            "control": "textbox",
+            "default_value": [
+              "your text"
+            ],
+            "args": [
+              ""
+            ],
+            "regex": "^[\\S ]{0,16}$"
+          },
+          {
+            "name": "device",
+            "control": "textbox",
+            "default_value": [
+              ""
+            ],
+            "args": [
+              ""
+            ],
+            "regex": ""
+          }
+        ],
+        "require": {
+          "type": "Lcd",
+          "fn_name": "showRotate_y"
+        }
+      },
+      {
+        "id": "AN_LCD_20",
+        "name": "Display Rotate_z",
+        "short_description": "Display Rotate_z",
+        "img_path": "",
+        "params": [
+          {
+            "name": "name",
+            "control": "textbox",
+            "default_value": [
+              "LCD ?"
+            ],
+            "args": [
+              ""
+            ],
+            "regex": "^[\\S]+$"
+          },
+          {
+            "name": "text",
+            "control": "textbox",
+            "default_value": [
+              "your text"
+            ],
+            "args": [
+              ""
+            ],
+            "regex": "^[\\S ]{0,16}$"
+          },
+          {
+            "name": "device",
+            "control": "textbox",
+            "default_value": [
+              ""
+            ],
+            "args": [
+              ""
+            ],
+            "regex": ""
+          }
+        ],
+        "require": {
+          "type": "Lcd",
+          "fn_name": "showRotate_z"
+        }
+      },
+      {
+        "id": "AN_LCD_21",
+        "name": "Display Temp",
+        "short_description": "Display Temp",
+        "img_path": "",
+        "params": [
+          {
+            "name": "name",
+            "control": "textbox",
+            "default_value": [
+              "LCD ?"
+            ],
+            "args": [
+              ""
+            ],
+            "regex": "^[\\S]+$"
+          },
+          {
+            "name": "text",
+            "control": "textbox",
+            "default_value": [
+              "your text"
+            ],
+            "args": [
+              ""
+            ],
+            "regex": "^[\\S ]{0,16}$"
+          },
+          {
+            "name": "device",
+            "control": "textbox",
+            "default_value": [
+              ""
+            ],
+            "args": [
+              ""
+            ],
+            "regex": ""
+          }
+        ],
+        "require": {
+          "type": "Lcd",
+          "fn_name": "showTemp"
+        }
+      },
+      {
+        "id": "AN_LCD_22",
+        "name": "Display Volume",
+        "short_description": "Display Volume",
+        "img_path": "",
+        "params": [
+          {
+            "name": "name",
+            "control": "textbox",
+            "default_value": [
+              "LCD ?"
+            ],
+            "args": [
+              ""
+            ],
+            "regex": "^[\\S]+$"
+          },
+          {
+            "name": "text",
+            "control": "textbox",
+            "default_value": [
+              "your text"
+            ],
+            "args": [
+              ""
+            ],
+            "regex": "^[\\S ]{0,16}$"
+          },
+          {
+            "name": "device",
+            "control": "textbox",
+            "default_value": [
+              ""
+            ],
+            "args": [
+              ""
+            ],
+            "regex": ""
+          }
+        ],
+        "require": {
+          "type": "Lcd",
+          "fn_name": "showVolume"
         }
       }
     ]
@@ -344,7 +1109,7 @@ export namespace ActionHelper {
           },
           {
             "name": "volume",
-            "control": "percentage",
+            "control": "slider",
             "default_value": [
               "50",
               "%"
@@ -371,12 +1136,7 @@ export namespace ActionHelper {
           "type": "Audio",
           "fn_name": "beep"
         }
-      }
-    ]
-  },
-  {
-    "name": "Audio",
-    "children": [
+      },
       {
         "id": "Audio_2",
         "name": "tone",
@@ -448,7 +1208,7 @@ export namespace ActionHelper {
           },
           {
             "name": "direction",
-            "control": "radio",
+            "control": "Dropdown",
             "default_value": [
               "CW"
             ],
@@ -503,7 +1263,7 @@ export namespace ActionHelper {
         "id": "DCMotor_3",
         "name": "set_speed",
         "short_description": "Change motor speed",
-        "img_path": "/assets/img-action/DC_setSpeed.svg",
+        "img_path": "/assets/img-action/DC_SetSpeed.svg",
         "params": [
           {
             "name": "name",
@@ -666,13 +1426,13 @@ export namespace ActionHelper {
     ]
   },
   {
-    "name": "Cloud",
+    "name": "Twitter",
     "children": [
       {
-        "id": "Cloud_1",
+        "id": "Twit_1",
         "name": "Tweeter",
         "short_description": "Tweet some text on tweeter",
-        "img_path": "",
+        "img_path": "/assets/img-action/Cloud_twitter.svg",
         "params": [
           {
             "name": "name",
@@ -698,14 +1458,14 @@ export namespace ActionHelper {
           }
         ],
         "require": {
-          "type": "Cloud",
+          "type": "Twitter",
           "fn_name": "tweet"
         }
       },
       {
-        "id": "Cloud_2",
-        "name": "AzureUpload",
-        "short_description": "AzureUpload",
+        "id": "Twit_2",
+        "name": "setup",
+        "short_description": "Initial the twitter's value",
         "img_path": "",
         "params": [
           {
@@ -720,43 +1480,64 @@ export namespace ActionHelper {
             "regex": "^[\\S]+$"
           },
           {
-            "name": "text",
+            "name": "consumer_key",
             "control": "textbox",
             "default_value": [
-              "hello world"
+              "your consumer_key"
             ],
             "args": [
               ""
             ],
             "regex": "^[\\S]+$"
-          }
-        ],
-        "require": {
-          "type": "Cloud",
-          "fn_name": "azureUp"
-        }
-      },
-      {
-        "id": "Cloud_3",
-        "name": "AzureDown",
-        "short_description": "AzureDown",
-        "img_path": "",
-        "params": [
+          },
           {
-            "name": "name",
+            "name": "consumer_secret",
             "control": "textbox",
             "default_value": [
-              "Azure ?"
+              "your consumer_secret"
             ],
             "args": [
               ""
             ],
-            "regex": "^[\\S]+$"
+            "regex": ""
+          },
+          {
+            "name": "access_token_key",
+            "control": "textbox",
+            "default_value": [
+              "your access_token_key"
+            ],
+            "args": [
+              ""
+            ],
+            "regex": ""
+          },
+          {
+            "name": "access_token_secret",
+            "control": "textbox",
+            "default_value": [
+              "your access_token_secret"
+            ],
+            "args": [
+              ""
+            ],
+            "regex": ""
+          },
+          {
+            "name": "intro_str",
+            "control": "textbox",
+            "default_value": [
+              "shortly intro"
+            ],
+            "args": [
+              ""
+            ],
+            "regex": ""
           }
         ],
         "require": {
-          "type": "Cloud",
-          "fn_name": "azureDown"
+          "type": "Twitter",
+          "fn_name": "setup"
         }
       }
     ]
@@ -768,7 +1549,7 @@ export namespace ActionHelper {
         "id": "Relay_1",
         "name": "on",
         "short_description": "on",
-        "img_path": "",
+        "img_path": "/assets/img-action/Relay_ON.svg",
         "params": [
           {
             "name": "name",
@@ -791,7 +1572,7 @@ export namespace ActionHelper {
         "id": "Relay_2",
         "name": "off",
         "short_description": "off",
-        "img_path": "",
+        "img_path": "/assets/img-action/Relay_OFF.svg",
         "params": [
           {
             "name": "name",
@@ -808,6 +1589,911 @@ export namespace ActionHelper {
         "require": {
           "type": "Relay",
           "fn_name": "off"
+        }
+      }
+    ]
+  },
+  {
+    "name": "Cloud",
+    "children": [
+      {
+        "id": "Cloud_1",
+        "name": "setup",
+        "short_description": "Initial the cloud's value",
+        "img_path": "",
+        "params": [
+          {
+            "name": "name",
+            "control": "textbox",
+            "default_value": [
+              "Azure ?"
+            ],
+            "args": [
+              ""
+            ],
+            "regex": "^[\\S]+$"
+          },
+          {
+            "name": "IO_USERNAME",
+            "control": "textbox",
+            "default_value": [
+              "your adafruitIO username"
+            ],
+            "args": [
+              ""
+            ],
+            "regex": "^[\\S]+$"
+          },
+          {
+            "name": "IO_KEY",
+            "control": "textbox",
+            "default_value": [
+              "your adafruitIO key"
+            ],
+            "args": [
+              ""
+            ],
+            "regex": "^[\\S]+$"
+          },
+          {
+            "name": "WIFI_SSID",
+            "control": "textbox",
+            "default_value": [
+              "your wifi name"
+            ],
+            "args": [
+              ""
+            ],
+            "regex": "^[\\S]+$"
+          },
+          {
+            "name": "WIFI_PASS",
+            "control": "textbox",
+            "default_value": [
+              "your wifi password"
+            ],
+            "args": [
+              ""
+            ],
+            "regex": "^[\\S]+$"
+          }
+        ],
+        "require": {
+          "type": "Cloud",
+          "fn_name": "setup"
+        }
+      },
+      {
+        "id": "Cloud_2",
+        "name": "Display Rotate_x",
+        "short_description": "Cloud Display Rotate_x",
+        "img_path": "",
+        "params": [
+          {
+            "name": "name",
+            "control": "textbox",
+            "default_value": [
+              "Cloud ?"
+            ],
+            "args": [
+              ""
+            ],
+            "regex": "^[\\S]+$"
+          },
+          {
+            "name": "feed",
+            "control": "textbox",
+            "default_value": [
+              "feed name(lable of cloud panel)"
+            ],
+            "args": [
+              ""
+            ],
+            "regex": "^[\\S]+$"
+          },
+          {
+            "name": "device",
+            "control": "textbox",
+            "default_value": [
+              ""
+            ],
+            "args": [
+              ""
+            ],
+            "regex": ""
+          }
+        ],
+        "require": {
+          "type": "Cloud",
+          "fn_name": "adaRotate_x"
+        }
+      },
+      {
+        "id": "Cloud_3",
+        "name": "Display Rotate_y",
+        "short_description": "Cloud Display Rotate_y",
+        "img_path": "",
+        "params": [
+          {
+            "name": "name",
+            "control": "textbox",
+            "default_value": [
+              "Cloud ?"
+            ],
+            "args": [
+              ""
+            ],
+            "regex": "^[\\S]+$"
+          },
+          {
+            "name": "feed",
+            "control": "textbox",
+            "default_value": [
+              "feed name(lable of cloud panel)"
+            ],
+            "args": [
+              ""
+            ],
+            "regex": "^[\\S]+$"
+          },
+          {
+            "name": "device",
+            "control": "textbox",
+            "default_value": [
+              ""
+            ],
+            "args": [
+              ""
+            ],
+            "regex": ""
+          }
+        ],
+        "require": {
+          "type": "Cloud",
+          "fn_name": "adaRotate_y"
+        }
+      },
+      {
+        "id": "Cloud_4",
+        "name": "Display Rotate_z",
+        "short_description": "Cloud Display Rotate_z",
+        "img_path": "",
+        "params": [
+          {
+            "name": "name",
+            "control": "textbox",
+            "default_value": [
+              "Cloud ?"
+            ],
+            "args": [
+              ""
+            ],
+            "regex": "^[\\S]+$"
+          },
+          {
+            "name": "feed",
+            "control": "textbox",
+            "default_value": [
+              "feed name(lable of cloud panel)"
+            ],
+            "args": [
+              ""
+            ],
+            "regex": "^[\\S]+$"
+          },
+          {
+            "name": "device",
+            "control": "textbox",
+            "default_value": [
+              ""
+            ],
+            "args": [
+              ""
+            ],
+            "regex": ""
+          }
+        ],
+        "require": {
+          "type": "Cloud",
+          "fn_name": "adaRotate_z"
+        }
+      },
+      {
+        "id": "Cloud_5",
+        "name": "Display Temp",
+        "short_description": "Cloud Display Temp",
+        "img_path": "",
+        "params": [
+          {
+            "name": "name",
+            "control": "textbox",
+            "default_value": [
+              "Cloud ?"
+            ],
+            "args": [
+              ""
+            ],
+            "regex": "^[\\S]+$"
+          },
+          {
+            "name": "feed",
+            "control": "textbox",
+            "default_value": [
+              "feed name(lable of cloud panel)"
+            ],
+            "args": [
+              ""
+            ],
+            "regex": "^[\\S]+$"
+          },
+          {
+            "name": "device",
+            "control": "textbox",
+            "default_value": [
+              ""
+            ],
+            "args": [
+              ""
+            ],
+            "regex": ""
+          }
+        ],
+        "require": {
+          "type": "Cloud",
+          "fn_name": "adaTemp"
+        }
+      },
+      {
+        "id": "Cloud_6",
+        "name": "Display Accel_x",
+        "short_description": "Cloud Display Accel_x",
+        "img_path": "",
+        "params": [
+          {
+            "name": "name",
+            "control": "textbox",
+            "default_value": [
+              "Cloud ?"
+            ],
+            "args": [
+              ""
+            ],
+            "regex": "^[\\S]+$"
+          },
+          {
+            "name": "feed",
+            "control": "textbox",
+            "default_value": [
+              "feed name(lable of cloud panel)"
+            ],
+            "args": [
+              ""
+            ],
+            "regex": "^[\\S]+$"
+          },
+          {
+            "name": "device",
+            "control": "textbox",
+            "default_value": [
+              ""
+            ],
+            "args": [
+              ""
+            ],
+            "regex": ""
+          }
+        ],
+        "require": {
+          "type": "Cloud",
+          "fn_name": "adaAccel_x"
+        }
+      },
+      {
+        "id": "Cloud_7",
+        "name": "Display Accel_y",
+        "short_description": "Cloud Display Accel_y",
+        "img_path": "",
+        "params": [
+          {
+            "name": "name",
+            "control": "textbox",
+            "default_value": [
+              "Cloud ?"
+            ],
+            "args": [
+              ""
+            ],
+            "regex": "^[\\S]+$"
+          },
+          {
+            "name": "feed",
+            "control": "textbox",
+            "default_value": [
+              "feed name(lable of cloud panel)"
+            ],
+            "args": [
+              ""
+            ],
+            "regex": "^[\\S]+$"
+          },
+          {
+            "name": "device",
+            "control": "textbox",
+            "default_value": [
+              ""
+            ],
+            "args": [
+              ""
+            ],
+            "regex": ""
+          }
+        ],
+        "require": {
+          "type": "Cloud",
+          "fn_name": "adaAccel_y"
+        }
+      },
+      {
+        "id": "Cloud_8",
+        "name": "Display Accel_z",
+        "short_description": "Cloud Display Accel_z",
+        "img_path": "",
+        "params": [
+          {
+            "name": "name",
+            "control": "textbox",
+            "default_value": [
+              "Cloud ?"
+            ],
+            "args": [
+              ""
+            ],
+            "regex": "^[\\S]+$"
+          },
+          {
+            "name": "feed",
+            "control": "textbox",
+            "default_value": [
+              "feed name(lable of cloud panel)"
+            ],
+            "args": [
+              ""
+            ],
+            "regex": "^[\\S]+$"
+          },
+          {
+            "name": "device",
+            "control": "textbox",
+            "default_value": [
+              ""
+            ],
+            "args": [
+              ""
+            ],
+            "regex": ""
+          }
+        ],
+        "require": {
+          "type": "Cloud",
+          "fn_name": "adaAccel_z"
+        }
+      },
+      {
+        "id": "Cloud_9",
+        "name": "Display Attitude",
+        "short_description": "Cloud Display Attitude",
+        "img_path": "",
+        "params": [
+          {
+            "name": "name",
+            "control": "textbox",
+            "default_value": [
+              "Cloud ?"
+            ],
+            "args": [
+              ""
+            ],
+            "regex": "^[\\S]+$"
+          },
+          {
+            "name": "feed",
+            "control": "textbox",
+            "default_value": [
+              "feed name(lable of cloud panel)"
+            ],
+            "args": [
+              ""
+            ],
+            "regex": "^[\\S]+$"
+          },
+          {
+            "name": "device",
+            "control": "textbox",
+            "default_value": [
+              ""
+            ],
+            "args": [
+              ""
+            ],
+            "regex": ""
+          }
+        ],
+        "require": {
+          "type": "Cloud",
+          "fn_name": "adaAttitude"
+        }
+      },
+      {
+        "id": "Cloud_10",
+        "name": "Display Compass",
+        "short_description": "Cloud Display Compass",
+        "img_path": "",
+        "params": [
+          {
+            "name": "name",
+            "control": "textbox",
+            "default_value": [
+              "Cloud ?"
+            ],
+            "args": [
+              ""
+            ],
+            "regex": "^[\\S]+$"
+          },
+          {
+            "name": "feed",
+            "control": "textbox",
+            "default_value": [
+              "feed name(lable of cloud panel)"
+            ],
+            "args": [
+              ""
+            ],
+            "regex": "^[\\S]+$"
+          },
+          {
+            "name": "device",
+            "control": "textbox",
+            "default_value": [
+              ""
+            ],
+            "args": [
+              ""
+            ],
+            "regex": ""
+          }
+        ],
+        "require": {
+          "type": "Cloud",
+          "fn_name": "adaCompass"
+        }
+      },
+      {
+        "id": "Cloud_11",
+        "name": "Display DoubleRelease",
+        "short_description": "Cloud Display DoubleRelease",
+        "img_path": "",
+        "params": [
+          {
+            "name": "name",
+            "control": "textbox",
+            "default_value": [
+              "Cloud ?"
+            ],
+            "args": [
+              ""
+            ],
+            "regex": "^[\\S]+$"
+          },
+          {
+            "name": "feed",
+            "control": "textbox",
+            "default_value": [
+              "feed name(lable of cloud panel)"
+            ],
+            "args": [
+              ""
+            ],
+            "regex": "^[\\S]+$"
+          },
+          {
+            "name": "device",
+            "control": "textbox",
+            "default_value": [
+              ""
+            ],
+            "args": [
+              ""
+            ],
+            "regex": ""
+          }
+        ],
+        "require": {
+          "type": "Cloud",
+          "fn_name": "adaDoubleRelease"
+        }
+      },
+      {
+        "id": "Cloud_12",
+        "name": "Display Humidity",
+        "short_description": "Cloud Display Humidity",
+        "img_path": "",
+        "params": [
+          {
+            "name": "name",
+            "control": "textbox",
+            "default_value": [
+              "Cloud ?"
+            ],
+            "args": [
+              ""
+            ],
+            "regex": "^[\\S]+$"
+          },
+          {
+            "name": "feed",
+            "control": "textbox",
+            "default_value": [
+              "feed name(lable of cloud panel)"
+            ],
+            "args": [
+              ""
+            ],
+            "regex": "^[\\S]+$"
+          },
+          {
+            "name": "device",
+            "control": "textbox",
+            "default_value": [
+              ""
+            ],
+            "args": [
+              ""
+            ],
+            "regex": ""
+          }
+        ],
+        "require": {
+          "type": "Cloud",
+          "fn_name": "adaHumidity"
+        }
+      },
+      {
+        "id": "Cloud_13",
+        "name": "Display Mag_x",
+        "short_description": "Cloud Display Mag_x",
+        "img_path": "",
+        "params": [
+          {
+            "name": "name",
+            "control": "textbox",
+            "default_value": [
+              "Cloud ?"
+            ],
+            "args": [
+              ""
+            ],
+            "regex": "^[\\S]+$"
+          },
+          {
+            "name": "feed",
+            "control": "textbox",
+            "default_value": [
+              "feed name(lable of cloud panel)"
+            ],
+            "args": [
+              ""
+            ],
+            "regex": "^[\\S]+$"
+          },
+          {
+            "name": "device",
+            "control": "textbox",
+            "default_value": [
+              ""
+            ],
+            "args": [
+              ""
+            ],
+            "regex": ""
+          }
+        ],
+        "require": {
+          "type": "Cloud",
+          "fn_name": "adaMag_x"
+        }
+      },
+      {
+        "id": "Cloud_14",
+        "name": "Display Mag_y",
+        "short_description": "Cloud Display Mag_y",
+        "img_path": "",
+        "params": [
+          {
+            "name": "name",
+            "control": "textbox",
+            "default_value": [
+              "Cloud ?"
+            ],
+            "args": [
+              ""
+            ],
+            "regex": "^[\\S]+$"
+          },
+          {
+            "name": "feed",
+            "control": "textbox",
+            "default_value": [
+              "feed name(lable of cloud panel)"
+            ],
+            "args": [
+              ""
+            ],
+            "regex": "^[\\S]+$"
+          },
+          {
+            "name": "device",
+            "control": "textbox",
+            "default_value": [
+              ""
+            ],
+            "args": [
+              ""
+            ],
+            "regex": ""
+          }
+        ],
+        "require": {
+          "type": "Cloud",
+          "fn_name": "adaMag_y"
+        }
+      },
+      {
+        "id": "Cloud_15",
+        "name": "Display Mag_z",
+        "short_description": "Cloud Display Mag_z",
+        "img_path": "",
+        "params": [
+          {
+            "name": "name",
+            "control": "textbox",
+            "default_value": [
+              "Cloud ?"
+            ],
+            "args": [
+              ""
+            ],
+            "regex": "^[\\S]+$"
+          },
+          {
+            "name": "feed",
+            "control": "textbox",
+            "default_value": [
+              "feed name(lable of cloud panel)"
+            ],
+            "args": [
+              ""
+            ],
+            "regex": "^[\\S]+$"
+          },
+          {
+            "name": "device",
+            "control": "textbox",
+            "default_value": [
+              ""
+            ],
+            "args": [
+              ""
+            ],
+            "regex": ""
+          }
+        ],
+        "require": {
+          "type": "Cloud",
+          "fn_name": "adaMag_z"
+        }
+      },
+      {
+        "id": "Cloud_16",
+        "name": "Display Pressure",
+        "short_description": "Cloud Display Pressure",
+        "img_path": "",
+        "params": [
+          {
+            "name": "name",
+            "control": "textbox",
+            "default_value": [
+              "Cloud ?"
+            ],
+            "args": [
+              ""
+            ],
+            "regex": "^[\\S]+$"
+          },
+          {
+            "name": "feed",
+            "control": "textbox",
+            "default_value": [
+              "feed name(lable of cloud panel)"
+            ],
+            "args": [
+              ""
+            ],
+            "regex": "^[\\S]+$"
+          },
+          {
+            "name": "device",
+            "control": "textbox",
+            "default_value": [
+              ""
+            ],
+            "args": [
+              ""
+            ],
+            "regex": ""
+          }
+        ],
+        "require": {
+          "type": "Cloud",
+          "fn_name": "adaPressure"
+        }
+      },
+      {
+        "id": "Cloud_17",
+        "name": "Display Release",
+        "short_description": "Cloud Display Release",
+        "img_path": "",
+        "params": [
+          {
+            "name": "name",
+            "control": "textbox",
+            "default_value": [
+              "Cloud ?"
+            ],
+            "args": [
+              ""
+            ],
+            "regex": "^[\\S]+$"
+          },
+          {
+            "name": "feed",
+            "control": "textbox",
+            "default_value": [
+              "feed name(lable of cloud panel)"
+            ],
+            "args": [
+              ""
+            ],
+            "regex": "^[\\S]+$"
+          },
+          {
+            "name": "device",
+            "control": "textbox",
+            "default_value": [
+              ""
+            ],
+            "args": [
+              ""
+            ],
+            "regex": ""
+          }
+        ],
+        "require": {
+          "type": "Cloud",
+          "fn_name": "adaRelease"
+        }
+      },
+      {
+        "id": "Cloud_18",
+        "name": "Display Volume",
+        "short_description": "Cloud Display Volume",
+        "img_path": "",
+        "params": [
+          {
+            "name": "name",
+            "control": "textbox",
+            "default_value": [
+              "Cloud ?"
+            ],
+            "args": [
+              ""
+            ],
+            "regex": "^[\\S]+$"
+          },
+          {
+            "name": "feed",
+            "control": "textbox",
+            "default_value": [
+              "feed name(lable of cloud panel)"
+            ],
+            "args": [
+              ""
+            ],
+            "regex": "^[\\S]+$"
+          },
+          {
+            "name": "device",
+            "control": "textbox",
+            "default_value": [
+              ""
+            ],
+            "args": [
+              ""
+            ],
+            "regex": ""
+          }
+        ],
+        "require": {
+          "type": "Cloud",
+          "fn_name": "adaVolume"
+        }
+      },
+      {
+        "id": "Cloud_19",
+        "name": "Control Led",
+        "short_description": "Control Led on cloud by percentage",
+        "img_path": "",
+        "params": [
+          {
+            "name": "name",
+            "control": "textbox",
+            "default_value": [
+              "Cloud ?"
+            ],
+            "args": [
+              ""
+            ],
+            "regex": "^[\\S]+$"
+          },
+          {
+            "name": "feed",
+            "control": "textbox",
+            "default_value": [
+              "feed name(lable of cloud panel)"
+            ],
+            "args": [
+              ""
+            ],
+            "regex": "^[\\S]+$"
+          }
+        ],
+        "require": {
+          "type": "Cloud",
+          "fn_name": "adaControlLED"
+        }
+      },
+      {
+        "id": "Cloud_20",
+        "name": "Control Motor",
+        "short_description": "Control Motor on cloud by percentage",
+        "img_path": "",
+        "params": [
+          {
+            "name": "name",
+            "control": "textbox",
+            "default_value": [
+              "Cloud ?"
+            ],
+            "args": [
+              ""
+            ],
+            "regex": "^[\\S]+$"
+          },
+          {
+            "name": "feed",
+            "control": "textbox",
+            "default_value": [
+              "feed name(lable of cloud panel)"
+            ],
+            "args": [
+              ""
+            ],
+            "regex": "^[\\S]+$"
+          }
+        ],
+        "require": {
+          "type": "Cloud",
+          "fn_name": "adaControlMotor"
         }
       }
     ]

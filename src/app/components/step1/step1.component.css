@@ -22,6 +22,73 @@
           transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
 }
 
+.customContainer2 {
+    padding-top: 51px;
+    background-color: #edeef3;
+}
+
+.deviceContainer {
+    margin-top: 40px;
+    margin: auto;
+    width: 70%;
+    background-color: #edeef3;
+}
+
+.device-type {
+    background-color: #f4f4f5;
+    height: 100%;
+    width: 100%;
+    box-shadow: 0px 2px 10px #888888;
+}
+
+.device-type-header {
+    position: absolute;
+    top: 0;
+    background-color: #444a62;
+    width: 100%;
+    text-align: left;
+    padding: 10px;
+    /*box-shadow: 0px 2px 10px #888888;*/
+    color: white;
+    /*font-family: 'Roboto';*/
+    line-height: 30px;
+}
+
+.device-type-body {
+    position: absolute;
+    top: 60px;
+    width: 100%;
+    height: 400px;
+    overflow-y: scroll;
+}
+
+.device-list {
+    height: 100px;
+    padding: 10px;
+    border-bottom: 1px solid #444a62;
+}
+
+.device-pic {
+    width: 25%;
+    float: left;
+    padding: 10px;
+
+}
+.device-detail {
+    width: 75%;
+    float: left;
+    padding: 10px;
+}
+
+.device-dropdown {
+
+}
+
+.device-type2 {
+    width: 100%;
+    height: 100%;
+}
+
 .customGrid {
     font-size: 12px;
     height: 30%;
@@ -135,11 +202,15 @@
 .under-nav-column {
     display: table-cell;
     width: 10%;
+    cursor: pointer; 
+    cursor: hand;
 }
 
 .under-nav-column1 {
     display: table-cell;
     width: 20%;
+    text-align: left;
+    padding-left: 20px;
 }
 
 .under-nav-space1 {
@@ -161,10 +232,38 @@
     color: #a5a5a5;
 }
 
-/*.typeSelection {
-    min-height: 20px;
-    background-color: lightblue;
-}*/
+.glyphicon.glyphicon-floppy-disk {
+    font-size: 25px;
+    cursor: pointer; 
+    cursor: hand;
+    position:absolute; 
+    top: 12.5px;
+    right: 11%;
+}
+
+.fa.fa-reply {
+    font-size: 25px;
+    cursor: pointer; 
+    cursor: hand;
+    position:absolute; 
+    top: 12.5px;
+    right: 15%;
+}
+
+.fa.fa-share {
+    font-size: 25px;
+    cursor: pointer; 
+    cursor: hand;
+    position:absolute; 
+    top: 12.5px;
+    right: 13%;
+}
+
+.saving-text {
+    position:absolute; 
+    top: 12.5px;
+    left: 90%;
+}
 
 .well-edit {
   min-height: 20px;

@@ -21,10 +21,95 @@
   <div class="under-nav">
     <p class="under-nav-basic  under-nav-column1">{{projectName}}</p>
     <p class="under-nav-basic  under-nav-space1"></p>
-    <a class="under-nav-basic under-nav-basic  under-nav-column" routerLink="/step1"><img class="imgProject" src="/assets/img-icon/canvas-inactive.svg" /> Canvas</a>
-    <a class="under-nav-active  under-nav-column" routerLink="/step2"><img class="imgProject" src="/assets/img-icon/device-active.svg" /> Devices</a>
+    <a class="under-nav-basic under-nav-column" routerLink="/step1"><img class="imgProject" src="/assets/img-icon/canvas-inactive.svg" /> Canvas</a>
+    <a class="under-nav-active  under-nav-basic under-nav-column" routerLink="/step2"><img class="imgProject" src="/assets/img-icon/device-active.svg" /> Devices</a>
     <a class="under-nav-basic  under-nav-column" (click)="BlueprintSelected()"><img class="imgProject" src="/assets/img-icon/blueprint-inactive.svg" /> Blueprint</a>
     <p class="under-nav-basic  under-nav-space2"></p>
+  </div>
+</div>
+
+<div class="customContainer2">
+  <div class="deviceContainer">
+    <md-grid-list cols="3" gutterSize="50px" rowHeight="fit" [style.height]="fitListHeight">
+      <!-- For -->
+      <md-grid-tile class="device-type" [colspan]="1">
+        <div class="device-type-header">
+          <h4>Motor : Motor1</h4>
+        </div>
+
+        <div class="device-type-body">
+          <!-- For  -->
+          <div class="device-list cursor" (click)="selectDevice(0)" [style.background]="backgroundStyle[0]">
+            <div class="device-pic">
+
+              <img src="/assets/img-icon/device-active.svg" height="60px">
+
+            </div>
+            <div class="device-detail">
+              xxxxxxx
+            </div>
+            <hr>
+          </div>
+
+          <div class="device-list" (click)="selectDevice(1)" [style.background]="backgroundStyle[1]">
+            <div class="device-pic">
+              <img src="/assets/img-icon/device-active.svg" height="60px">
+            </div>
+            <div class="device-detail">
+              xxxxxxx<br>
+              Detail:<br>
+              Price:
+            </div>
+            <hr>
+          </div>
+
+          <div class="device-list" (click)="selectDevice(2)" [style.background]="backgroundStyle[2]">
+            <div class="device-pic">
+
+              <img src="/assets/img-icon/device-active.svg" height="60px">
+
+            </div>
+            <div class="device-detail">
+              xxxxxxx
+            </div>
+            <hr>
+          </div>
+
+          <div class="device-list" (click)="selectDevice(3)" [style.background]="backgroundStyle[3]">
+            <div class="device-pic">
+              <img src="/assets/img-icon/device-active.svg" height="60px">
+            </div>
+            <div class="device-detail">
+              xxxxxxx
+            </div>
+            <hr>
+          </div>
+
+          <div class="device-list" (click)="selectDevice(4)" [style.background]="backgroundStyle[4]">
+            <div class="device-pic">
+
+              <img src="/assets/img-icon/device-active.svg" height="60px">
+
+            </div>
+            <div class="device-detail">
+              xxxxxxx
+            </div>
+            <hr>
+          </div>
+        </div>
+      </md-grid-tile>
+
+
+      <md-grid-tile [colspan]="1">
+
+      </md-grid-tile>
+
+      <md-grid-tile [colspan]="1" [style.background]="'lightblue'">
+      </md-grid-tile>
+      <!--<md-grid-tile  *ngFor="let project of projects; let i = index" [colspan]="1" [style.background]="'lightblue'">
+
+        </md-grid-tile>-->
+    </md-grid-list>
   </div>
 
 

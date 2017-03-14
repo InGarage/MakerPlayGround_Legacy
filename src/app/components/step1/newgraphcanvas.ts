@@ -171,7 +171,7 @@ export class GraphCanvas {
                 if (selectedEdge.size() !== 0) {
                     dx = edgeSelected.triangle.getLeft() - oldLeft;
                     dy = edgeSelected.triangle.getTop() - oldTop;
-                    console.log('new', edgeSelected.triangle.getLeft() , edgeSelected.triangle.getTop() );
+                    console.log('new', edgeSelected.triangle.getLeft(), edgeSelected.triangle.getTop());
                     console.log('diff', dx, dy);
                 }
 
@@ -302,7 +302,6 @@ export class GraphCanvas {
     removeEdge(edgeData: EdgeData) {
         let edgeView = this.edgeFabricObject.remove(edgeData.getEdgeId());
         for (const obj of edgeView.getAllFabricElement()) {
-            console.log('x', obj);
             this.canvas.remove(obj);
         }
     }
@@ -1672,7 +1671,6 @@ class EdgeView {
             let endY = edge.getEndY();
             let endDirection = edge.getConnectDirection_Dst();
             let intersect = this.curve.isIntersect(startX, startY, startDirection, centerX, centerY, endX, endY, endDirection);
-            console.log("intersect result", intersect);
             if (intersect === true) {
                 let edgeView = this.edgeFabricObject.getValue(edge.getEdgeId());
                 if (!shouldEmittedEvent) {
@@ -1688,77 +1686,6 @@ class EdgeView {
                 }
             }
         }
-
-        // for (let edge of allEdge) {
-        //     x3 = edge.getStartX(); y3 = edge.getStartY();
-        //     x4 = edge.getEndX(); y4 = edge.getEndY();
-
-        //     let a_dx = x2 - x1;
-        //     let a_dy = y2 - y1;
-        //     let b_dx = x4 - x3;
-        //     let b_dy = y4 - y3;
-
-        //     // This is the moving edge, must not compare with itself!
-        //     // Otherwise it will paint itself to be red too.
-        //     if (this.edgeData.getEdgeId() === edge.getEdgeId())
-        //         continue;
-
-        //     if (this.edgeData.getEdgeId() !== edge.getEdgeId()) {
-        //         // For the case where two lines are parallel to each other
-        //         if ((y1 === y2) && (y3 === y4) && ((x3 > x1 && x3 < x2) || (x4 > x1 && x4 < x2))) {
-        //             if (y1 - y3 >= -10 && y1 - y3 <= 10) {
-        //                 let edgeView = this.edgeFabricObject.getValue(edge.getEdgeId());
-        //                 if (!shouldEmittedEvent) {
-        //                     edgeView.line.set('stroke', 'red');
-        //                     edgeView.triangle.set('fill', 'red');
-        //                 }
-        //                 return { toBeMissing: this.edgeData, toBeCombined: edge };
-        //             } else {
-        //                 // No intersection point, paint arrow's color back to black
-        //                 let edgeView = this.edgeFabricObject.getValue(edge.getEdgeId());
-        //                 if (!shouldEmittedEvent) {
-        //                     edgeView.line.set('stroke', 'black');
-        //                     edgeView.triangle.set('fill', 'black');
-        //                 }
-        //             }
-        //         } else if (x1 === x2 && x3 === x4 && ((y3 > y1 && y3 < y2) || (y4 > y1 && y4 < y2))) {
-        //             if (x1 - x3 >= -10 && x1 - x3 <= 10) {
-        //                 let edgeView = this.edgeFabricObject.getValue(edge.getEdgeId());
-        //                 if (!shouldEmittedEvent) {
-        //                     edgeView.line.set('stroke', 'red');
-        //                     edgeView.triangle.set('fill', 'red');
-        //                 }
-        //                 return { toBeMissing: this.edgeData, toBeCombined: edge };
-        //             } else {
-        //                 // No intersection point, paint arrow's color back to black
-        //                 let edgeView = this.edgeFabricObject.getValue(edge.getEdgeId());
-        //                 if (!shouldEmittedEvent) {
-        //                     edgeView.line.set('stroke', 'black');
-        //                     edgeView.triangle.set('fill', 'black');
-        //                 }
-        //             }
-        //         } else if (y1 !== y2 || y3 !== y4 || x1 !== x2 || x3 !== x4) {
-        //             let s = (-a_dy * (x1 - x3) + a_dx * (y1 - y3)) / (-b_dx * a_dy + a_dx * b_dy);
-        //             let t = (+b_dx * (y1 - y3) - b_dy * (x1 - x3)) / (-b_dx * a_dy + a_dx * b_dy);
-        //             let a = (s >= 0 && s <= 1 && t >= 0 && t <= 1);
-        //             if (a === true) {
-        //                 let edgeView = this.edgeFabricObject.getValue(edge.getEdgeId());
-        //                 if (!shouldEmittedEvent) {
-        //                     edgeView.line.set('stroke', 'red');
-        //                     edgeView.triangle.set('fill', 'red');
-        //                 }
-        //                 return { toBeMissing: this.edgeData, toBeCombined: edge };
-        //             } else {
-        //                 // No intersection point, paint arrow's color back to black
-        //                 let edgeView = this.edgeFabricObject.getValue(edge.getEdgeId());
-        //                 if (!shouldEmittedEvent) {
-        //                     edgeView.line.set('stroke', 'black');
-        //                     edgeView.triangle.set('fill', 'black');
-        //                 }
-        //             }
-        //         }
-        //   }
-        //}
     }
 
     combineEdge(edge: combineEdge) {
@@ -2064,7 +1991,6 @@ class EdgeView {
     }
 
     public selectEdge() {
-        console.log('select edge');
         this.dotHead.visible = true;
         this.dotTail.visible = true;
         this.curveControlPoint.visible = true;
