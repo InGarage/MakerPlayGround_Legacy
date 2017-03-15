@@ -41,7 +41,7 @@ export class Step3Component {
   }
 
   uploadToCloud() {
-    this.projectService.get
+    this.projectService.upload();
   }
 
 
