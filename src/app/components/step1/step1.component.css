@@ -303,3 +303,13 @@ ul.kas-icon-aero li a:before{font-family: 'Glyphicons Halflings'; font-size:9px;
     height: 500px;
     overflow-y: scroll;
 }
+
+.cursor {
+    cursor: pointer; 
+    cursor: hand;
+    left: 400px;
+}
+
+.xx {
+    width: 400px;
+}

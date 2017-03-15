@@ -321,7 +321,7 @@ export namespace ActionHelper {
     ]
   },
   {
-    "name": "DC Motor",
+    "name": "DCMotor",
     "children": [
       {
         "id": "DCMotor_1",

@@ -58,7 +58,10 @@
 
     <div class="col-xs-6">
       Source Code
-      <div id="overflow">
+      <div class="xx">
+      </div>
+      <span class="cursor" (click)="uploadToCloud()"><i class="fa fa-cloud-upload fa-2x" aria-hidden="true"></i>Upload to Board</span>
+      <div [ngStyle]="setHeight()">
         <pre>
         {{devices.sourcecode}}
         </pre>

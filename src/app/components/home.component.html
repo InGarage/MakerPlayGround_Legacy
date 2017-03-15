@@ -27,60 +27,57 @@
 
   <div class="btnRow">
     <div id="inline">
-      <input #box type="text" name="project_name" (blur)="onOutOfFocus()">
+      <input #box type="text" name="project_name">
     </div>
     <div id="inline">
       <button class="btn btn-primary btn-margin" (click)="newProject(box.value)">+Create New Project</button>
     </div>
   </div>
+</div>
 
 
-  <div class="allProjectsTable">
-    <div *ngFor="let project of displayProjectsTemplate; let i = index">
+<div class="allProjectsTable">
+  <div *ngFor="let project of displayProjectsTemplate; let i = index">
 
 
-      <div class="peekImageProject" (click)="getProject(project.id0)" *ngIf="project.project0 !== undefined">
-        <img class="imgPeek" src="/assets/img/redd-charactor.svg">
+    <div class="peekImageProject" (click)="getProject(project.id0)" *ngIf="project.project0 !== undefined">
+      <img class="imgPeek" src="/assets/img/redd-charactor.svg">
 
-        <div class="projectName">
-          <div class="fontProjectName">
-            {{project.project0}}
-          </div>
+      <div class="projectName">
+        <div class="fontProjectName">
+          {{project.project0}}
         </div>
       </div>
+    </div>
 
-      <div class="peekImageProject" (click)="getProject(project.id1)" *ngIf="project.project1 !== undefined">
-        <img class="imgPeek" src="/assets/img/purple-charactor.svg">
+    <div class="peekImageProject" (click)="getProject(project.id1)" *ngIf="project.project1 !== undefined">
+      <img class="imgPeek" src="/assets/img/purple-charactor.svg">
 
-        <div class="projectName">
-          <div class="fontProjectName">
-            {{project.project1}}
-          </div>
+      <div class="projectName">
+        <div class="fontProjectName">
+          {{project.project1}}
         </div>
       </div>
+    </div>
 
-      <div class="peekImageProject" (click)="getProject(project.id2)" *ngIf="project.project2 !== undefined">
-        <img class="imgPeek" src="/assets/img/creator-charactor.svg">
+    <div class="peekImageProject" (click)="getProject(project.id2)" *ngIf="project.project2 !== undefined">
+      <img class="imgPeek" src="/assets/img/creator-charactor.svg">
 
-        <div class="projectName">
-          <div class="fontProjectName">
-            {{project.project2}}
-          </div>
+      <div class="projectName">
+        <div class="fontProjectName">
+          {{project.project2}}
         </div>
       </div>
+    </div>
 
-      <div class="peekImageProject" (click)="getProject(project.id3)" *ngIf="project.project3 !== undefined">
-        <img class="imgPeek" src="/assets/img/yellow-charactor.svg">
+    <div class="peekImageProject" (click)="getProject(project.id3)" *ngIf="project.project3 !== undefined">
+      <img class="imgPeek" src="/assets/img/yellow-charactor.svg">
 
-        <div class="projectName">
-          <div class="fontProjectName">
-            {{project.project3}}
-          </div>
+      <div class="projectName">
+        <div class="fontProjectName">
+          {{project.project3}}
         </div>
       </div>
-
-
     </div>
   </div>
-
 </div>

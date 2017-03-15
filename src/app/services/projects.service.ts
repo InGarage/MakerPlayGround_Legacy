@@ -9,8 +9,8 @@ import 'rxjs/add/operator/toPromise';
 @Injectable()
 export class ProjectService {
 
-    url = 'https://makerplayground.azurewebsites.net/';
-    //url = 'http://localhost:3001/';
+    //url = 'https://makerplayground.azurewebsites.net/';
+    url = 'http://localhost:3001/';
 
     private currentProject: Project;
 
@@ -24,6 +24,20 @@ export class ProjectService {
         //console.log(localStorage.getItem('id_token'));
         return this.authHttp.get(this.url + 'api/project/')
             .map(res => res.json());
+    }
+
+    upload() {
+        this.generateCode(this.getCurrentProject()).subscribe((res) => {
+            console.log(res);
+            return this.authHttp.post(this.url + 'api/project/', JSON.stringify({
+                lib: ["MP_GeneralLed","MP_LSM303"],
+                board: 'uno',
+                code: res.sourcecode
+            }), {
+                    headers: new Headers({ 'Content-Type': 'application/json' })
+                }).map(res => res.json());
+        });
+
     }
 
     // post is new project's name
