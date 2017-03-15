@@ -18,11 +18,9 @@ export class Step2Component {
   constructor(private router: Router, private projectService: ProjectService) {
     this.projectName = projectService.getCurrentProject().project_name;
 
-    projectService.getDeviceList().toPromise().then(() => {
-      console.log('get device list complete');
-    }, () => {
-
-    })
+    projectService.getDeviceList().subscribe((res) => {
+      console.log('response', res);
+    });
   }
 
   ngOnInit() {

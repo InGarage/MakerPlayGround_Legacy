@@ -35,10 +35,10 @@ export class Step3Component implements OnInit, AfterViewInit {
         this.canvas = new fabric.Canvas('diagram');
 
         this.projectService.generateCode(this.projectService.getCurrentProject()).subscribe((res) => {
-            console.log(res);
             this.devices.sourcecode = this.devices.sourcecode.replace('\n', '<br>');
             this.devices = res;
 
+            console.log(this.devices.diagram);
             this.drawDiagram();
         });
     }
@@ -91,7 +91,7 @@ export class Step3Component implements OnInit, AfterViewInit {
         const diagram: any = JSON.parse(this.devices.diagram);
         console.log(diagram);
         // draw a breadboard
-        fabric.Image.fromURL('/assets/diagram/' + diagram.breadboard.name + '.png', (img) => {
+        fabric.Image.fromURL('/assets/diagram/' + diagram.breadboard.name + '@2x.png', (img) => {
             //fabric.loadSVGFromURL('/assets/diagram/' + diagram.breadboard.name + '.svg', (objects, options) => {
             //let img = fabric.util.groupSVGElements(objects, options);
             img.set({
@@ -102,7 +102,7 @@ export class Step3Component implements OnInit, AfterViewInit {
 
             // draw devices
             for (const device of diagram.devices) {
-                fabric.Image.fromURL('/assets/diagram/' + device.type + '.png', (img) => {
+                fabric.Image.fromURL('/assets/diagram/' + device.type + '@2x.png', (img) => {
                     //fabric.loadSVGFromURL('/assets/diagram/' + device.type + '.svg', (objects, options) => {
                     //    let img = fabric.util.groupSVGElements(objects, options);
                     img.set({
@@ -114,7 +114,7 @@ export class Step3Component implements OnInit, AfterViewInit {
             }
 
             // draw mcu
-            fabric.Image.fromURL('/assets/diagram/' + diagram.mcu.name + '.png', (img) => {
+            fabric.Image.fromURL('/assets/diagram/' + diagram.mcu.name + '@2x.png', (img) => {
                 img.set({
                     left: diagram.mcu.position.x,
                     top: diagram.mcu.position.y
